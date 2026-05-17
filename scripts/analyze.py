@@ -516,6 +516,84 @@ def batch_deep_analyze(candidates):
 
 # ========== 推荐 ==========
 
+def gen_market_analysis(all_stocks, scored, rec):
+    """生成大盘综合分析"""
+    rise = [s for s in all_stocks if s.get('change_pct', 0) > 0]
+    fall = [s for s in all_stocks if s.get('change_pct', 0) < 0]
+    flat = [s for s in all_stocks if s.get('change_pct', 0) == 0]
+    zt = [s for s in all_stocks if s.get('change_pct', 0) >= 9.8]
+    dt = [s for s in all_stocks if s.get('change_pct', 0) <= -9.8]
+    rise_pct = len(rise) / len(all_stocks) * 100 if all_stocks else 0
+    fall_pct = len(fall) / len(all_stocks) * 100 if all_stocks else 0
+    avg_chg = sum(s.get('change_pct', 0) for s in all_stocks) / len(all_stocks) if all_stocks else 0
+
+    # 行业分布
+    industries = defaultdict(list)
+    for s in all_stocks:
+        signals_str = ' '.join(s.get('signals', []))
+        if s.get('change_pct', 0) > 3:
+            industries['强势'].append(s)
+        elif s.get('change_pct', 0) < -3:
+            industries['弱势'].append(s)
+
+    # 资金面
+    high_turnover = [s for s in all_stocks if s.get('turnover_rate', 0) > 10]
+    total_amount = sum(s.get('amount', 0) for s in all_stocks)
+
+    lines = []
+    lines.append(f"今日A股市场整体{rec['market_sentiment']}，全市场{len(all_stocks)}只股票中，上涨{len(rise)}只（{rise_pct:.1f}%），下跌{len(fall)}只（{fall_pct:.1f}%），平盘{len(flat)}只。")
+    lines.append(f"平均涨幅{avg_chg:+.2f}%，涨停{len(zt)}只，跌停{len(dt)}只。")
+
+    if zt:
+        top_zt = zt[:3]
+        zt_strs = [f"{s['name']}({s['change_pct']:.1f}%)" for s in top_zt]
+        lines.append(f"涨停股代表：{', '.join(zt_strs)}。")
+    if dt:
+        top_dt = dt[:3]
+        dt_strs = [f"{s['name']}({s['change_pct']:.1f}%)" for s in top_dt]
+        lines.append(f"跌停股代表：{', '.join(dt_strs)}。")
+
+    lines.append(f"市场总成交额约{total_amount/10000:.0f}亿元，高换手率（>10%）股票{len(high_turnover)}只。")
+    lines.append(f"综合评分{rec['avg_score']}分，技术面{'偏强' if rec['avg_score'] > 55 else '偏弱' if rec['avg_score'] < 45 else '中性'}。")
+
+    # 涨停板块分析
+    if industries.get('强势'):
+        strong_names = [s['name'] for s in industries['强势'][:5]]
+        lines.append(f"今日强势股代表：{'、'.join(strong_names)}。")
+
+    return '\n'.join(lines)
+
+
+def gen_next_day_advice(all_stocks, scored, rec):
+    """生成明日操作建议"""
+    lines = []
+    sentiment = rec['market_sentiment']
+
+    if sentiment == '偏多':
+        lines.append("【明日展望】市场情绪偏暖，可适度积极。")
+        lines.append("1. 强烈买入标的可在开盘低吸，关注竞价量能")
+        lines.append("2. 买入标的可在回调至支撑位附近分批建仓")
+        lines.append("3. 控制仓位在6-7成，留有加仓空间")
+    elif sentiment == '偏空':
+        lines.append("【明日展望】市场情绪偏冷，以防守为主。")
+        lines.append("1. 优先考虑减仓或观望，避免追高")
+        lines.append("2. 若持仓亏损超5%，建议设好止损严格执行")
+        lines.append("3. 保持低仓位（3-4成），等待企稳信号")
+    else:
+        lines.append("【明日展望】市场震荡分化，精选个股为主。")
+        lines.append("1. 关注评分65分以上且处于上升趋势的个股")
+        lines.append("2. 避免追涨杀跌，逢低吸纳优质标的")
+        lines.append("3. 仓位控制在5成左右，灵活应对")
+
+    if rec.get('strong_buy'):
+        lines.append(f"\n【重点关注】{', '.join(s['name'] + '(' + str(s['score']) + '分)' for s in rec['strong_buy'][:3])}")
+    if rec.get('strategies'):
+        for st in rec['strategies'][:2]:
+            lines.append(f"\n【{st['name']}】{st['desc']}")
+
+    return '\n'.join(lines)
+
+
 def generate_recommendations(all_stocks):
     scored = [s for s in all_stocks if s.get('score') is not None]
     scored.sort(key=lambda x: x['score'], reverse=True)
@@ -556,7 +634,8 @@ def generate_recommendations(all_stocks):
             'stocks': [{'code': s['code'], 'name': s['name'], 'score': s['score']} for s in breakout[:5]]
         })
 
-    return {
+    # 先生成基础推荐
+    result = {
         'update_time': datetime.now().strftime('%Y-%m-%d %H:%M'),
         'market_sentiment': sentiment,
         'avg_score': round(avg_score, 1),
@@ -566,6 +645,10 @@ def generate_recommendations(all_stocks):
         'avoid': avoid,
         'strategies': strategies,
     }
+    # 再基于 result 生成分析和建议（避免递归引用）
+    result['market_analysis'] = gen_market_analysis(all_stocks, scored, result)
+    result['next_day_advice'] = gen_next_day_advice(all_stocks, scored, result)
+    return result
 
 
 # ========== 辅助 ==========
@@ -623,15 +706,17 @@ def save_snapshot(all_stocks, recommendations):
     with open(os.path.join(DATA_DIR, 'recommendations.json'), 'w', encoding='utf-8') as f:
         json.dump(recommendations, f, ensure_ascii=False)
 
-    # 历史快照
+    # 历史快照（包含价格，用于准确率统计）
     hist_data = {
         'update_time': ts,
         'recommendations': {
-            'strong_buy': [{'code': s['code'], 'name': s['name'], 'score': s['score']} for s in recommendations['strong_buy']],
-            'buy': [{'code': s['code'], 'name': s['name'], 'score': s['score']} for s in recommendations['buy']],
-            'avoid': [{'code': s['code'], 'name': s['name'], 'score': s['score']} for s in recommendations['avoid']],
+            'strong_buy': [{'code': s['code'], 'name': s['name'], 'score': s['score'], 'price': s['price'], 'prev_close': s['prev_close']} for s in recommendations['strong_buy']],
+            'buy': [{'code': s['code'], 'name': s['name'], 'score': s['score'], 'price': s['price'], 'prev_close': s['prev_close']} for s in recommendations['buy']],
+            'avoid': [{'code': s['code'], 'name': s['name'], 'score': s['score'], 'price': s['price'], 'prev_close': s['prev_close']} for s in recommendations['avoid']],
         },
-        'scores': {s['code']: s['score'] for s in all_stocks[:500]},
+        'scores': {s['code']: {'score': s['score'], 'price': s['price'], 'name': s['name']} for s in all_stocks[:500]},
+        'market_sentiment': recommendations['market_sentiment'],
+        'avg_score': recommendations['avg_score'],
     }
     with open(os.path.join(HISTORY_DIR, f'{date_str}_{time_str}.json'), 'w', encoding='utf-8') as f:
         json.dump(hist_data, f, ensure_ascii=False)
