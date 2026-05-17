@@ -149,6 +149,12 @@ const App = {
     // A股统计
     const stocks = this.allData.stocks || [];
     const rise = stocks.filter(s => s.change_pct > 0).length;
+    const fall = stocks.filter(s => s.change_pct < 0).length;
+    const flat = stocks.length - rise - fall;
+    const zt = stocks.filter(s => s.change_pct >= 9.8).length;
+    const dt = stocks.filter(s => s.change_pct <= -9.8).length;
+
+    html += `<div class="market-stats-row">
       <div class="market-stat-item"><div class="market-stat-val text-rise">${rise}</div><div class="market-stat-label">上涨</div></div>
       <div class="market-stat-item"><div class="market-stat-val text-fall">${fall}</div><div class="market-stat-label">下跌</div></div>
       <div class="market-stat-item"><div class="market-stat-val">${flat}</div><div class="market-stat-label">平盘</div></div>
