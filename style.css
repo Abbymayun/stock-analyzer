@@ -613,24 +613,90 @@ body {
   font-size: 11px;
 }
 
+/* === 指数行情 === */
+.indices-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.idx-item {
+  flex: 1;
+  min-width: 90px;
+  background: var(--bg2);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  text-align: center;
+  border-left: 3px solid var(--border);
+}
+.idx-item.us { border-left-color: var(--accent2); }
+.idx-item:first-child { border-left-color: var(--rise); }
+.idx-label { font-size: 10px; color: var(--text3); margin-bottom: 2px; }
+.idx-val { font-size: 15px; font-weight: 700; }
+.idx-chg { font-size: 11px; font-weight: 600; margin-top: 1px; }
+
 /* === 历史更新页 === */
 .history-page { padding: 16px 20px; max-width: 1200px; margin: 0 auto; }
-.history-item {
-  background: var(--card);
-  border: 1px solid var(--border);
+.history-date-group {
   border-radius: var(--radius);
   padding: 16px;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
 }
-.history-time { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
-.history-stocks { display: flex; flex-wrap: wrap; gap: 8px; }
+.history-date-header {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.history-slot {
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  border: 1px solid rgba(42,58,80,0.2);
+}
+.history-slot:last-child { margin-bottom: 0; }
+.history-slot-time {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.history-accuracy-mini {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  background: var(--bg2);
+  border-radius: 8px;
+  font-size: 12px;
+}
+.history-accuracy-mini span { display: flex; align-items: center; gap: 4px; }
+.history-rec-group { margin-bottom: 8px; }
+.history-rec-label { font-size: 12px; font-weight: 600; }
+.history-rec-label.rise { color: var(--rise); }
+.history-rec-label.buy { color: #f87171; }
+.history-strategies { margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(42,58,80,0.3); }
+.history-strategy-item {
+  background: rgba(42,58,80,0.1);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+.history-strategy-name { font-size: 13px; font-weight: 600; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+.strategy-accuracy { font-size: 11px; color: var(--accent); background: rgba(59,130,246,0.1); padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+.history-strategy-desc { font-size: 12px; color: var(--text2); line-height: 1.5; margin-bottom: 6px; }
 .history-stock-tag {
   background: var(--bg2);
   border: 1px solid var(--border);
-  padding: 4px 10px;
+  padding: 3px 8px;
   border-radius: 6px;
-  font-size: 12px;
+  font-size: 11px;
 }
+.history-stock-tag.rise { border-color: rgba(239,68,68,0.3); color: var(--rise); }
+.history-stock-tag.fall { border-color: rgba(34,197,94,0.3); color: var(--fall); }
+.history-stocks { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
 
 /* === 滚动条 === */
 ::-webkit-scrollbar { width: 6px; }

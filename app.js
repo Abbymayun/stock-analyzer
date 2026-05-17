@@ -53,12 +53,10 @@ const App = {
     sentEl.textContent = r.market_sentiment + ' · ' + r.avg_score + '分';
     sentEl.className = 'sentiment ' + r.market_sentiment;
 
-    // 统计（去掉建议回避，加强烈卖出）
+    // 统计（去掉强烈卖出）
     document.getElementById('stat-strong').textContent = (r.strong_buy || []).length;
     document.getElementById('stat-buy').textContent = (r.buy || []).length;
     document.getElementById('stat-watch').textContent = (r.watch || []).length;
-    const strongSell = (this.allData.stocks || []).filter(s => s.recommendation === '强烈卖出').length;
-    document.getElementById('stat-strong-sell').textContent = strongSell;
 
     // 左栏推荐列表
     this.renderRecList('strong-buy-list', r.strong_buy || []);
@@ -104,28 +102,61 @@ const App = {
     const el = document.getElementById('market-analysis');
     document.getElementById('analysis-update-time').textContent = r.update_time || '';
 
-    const stocks = this.allData.stocks || [];
-    const rise = stocks.filter(s => s.change_pct > 0).length;
-    const fall = stocks.filter(s => s.change_pct < 0).length;
-    const flat = stocks.length - rise - fall;
-    const zt = stocks.filter(s => s.change_pct >= 9.8).length;
-    const dt = stocks.filter(s => s.change_pct <= -9.8).length;
-    const avgChg = stocks.length ? (stocks.reduce((a, s) => a + s.change_pct, 0) / stocks.length) : 0;
+    const macro = r.macro_indices || {};
+    // 兼容代码映射
+    const idxMap = {
+      'sh000001': ['sh000001', '000001'],
+      'sz399001': ['sz399001', '399001'],
+      'sz399006': ['sz399006', '399006'],
+      'int_dji': ['int_dji'],
+      'int_nasdaq': ['int_nasdaq'],
+      'int_sp500': ['int_sp500'],
+    };
+    const getIdx = (code) => {
+      const keys = idxMap[code] || [code];
+      for (const k of keys) {
+        if (macro[k]) return macro[k];
+      }
+      return null;
+    };
 
     let html = `<div class="market-sentiment-badge ${r.market_sentiment}">
       ${r.market_sentiment === '偏多' ? '📈' : r.market_sentiment === '偏空' ? '📉' : '➡️'} 
       市场情绪：${r.market_sentiment} · 综合评分 ${r.avg_score}分
     </div>`;
 
-    html += `<div class="market-stats-row">
+    // 指数行情
+    html += `<div class="indices-row">`;
+    const idxList = [
+      { code: 'sh000001', label: '上证' },
+      { code: 'sz399001', label: '深证' },
+      { code: 'sz399006', label: '创业板' },
+      { code: 'int_dji', label: '道琼斯' },
+      { code: 'int_nasdaq', label: '纳斯达克' },
+      { code: 'int_sp500', label: '标普500' },
+    ];
+    idxList.forEach(idx => {
+      const info = getIdx(idx.code);
+      if (info) {
+        const cls = info.change_pct >= 0 ? 'text-rise' : 'text-fall';
+        const sign = info.change_pct >= 0 ? '+' : '';
+        const tag = idx.code.startsWith('int') ? 'us' : '';
+        html += `<div class="idx-item ${tag}"><div class="idx-label">${idx.label}</div><div class="idx-val ${cls}">${info.price?.toFixed(2) || '-'}</div><div class="idx-chg ${cls}">${sign}${info.change_pct.toFixed(2)}%</div></div>`;
+      }
+    });
+    html += '</div>';
+
+    // A股统计
+    const stocks = this.allData.stocks || [];
+    const rise = stocks.filter(s => s.change_pct > 0).length;
       <div class="market-stat-item"><div class="market-stat-val text-rise">${rise}</div><div class="market-stat-label">上涨</div></div>
       <div class="market-stat-item"><div class="market-stat-val text-fall">${fall}</div><div class="market-stat-label">下跌</div></div>
       <div class="market-stat-item"><div class="market-stat-val">${flat}</div><div class="market-stat-label">平盘</div></div>
-      <div class="market-stat-item"><div class="market-stat-val ${avgChg >= 0 ? 'text-rise' : 'text-fall'}">${avgChg >= 0 ? '+' : ''}${avgChg.toFixed(2)}%</div><div class="market-stat-label">平均涨幅</div></div>
       <div class="market-stat-item"><div class="market-stat-val text-rise">${zt}</div><div class="market-stat-label">涨停</div></div>
       <div class="market-stat-item"><div class="market-stat-val text-fall">${dt}</div><div class="market-stat-label">跌停</div></div>
     </div>`;
 
+    // 宏观分析文本
     if (r.market_analysis) {
       html += `<div class="market-text">${this.esc(r.market_analysis)}</div>`;
     }
@@ -393,7 +424,7 @@ const App = {
     }
   },
 
-  // === 历史更新页（需求5：去掉建议回避，去掉均分情绪，显示准确率） ===
+  // === 历史更新页（需求5改造） ===
   async renderHistory() {
     const el = document.getElementById('history-content');
     try {
@@ -406,6 +437,9 @@ const App = {
       const results = await Promise.all(promises);
       const valid = results.filter(Boolean);
 
+      // 获取最新一次的 scores 数据（用于查找实际涨幅）
+      const latestScores = valid[0]?.scores || {};
+
       let html = '';
       // 按日期分组
       const byDate = {};
@@ -415,76 +449,165 @@ const App = {
         byDate[date].push(h);
       });
 
-      Object.keys(byDate).sort().reverse().forEach(date => {
+      const dateColors = ['#1a2a3a', '#1f2535', '#1a2332'];
+
+      Object.keys(byDate).sort().reverse().forEach((date, di) => {
         const daySnapshots = byDate[date];
-        const latest = daySnapshots[0];
-        const prev = daySnapshots.length > 1 ? daySnapshots[daySnapshots.length - 1] : null;
+        const bgColor = dateColors[di % dateColors.length];
 
-        html += `<div class="history-item">
-          <div class="history-time">📅 ${date}</div>`;
+        html += `<div class="history-date-group" style="background:${bgColor}">
+          <div class="history-date-header">📅 ${date}</div>`;
 
-        // 准确率统计（当天第一次分析 vs 最后一次，或 vs 前一天最后一次）
-        if (prev && prev.recommendations?.strong_buy?.length) {
-          const ydStrongBuy = prev.recommendations.strong_buy;
-          const todayStocks = valid[0];
-          let correct = 0, wrong = 0, totalPnl = 0;
-
-          ydStrongBuy.forEach(s => {
-            // 找该股票在latest中的价格
-            const laterSnapshot = daySnapshots[daySnapshots.length - 1];
-            const scores = laterSnapshot?.scores || {};
-            const info = scores[s.code];
-            if (info && info.price) {
-              const ydPrice = s.price || s.prev_close;
-              const chg = (info.price - ydPrice) / ydPrice * 100;
-              if (chg > 0) correct++; else wrong++;
-              totalPnl += chg;
-            }
-          });
-
-          const total = correct + wrong;
-          if (total > 0) {
-            const acc = (correct / total * 100).toFixed(0);
-            const avg = (totalPnl / total).toFixed(2);
-            html += `<div style="display:flex;gap:16px;margin:8px 0;padding:10px;background:var(--bg2);border-radius:8px;font-size:13px">
-              <div><span style="color:var(--text3)">准确率</span><br><strong style="color:${acc >= 60 ? 'var(--fall)' : 'var(--gold)'}">${acc}%</strong></div>
-              <div><span style="color:var(--text3)">平均收益</span><br><strong class="${totalPnl >= 0 ? 'text-rise' : 'text-fall'}">${totalPnl >= 0 ? '+' : ''}${avg}%</strong></div>
-              <div><span style="color:var(--text3)">命中</span><br><strong style="color:var(--accent)">${correct}/${total}</strong></div>
-            </div>`;
-          }
-        }
-
-        // 各时间点的推荐
-        daySnapshots.forEach(h => {
+        daySnapshots.forEach((h, si) => {
           const rec = h.recommendations || {};
           const strongBuy = rec.strong_buy || [];
           const buy = rec.buy || [];
           const time = (h.update_time || '').split(' ')[1] || '';
+          const strategies = h.strategies || [];
 
-          html += `<div style="margin-bottom:10px;padding-left:12px;border-left:3px solid var(--border)">
-            <div style="font-size:12px;color:var(--text3);margin-bottom:6px">⏰ ${time}</div>
-            <div style="margin-bottom:4px">
-              <span style="color:var(--rise);font-size:12px;font-weight:600">强烈买入 ${strongBuy.length}只：</span>
-              <div class="history-stocks" style="margin-top:4px">${strongBuy.map(s =>
-                `<span class="history-stock-tag" style="cursor:pointer" onclick="App.showPage('home');App.openStock('${s.code}')">${s.name}(${s.score}分·${s.price?.toFixed(2) || '-'})</span>`
-              ).join('')}</div>
-            </div>
-            <div>
-              <span style="color:#f87171;font-size:12px;font-weight:600">建议买入 ${buy.length}只：</span>
-              <div class="history-stocks" style="margin-top:4px">${buy.map(s =>
-                `<span class="history-stock-tag" style="cursor:pointer" onclick="App.showPage('home');App.openStock('${s.code}')">${s.name}(${s.score}分)</span>`
-              ).join('')}</div>
-            </div>
-          </div>`;
+          // 每个时间点用不同浅色区分
+          const slotBg = si % 2 === 0 ? 'rgba(42,58,80,0.15)' : 'rgba(59,130,246,0.06)';
+
+          html += `<div class="history-slot" style="background:${slotBg}">
+            <div class="history-slot-time">⏰ ${time}</div>`;
+
+          // 准确率
+          if (si < daySnapshots.length - 1) {
+            const nextH = daySnapshots[si + 1];
+            const nextScores = nextH.scores || {};
+            if (strongBuy.length) {
+              let correct = 0, wrong = 0, totalPnl = 0;
+              strongBuy.forEach(s => {
+                const later = nextScores[s.code];
+                if (later && later.price) {
+                  const ydPrice = s.price;
+                  const chg = (later.price - ydPrice) / ydPrice * 100;
+                  if (chg > 0) correct++; else wrong++;
+                  totalPnl += chg;
+                }
+              });
+              const total = correct + wrong;
+              if (total > 0) {
+                const acc = (correct / total * 100).toFixed(0);
+                const avg = (totalPnl / total).toFixed(2);
+                html += `<div class="history-accuracy-mini">
+                  <span>准确率 <strong style="color:${acc >= 60 ? 'var(--fall)' : 'var(--gold)'}">${acc}%</strong></span>
+                  <span>平均 <strong class="${totalPnl >= 0 ? 'text-rise' : 'text-fall'}">${totalPnl >= 0 ? '+' : ''}${avg}%</strong></span>
+                  <span>命中 <strong style="color:var(--accent)">${correct}/${total}</strong></span>
+                </div>`;
+              }
+            }
+          } else if (di < Object.keys(byDate).length - 1 && latestScores) {
+            // 最后一次更新，对比最新数据
+            let correct = 0, wrong = 0, totalPnl = 0;
+            strongBuy.forEach(s => {
+              const later = latestScores[s.code];
+              if (later && later.price) {
+                const chg = (later.price - s.price) / s.price * 100;
+                if (chg > 0) correct++; else wrong++;
+                totalPnl += chg;
+              }
+            });
+            const total = correct + wrong;
+            if (total > 0) {
+              const acc = (correct / total * 100).toFixed(0);
+              const avg = (totalPnl / total).toFixed(2);
+              html += `<div class="history-accuracy-mini">
+                <span>准确率 <strong style="color:${acc >= 60 ? 'var(--fall)' : 'var(--gold)'}">${acc}%</strong></span>
+                <span>平均 <strong class="${totalPnl >= 0 ? 'text-rise' : 'text-fall'}">${totalPnl >= 0 ? '+' : ''}${avg}%</strong></span>
+                <span>命中 <strong style="color:var(--accent)">${correct}/${total}</strong></span>
+              </div>`;
+            }
+          }
+
+          // 强烈买入
+          if (strongBuy.length) {
+            html += `<div class="history-rec-group">
+              <span class="history-rec-label rise">强烈买入 ${strongBuy.length}只</span>
+              <div class="history-stocks">${strongBuy.map(s => {
+                const curChg = s.change_pct;
+                const estChg = this._findEst(s.code, h.scores);
+                const actChg = this._findActual(s.code, si < daySnapshots.length - 1 ? daySnapshots[si+1].scores : latestScores, s.price);
+                return `<span class="history-stock-tag ${curChg >= 0 ? 'rise' : 'fall'}" style="cursor:pointer" onclick="App.showPage('home');App.openStock('${s.code}')">
+                  ${this.esc(s.name)}${curChg >= 0 ? '+' : ''}${curChg.toFixed(1)}%${estChg !== null ? ' / 明日预估'+(estChg >= 0 ? '+' : '')+estChg.toFixed(1)+'%' : ''}${actChg !== null ? ' / 实际'+(actChg >= 0 ? '+' : '')+actChg.toFixed(1)+'%' : ''}
+                </span>`;
+              }).join('')}</div>
+            </div>`;
+          }
+
+          // 建议买入
+          if (buy.length) {
+            html += `<div class="history-rec-group">
+              <span class="history-rec-label buy">建议买入 ${buy.length}只</span>
+              <div class="history-stocks">${buy.map(s => {
+                const curChg = s.change_pct;
+                const actChg = this._findActual(s.code, si < daySnapshots.length - 1 ? daySnapshots[si+1].scores : latestScores, s.price);
+                return `<span class="history-stock-tag" style="cursor:pointer" onclick="App.showPage('home');App.openStock('${s.code}')">
+                  ${this.esc(s.name)}${curChg >= 0 ? '+' : ''}${curChg.toFixed(1)}%${actChg !== null ? ' / 实际'+(actChg >= 0 ? '+' : '')+actChg.toFixed(1)+'%' : ''}
+                </span>`;
+              }).join('')}</div>
+            </div>`;
+          }
+
+          // 策略
+          if (strategies.length) {
+            html += `<div class="history-strategies">`;
+            strategies.forEach(st => {
+              // 策略准确率：看策略中股票的实际表现
+              const stStocks = st.stocks || [];
+              let stCorrect = 0, stTotal = 0, stPnl = 0;
+              stStocks.forEach(ss => {
+                const actChg = this._findActual(ss.code, si < daySnapshots.length - 1 ? daySnapshots[si+1].scores : latestScores);
+                if (actChg !== null) {
+                  stTotal++;
+                  if (actChg > 0) stCorrect++;
+                  stPnl += actChg;
+                }
+              });
+
+              html += `<div class="history-strategy-item">
+                <div class="history-strategy-name">${this.esc(st.name)}
+                  ${stTotal > 0 ? `<span class="strategy-accuracy">准确率${(stCorrect/stTotal*100).toFixed(0)}% (${stCorrect}/${stTotal})</span>` : ''}
+                </div>
+                <div class="history-strategy-desc">${this.esc(st.desc)}</div>
+                ${stStocks.length ? `<div class="history-stocks">${stStocks.map(ss => {
+                  const actChg = this._findActual(ss.code, si < daySnapshots.length - 1 ? daySnapshots[si+1].scores : latestScores);
+                  return `<span class="history-stock-tag" style="cursor:pointer" onclick="App.showPage('home');App.openStock('${ss.code}')">${this.esc(ss.name)}${actChg !== null ? ' '+(actChg >= 0 ? '+' : '')+actChg.toFixed(1)+'%' : ''}</span>`;
+                }).join('')}</div>` : ''}
+              </div>`;
+            });
+            html += '</div>';
+          }
+
+          html += '</div>'; // .history-slot
         });
 
-        html += '</div>';
+        html += '</div>'; // .history-date-group
       });
 
       el.innerHTML = html || '<div class="empty">暂无历史记录</div>';
     } catch (e) {
       el.innerHTML = '<div class="empty">加载失败</div>';
     }
+  },
+
+  // 辅助：查找预估涨幅
+  _findEst(code, scores) {
+    if (!scores || !scores[code]) return null;
+    const s = scores[code];
+    // 从当前数据找
+    const stock = this.findStock(code);
+    if (stock?.next_day_estimate?.estimate !== undefined) return stock.next_day_estimate.estimate;
+    return null;
+  },
+
+  // 辅助：查找实际涨幅
+  _findActual(code, laterScores, prevPrice) {
+    if (!laterScores || !laterScores[code] || !prevPrice || prevPrice <= 0) return null;
+    const later = laterScores[code];
+    const laterPrice = later.price;
+    if (!laterPrice || laterPrice <= 0) return null;
+    return (laterPrice - prevPrice) / prevPrice * 100;
   },
 
   // === 个股详情页（需求4：持仓股票详情加强） ===

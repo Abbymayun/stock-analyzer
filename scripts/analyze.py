@@ -31,6 +31,78 @@ def ensure_dirs():
     os.makedirs(HISTORY_DIR, exist_ok=True)
 
 
+# ========== 获取宏观指数 ==========
+
+def get_macro_indices():
+    """获取A股、美股主要指数行情"""
+    print("  [0/6] 获取宏观指数行情...")
+    indices = {}
+    # 腾讯API批量查询
+    codes = 'sh000001,sz399001,sz399006,sh000688,sh000300'
+    # 美股需要用新浪API（腾讯不支持美股）
+    try:
+        r = session.get(f"https://qt.gtimg.cn/q={codes}", timeout=10)
+        lines = [l for l in r.text.strip().split(';') if l.strip() and '~' in l and '=' in l]
+        for line in lines:
+            parts = line.split('~')
+            if len(parts) < 50: continue
+            code = parts[2]
+            name = parts[1]
+            if not name: continue
+            try:
+                indices[code] = {
+                    'name': name,
+                    'code': code,
+                    'price': float(parts[3]) if parts[3] else 0,
+                    'prev_close': float(parts[4]) if parts[4] else 0,
+                    'change_pct': float(parts[32]) if parts[32] else 0,
+                    'high': float(parts[33]) if parts[33] else 0,
+                    'low': float(parts[34]) if parts[34] else 0,
+                    'amount': float(parts[37]) if parts[37] else 0,
+                }
+            except (ValueError, IndexError):
+                continue
+    except Exception as e:
+        print(f"        A股指数获取失败: {e}")
+
+    # 美股指数（新浪API，显示上一交易日收盘数据）
+    # 注意：新浪数据格式为 hq_str_int_dji="道琼斯,46247.29,0.00,..." 
+    # fields: name, price, change(absolute), change_pct, prev_close, ...
+    us_codes = {
+        'int_dji': '道琼斯',
+        'int_nasdaq': '纳斯达克',
+        'int_sp500': '标普500',
+    }
+    for code, name in us_codes.items():
+        try:
+            r = session.get(f"http://hq.sinajs.cn/list={code}", timeout=10, 
+                          headers={'Referer': 'https://finance.sina.com.cn'})
+            r.encoding = 'gbk'
+            text = r.text.strip()
+            if text and '=' in text and '"' in text:
+                data = text.split('"')[1].split(',')
+                if len(data) >= 6:
+                    price = float(data[1])
+                    prev = float(data[5])  # prev_close is field 5, not 2
+                    pct = round((price - prev) / prev * 100, 2) if prev > 0 else 0
+                    if abs(pct) < 50:  # sanity check
+                        indices[code] = {
+                            'name': name,
+                            'code': code,
+                            'price': price,
+                            'prev_close': prev,
+                            'change_pct': pct,
+                        }
+        except Exception:
+            pass
+
+    for code, info in indices.items():
+        chg_sign = '+' if info['change_pct'] >= 0 else ''
+        print(f"        {info['name']}: {info['price']:.2f} ({chg_sign}{info['change_pct']:.2f}%)")
+    
+    return indices
+
+
 # ========== 数据获取：股票列表 + 实时行情 ==========
 
 def get_stock_list_with_quotes():
@@ -737,85 +809,165 @@ def batch_deep_analyze(candidates):
 
 # ========== 推荐 ==========
 
-def gen_market_analysis(all_stocks, scored, rec):
-    """生成大盘综合分析"""
+def gen_market_analysis(all_stocks, scored, rec, macro_indices):
+    """生成大盘宏观综合分析"""
+    lines = []
+    
+    # === A股大盘 ===
+    sh = macro_indices.get('sh000001', {})
+    sz = macro_indices.get('sz399001', {})
+    cyb = macro_indices.get('sz399006', {})
+    kcb = macro_indices.get('sh000688', {})
+    hs300 = macro_indices.get('sh000300', {})
+
     rise = [s for s in all_stocks if s.get('change_pct', 0) > 0]
     fall = [s for s in all_stocks if s.get('change_pct', 0) < 0]
-    flat = [s for s in all_stocks if s.get('change_pct', 0) == 0]
+    total = len(all_stocks)
     zt = [s for s in all_stocks if s.get('change_pct', 0) >= 9.8]
     dt = [s for s in all_stocks if s.get('change_pct', 0) <= -9.8]
-    rise_pct = len(rise) / len(all_stocks) * 100 if all_stocks else 0
-    fall_pct = len(fall) / len(all_stocks) * 100 if all_stocks else 0
-    avg_chg = sum(s.get('change_pct', 0) for s in all_stocks) / len(all_stocks) if all_stocks else 0
+    avg_chg = sum(s.get('change_pct', 0) for s in all_stocks) / total if total else 0
 
-    # 行业分布
-    industries = defaultdict(list)
-    for s in all_stocks:
-        signals_str = ' '.join(s.get('signals', []))
-        if s.get('change_pct', 0) > 3:
-            industries['强势'].append(s)
-        elif s.get('change_pct', 0) < -3:
-            industries['弱势'].append(s)
+    lines.append(f"【A股大盘】")
+    if sh:
+        chg_s = '+' if sh['change_pct'] >= 0 else ''
+        lines.append(f"上证指数 {sh['price']:.2f}（{chg_s}{sh['change_pct']:.2f}%），"
+                     f"{'站上' if sh['price'] > sh.get('prev_close',0) else '跌破'}昨日收盘位。")
+    if sz:
+        chg_s = '+' if sz['change_pct'] >= 0 else ''
+        lines.append(f"深证成指 {sz['price']:.2f}（{chg_s}{sz['change_pct']:.2f}%）。")
+    if cyb:
+        chg_s = '+' if cyb['change_pct'] >= 0 else ''
+        lines.append(f"创业板指 {cyb['price']:.2f}（{chg_s}{cyb['change_pct']:.2f}%），{'表现偏强' if cyb['change_pct'] > (sh.get('change_pct',0) or 0) else '弱于主板'}。")
+    if kcb:
+        chg_s = '+' if kcb['change_pct'] >= 0 else ''
+        lines.append(f"科创50 {kcb['price']:.2f}（{chg_s}{kcb['change_pct']:.2f}%）。")
+    
+    lines.append(f"\n全市场{total}只股票：上涨{len(rise)}只（{len(rise)/total*100:.1f}%），下跌{len(fall)}只（{len(fall)/total*100:.1f}%），平均涨幅{avg_chg:+.2f}%。涨停{len(zt)}只，跌停{len(dt)}只。")
 
-    # 资金面
-    high_turnover = [s for s in all_stocks if s.get('turnover_rate', 0) > 10]
+    # 市场成交额
     total_amount = sum(s.get('amount', 0) for s in all_stocks)
+    if total_amount > 0:
+        lines.append(f"两市总成交额约{total_amount/10000:.0f}亿元。")
 
-    lines = []
-    lines.append(f"今日A股市场整体{rec['market_sentiment']}，全市场{len(all_stocks)}只股票中，上涨{len(rise)}只（{rise_pct:.1f}%），下跌{len(fall)}只（{fall_pct:.1f}%），平盘{len(flat)}只。")
-    lines.append(f"平均涨幅{avg_chg:+.2f}%，涨停{len(zt)}只，跌停{len(dt)}只。")
+    # 行业轮动
+    strong = sorted([s for s in all_stocks if s.get('change_pct', 0) > 5], key=lambda x: x['change_pct'], reverse=True)[:5]
+    weak = sorted([s for s in all_stocks if s.get('change_pct', 0) < -5], key=lambda x: x['change_pct'])[:5]
 
+    # === 美股影响 ===
+    lines.append(f"\n【美股隔夜行情】")
+    us_indices = ['int_dji', 'int_nasdaq', 'int_sp500']
+    us_found = False
+    for code in us_indices:
+        info = macro_indices.get(code)
+        if info:
+            chg_s = '+' if info['change_pct'] >= 0 else ''
+            emoji = '📈' if info['change_pct'] > 0 else '📉'
+            lines.append(f"{emoji} {info['name']} {info['price']:.2f}（{chg_s}{info['change_pct']:.2f}%）")
+            us_found = True
+    if not us_found:
+        lines.append("美股数据暂未获取（可能为非交易时段）")
+    else:
+        # 美股对A股影响评估
+        us_avg = sum(macro_indices[c]['change_pct'] for c in us_indices if c in macro_indices) / max(1, sum(1 for c in us_indices if c in macro_indices))
+        if us_avg > 1:
+            lines.append(f"\n💡 美股整体偏强（平均{us_avg:+.2f}%），对今日A股情绪有一定提振作用。")
+        elif us_avg < -1:
+            lines.append(f"\n💡 美股整体偏弱（平均{us_avg:+.2f}%），可能对今日A股开盘造成一定压力。")
+        else:
+            lines.append(f"\n💡 美股整体平稳（平均{us_avg:+.2f}%），对A股直接影响有限。")
+
+    # === 板块分析 ===
+    lines.append(f"\n【板块资金动向】")
+    high_turnover = [s for s in all_stocks if s.get('turnover_rate', 0) > 10]
+    if high_turnover:
+        lines.append(f"高换手率（>10%）个股{len(high_turnover)}只，市场活跃度{'较高' if len(high_turnover) > 100 else '一般'}。")
+
+    # 涨停分析
     if zt:
-        top_zt = zt[:3]
-        zt_strs = [f"{s['name']}({s['change_pct']:.1f}%)" for s in top_zt]
-        lines.append(f"涨停股代表：{', '.join(zt_strs)}。")
-    if dt:
-        top_dt = dt[:3]
-        dt_strs = [f"{s['name']}({s['change_pct']:.1f}%)" for s in top_dt]
-        lines.append(f"跌停股代表：{', '.join(dt_strs)}。")
+        zt_strong = [s for s in zt if s.get('score', 0) >= 60]
+        lines.append(f"涨停{len(zt)}只中{'，' if zt_strong else ''}评分60+的有{len(zt_strong)}只，{'涨停质量较高' if len(zt_strong) > len(zt)*0.5 else '涨停质量一般'}。")
 
-    lines.append(f"市场总成交额约{total_amount/10000:.0f}亿元，高换手率（>10%）股票{len(high_turnover)}只。")
-    lines.append(f"综合评分{rec['avg_score']}分，技术面{'偏强' if rec['avg_score'] > 55 else '偏弱' if rec['avg_score'] < 45 else '中性'}。")
-
-    # 涨停板块分析
-    if industries.get('强势'):
-        strong_names = [s['name'] for s in industries['强势'][:5]]
-        lines.append(f"今日强势股代表：{'、'.join(strong_names)}。")
+    # === 综合结论 ===
+    lines.append(f"\n【综合结论】市场情绪{rec['market_sentiment']}，综合评分{rec['avg_score']}分。")
+    if rec['avg_score'] > 55:
+        lines.append("技术面偏强，短线可适度积极，关注强势板块龙头。")
+    elif rec['avg_score'] < 45:
+        lines.append("技术面偏弱，注意控制风险，以防守为主，等待企稳信号。")
+    else:
+        lines.append("技术面中性，市场分化明显，建议精选个股，控制仓位。")
 
     return '\n'.join(lines)
 
 
 def gen_next_day_advice(all_stocks, scored, rec):
-    """生成明日操作建议"""
+    """生成明日操作建议（包含具体股票操作计划）"""
     lines = []
     sentiment = rec['market_sentiment']
 
+    # 总体策略
     if sentiment == '偏多':
-        lines.append("【明日展望】市场情绪偏暖，可适度积极。")
-        lines.append("1. 强烈买入标的可在开盘低吸，关注竞价量能")
-        lines.append("2. 买入标的可在回调至支撑位附近分批建仓")
-        lines.append("3. 控制仓位在6-7成，留有加仓空间")
+        lines.append("【明日总体策略】市场情绪偏暖，可适度积极。")
+        lines.append("控制仓位在6-7成，留有加仓空间。")
     elif sentiment == '偏空':
-        lines.append("【明日展望】市场情绪偏冷，以防守为主。")
-        lines.append("1. 优先考虑减仓或观望，避免追高")
-        lines.append("2. 若持仓亏损超5%，建议设好止损严格执行")
-        lines.append("3. 保持低仓位（3-4成），等待企稳信号")
+        lines.append("【明日总体策略】市场情绪偏冷，以防守为主。")
+        lines.append("保持低仓位（3-4成），优先考虑减仓或观望。")
     else:
-        lines.append("【明日展望】市场震荡分化，精选个股为主。")
-        lines.append("1. 关注评分65分以上且处于上升趋势的个股")
-        lines.append("2. 避免追涨杀跌，逢低吸纳优质标的")
-        lines.append("3. 仓位控制在5成左右，灵活应对")
+        lines.append("【明日总体策略】市场震荡分化，精选个股为主。")
+        lines.append("仓位控制在5成左右，灵活应对。")
 
-    if rec.get('strong_buy'):
-        lines.append(f"\n【重点关注】{', '.join(s['name'] + '(' + str(s['score']) + '分)' for s in rec['strong_buy'][:3])}")
+    # 具体股票操作建议
+    strong_buy = rec.get('strong_buy', [])
+    buy_list = rec.get('buy', [])
+
+    if strong_buy:
+        lines.append(f"\n{'='*40}")
+        lines.append(f"【重点推荐操作计划】")
+        lines.append(f"{'='*40}")
+
+        for i, s in enumerate(strong_buy[:3], 1):
+            est = s.get('next_day_estimate', {})
+            est_val = est.get('estimate', 0) if est else 0
+            est_sign = '+' if est_val >= 0 else ''
+            
+            lines.append(f"\n📌 {i}. {s['name']}（{s['code']}）评分{s['score']}分 | 明日预估{est_sign}{est_val:.1f}%")
+            lines.append(f"   现价：{s['price']:.2f}元  今日涨幅：{s['change_pct']:+.2f}%")
+            lines.append(f"   建议买入区间：{s.get('buy_point', '-'):.2f} 元")
+            lines.append(f"   止损位：{s.get('stop_loss', '-'):.2f} 元")
+            lines.append(f"   目标价位：{s.get('target_price', '-'):.2f} 元")
+            lines.append(f"   买入时间：{s.get('buy_time', '-')}")
+            if s.get('signals'):
+                buy_sig = [sig for sig in s.get('signals',[]) if any(k in sig for k in ['金叉','超卖','放量上涨','多头','突破','低位','红柱'])]
+                if buy_sig:
+                    lines.append(f"   关键信号：{'、'.join(buy_sig)}")
+            lines.append(f"   👉 操作计划：")
+            if est_val >= 2:
+                lines.append(f"      开盘观察竞价量能，若高开1-2%且量能放大，可在{s.get('buy_point', '支撑位')}附近介入。")
+                lines.append(f"      目标{s.get('target_price', '-')}元（约{((s.get('target_price',0) - s['price']) / s['price'] * 100):.1f}%空间），止损{s.get('stop_loss', '-')}元。")
+            elif est_val >= 0:
+                lines.append(f"      建议低吸为主，若回调至{s.get('buy_point', '支撑位')}附近企稳可分批建仓。")
+                lines.append(f"      目标{s.get('target_price', '-')}元，止损{s.get('stop_loss', '-')}元。")
+            else:
+                lines.append(f"      明日预估偏弱，建议观望为主。若大幅低开至{s.get('buy_point', '支撑位')}以下可考虑轻仓博反弹。")
+
+    if buy_list:
+        lines.append(f"\n{'='*40}")
+        lines.append(f"【备选买入标的】")
+        lines.append(f"{'='*40}")
+        for s in buy_list[:3]:
+            est = s.get('next_day_estimate', {})
+            est_val = est.get('estimate', 0) if est else 0
+            est_sign = '+' if est_val >= 0 else ''
+            lines.append(f"   • {s['name']}（{s['code']}）{s['score']}分 | 预估{est_sign}{est_val:.1f}% | 买入{s.get('buy_point','-')}元 | 目标{s.get('target_price','-')}元 | 止损{s.get('stop_loss','-')}元")
+
+    # 策略提醒
     if rec.get('strategies'):
         for st in rec['strategies'][:2]:
-            lines.append(f"\n【{st['name']}】{st['desc']}")
+            lines.append(f"\n【{st['name']}策略】{st['desc']}")
 
     return '\n'.join(lines)
 
 
-def generate_recommendations(all_stocks):
+def generate_recommendations_with_macro(all_stocks, macro_indices):
     scored = [s for s in all_stocks if s.get('score') is not None]
     scored.sort(key=lambda x: x['score'], reverse=True)
 
@@ -865,9 +1017,10 @@ def generate_recommendations(all_stocks):
         'watch': watch,
         'avoid': avoid,
         'strategies': strategies,
+        'macro_indices': {code: {k:v for k,v in info.items() if k != 'amount'} for code, info in macro_indices.items()},
     }
     # 再基于 result 生成分析和建议（避免递归引用）
-    result['market_analysis'] = gen_market_analysis(all_stocks, scored, result)
+    result['market_analysis'] = gen_market_analysis(all_stocks, scored, result, macro_indices)
     result['next_day_advice'] = gen_next_day_advice(all_stocks, scored, result)
     return result
 
@@ -931,13 +1084,14 @@ def save_snapshot(all_stocks, recommendations):
     hist_data = {
         'update_time': ts,
         'recommendations': {
-            'strong_buy': [{'code': s['code'], 'name': s['name'], 'score': s['score'], 'price': s['price'], 'prev_close': s['prev_close']} for s in recommendations['strong_buy']],
-            'buy': [{'code': s['code'], 'name': s['name'], 'score': s['score'], 'price': s['price'], 'prev_close': s['prev_close']} for s in recommendations['buy']],
-            'avoid': [{'code': s['code'], 'name': s['name'], 'score': s['score'], 'price': s['price'], 'prev_close': s['prev_close']} for s in recommendations['avoid']],
+            'strong_buy': [{'code': s['code'], 'name': s['name'], 'score': s['score'], 'price': s['price'], 'prev_close': s['prev_close'], 'change_pct': s.get('change_pct',0)} for s in recommendations['strong_buy']],
+            'buy': [{'code': s['code'], 'name': s['name'], 'score': s['score'], 'price': s['price'], 'prev_close': s['prev_close'], 'change_pct': s.get('change_pct',0)} for s in recommendations['buy']],
+            'avoid': [{'code': s['code'], 'name': s['name'], 'score': s['score'], 'price': s['price'], 'prev_close': s['prev_close'], 'change_pct': s.get('change_pct',0)} for s in recommendations['avoid']],
         },
-        'scores': {s['code']: {'score': s['score'], 'price': s['price'], 'name': s['name']} for s in all_stocks[:500]},
+        'scores': {s['code']: {'score': s['score'], 'price': s['price'], 'name': s['name'], 'change_pct': s.get('change_pct',0)} for s in all_stocks[:500]},
         'market_sentiment': recommendations['market_sentiment'],
         'avg_score': recommendations['avg_score'],
+        'strategies': recommendations.get('strategies', []),
     }
     with open(os.path.join(HISTORY_DIR, f'{date_str}_{time_str}.json'), 'w', encoding='utf-8') as f:
         json.dump(hist_data, f, ensure_ascii=False)
@@ -952,6 +1106,9 @@ def main():
     print("=" * 60)
     print(f"  A股全市场智能分析  |  {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 60)
+
+    # 0. 获取宏观指数
+    macro_indices = get_macro_indices()
 
     # 1. 获取实时数据
     stocks = get_stock_list_with_quotes()
@@ -976,7 +1133,7 @@ def main():
             s.update(deep_results[s['code']])
 
     # 4. 生成推荐
-    recommendations = generate_recommendations(stocks)
+    recommendations = generate_recommendations_with_macro(stocks, macro_indices)
     print(f"\n  📊 市场情绪: {recommendations['market_sentiment']} (平均分 {recommendations['avg_score']})")
     if recommendations['strong_buy']:
         top = recommendations['strong_buy'][:3]
