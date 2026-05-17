@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>A股智能分析系统</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app">
+  <!-- 首页 -->
+  <div id="page-home" class="page active">
+    <header class="header">
+      <h1>🇨🇳 A股智能分析</h1>
+      <div class="header-meta">
+        <span id="update-time">加载中...</span>
+        <span id="market-sentiment" class="sentiment"></span>
+      </div>
+    </header>
+
+    <!-- 持仓操作建议 -->
+    <section class="section" id="portfolio-section" style="display:none">
+      <div class="section-head">
+        <h2>💼 我的持仓操作建议</h2>
+        <button class="btn-tiny" onclick="Portfolio.clear()">清空</button>
+      </div>
+      <div id="portfolio-list"></div>
+    </section>
+
+    <!-- 今日操作建议 -->
+    <section class="section">
+      <h2>🔥 今日操作建议</h2>
+      <div id="recommendations"></div>
+    </section>
+
+    <!-- 可行性策略 -->
+    <section class="section" id="strategy-section" style="display:none">
+      <h2>📐 可行性策略分析</h2>
+      <div id="strategies"></div>
+    </section>
+
+    <!-- 搜索 -->
+    <section class="section">
+      <h2>🔍 个股分析查询</h2>
+      <div class="search-box">
+        <input id="search-input" type="text" placeholder="输入股票名称或代码，如：平安银行 或 000001" onkeydown="if(event.key==='Enter')App.search()">
+        <button class="btn-search" onclick="App.search()">分析</button>
+      </div>
+      <div id="search-result"></div>
+    </section>
+
+    <!-- 全市场列表 -->
+    <section class="section">
+      <div class="section-head">
+        <h2>📋 全市场分析 <span id="stock-count" class="badge"></span></h2>
+        <div class="filter-bar">
+          <select id="filter-rec" onchange="App.filter()">
+            <option value="all">全部</option>
+            <option value="强烈买入">🔥 强烈买入</option>
+            <option value="买入">📈 买入</option>
+            <option value="关注">👀 关注</option>
+            <option value="卖出">📉 卖出</option>
+            <option value="强烈卖出">⚠️ 强烈卖出</option>
+          </select>
+          <select id="filter-sort" onchange="App.filter()">
+            <option value="score_desc">评分 ↓</option>
+            <option value="score_asc">评分 ↑</option>
+            <option value="change_desc">涨幅 ↓</option>
+            <option value="change_asc">跌幅 ↓</option>
+            <option value="turnover_desc">换手率 ↓</option>
+          </select>
+        </div>
+      </div>
+      <div id="stock-list"></div>
+      <div id="load-more-area">
+        <button id="btn-load-more" class="btn-load-more" onclick="App.loadMore()">加载更多</button>
+      </div>
+    </section>
+
+    <!-- 添加到持仓弹窗 -->
+    <div id="add-modal" class="modal hidden">
+      <div class="modal-content">
+        <h3>添加到持仓</h3>
+        <div class="modal-row">
+          <label>买入价格</label>
+          <input id="modal-price" type="number" step="0.01" placeholder="0.00">
+        </div>
+        <div class="modal-row">
+          <label>买入数量（股）</label>
+          <input id="modal-qty" type="number" step="100" value="100">
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-secondary" onclick="App.closeModal()">取消</button>
+          <button class="btn btn-primary" onclick="App.confirmAdd()">确认</button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <p>数据来源：东方财富 · 每日4次自动更新 · 仅供参考，不构成投资建议</p>
+    </footer>
+  </div>
+
+  <!-- 个股详情页 -->
+  <div id="page-detail" class="page">
+    <header class="header">
+      <button class="btn-back" onclick="App.back()">← 返回</button>
+      <h2 id="detail-title">个股分析</h2>
+    </header>
+    <div id="detail-content"></div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast hidden"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
