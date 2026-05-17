@@ -852,6 +852,7 @@ const App = {
     document.getElementById('page-' + id).classList.add('active');
     window.scrollTo(0, 0);
     if (id === 'history') this.renderHistory();
+    if (id === 'trading') this.renderTrading();
   },
 
   back() { this.showPage('home'); },
@@ -910,6 +911,238 @@ const Portfolio = {
   },
   remove(idx) { const list = this.get(); list.splice(idx, 1); this.save(list); },
   clear() { localStorage.removeItem(this.KEY); App.renderPortfolio(); App.showToast('已清空'); }
+};
+
+// ========== 虚拟交易页面 ==========
+App.renderTrading = function() {
+  const r = App.recData;
+  const trading = r?.trading;
+  if (!trading) {
+    document.getElementById('trading-overview').innerHTML = '<div class="empty">等待首次交易分析...</div><div class="empty">系统将在下次分析时自动执行交易决策</div>';
+    return;
+  }
+  this.renderTradingOverview(trading);
+  this.renderTradingReport(trading);
+};
+
+App.showTradingTab = function(tab) {
+  document.querySelectorAll('.trading-page').forEach(p => p.style.display = 'none');
+  document.getElementById('trading-' + tab).style.display = '';
+  document.querySelectorAll('.htab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  if (tab === 'records') this.renderTradingRecords();
+  if (tab === 'report') this.renderTradingReportFull();
+};
+
+App.renderTradingOverview = function(trading) {
+  const p = trading.portfolio;
+  const stats = trading.stats || {};
+  const totalReturn = p.total_return || 0;
+  const retSign = totalReturn >= 0 ? '+' : '';
+  const retCls = totalReturn >= 0 ? 'text-rise' : 'text-fall';
+  const retEmoji = totalReturn >= 0 ? '🚀' : '📉';
+
+  // 账户概览
+  let html = `<div class="trading-overview">
+    <div class="trading-account-card">
+      <div class="trading-account-header">
+        <span class="trading-account-label">虚拟账户</span>
+        <span class="trading-account-emoji">${retEmoji}</span>
+      </div>
+      <div class="trading-account-value">${(p.total_assets || 0).toLocaleString('zh-CN', {minimumFractionDigits:2, maximumFractionDigits:2})} 元</div>
+      <div class="trading-account-return ${retCls}">${retSign}${totalReturn.toFixed(2)}%</div>
+      <div class="trading-account-stats">
+        <div class="ta-stat"><div class="ta-stat-val">${(p.cash || 0).toLocaleString('zh-CN', {minimumFractionDigits:0, maximumFractionDigits:0})}</div><div class="ta-stat-label">可用资金</div></div>
+        <div class="ta-stat"><div class="ta-stat-val">${(p.position_value || 0).toLocaleString('zh-CN', {minimumFractionDigits:0, maximumFractionDigits:0})}</div><div class="ta-stat-label">持仓市值</div></div>
+        <div class="ta-stat"><div class="ta-stat-val">${(p.position_ratio || 0).toFixed(1)}%</div><div class="ta-stat-label">仓位比例</div></div>
+        <div class="ta-stat"><div class="ta-stat-val ${stats.total_pnl >= 0 ? 'text-rise' : 'text-fall'}">${stats.total_pnl >= 0 ? '+' : ''}${(stats.total_pnl || 0).toLocaleString('zh-CN', {minimumFractionDigits:0, maximumFractionDigits:0})}</div><div class="ta-stat-label">累计盈亏</div></div>
+      </div>
+    </div>
+
+    <!-- 交易统计 -->
+    <div class="trading-stats-bar">
+      <div class="ts-item"><span class="ts-val">${stats.total_trades || 0}</span><span class="ts-label">总交易</span></div>
+      <div class="ts-item"><span class="ts-val">${stats.total_trades ? (stats.win_trades / stats.total_trades * 100).toFixed(0) : 0}%</span><span class="ts-label">胜率</span></div>
+      <div class="ts-item"><span class="ts-val">${stats.max_drawdown || 0}%</span><span class="ts-label">最大回撤</span></div>
+    </div>`;
+
+  // 当前持仓
+  const holdings = p.holdings || {};
+  const hKeys = Object.keys(holdings);
+  if (hKeys.length) {
+    html += `<div class="trading-section-title">📈 当前持仓（${hKeys.length}只）</div>`;
+    hKeys.forEach(code => {
+      const h = holdings[code];
+      const cur = h.current_price || h.avg_cost;
+      const pnl = (cur - h.avg_cost) * h.qty;
+      const pnlPct = (cur - h.avg_cost) / h.avg_cost * 100;
+      const pnlSign = pnl >= 0 ? '+' : '';
+      const pnlCls = pnl >= 0 ? 'text-rise' : 'text-fall';
+      const emoji = pnl >= 0 ? '🟢' : '🔴';
+
+      html += `<div class="trading-holding-card" onclick="App.openStock('${code}')">
+        <div class="th-left">
+          <div class="th-name">${this.esc(h.name)}<span class="th-code">${code}</span></div>
+          <div class="th-detail">${h.qty}股 · 成本${h.avg_cost.toFixed(2)} · 现价${cur.toFixed(2)}</div>
+        </div>
+        <div class="th-right ${pnlCls}">
+          <div class="th-pnl">${emoji} ${pnlSign}${pnl.toLocaleString('zh-CN', {minimumFractionDigits:0, maximumFractionDigits:0})}元</div>
+          <div class="th-pct">${pnlSign}${pnlPct.toFixed(2)}%</div>
+        </div>
+      </div>`;
+    });
+  } else {
+    html += `<div class="trading-empty">空仓观望中</div>`;
+  }
+
+  // 最新日报摘要
+  const report = trading.latest_report;
+  if (report) {
+    html += `<div class="trading-section-title">📝 最近操作</div>`;
+    if (report.buys?.length) {
+      report.buys.forEach(b => {
+        html += `<div class="trading-action buy">
+          <span class="ta-type">✅ 买入</span>
+          <span class="ta-name">${this.esc(b.name)}（${b.code}）</span>
+          <span class="ta-info">${b.qty}股 × ${b.price.toFixed(2)}元 = ${(b.amount||0).toLocaleString('zh-CN', {maximumFractionDigits:0})}元</span>
+          <span class="ta-reason">${this.esc(b.reason)}</span>
+        </div>`;
+      });
+    }
+    if (report.sells?.length) {
+      report.sells.forEach(s => {
+        const sp = s.pnl >= 0 ? '+' : '';
+        const sc = s.pnl >= 0 ? 'text-rise' : 'text-fall';
+        html += `<div class="trading-action sell">
+          <span class="ta-type">❌ 卖出</span>
+          <span class="ta-name">${this.esc(s.name)}（${s.code}）</span>
+          <span class="ta-info">${s.qty}股 × ${s.price.toFixed(2)}元 · <span class="${sc}">${sp}${(s.pnl||0).toFixed(0)}元(${sp}${(s.pnl_pct||0).toFixed(1)}%)</span></span>
+          <span class="ta-reason">${this.esc(s.reason)}</span>
+        </div>`;
+      });
+    }
+    if (!report.buys?.length && !report.sells?.length) {
+      html += `<div class="trading-action">📌 今日无操作（持仓观望）</div>`;
+    }
+  }
+
+  html += '</div>';
+  document.getElementById('trading-overview').innerHTML = html;
+};
+
+App.renderTradingReport = function(trading) {
+  // 简报显示在overview中，完整日报在report tab
+  document.getElementById('trading-report').innerHTML = '<div class="empty">点击"日报"标签查看完整汇报</div>';
+};
+
+App.renderTradingReportFull = function() {
+  const el = document.getElementById('trading-report');
+  const trading = App.recData?.trading;
+  if (!trading) { el.innerHTML = '<div class="empty">暂无数据</div>'; return; }
+
+  // 从 trade_log.json 加载完整日报
+  fetch('data/portfolio.json').then(r => r.json()).then(data => {
+    const reports = data.daily_reports || [];
+    if (!reports.length) { el.innerHTML = '<div class="empty">暂无日报</div>'; return; }
+
+    let html = '';
+    reports.slice().reverse().forEach(report => {
+      const retSign = (report.total_return || 0) >= 0 ? '+' : '';
+      const retCls = (report.total_return || 0) >= 0 ? 'text-rise' : 'text-fall';
+      const pnlSign = (report.today_pnl || 0) >= 0 ? '+' : '';
+      const pnlCls = (report.today_pnl || 0) >= 0 ? 'text-rise' : 'text-fall';
+
+      html += `<div class="report-card">
+        <div class="report-header">
+          <span class="report-date">${report.date}</span>
+          <span class="report-sentiment">${report.market_sentiment}（${report.market_score}分）</span>
+        </div>
+        <div class="report-nums">
+          <div class="rn"><div class="rn-val">${(report.total_assets||0).toLocaleString('zh-CN', {maximumFractionDigits:0})}</div><div class="rn-label">总资产</div></div>
+          <div class="rn"><div class="rn-val ${retCls}">${retSign}${(report.total_return||0).toFixed(2)}%</div><div class="rn-label">总收益</div></div>
+          <div class="rn"><div class="rn-val ${pnlCls}">${pnlSign}${(report.today_pnl||0).toFixed(0)}元</div><div class="rn-label">今日盈亏</div></div>
+          <div class="rn"><div class="rn-val">${(report.position_ratio||0).toFixed(0)}%</div><div class="rn-label">仓位</div></div>
+        </div>`;
+
+      if (report.buys?.length) {
+        html += `<div class="report-section"><div class="rs-title">✅ 买入</div>`;
+        report.buys.forEach(b => {
+          html += `<div class="rs-item"><strong>${this.esc(b.name)}</strong> ${b.qty}股 × ${b.price.toFixed(2)}元 = ${(b.amount||0).toLocaleString('zh-CN', {maximumFractionDigits:0})}元<br><span class="rs-reason">${this.esc(b.reason)}</span></div>`;
+        });
+        html += '</div>';
+      }
+      if (report.sells?.length) {
+        html += `<div class="report-section"><div class="rs-title">❌ 卖出</div>`;
+        report.sells.forEach(s => {
+          const sp = (s.pnl||0) >= 0 ? '+' : '';
+          const sc = (s.pnl||0) >= 0 ? 'text-rise' : 'text-fall';
+          html += `<div class="rs-item"><strong>${this.esc(s.name)}</strong> ${s.qty}股 × ${s.price.toFixed(2)}元 · <span class="${sc}">${sp}${(s.pnl||0).toFixed(0)}元(${sp}${(s.pnl_pct||0).toFixed(1)}%)</span><br><span class="rs-reason">${this.esc(s.reason)}</span></div>`;
+        });
+        html += '</div>';
+      }
+      if (report.holdings?.length) {
+        html += `<div class="report-section"><div class="rs-title">📈 持仓明细</div><div class="rs-grid">`;
+        report.holdings.forEach(h => {
+          const hc = (h.pnl||0) >= 0 ? 'text-rise' : 'text-fall';
+          const hs = (h.pnl||0) >= 0 ? '+' : '';
+          html += `<div class="rsg-item"><span class="rsg-name">${this.esc(h.name)}</span><span class="rsg-info">${h.qty}股</span><span class="rsg-pnl ${hc}">${hs}${(h.pnl||0).toFixed(0)}元(${hs}${(h.pnl_pct||0).toFixed(1)}%)</span></div>`;
+        });
+        html += '</div></div>';
+      }
+      if (report.plans?.length) {
+        html += `<div class="report-section"><div class="rs-title">📋 后续计划</div>`;
+        report.plans.forEach(p => { html += `<div class="rs-plan">• ${this.esc(p)}</div>`; });
+        html += '</div>';
+      }
+      html += '</div>';
+    });
+
+    el.innerHTML = html;
+  }).catch(() => {
+    el.innerHTML = '<div class="empty">加载失败</div>';
+  });
+};
+
+App.renderTradingRecords = function() {
+  const el = document.getElementById('trading-records');
+  fetch('data/trade_log.json').then(r => r.json()).then(data => {
+    const trades = data.trades || [];
+    if (!trades.length) { el.innerHTML = '<div class="empty">暂无交易记录</div>'; return; }
+
+    // 验证完整性
+    const verified = data.verified !== false;
+
+    let html = `<div class="records-header">
+      <span>共 ${trades.length} 笔交易</span>
+      <span class="records-verify">${verified ? '🔒 记录完整（hash链验证通过）' : '⚠️ 记录异常'}</span>
+    </div>`;
+
+    trades.slice().reverse().forEach(t => {
+      const isBuy = t.type.includes('buy');
+      const pnlSign = (t.pnl || 0) >= 0 ? '+' : '';
+      const pnlCls = (t.pnl || 0) >= 0 ? 'text-rise' : 'text-fall';
+
+      html += `<div class="record-item ${isBuy ? 'buy' : 'sell'}">
+        <div class="ri-left">
+          <span class="ri-type">${isBuy ? '✅ 买入' : '❌ 卖出'}</span>
+          <span class="ri-hash" title="${t.hash}" onclick="event.stopPropagation();navigator.clipboard?.writeText('${t.hash}')">${t.hash.substring(0, 8)}…</span>
+        </div>
+        <div class="ri-main">
+          <div class="ri-name">${this.esc(t.name)}（${t.code}）</div>
+          <div class="ri-detail">${t.qty}股 × ${t.price.toFixed(2)}元 = ${(t.amount||0).toLocaleString('zh-CN', {maximumFractionDigits:0})}元 · 手续费${(t.commission||0).toFixed(1)}元${t.pnl != null ? ` · <span class="${pnlCls}">盈亏${pnlSign}${(t.pnl||0).toFixed(0)}元(${pnlSign}${(t.pnl_pct||0).toFixed(1)}%)</span>` : ''}</div>
+          <div class="ri-reason">原因：${this.esc(t.reason)}</div>
+        </div>
+        <div class="ri-right">
+          <div class="ri-time">${t.timestamp}</div>
+          <div class="ri-snapshot">资产：${(t.portfolio_snapshot?.total_assets || 0).toLocaleString('zh-CN', {maximumFractionDigits:0})}元</div>
+        </div>
+      </div>`;
+    });
+
+    el.innerHTML = html;
+  }).catch(() => {
+    el.innerHTML = '<div class="empty">加载失败</div>';
+  });
 };
 
 document.addEventListener('DOMContentLoaded', () => App.init());

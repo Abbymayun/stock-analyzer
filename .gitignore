@@ -2,6 +2,9 @@
 data/all_stocks.json
 data/stock_list.json
 data/history/
+data/portfolio.json
+data/trade_log.json
+data/recommendations.json
 
 # 临时文件
 *.pyc

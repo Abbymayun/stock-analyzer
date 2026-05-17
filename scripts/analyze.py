@@ -1144,6 +1144,82 @@ def main():
     cleanup_history()
     print("\n  ✅ 分析完成！")
 
+    # 6. 虚拟交易
+    print("\n  💰 执行虚拟交易决策...")
+    from trader import (
+        load_portfolio, make_trading_decision, execute_trades,
+        generate_daily_report, format_report_text, calc_total_assets
+    )
+    portfolio = load_portfolio()
+    decisions = make_trading_decision(portfolio, recommendations, stocks, macro_indices)
+    
+    if decisions:
+        print(f"  📋 交易决策：{len(decisions)}笔")
+        for d in decisions:
+            if d['action'] == 'buy':
+                print(f"     ✅ 买入 {d['name']}（{d['code']}）{d['qty']}股 × {d['price']:.2f}元 — {d['reason']}")
+            else:
+                print(f"     ❌ 卖出 {d['name']}（{d['code']}）{d['qty']}股 × {d['price']:.2f}元 — {d['reason']}")
+        
+        trades = execute_trades(portfolio, decisions, stocks)
+        report = generate_daily_report(portfolio, trades, recommendations, stocks, macro_indices)
+        
+        # 打印日报
+        print("\n" + format_report_text(report))
+        
+        # 保存交易相关数据到推荐文件（供前端展示）
+        total_assets = calc_total_assets(portfolio)
+        with open(os.path.join(DATA_DIR, 'recommendations.json'), 'r') as f:
+            rec_data = json.load(f)
+        rec_data['trading'] = {
+            'portfolio': {
+                'cash': portfolio['cash'],
+                'total_assets': total_assets,
+                'total_return': (total_assets - portfolio['initial_capital']) / portfolio['initial_capital'] * 100,
+                'position_value': total_assets - portfolio['cash'],
+                'position_ratio': (total_assets - portfolio['cash']) / total_assets * 100 if total_assets > 0 else 0,
+                'holdings': portfolio['holdings'],
+            },
+            'latest_report': report,
+            'stats': portfolio['trading_stats'],
+        }
+        with open(os.path.join(DATA_DIR, 'recommendations.json'), 'w') as f:
+            json.dump(rec_data, f, ensure_ascii=False, indent=2)
+        
+        print(f"\n  💰 账户总资产：{total_assets:,.2f} 元")
+    else:
+        print("  📋 今日无交易决策（观望或持仓不动）")
+        # 仍然更新持仓价格和日报
+        for code, h in portfolio.get('holdings', {}).items():
+            for s in stocks:
+                if s['code'] == code:
+                    h['current_price'] = s['price']
+                    break
+        from trader import save_portfolio as sp
+        sp(portfolio)
+        
+        report = generate_daily_report(portfolio, [], recommendations, stocks, macro_indices)
+        
+        total_assets = calc_total_assets(portfolio)
+        with open(os.path.join(DATA_DIR, 'recommendations.json'), 'r') as f:
+            rec_data = json.load(f)
+        rec_data['trading'] = {
+            'portfolio': {
+                'cash': portfolio['cash'],
+                'total_assets': total_assets,
+                'total_return': (total_assets - portfolio['initial_capital']) / portfolio['initial_capital'] * 100,
+                'position_value': total_assets - portfolio['cash'],
+                'position_ratio': (total_assets - portfolio['cash']) / total_assets * 100 if total_assets > 0 else 0,
+                'holdings': portfolio['holdings'],
+            },
+            'latest_report': report,
+            'stats': portfolio['trading_stats'],
+        }
+        with open(os.path.join(DATA_DIR, 'recommendations.json'), 'w') as f:
+            json.dump(rec_data, f, ensure_ascii=False, indent=2)
+        
+        print(f"\n  💰 账户总资产：{total_assets:,.2f} 元（持仓观望）")
+
 
 if __name__ == '__main__':
     try:

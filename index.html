@@ -16,6 +16,7 @@
       <div class="header-meta">
         <span id="update-time">加载中...</span>
         <span id="market-sentiment" class="sentiment"></span>
+        <a class="trading-entry" onclick="App.showPage('trading')">💰 虚拟交易</a>
       </div>
     </header>
 
@@ -178,6 +179,22 @@
     <div class="history-page" id="history-content">
       <div class="empty">加载中...</div>
     </div>
+  </div>
+
+  <!-- ========== 虚拟交易页 ========== -->
+  <div id="page-trading" class="page">
+    <header class="header">
+      <button class="btn-back" onclick="App.showPage('home')">← 返回</button>
+      <h2>💰 虚拟炒股</h2>
+      <div class="header-tabs">
+        <span class="htab active" onclick="App.showTradingTab('overview')">账户</span>
+        <span class="htab" onclick="App.showTradingTab('report')">日报</span>
+        <span class="htab" onclick="App.showTradingTab('records')">交易记录</span>
+      </div>
+    </header>
+    <div id="trading-overview" class="trading-page"></div>
+    <div id="trading-report" class="trading-page" style="display:none"></div>
+    <div id="trading-records" class="trading-page" style="display:none"></div>
   </div>
 
   <!-- ========== 个股详情页 ========== -->
