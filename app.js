@@ -485,8 +485,8 @@ const App = {
               let correct = 0, wrong = 0, totalPnl = 0;
               strongBuy.forEach(s => {
                 const later = nextScores[s.code];
-                if (later && later.price) {
-                  const ydPrice = s.price;
+                const ydPrice = s.price;
+                if (later && later.price && ydPrice && ydPrice > 0) {
                   const chg = (later.price - ydPrice) / ydPrice * 100;
                   if (chg > 0) correct++; else wrong++;
                   totalPnl += chg;
@@ -508,7 +508,7 @@ const App = {
             let correct = 0, wrong = 0, totalPnl = 0;
             strongBuy.forEach(s => {
               const later = latestScores[s.code];
-              if (later && later.price) {
+              if (later && later.price && s.price && s.price > 0) {
                 const chg = (later.price - s.price) / s.price * 100;
                 if (chg > 0) correct++; else wrong++;
                 totalPnl += chg;
@@ -532,10 +532,12 @@ const App = {
               <span class="history-rec-label rise">强烈买入 ${strongBuy.length}只</span>
               <div class="history-stocks">${strongBuy.map(s => {
                 const curChg = s.change_pct;
+                const hasCurChg = curChg != null && isFinite(curChg);
                 const estChg = this._findEst(s.code, h.scores);
                 const actChg = this._findActual(s.code, si < daySnapshots.length - 1 ? daySnapshots[si+1].scores : latestScores, s.price);
-                return `<span class="history-stock-tag ${curChg >= 0 ? 'rise' : 'fall'}" style="cursor:pointer" onclick="App.showPage('home');App.openStock('${s.code}')">
-                  ${this.esc(s.name)}${curChg >= 0 ? '+' : ''}${curChg.toFixed(1)}%${estChg !== null ? ' / 明日预估'+(estChg >= 0 ? '+' : '')+estChg.toFixed(1)+'%' : ''}${actChg !== null ? ' / 实际'+(actChg >= 0 ? '+' : '')+actChg.toFixed(1)+'%' : ''}
+                const cls = hasCurChg && curChg >= 0 ? 'rise' : hasCurChg ? 'fall' : '';
+                return `<span class="history-stock-tag ${cls}" style="cursor:pointer" onclick="App.showPage('home');App.openStock('${s.code}')">
+                  ${this.esc(s.name)}${hasCurChg ? (curChg >= 0 ? '+' : '') + curChg.toFixed(1) + '%' : ''}${estChg !== null ? ' / 明日预估'+(estChg >= 0 ? '+' : '')+estChg.toFixed(1)+'%' : ''}${actChg !== null ? ' / 实际'+(actChg >= 0 ? '+' : '')+actChg.toFixed(1)+'%' : ''}
                 </span>`;
               }).join('')}</div>
             </div>`;
@@ -547,9 +549,10 @@ const App = {
               <span class="history-rec-label buy">建议买入 ${buy.length}只</span>
               <div class="history-stocks">${buy.map(s => {
                 const curChg = s.change_pct;
+                const hasCurChg = curChg != null && isFinite(curChg);
                 const actChg = this._findActual(s.code, si < daySnapshots.length - 1 ? daySnapshots[si+1].scores : latestScores, s.price);
                 return `<span class="history-stock-tag" style="cursor:pointer" onclick="App.showPage('home');App.openStock('${s.code}')">
-                  ${this.esc(s.name)}${curChg >= 0 ? '+' : ''}${curChg.toFixed(1)}%${actChg !== null ? ' / 实际'+(actChg >= 0 ? '+' : '')+actChg.toFixed(1)+'%' : ''}
+                  ${this.esc(s.name)}${hasCurChg ? (curChg >= 0 ? '+' : '') + curChg.toFixed(1) + '%' : ''}${actChg !== null ? ' / 实际'+(actChg >= 0 ? '+' : '')+actChg.toFixed(1)+'%' : ''}
                 </span>`;
               }).join('')}</div>
             </div>`;
