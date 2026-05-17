@@ -22,29 +22,29 @@
     <div class="dashboard">
       <!-- ====== 左栏 ====== -->
       <div class="col-left">
-        <!-- 统计入口 -->
+        <!-- 统计入口（去掉建议回避） -->
         <div class="card" style="margin-bottom:16px">
           <div class="card-head">
             <h3>📊 今日推荐统计</h3>
             <a class="view-more" onclick="App.showPage('history')">查看全部更新 →</a>
           </div>
           <div class="card-body">
-            <div class="stat-grid">
+            <div class="stat-grid" style="grid-template-columns:1fr 1fr">
               <div class="stat-item strong" onclick="App.filterByRec('强烈买入')">
                 <div class="stat-num rise" id="stat-strong">-</div>
                 <div class="stat-label">🔥 强烈买入</div>
               </div>
               <div class="stat-item" onclick="App.filterByRec('买入')">
-                <div class="stat-num rise" id="stat-buy" style="font-size:26px">-</div>
+                <div class="stat-num" style="color:#f87171;font-size:26px" id="stat-buy">-</div>
                 <div class="stat-label">📈 建议买入</div>
               </div>
               <div class="stat-item" onclick="App.filterByRec('关注')">
-                <div class="stat-num gold" id="stat-watch" style="font-size:26px">-</div>
+                <div class="stat-num gold" style="font-size:26px" id="stat-watch">-</div>
                 <div class="stat-label">👀 值得关注</div>
               </div>
-              <div class="stat-item" onclick="App.filterByRec('卖出')">
-                <div class="stat-num fall" id="stat-sell" style="font-size:26px">-</div>
-                <div class="stat-label">📉 建议回避</div>
+              <div class="stat-item" onclick="App.filterByRec('强烈卖出')">
+                <div class="stat-num fall" style="font-size:26px" id="stat-strong-sell">-</div>
+                <div class="stat-label">⚠️ 强烈卖出</div>
               </div>
             </div>
           </div>
@@ -52,32 +52,20 @@
 
         <!-- 强烈买入列表 -->
         <div class="card">
-          <div class="card-head">
-            <h3>🔥 强烈买入</h3>
-          </div>
-          <div class="card-body" id="strong-buy-list">
-            <div class="empty">加载中...</div>
-          </div>
+          <div class="card-head"><h3>🔥 强烈买入</h3></div>
+          <div class="card-body" id="strong-buy-list"><div class="empty">加载中...</div></div>
         </div>
 
         <!-- 建议买入 -->
         <div class="card" style="margin-top:16px">
-          <div class="card-head">
-            <h3>📈 建议买入</h3>
-          </div>
-          <div class="card-body" id="buy-list">
-            <div class="empty">加载中...</div>
-          </div>
+          <div class="card-head"><h3>📈 建议买入</h3></div>
+          <div class="card-body" id="buy-list"><div class="empty">加载中...</div></div>
         </div>
 
         <!-- 值得关注 -->
         <div class="card" style="margin-top:16px">
-          <div class="card-head">
-            <h3>👀 值得关注</h3>
-          </div>
-          <div class="card-body" id="watch-list">
-            <div class="empty">加载中...</div>
-          </div>
+          <div class="card-head"><h3>👀 值得关注</h3></div>
+          <div class="card-body" id="watch-list"><div class="empty">加载中...</div></div>
         </div>
       </div>
 
@@ -96,51 +84,48 @@
 
         <!-- 明日操作建议 -->
         <div class="card" id="next-day-card" style="margin-bottom:16px;display:none">
-          <div class="card-head">
-            <h3>📅 明日操作建议</h3>
-          </div>
-          <div class="card-body">
-            <div class="advice-box" id="next-day-advice"></div>
-          </div>
+          <div class="card-head"><h3>📅 明日操作建议</h3></div>
+          <div class="card-body"><div class="advice-box" id="next-day-advice"></div></div>
         </div>
 
         <!-- 可行性策略 -->
         <div class="card" id="strategy-card" style="margin-bottom:16px;display:none">
-          <div class="card-head">
-            <h3>📐 策略分析</h3>
-          </div>
+          <div class="card-head"><h3>📐 策略分析</h3></div>
           <div class="card-body" id="strategies"></div>
         </div>
 
-        <!-- 搜索 + 全市场列表 -->
+        <!-- 推荐股票列表（只显示推荐的） -->
         <div class="card">
           <div class="card-head">
-            <h2 style="font-size:15px;font-weight:600">📋 全市场分析 <span id="stock-count" class="badge"></span></h2>
+            <h3 style="font-size:14px;font-weight:600">📋 推荐股票明细 <span id="rec-count" class="badge"></span></h3>
             <div class="filter-bar">
-              <select id="filter-rec" onchange="App.filter()">
-                <option value="all">全部</option>
+              <select id="filter-rec" onchange="App.filterRecList()">
+                <option value="all">全部推荐</option>
                 <option value="强烈买入">🔥 强烈买入</option>
-                <option value="买入">📈 买入</option>
-                <option value="关注">👀 关注</option>
-                <option value="卖出">📉 卖出</option>
-                <option value="强烈卖出">⚠️ 强烈卖出</option>
+                <option value="买入">📈 建议买入</option>
+                <option value="关注">👀 值得关注</option>
               </select>
-              <select id="filter-sort" onchange="App.filter()">
+              <select id="filter-sort" onchange="App.filterRecList()">
                 <option value="score_desc">评分 ↓</option>
-                <option value="score_asc">评分 ↑</option>
-                <option value="change_desc">涨幅 ↓</option>
-                <option value="change_asc">跌幅 ↓</option>
-                <option value="turnover_desc">换手率 ↓</option>
+                <option value="estimate_desc">预估涨幅 ↓</option>
+                <option value="change_desc">今日涨幅 ↓</option>
               </select>
             </div>
           </div>
           <div class="card-body">
-            <div class="search-box">
-              <input id="search-input" type="text" placeholder="输入股票名称或代码，如：平安银行 或 000001" onkeydown="if(event.key==='Enter')App.search()">
-              <button class="btn-search" onclick="App.search()">分析</button>
+            <!-- 表头 -->
+            <div class="rec-table-head">
+              <span class="col-name">股票</span>
+              <span class="col-price">现价</span>
+              <span class="col-chg">涨幅</span>
+              <span class="col-buy-p">建议买入价</span>
+              <span class="col-buy-t">买入时间</span>
+              <span class="col-target">目标价</span>
+              <span class="col-stop">止损价</span>
+              <span class="col-est">明日预估</span>
+              <span class="col-score">评分</span>
             </div>
-            <div id="search-result"></div>
-            <div id="stock-list"></div>
+            <div id="rec-list"></div>
             <div id="load-more-area">
               <button id="btn-load-more" class="btn-load-more" onclick="App.loadMore()">加载更多</button>
             </div>
@@ -177,11 +162,8 @@
 
         <!-- 持仓操作建议 -->
         <div class="card" id="portfolio-advice-card" style="margin-top:16px;display:none">
-          <div class="card-head">
-            <h3>📝 持仓操作建议</h3>
-          </div>
-          <div class="card-body" id="portfolio-advice">
-          </div>
+          <div class="card-head"><h3>📝 持仓操作建议</h3></div>
+          <div class="card-body" id="portfolio-advice"></div>
         </div>
       </div>
     </div>
@@ -229,8 +211,7 @@
       <input id="modal-qty" type="number" step="100" value="100">
     </div>
     <div class="modal-row">
-      <label>AI自动分析当前股票</label>
-      <button class="btn btn-primary" style="width:100%" onclick="App.autoAddPortfolio()">🔍 从推荐中选取持仓</button>
+      <button class="btn btn-primary" style="width:100%" onclick="App.autoAddPortfolio()">🔍 AI自动从推荐中选取</button>
     </div>
     <div class="modal-actions">
       <button class="btn btn-secondary" onclick="App.closeModal()">取消</button>

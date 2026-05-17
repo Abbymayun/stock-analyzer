@@ -571,6 +571,40 @@ body {
 }
 .toast.hidden { display: none; }
 
+/* === 推荐股票表格 === */
+.rec-table-head {
+  display: grid;
+  grid-template-columns: 80px 50px 50px 65px 72px 55px 55px 60px 42px;
+  gap: 4px;
+  padding: 8px 4px;
+  font-size: 11px;
+  color: var(--text3);
+  font-weight: 600;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.rec-table-head span { text-align: right; }
+.rec-table-head .col-name { text-align: left; }
+
+.rec-row {
+  display: grid;
+  grid-template-columns: 80px 50px 50px 65px 72px 55px 55px 60px 42px;
+  gap: 4px;
+  padding: 9px 4px;
+  font-size: 12px;
+  border-bottom: 1px solid rgba(42,58,80,0.2);
+  cursor: pointer;
+  transition: background 0.15s;
+  align-items: center;
+}
+.rec-row:hover { background: var(--bg2); border-radius: 6px; }
+.rec-row:last-child { border-bottom: none; }
+.rec-row span { text-align: right; white-space: nowrap; }
+.rec-row .col-name { text-align: left; overflow: hidden; text-overflow: ellipsis; }
+.rec-row .col-name .rname { font-weight: 600; font-size: 13px; }
+.rec-row .col-name .rcode { font-size: 10px; color: var(--text3); margin-left: 4px; }
+.rec-row .col-buy-t { font-size: 11px; color: var(--text3); text-align: right; }
+
 /* === Footer === */
 .footer {
   text-align: center;

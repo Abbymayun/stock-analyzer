@@ -438,6 +438,17 @@ def deep_analyze(stock, basic, hist):
         r['stop_loss'] = round(r_lo * 0.97, 2)
         r['target_price'] = round(r_hi * 1.03, 2)
 
+    # 明日预估涨幅（基于技术面信号综合判断）
+    r['next_day_estimate'] = calc_next_day_estimate(r, closes, vols)
+
+    # 主力心理分析
+    if len(hist) >= 10:
+        r['main_force_analysis'] = gen_main_force_analysis(r, hist, closes, vols, highs, lows)
+
+    # 筹码分布分析
+    if len(hist) >= 20:
+        r['chip_analysis'] = gen_chip_analysis(hist, closes, vols, r)
+
     # 操作时间
     if score >= 65:
         r['buy_time'] = '开盘30分钟内 (9:30-10:00)'
@@ -458,6 +469,216 @@ def deep_analyze(stock, basic, hist):
         'analysis_text': gen_text(r, cp, ma5, ma10, ma20),
     })
     return r
+
+
+def calc_next_day_estimate(r, closes, vols):
+    """预估明日涨幅"""
+    estimate = 0.0
+    factors = []
+    score = r.get('score', 50)
+
+    # 1. 趋势因子
+    if score >= 80:
+        estimate += 3.0; factors.append('技术面极强')
+    elif score >= 65:
+        estimate += 1.5; factors.append('技术面偏强')
+    elif score < 35:
+        estimate -= 2.0; factors.append('技术面偏弱')
+    elif score < 50:
+        estimate -= 0.5
+
+    # 2. 动量因子
+    if len(closes) >= 3:
+        chg1 = (closes[-1] - closes[-2]) / closes[-2] * 100
+        chg2 = (closes[-2] - closes[-3]) / closes[-3] * 100
+        if chg1 > 0 and chg2 > 0:
+            estimate += 1.0; factors.append('连续上涨')
+        elif chg1 < 0 and chg2 < 0:
+            estimate -= 1.5; factors.append('连续下跌')
+        if chg1 > 5:
+            estimate -= 0.5; factors.append('今日涨幅较大，注意回调')
+        if chg1 < -5:
+            estimate += 0.5; factors.append('超跌可能反弹')
+
+    # 3. MACD信号
+    if r.get('macd_dif', 0) > r.get('macd_dea', 0) and r.get('macd_hist', 0) > 0:
+        estimate += 0.5; factors.append('MACD多头')
+    elif r.get('macd_dif', 0) < r.get('macd_dea', 0) and r.get('macd_hist', 0) < 0:
+        estimate -= 0.5
+
+    # 4. 量能因子
+    if len(vols) >= 5:
+        avg_vol = sum(vols[-5:]) / 5
+        if vols[-1] > avg_vol * 1.5 and closes[-1] > closes[-2]:
+            estimate += 1.0; factors.append('放量上攻')
+        elif vols[-1] > avg_vol * 2:
+            estimate -= 0.3; factors.append('量能过大需观察')
+
+    # 5. RSI因子
+    rsi = r.get('rsi6', 50)
+    if rsi < 25:
+        estimate += 1.5; factors.append('RSI超卖反弹')
+    elif rsi > 80:
+        estimate -= 1.5; factors.append('RSI超买回落')
+
+    # 6. 布林带因子
+    if r.get('boll_lower') and closes[-1] <= r['boll_lower']:
+        estimate += 1.0; factors.append('触及布林下轨')
+    elif r.get('boll_upper') and closes[-1] >= r['boll_upper']:
+        estimate -= 0.8; factors.append('触及布林上轨')
+
+    # 限制范围 -5% ~ +5%
+    estimate = max(-5.0, min(5.0, estimate))
+    return {'estimate': round(estimate, 2), 'factors': factors}
+
+
+def gen_main_force_analysis(r, hist, closes, vols, highs, lows):
+    """分析主力心理和行为"""
+    lines = []
+
+    if len(closes) < 10 or len(vols) < 10:
+        return "数据不足，无法分析主力行为。"
+
+    # 量价分析 - 判断主力意图
+    avg_vol_5 = sum(vols[-5:]) / 5
+    avg_vol_10 = sum(vols[-10:]) / 10
+    vol_ratio = avg_vol_5 / avg_vol_10 if avg_vol_10 > 0 else 1
+
+    chg_5d = (closes[-1] - closes[-5]) / closes[-5] * 100
+    chg_10d = (closes[-1] - closes[-min(10, len(closes))]) / closes[-min(10, len(closes))] * 100
+
+    # 主力行为判断
+    if vol_ratio > 1.5 and chg_5d > 3:
+        lines.append("📈 主力行为判断：主力放量拉升，处于主动建仓/加仓阶段。放量上涨表明主力资金积极介入，短期趋势偏强。")
+    elif vol_ratio > 1.5 and chg_5d < -3:
+        lines.append("📉 主力行为判断：主力放量杀跌，可能为洗盘或出货。需关注下方支撑位是否有效。")
+    elif vol_ratio < 0.7 and abs(chg_5d) < 2:
+        lines.append("⏸ 主力行为判断：缩量横盘，主力观望态度明显。可能为蓄势阶段，等待方向选择。")
+    elif vol_ratio < 0.7 and chg_5d < 0:
+        lines.append("⏬ 主力行为判断：缩量下跌，抛压较轻，主力可能未大规模出货。关注是否出现放量止跌信号。")
+    elif vol_ratio > 1.2 and abs(chg_5d) < 2:
+        lines.append("🔄 主力行为判断：放量震荡，多空分歧加大。主力可能在换手或调仓。")
+    else:
+        lines.append("📊 主力行为判断：量价关系正常，主力暂无明显异动。")
+
+    # 主力成本区间估算
+    if len(closes) >= 20:
+        cost_low = min(closes[-20:])
+        cost_high = max(closes[-20:])
+        cost_mid = sum(closes[-20:]) / 20
+        lines.append(f"\n💰 主力估算成本区间：{cost_low:.2f} - {cost_high:.2f} 元，中位成本约 {cost_mid:.2f} 元。")
+
+        cp = closes[-1]
+        if cp < cost_mid * 0.95:
+            lines.append(f"现价 {cp:.2f} 低于主力成本中位 {((1 - cp/cost_mid)*100):.1f}%，主力可能被套或处于吸筹末期。")
+        elif cp > cost_mid * 1.05:
+            lines.append(f"现价 {cp:.2f} 高于主力成本中位 {((cp/cost_mid-1)*100):.1f}%，主力已有浮盈，注意获利了结压力。")
+        else:
+            lines.append(f"现价 {cp:.2f} 在主力成本区间附近，主力处于盈亏平衡区域。")
+
+    # 操盘手法识别
+    recent_highs = highs[-5:]
+    recent_lows = lows[-5:]
+    intra_range = max(recent_highs) - min(recent_lows)
+    avg_range = sum(h - l for h, l in zip(recent_highs, recent_lows)) / 5
+
+    if intra_range / closes[-1] > 0.05:
+        lines.append(f"\n🎯 操盘特征：近5日振幅较大（{intra_range/closes[-1]*100:.1f}%），主力可能采用宽幅震荡洗盘手法。")
+    elif intra_range / closes[-1] < 0.02:
+        lines.append(f"\n🎯 操盘特征：近5日振幅较小（{intra_range/closes[-1]*100:.1f}%），主力控盘度较高或暂无明显方向。")
+
+    # 建议
+    signals_str = ' '.join(r.get('signals', []))
+    if '金叉' in signals_str or '放量上涨' in signals_str:
+        lines.append("\n💡 操作建议：技术信号积极，主力资金流入迹象明显，可考虑在支撑位附近分批介入。")
+    elif '死叉' in signals_str or '放量下跌' in signals_str:
+        lines.append("\n💡 操作建议：主力资金有流出迹象，建议控制仓位，等待企稳信号再考虑介入。")
+    else:
+        lines.append("\n💡 操作建议：主力暂未表态，建议保持观察，等待放量突破或缩量企稳信号。")
+
+    return '\n'.join(lines)
+
+
+def gen_chip_analysis(hist, closes, vols, r):
+    """筹码分布分析"""
+    lines = []
+    cp = closes[-1]
+
+    if len(closes) < 20:
+        return "数据不足，无法进行筹码分析。"
+
+    # 模拟筹码分布（基于成交量加权价格区间）
+    price_range = max(closes[-20:]) - min(closes[-20:])
+    if price_range <= 0:
+        return "价格区间过窄，筹码分析意义有限。"
+
+    # 计算各价位筹码集中度
+    slots = {}
+    for i, (c, v) in enumerate(zip(closes[-20:], vols[-20:])):
+        slot = round(c, 1)
+        slots[slot] = slots.get(slot, 0) + v
+
+    total_vol = sum(slots.values())
+    if total_vol == 0:
+        return "成交量数据异常，无法进行筹码分析。"
+
+    # 找筹码密集区
+    sorted_slots = sorted(slots.items(), key=lambda x: x[1], reverse=True)
+    top_areas = sorted_slots[:5]
+
+    # 筹码集中度
+    max_vol = top_areas[0][1] if top_areas else 0
+    concentration = max_vol / total_vol * 100
+
+    lines.append(f"📊 20日筹码分布分析（现价 {cp:.2f} 元）：")
+
+    # 筹码集中度
+    if concentration > 15:
+        lines.append(f"\n🔴 筹码高度集中（{concentration:.1f}%），主力控盘迹象明显。")
+    elif concentration > 10:
+        lines.append(f"\n🟡 筹码较为集中（{concentration:.1f}%），存在一定控盘。")
+    else:
+        lines.append(f"\n🟢 筹码较为分散（{concentration:.1f}%），多空博弈激烈。")
+
+    # 筹码密集区
+    lines.append(f"\n筹码密集价位：")
+    for price, vol in top_areas:
+        pct = vol / total_vol * 100
+        bar = '█' * int(pct / 2)
+        pos = '上方' if price > cp else '下方' if price < cp else '当前'
+        lines.append(f"  {price:.1f}元 [{pos:>4}] {bar} {pct:.1f}%")
+
+    # 获利盘/套牢盘估算
+    above = sum(v for (p, v) in slots.items() if p < cp)
+    below = sum(v for (p, v) in slots.items() if p > cp)
+    profit_pct = above / total_vol * 100
+    trapped_pct = below / total_vol * 100
+
+    lines.append(f"\n📈 估算获利盘：{profit_pct:.1f}% | 📉 估算套牢盘：{trapped_pct:.1f}%")
+
+    if profit_pct > 80:
+        lines.append("⚠️ 获利盘比例过高，上方抛压风险较大，追高需谨慎。")
+    elif profit_pct < 20:
+        lines.append("💡 套牢盘比例较高，上方存在较强解套压力，但下跌空间可能有限。")
+    elif 40 <= profit_pct <= 60:
+        lines.append("✅ 获利盘与套牢盘比例适中，筹码结构相对健康，具备上攻基础。")
+
+    # 筹码转移趋势
+    if len(closes) >= 10:
+        recent_slots = {}
+        for c, v in zip(closes[-10:], vols[-10:]):
+            slot = round(c, 1)
+            recent_slots[slot] = recent_slots.get(slot, 0) + v
+        recent_avg = sum(c * v for c, v in recent_slots.items()) / sum(vols[-10:]) if sum(vols[-10:]) > 0 else cp
+
+        if recent_avg > cp:
+            lines.append(f"\n🔄 筹码转移：近10日筹码重心上移至 {recent_avg:.2f} 元，高于现价，主力可能在高位派发或洗盘。")
+        elif recent_avg < cp * 0.97:
+            lines.append(f"\n🔄 筹码转移：近10日筹码重心下移至 {recent_avg:.2f} 元，低于现价，低位筹码堆积，可能为主力吸筹。")
+        else:
+            lines.append(f"\n🔄 筹码转移：近10日筹码重心在 {recent_avg:.2f} 元附近，与现价接近，筹码相对稳定。")
+
+    return '\n'.join(lines)
 
 
 def gen_text(r, cp, ma5, ma10, ma20):
