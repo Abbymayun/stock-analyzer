@@ -1,0 +1,9 @@
+# 大数据文件不提交到 Git，由 GitHub Actions 生成
+data/all_stocks.json
+data/stock_list.json
+data/history/
+
+# 临时文件
+*.pyc
+__pycache__/
+.DS_Store
