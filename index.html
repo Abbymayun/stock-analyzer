@@ -17,6 +17,7 @@
         <span id="update-time">加载中...</span>
         <span id="market-sentiment" class="sentiment"></span>
         <a class="trading-entry" onclick="App.showPage('trading')">💰 虚拟交易</a>
+        <a class="trading-entry" onclick="App.showPage('strategy')" style="margin-left:6px">🧪 策略</a>
       </div>
     </header>
 
@@ -77,12 +78,6 @@
           <div class="card-body" id="market-analysis">
             <div class="empty">等待分析数据...</div>
           </div>
-        </div>
-
-        <!-- 明日操作建议 -->
-        <div class="card" id="next-day-card" style="margin-bottom:16px;display:none">
-          <div class="card-head"><h3>📅 明日操作建议</h3></div>
-          <div class="card-body"><div class="advice-box" id="next-day-advice"></div></div>
         </div>
 
         <!-- 可行性策略 -->
@@ -162,6 +157,23 @@
           <div class="card-head"><h3>📝 持仓操作建议</h3></div>
           <div class="card-body" id="portfolio-advice"></div>
         </div>
+
+        <!-- 虚拟交易持仓 -->
+        <div class="card" style="margin-top:16px">
+          <div class="card-head">
+            <h3>🎰 虚拟交易持仓</h3>
+            <a class="view-more" onclick="App.showPage('trading')">查看交易页 →</a>
+          </div>
+          <div class="card-body" id="virtual-holdings-section">
+            <div class="portfolio-empty">等待交易数据...</div>
+          </div>
+        </div>
+
+        <!-- 明日操作建议（从中间栏移过来） -->
+        <div class="card" id="next-day-card" style="margin-top:16px;display:none">
+          <div class="card-head"><h3>📅 明日操作建议</h3></div>
+          <div class="card-body"><div class="advice-box" id="next-day-advice"></div></div>
+        </div>
       </div>
     </div>
 
@@ -190,11 +202,23 @@
         <span class="htab active" onclick="App.showTradingTab('overview')">账户</span>
         <span class="htab" onclick="App.showTradingTab('report')">日报</span>
         <span class="htab" onclick="App.showTradingTab('records')">交易记录</span>
+        <span class="htab" onclick="App.showTradingTab('purchased')">购买记录</span>
       </div>
     </header>
     <div id="trading-overview" class="trading-page"></div>
     <div id="trading-report" class="trading-page" style="display:none"></div>
     <div id="trading-records" class="trading-page" style="display:none"></div>
+    <div id="trading-purchased" class="trading-page" style="display:none"></div>
+  </div>
+
+  <!-- ========== 策略分析页 ========== -->
+  <div id="page-strategy" class="page">
+    <header class="header">
+      <button class="btn-back" onclick="App.back()">← 返回</button>
+      <h2>🧪 策略分析实验室</h2>
+      <div class="header-meta"><span id="strategy-update-time"></span></div>
+    </header>
+    <div id="strategy-content"></div>
   </div>
 
   <!-- ========== 个股详情页 ========== -->

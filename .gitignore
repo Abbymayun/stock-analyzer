@@ -5,8 +5,14 @@ data/history/
 data/portfolio.json
 data/trade_log.json
 data/recommendations.json
+data/buy_plan.json
+data/sell_plan.json
+data/strategy_tracking.json
 
 # 临时文件
 *.pyc
 __pycache__/
 .DS_Store
+.server.log
+.server.pid
+logs/

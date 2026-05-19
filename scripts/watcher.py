@@ -23,8 +23,14 @@ import math
 import requests
 from datetime import datetime
 
+# 导入统一交易日历
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, SCRIPT_DIR)
+from market_calendar import is_trading_time as _is_market_open
+
 DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data')
 BUY_PLAN_FILE = os.path.join(DATA_DIR, 'buy_plan.json')
+SELL_PLAN_FILE = os.path.join(DATA_DIR, 'sell_plan.json')
 PORTFOLIO_FILE = os.path.join(DATA_DIR, 'portfolio.json')
 TRADE_LOG_FILE = os.path.join(DATA_DIR, 'trade_log.json')
 MAX_BUY_PER_DAY = 3
@@ -172,8 +178,106 @@ def execute_buy(code, name, price, qty, reason):
     return True
 
 
+def execute_sell(code, name, price, qty, reason):
+    """执行一笔卖出"""
+    portfolio = load_json(PORTFOLIO_FILE)
+    if not portfolio:
+        print(f"  ❌ 无法读取投资组合")
+        return False
+
+    h = portfolio.get('holdings', {}).get(code)
+    if not h or h['qty'] < qty:
+        print(f"  ❌ 持仓不足：{name} 持有{h['qty'] if h else 0}股，要卖{qty}股")
+        return False
+
+    sell_price = calc_slippage_price(price, False)
+    sell_amount = sell_price * qty
+    commission = calc_commission(sell_price, qty, 'sell')
+    net_amount = sell_amount - commission
+
+    # 计算盈亏
+    cost_amount = h['avg_cost'] * qty
+    pnl = net_amount - cost_amount
+    pnl_pct = (sell_price - h['avg_cost']) / h['avg_cost'] * 100
+
+    # 更新持仓
+    portfolio['cash'] += net_amount
+    h['qty'] -= qty
+    if h['qty'] <= 0:
+        del portfolio['holdings'][code]
+
+    # 更新统计
+    portfolio['trading_stats']['total_trades'] += 1
+    portfolio['trading_stats']['total_pnl'] += pnl
+    if pnl > 0:
+        portfolio['trading_stats']['win_trades'] += 1
+
+    # 记录交易
+    trade = {
+        'type': 'sell',
+        'code': code,
+        'name': name,
+        'price': sell_price,
+        'qty': qty,
+        'amount': round(sell_amount, 2),
+        'commission': round(commission, 2),
+        'pnl': round(pnl, 2),
+        'pnl_pct': round(pnl_pct, 2),
+        'reason': reason,
+        'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+    }
+
+    trade_log = load_json(TRADE_LOG_FILE, {'trades': []})
+    trade_log['trades'].append(trade)
+
+    save_json(PORTFOLIO_FILE, portfolio)
+    save_json(TRADE_LOG_FILE, trade_log)
+
+    pnl_sign = '+' if pnl >= 0 else ''
+    print(f"  ❌ 卖出 {name}（{code}）{qty}股 × {sell_price:.2f}元（{pnl_sign}{pnl:.2f}元 / {pnl_sign}{pnl_pct:.1f}%）")
+    print(f"      原因：{reason}")
+    return True
+
+
 def run_once():
     """执行一次观察检查"""
+    if not is_market_open():
+        return  # 非交易时间静默退出
+
+    today = datetime.now().strftime('%Y-%m-%d')
+    executed_any = False
+
+    # === 1. 处理卖出计划 ===
+    sell_plan = load_json(SELL_PLAN_FILE)
+    sell_items = sell_plan.get('items', [])
+    if sell_items:
+        plan_date = sell_plan.get('date', '')
+        if plan_date != today:
+            # 过期清空
+            save_json(SELL_PLAN_FILE, {'date': today, 'items': [], 'created_at': ''})
+        else:
+            remaining_sells = []
+            sell_codes = [item['code'] for item in sell_items]
+            prices = get_realtime_prices(sell_codes)
+            
+            for item in sell_items:
+                code = item['code']
+                rt = prices.get(code)
+                if not rt or rt['price'] <= 0:
+                    remaining_sells.append(item)
+                    continue
+                
+                # 使用实时价格执行卖出
+                if execute_sell(code, item['name'], rt['price'], item['qty'], 
+                               item['reason'] + '（开盘后由watcher执行）'):
+                    executed_any = True
+                else:
+                    remaining_sells.append(item)
+            
+            sell_plan['items'] = remaining_sells
+            save_json(SELL_PLAN_FILE, sell_plan)
+
+    # === 2. 处理买入计划 ===
     plan = load_json(BUY_PLAN_FILE)
     if not plan or not plan.get('items'):
         return  # 没有计划
@@ -287,15 +391,8 @@ def save_buy_plan(buy_plan_candidates):
 
 
 def is_market_open():
-    """检查A股市场是否开盘（周一到周五 9:15-15:00）"""
-    now = datetime.now()
-    # 周末不开盘
-    if now.weekday() >= 5:
-        return False
-    hour, minute = now.hour, now.minute
-    t = hour * 60 + minute
-    # 9:15 - 15:00
-    return 555 <= t <= 900
+    """检查A股市场是否处于可交易时间（含节假日校验）"""
+    return _is_market_open()
 
 
 if __name__ == '__main__':

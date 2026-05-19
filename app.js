@@ -1,16 +1,31 @@
-/* === A股智能分析系统 v2.1 === */
+/* === A股智能分析系统 v3.0 === */
 
 const App = {
   allData: null,
   recData: null,
   historyData: [],
   yesterdayData: null,
-  recList: [],     // 过滤后的推荐列表
+  recList: [],
   recPage: 0,
   recPageSize: 50,
+  realtimeCache: {},
+  realtimeTimer: null,
+  API_BASE: '',
 
   // === 初始化 ===
   async init() {
+    // 检测API服务器
+    this._apiAvailable = false;
+    try {
+      const r = await fetch('/api/health');
+      if (r.ok) { this.API_BASE = ''; this._apiAvailable = true; }
+    } catch {
+      try {
+        const r = await fetch('http://127.0.0.1:8765/api/health');
+        if (r.ok) { this.API_BASE = 'http://127.0.0.1:8765'; this._apiAvailable = true; }
+      } catch {}
+    }
+
     try {
       const [allRes, recRes] = await Promise.all([
         fetch('data/all_stocks.json'),
@@ -21,16 +36,126 @@ const App = {
       this.recData = await recRes.json();
       await this.loadHistory();
       this.renderHome();
+      // 启动实时数据刷新
+      if (this._apiAvailable) {
+        this.startRealtimeRefresh();
+      }
     } catch (e) {
       document.getElementById('update-time').textContent = '暂无数据';
       document.getElementById('market-analysis').innerHTML =
-        '<div class="empty"><div class="empty-icon">⏳</div><div>等待首次分析数据...</div><div style="font-size:12px;margin-top:8px;color:var(--text3)">GitHub Actions 将在每个交易日的 8:30/12:00/14:00/15:30 自动运行分析</div></div>';
+        '<div class="empty"><div class="empty-icon">⏳</div><div>等待首次分析数据...</div></div>';
     }
+  },
+
+  // === 实时数据刷新 ===
+  startRealtimeRefresh() {
+    const refresh = async () => {
+      try {
+        // 获取持仓+推荐的实时数据
+        const codes = this._getImportantCodes();
+        if (!codes.length) return;
+        const res = await fetch(this.API_BASE + '/api/realtime?codes=' + codes.join(','));
+        if (!res.ok) return;
+        const json = await res.json();
+        if (json.data) {
+          this.realtimeCache = json.data;
+          this._updateDisplayWithRealtime();
+        }
+      } catch {}
+    };
+    // 立即刷新一次
+    refresh();
+    // 每30秒刷新
+    this.realtimeTimer = setInterval(refresh, 30000);
+  },
+
+  _getImportantCodes() {
+    const codes = new Set();
+    // 持仓
+    (this.allData?.stocks || []).filter(s => s._holding).forEach(s => codes.add(s.code));
+    // 推荐
+    const rec = this.recData || {};
+    [...(rec.strong_buy || []), ...(rec.buy || []), ...(rec.watch || [])].forEach(s => codes.add(s.code));
+    return [...codes];
+  },
+
+  _updateDisplayWithRealtime() {
+    const rt = this.realtimeCache;
+    if (!rt || !Object.keys(rt).length) return;
+
+    // 更新首页上的价格和涨幅
+    document.querySelectorAll('[data-rt-code]').forEach(el => {
+      const code = el.dataset.rtCode;
+      const field = el.dataset.rtField;
+      const data = rt[code];
+      if (!data) return;
+      if (field === 'price') {
+        el.textContent = data.price.toFixed(2);
+      } else if (field === 'change_pct') {
+        const sign = data.change_pct >= 0 ? '+' : '';
+        el.textContent = sign + data.change_pct.toFixed(2) + '%';
+        el.className = data.change_pct >= 0 ? 'text-rise' : 'text-fall';
+        if (el.dataset.bold) el.style.fontWeight = '700';
+      }
+    });
+
+    // 更新持仓卡片
+    this._updatePortfolioRealtime(rt);
+    // 更新虚拟交易持仓
+    this._updateVirtualHoldingsRealtime(rt);
+  },
+
+  _updatePortfolioRealtime(rt) {
+    document.querySelectorAll('.portfolio-item[data-holding-code]').forEach(el => {
+      const code = el.dataset.holdingCode;
+      const data = rt[code];
+      if (!data) return;
+      const cost = parseFloat(el.dataset.holdingCost) || 0;
+      const qty = parseInt(el.dataset.holdingQty) || 0;
+      const pnl = (data.price - cost) * qty;
+      const pnlPct = cost > 0 ? (data.price - cost) / cost * 100 : 0;
+      const cls = pnl >= 0 ? 'text-rise' : 'text-fall';
+      const sign = pnl >= 0 ? '+' : '';
+
+      const priceEl = el.querySelector('.rt-price');
+      const pnlEl = el.querySelector('.rt-pnl');
+      const pctEl = el.querySelector('.rt-pct');
+      if (priceEl) priceEl.textContent = '现价' + data.price.toFixed(2);
+      if (pnlEl) { pnlEl.textContent = sign + pnl.toFixed(0) + '元'; pnlEl.className = 'portfolio-pnl rt-pnl ' + cls; }
+      if (pctEl) { pctEl.textContent = sign + pnlPct.toFixed(2) + '%'; pctEl.className = 'portfolio-pnl rt-pct ' + cls; }
+    });
+  },
+
+  _updateVirtualHoldingsRealtime(rt) {
+    document.querySelectorAll('.vh-card[data-code]').forEach(el => {
+      const code = el.dataset.code;
+      const data = rt[code];
+      if (!data) return;
+      const cost = parseFloat(el.dataset.cost) || 0;
+      const qty = parseInt(el.dataset.qty) || 0;
+      const pnl = (data.price - cost) * qty;
+      const pnlPct = cost > 0 ? (data.price - cost) / cost * 100 : 0;
+      const cls = pnl >= 0 ? 'text-rise' : 'text-fall';
+      const sign = pnl >= 0 ? '+' : '';
+
+      const priceSpan = el.querySelector('.vh-price');
+      const pnlSpan = el.querySelector('.vh-pnl');
+      const pctSpan = el.querySelector('.vh-pct');
+      if (priceSpan) priceSpan.textContent = data.price.toFixed(2);
+      if (pnlSpan) { pnlSpan.textContent = sign + pnl.toFixed(0) + '元'; pnlSpan.className = 'vh-pnl ' + cls; }
+      if (pctSpan) { pctSpan.textContent = sign + pnlPct.toFixed(2) + '%'; pctSpan.className = 'vh-pct ' + cls; }
+    });
   },
 
   // === 加载历史数据 ===
   async loadHistory() {
     try {
+      if (this._apiAvailable) {
+        const res = await fetch(this.API_BASE + '/api/history_list');
+        if (res.ok) {
+          this.historyListData = await res.json();
+        }
+      }
       const res = await fetch('data/history/');
       const text = await res.text();
       const files = text.match(/"[^"]+\.json"/g);
@@ -48,29 +173,26 @@ const App = {
   // === 首页渲染 ===
   renderHome() {
     const r = this.recData;
-    document.getElementById('update-time').textContent = this.allData.update_time;
+    document.getElementById('update-time').textContent = this.allData.update_time + (this._apiAvailable ? ' · 实时' : '');
     const sentEl = document.getElementById('market-sentiment');
     sentEl.textContent = r.market_sentiment + ' · ' + r.avg_score + '分';
     sentEl.className = 'sentiment ' + r.market_sentiment;
 
-    // 统计（去掉强烈卖出）
     document.getElementById('stat-strong').textContent = (r.strong_buy || []).length;
     document.getElementById('stat-buy').textContent = (r.buy || []).length;
     document.getElementById('stat-watch').textContent = (r.watch || []).length;
 
-    // 左栏推荐列表
     this.renderRecList('strong-buy-list', r.strong_buy || []);
     this.renderRecList('buy-list', r.buy || []);
     this.renderRecList('watch-list', r.watch || []);
 
-    // 中栏
     this.renderMarketAnalysis(r);
     this.renderStrategies(r);
     this.filterRecList();
 
-    // 右栏
     this.renderAccuracy();
     this.renderPortfolio();
+    this.renderVirtualHoldings();
   },
 
   // === 左栏推荐列表 ===
@@ -89,8 +211,8 @@ const App = {
           <span class="rec-mini-code">${s.code}</span>
         </div>
         <div class="rec-mini-right">
-          <div class="rec-mini-price ${chgCls}">${s.price.toFixed(2)}</div>
-          <div class="rec-mini-change ${chgCls}">${chgSign}${s.change_pct.toFixed(2)}%</div>
+          <div class="rec-mini-price ${chgCls}" data-rt-code="${s.code}" data-rt-field="price">${s.price.toFixed(2)}</div>
+          <div class="rec-mini-change ${chgCls}" data-rt-code="${s.code}" data-rt-field="change_pct">${chgSign}${s.change_pct.toFixed(2)}%</div>
           <div class="rec-mini-score">明日预估 <span class="${estCls}">${estStr}</span></div>
         </div>
       </div>`;
@@ -103,7 +225,6 @@ const App = {
     document.getElementById('analysis-update-time').textContent = r.update_time || '';
 
     const macro = r.macro_indices || {};
-    // 兼容代码映射
     const idxMap = {
       'sh000001': ['sh000001', '000001'],
       'sz399001': ['sz399001', '399001'],
@@ -114,9 +235,7 @@ const App = {
     };
     const getIdx = (code) => {
       const keys = idxMap[code] || [code];
-      for (const k of keys) {
-        if (macro[k]) return macro[k];
-      }
+      for (const k of keys) { if (macro[k]) return macro[k]; }
       return null;
     };
 
@@ -125,7 +244,6 @@ const App = {
       市场情绪：${r.market_sentiment} · 综合评分 ${r.avg_score}分
     </div>`;
 
-    // 指数行情
     html += `<div class="indices-row">`;
     const idxList = [
       { code: 'sh000001', label: '上证' },
@@ -146,7 +264,6 @@ const App = {
     });
     html += '</div>';
 
-    // A股统计
     const stocks = this.allData.stocks || [];
     const rise = stocks.filter(s => s.change_pct > 0).length;
     const fall = stocks.filter(s => s.change_pct < 0).length;
@@ -162,7 +279,6 @@ const App = {
       <div class="market-stat-item"><div class="market-stat-val text-fall">${dt}</div><div class="market-stat-label">跌停</div></div>
     </div>`;
 
-    // 宏观分析文本
     if (r.market_analysis) {
       html += `<div class="market-text">${this.esc(r.market_analysis)}</div>`;
     }
@@ -191,12 +307,11 @@ const App = {
     ).join('');
   },
 
-  // === 推荐股票列表（只显示推荐的） ===
+  // === 推荐股票列表 ===
   filterRecList() {
     const recFilter = document.getElementById('filter-rec').value;
     const sortBy = document.getElementById('filter-sort').value;
 
-    // 只取推荐的股票
     let list = (this.allData?.stocks || []).filter(s =>
       s.recommendation === '强烈买入' || s.recommendation === '买入' || s.recommendation === '关注'
     );
@@ -243,8 +358,8 @@ const App = {
 
       html += `<div class="rec-row" onclick="App.openStock('${s.code}')">
         <span class="col-name"><span class="rname">${this.esc(s.name)}</span><span class="rcode">${s.code}</span></span>
-        <span class="${chgCls}" style="font-weight:600">${s.price.toFixed(2)}</span>
-        <span class="${chgCls}">${chgSign}${s.change_pct.toFixed(2)}%</span>
+        <span class="${chgCls}" style="font-weight:600" data-rt-code="${s.code}" data-rt-field="price">${s.price.toFixed(2)}</span>
+        <span class="${chgCls}" data-rt-code="${s.code}" data-rt-field="change_pct" data-bold="1">${chgSign}${s.change_pct.toFixed(2)}%</span>
         <span style="color:var(--fall)">${s.buy_point ? s.buy_point.toFixed(2) : '-'}</span>
         <span class="col-buy-t">${s.buy_time ? s.buy_time.replace(/\(.*\)/, '') : '-'}</span>
         <span style="color:var(--fall)">${s.target_price ? s.target_price.toFixed(2) : '-'}</span>
@@ -258,10 +373,7 @@ const App = {
     document.getElementById('btn-load-more').style.display = end < total ? '' : 'none';
   },
 
-  loadMore() {
-    this.recPage++;
-    this.renderRecListTable();
-  },
+  loadMore() { this.recPage++; this.renderRecListTable(); },
 
   filterByRec(rec) {
     document.getElementById('filter-rec').value = rec;
@@ -272,20 +384,14 @@ const App = {
   // === 右栏 - 准确率统计 ===
   renderAccuracy() {
     const el = document.getElementById('accuracy-section');
-
     if (!this.yesterdayData || !this.yesterdayData.recommendations) {
-      // 尝试从更多历史中找
       if (this.historyData.length >= 2) {
-        // 找不同日期的
         for (let i = 1; i < this.historyData.length; i++) {
-          if (this.historyData[i].recommendations?.strong_buy?.length) {
-            this.yesterdayData = this.historyData[i];
-            break;
-          }
+          if (this.historyData[i].recommendations?.strong_buy?.length) { this.yesterdayData = this.historyData[i]; break; }
         }
       }
       if (!this.yesterdayData || !this.yesterdayData.recommendations?.strong_buy?.length) {
-        el.innerHTML = '<div class="empty"><div class="empty-icon">📊</div><div>需要至少2次分析数据才能统计准确率</div><div style="font-size:11px;margin-top:4px">系统每日自动运行4次分析（8:30/12:00/14:00/15:30）</div></div>';
+        el.innerHTML = '<div class="empty"><div class="empty-icon">📊</div><div>需要至少2次分析数据才能统计准确率</div></div>';
         return;
       }
     }
@@ -294,18 +400,12 @@ const App = {
     const todayTime = this.historyData[0]?.update_time || '';
     const ydTime = this.yesterdayData.update_time || '';
 
-    if (!ydStrongBuy.length) {
-      el.innerHTML = '<div class="empty">暂无昨日强烈买入数据</div>';
-      return;
-    }
+    if (!ydStrongBuy.length) { el.innerHTML = '<div class="empty">暂无数据</div>'; return; }
 
     let correct = 0, wrong = 0, totalPnl = 0, details = [];
     ydStrongBuy.forEach(s => {
       const todayStock = this.findStock(s.code);
-      if (!todayStock) {
-        details.push({ name: s.name, code: s.code, pred_price: s.price, actual: null });
-        return;
-      }
+      if (!todayStock) { details.push({ name: s.name, code: s.code, pred_price: s.price, actual: null }); return; }
       const ydPrice = s.price || s.prev_close;
       const chgPct = todayStock.price > 0 && ydPrice > 0 ? (todayStock.price - ydPrice) / ydPrice * 100 : 0;
       if (chgPct > 0) correct++; else wrong++;
@@ -319,35 +419,18 @@ const App = {
 
     let html = `<div style="text-align:center;margin-bottom:8px;font-size:11px;color:var(--text3)">${ydTime} 预测 → ${todayTime} 实际</div>`;
     html += `<div class="accuracy-summary">
-      <div class="accuracy-summary-item">
-        <div class="accuracy-summary-num" style="color:${accuracy >= 60 ? 'var(--fall)' : accuracy >= 40 ? 'var(--gold)' : 'var(--rise)'}">${accuracy.toFixed(0)}%</div>
-        <div class="accuracy-summary-label">胜率</div>
-      </div>
-      <div class="accuracy-summary-item">
-        <div class="accuracy-summary-num ${avgPnl >= 0 ? 'text-rise' : 'text-fall'}">${avgPnl >= 0 ? '+' : ''}${avgPnl.toFixed(2)}%</div>
-        <div class="accuracy-summary-label">平均收益</div>
-      </div>
-      <div class="accuracy-summary-item">
-        <div class="accuracy-summary-num" style="color:var(--accent)">${correct}/${total}</div>
-        <div class="accuracy-summary-label">正确/总计</div>
-      </div>
+      <div class="accuracy-summary-item"><div class="accuracy-summary-num" style="color:${accuracy >= 60 ? 'var(--fall)' : 'var(--gold)'}">${accuracy.toFixed(0)}%</div><div class="accuracy-summary-label">胜率</div></div>
+      <div class="accuracy-summary-item"><div class="accuracy-summary-num ${avgPnl >= 0 ? 'text-rise' : 'text-fall'}">${avgPnl >= 0 ? '+' : ''}${avgPnl.toFixed(2)}%</div><div class="accuracy-summary-label">平均收益</div></div>
+      <div class="accuracy-summary-item"><div class="accuracy-summary-num" style="color:var(--accent)">${correct}/${total}</div><div class="accuracy-summary-label">正确/总计</div></div>
     </div>`;
 
     html += '<div class="accuracy-detail">';
     details.forEach(d => {
       if (d.actual === null) {
-        html += `<div class="accuracy-row" onclick="App.openStock('${d.code}')" style="cursor:pointer">
-          <span class="name">${this.esc(d.name)}</span>
-          <span class="pred">${d.pred_price?.toFixed(2) || '-'}</span>
-          <span class="actual" style="color:var(--text3)">未找到</span>
-        </div>`;
+        html += `<div class="accuracy-row" onclick="App.openStock('${d.code}')" style="cursor:pointer"><span class="name">${this.esc(d.name)}</span><span class="pred">${d.pred_price?.toFixed(2) || '-'}</span><span class="actual" style="color:var(--text3)">未找到</span></div>`;
       } else {
         const chgSign = d.chg_pct >= 0 ? '+' : '';
-        html += `<div class="accuracy-row" onclick="App.openStock('${d.code}')" style="cursor:pointer">
-          <span class="name">${this.esc(d.name)}</span>
-          <span class="pred">${d.pred_price.toFixed(2)}</span>
-          <span class="actual ${d.hit ? 'correct' : 'wrong'}">${chgSign}${d.chg_pct.toFixed(2)}% ${d.hit ? '✓' : '✗'}</span>
-        </div>`;
+        html += `<div class="accuracy-row" onclick="App.openStock('${d.code}')" style="cursor:pointer"><span class="name">${this.esc(d.name)}</span><span class="pred">${d.pred_price.toFixed(2)}</span><span class="actual ${d.hit ? 'correct' : 'wrong'}">${chgSign}${d.chg_pct.toFixed(2)}% ${d.hit ? '✓' : '✗'}</span></div>`;
       }
     });
     html += '</div>';
@@ -384,7 +467,7 @@ const App = {
     portfolio.forEach((pos, i) => {
       const stock = this.findStock(pos.code);
       if (!stock) {
-        html += `<div class="portfolio-item">
+        html += `<div class="portfolio-item" data-holding-code="${pos.code}" data-holding-cost="${pos.cost}" data-holding-qty="${pos.qty}">
           <div class="portfolio-left"><span class="stock-name">${this.esc(pos.code)}</span><span class="portfolio-cost">成本 ${pos.cost.toFixed(2)} × ${pos.qty}股</span></div>
           <div class="portfolio-right" style="color:var(--text3);font-size:12px">未找到<button class="btn-add" onclick="event.stopPropagation();Portfolio.remove(${i});App.renderPortfolio()">✕</button></div>
         </div>`;
@@ -396,23 +479,22 @@ const App = {
       const pCls = pnl >= 0 ? 'text-rise' : 'text-fall';
       const pSign = pnl >= 0 ? '+' : '';
 
-      html += `<div class="portfolio-item" onclick="App.openStock('${pos.code}')">
+      html += `<div class="portfolio-item" data-holding-code="${pos.code}" data-holding-cost="${pos.cost}" data-holding-qty="${pos.qty}" onclick="App.openStock('${pos.code}')">
         <div class="portfolio-left">
           <div style="display:flex;align-items:center;gap:6px">
             <span class="stock-name">${this.esc(stock.name)}</span>
             <span class="stock-code">${stock.code}</span>
             <button class="btn-add" onclick="event.stopPropagation();Portfolio.remove(${i});App.renderPortfolio()">✕</button>
           </div>
-          <span class="portfolio-cost">成本${pos.cost.toFixed(2)} × ${pos.qty}股 · 现价${stock.price.toFixed(2)}</span>
+          <span class="portfolio-cost rt-price">成本${pos.cost.toFixed(2)} × ${pos.qty}股 · 现价${stock.price.toFixed(2)}</span>
         </div>
         <div class="portfolio-right">
-          <div class="portfolio-pnl ${pCls}">${pSign}${pnlAmt.toFixed(0)}元</div>
-          <div class="portfolio-pnl ${pCls}" style="font-size:12px">${pSign}${pnlPct.toFixed(2)}%</div>
+          <div class="portfolio-pnl rt-pnl ${pCls}">${pSign}${pnlAmt.toFixed(0)}元</div>
+          <div class="portfolio-pnl rt-pct ${pCls}" style="font-size:12px">${pSign}${pnlPct.toFixed(2)}%</div>
           <span class="portfolio-advice stock-rec-tag ${stock.recommendation}">${stock.recommendation}</span>
         </div>
       </div>`;
 
-      // 持仓建议
       const rec = stock.recommendation;
       let advice = '';
       if (pnlPct < -5) advice = `⚠️ ${stock.name} 亏损${Math.abs(pnlPct).toFixed(1)}%，止损位${stock.stop_loss || '未设定'}元`;
@@ -430,223 +512,502 @@ const App = {
     }
   },
 
-  // === 历史更新页（需求5改造） ===
+  // === 右栏 - 虚拟交易持仓（需求2） ===
+  async renderVirtualHoldings() {
+    const el = document.getElementById('virtual-holdings-section');
+    if (!this._apiAvailable) {
+      el.innerHTML = '<div class="portfolio-empty">需要启动API服务器</div>';
+      return;
+    }
+
+    try {
+      const res = await fetch(this.API_BASE + '/api/portfolio');
+      if (!res.ok) throw new Error('failed');
+      const data = await res.json();
+      const holdings = data.holdings || [];
+
+      if (!holdings.length) {
+        el.innerHTML = '<div class="portfolio-empty">暂无虚拟交易持仓</div>';
+        return;
+      }
+
+      // 计算总盈亏
+      const totalPnl = holdings.reduce((s, h) => s + (h.pnl || 0), 0);
+      const totalCost = holdings.reduce((s, h) => s + h.avg_cost * h.qty, 0);
+      const totalPnlPct = totalCost > 0 ? totalPnl / totalCost * 100 : 0;
+      const cls = totalPnl >= 0 ? 'text-rise' : 'text-fall';
+      const sign = totalPnl >= 0 ? '+' : '';
+
+      let html = `<div style="text-align:center;padding:6px 0 10px;border-bottom:1px solid var(--border);margin-bottom:8px">
+        <div style="font-size:11px;color:var(--text3)">虚拟交易盈亏</div>
+        <div style="font-size:18px;font-weight:800" class="${cls}">${sign}${totalPnl.toFixed(0)}元 (${sign}${totalPnlPct.toFixed(2)}%)</div>
+        <div style="font-size:11px;color:var(--text3)">可用资金 ${(data.cash || 0).toLocaleString('zh-CN', {minimumFractionDigits:0, maximumFractionDigits:0})}元</div>
+      </div>`;
+
+      holdings.forEach(h => {
+        const hCls = (h.pnl || 0) >= 0 ? 'text-rise' : 'text-fall';
+        const hSign = (h.pnl || 0) >= 0 ? '+' : '';
+        const emoji = (h.pnl || 0) >= 0 ? '🟢' : '🔴';
+
+        html += `<div class="vh-card" data-code="${h.code}" data-cost="${h.avg_cost}" data-qty="${h.qty}" onclick="App.openStock('${h.code}')" style="cursor:pointer;padding:10px 0;border-bottom:1px solid rgba(42,58,80,0.15)">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <span style="font-weight:600;font-size:14px">${this.esc(h.name)}</span>
+              <span style="color:var(--text3);font-size:11px;margin-left:4px">${h.code}</span>
+              <span style="font-size:11px;color:var(--text3);margin-left:6px">${h.qty}股 × ${h.avg_cost.toFixed(2)}</span>
+            </div>
+            <div style="text-align:right">
+              <div class="vh-price" style="font-weight:600;font-size:14px">${h.current_price.toFixed(2)}</div>
+              <div class="vh-pnl ${hCls}" style="font-size:13px;font-weight:700">${emoji} ${hSign}${(h.pnl || 0).toFixed(0)}元</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px">
+            <div style="font-size:11px;color:var(--text3)">
+              ${h.buys.length ? '买入' + h.buys.length + '笔' : ''}${h.sells.length ? ' · 卖出' + h.sells.length + '笔' : ''}
+            </div>
+            <div class="vh-pct ${hCls}" style="font-size:12px">${hSign}${(h.pnl_pct || 0).toFixed(2)}%</div>
+          </div>`;
+
+        // 交易明细（折叠）
+        if (h.buys.length || h.sells.length) {
+          html += `<div class="vh-trades" style="margin-top:6px;font-size:11px">`;
+          // 按时间倒序显示所有交易
+          const allTrades = [
+            ...h.buys.map(t => ({...t, _type: 'buy'})),
+            ...h.sells.map(t => ({...t, _type: 'sell'}))
+          ].sort((a, b) => b.timestamp.localeCompare(a.timestamp));
+          allTrades.forEach(t => {
+            if (t._type === 'buy') {
+              html += `<div style="color:var(--text2);padding:2px 0">✅ 买入 ${t.timestamp} ${t.qty}股 × ${t.price.toFixed(2)}</div>`;
+            } else {
+              const sp = (t.pnl || 0) >= 0 ? '+' : '';
+              const sc = (t.pnl || 0) >= 0 ? 'text-rise' : 'text-fall';
+              html += `<div style="color:var(--text2);padding:2px 0">❌ 卖出 ${t.timestamp} ${t.qty}股 × ${t.price.toFixed(2)} <span class="${sc}">${sp}${(t.pnl||0).toFixed(0)}元(${sp}${(t.pnl_pct||0).toFixed(1)}%)</span></div>`;
+            }
+          });
+          html += '</div>';
+        }
+        html += '</div>';
+      });
+
+      el.innerHTML = html;
+    } catch (e) {
+      el.innerHTML = '<div class="portfolio-empty">加载失败</div>';
+    }
+  },
+
+  // === 历史更新页（需求4：列表+详情+K线） ===
   async renderHistory() {
     const el = document.getElementById('history-content');
+    if (this._historyDetailFile) {
+      await this._renderHistoryDetail(this._historyDetailFile);
+      return;
+    }
+
     try {
-      const res = await fetch('data/history/');
-      const text = await res.text();
-      const files = text.match(/"[^"]+\.json"/g);
-      if (!files) { el.innerHTML = '<div class="empty">暂无历史记录</div>'; return; }
-      const fileNames = files.map(f => f.replace(/"/g, '').split('/').pop()).sort().reverse();
-      const promises = fileNames.map(f => fetch(`data/history/${f}`).then(r => r.json()).catch(() => null));
-      const results = await Promise.all(promises);
-      const valid = results.filter(Boolean);
+      let historyList;
+      if (this._apiAvailable) {
+        const res = await fetch(this.API_BASE + '/api/history_list');
+        if (res.ok) historyList = await res.json();
+      }
+      if (!historyList) {
+        // Fallback: load from directory listing
+        const res = await fetch('data/history/');
+        const text = await res.text();
+        const files = text.match(/"[^"]+\.json"/g);
+        if (!files) { el.innerHTML = '<div class="empty">暂无历史记录</div>'; return; }
+        const fileNames = files.map(f => f.replace(/"/g, '').split('/').pop()).sort().reverse();
+        historyList = fileNames.map(f => ({ file: f, update_time: f.replace('.json', '').replace(/_/g, ' ') }));
+      }
 
-      // 获取最新一次的 scores 数据（用于查找实际涨幅）
-      const latestScores = valid[0]?.scores || {};
+      let html = '<div class="history-list-page">';
 
-      let html = '';
       // 按日期分组
       const byDate = {};
-      valid.forEach(h => {
-        const date = (h.update_time || '').split(' ')[0];
+      historyList.forEach(h => {
+        const date = (h.update_time || '').split(' ')[0] || h.file.split('_')[0];
         if (!byDate[date]) byDate[date] = [];
         byDate[date].push(h);
       });
 
-      const dateColors = ['#1a2a3a', '#1f2535', '#1a2332'];
+      Object.keys(byDate).sort().reverse().forEach(date => {
+        html += `<div class="hl-date-group">
+          <div class="hl-date-header">📅 ${date}</div>`;
 
-      Object.keys(byDate).sort().reverse().forEach((date, di) => {
-        const daySnapshots = byDate[date];
-        const bgColor = dateColors[di % dateColors.length];
-
-        html += `<div class="history-date-group" style="background:${bgColor}">
-          <div class="history-date-header">📅 ${date}</div>`;
-
-        daySnapshots.forEach((h, si) => {
-          const rec = h.recommendations || {};
-          const strongBuy = rec.strong_buy || [];
-          const buy = rec.buy || [];
+        byDate[date].forEach(h => {
           const time = (h.update_time || '').split(' ')[1] || '';
-          const strategies = h.strategies || [];
-
-          // 每个时间点用不同浅色区分
-          const slotBg = si % 2 === 0 ? 'rgba(42,58,80,0.15)' : 'rgba(59,130,246,0.06)';
-
-          html += `<div class="history-slot" style="background:${slotBg}">
-            <div class="history-slot-time">⏰ ${time}</div>`;
-
-          // 准确率
-          if (si < daySnapshots.length - 1) {
-            const nextH = daySnapshots[si + 1];
-            const nextScores = nextH.scores || {};
-            if (strongBuy.length) {
-              let correct = 0, wrong = 0, totalPnl = 0;
-              strongBuy.forEach(s => {
-                const later = nextScores[s.code];
-                const ydPrice = s.price;
-                if (later && later.price && ydPrice && ydPrice > 0) {
-                  const chg = (later.price - ydPrice) / ydPrice * 100;
-                  if (chg > 0) correct++; else wrong++;
-                  totalPnl += chg;
-                }
-              });
-              const total = correct + wrong;
-              if (total > 0) {
-                const acc = (correct / total * 100).toFixed(0);
-                const avg = (totalPnl / total).toFixed(2);
-                html += `<div class="history-accuracy-mini">
-                  <span>准确率 <strong style="color:${acc >= 60 ? 'var(--fall)' : 'var(--gold)'}">${acc}%</strong></span>
-                  <span>平均 <strong class="${totalPnl >= 0 ? 'text-rise' : 'text-fall'}">${totalPnl >= 0 ? '+' : ''}${avg}%</strong></span>
-                  <span>命中 <strong style="color:var(--accent)">${correct}/${total}</strong></span>
-                </div>`;
-              }
-            }
-          } else if (di < Object.keys(byDate).length - 1 && latestScores) {
-            // 最后一次更新，对比最新数据
-            let correct = 0, wrong = 0, totalPnl = 0;
-            strongBuy.forEach(s => {
-              const later = latestScores[s.code];
-              if (later && later.price && s.price && s.price > 0) {
-                const chg = (later.price - s.price) / s.price * 100;
-                if (chg > 0) correct++; else wrong++;
-                totalPnl += chg;
-              }
-            });
-            const total = correct + wrong;
-            if (total > 0) {
-              const acc = (correct / total * 100).toFixed(0);
-              const avg = (totalPnl / total).toFixed(2);
-              html += `<div class="history-accuracy-mini">
-                <span>准确率 <strong style="color:${acc >= 60 ? 'var(--fall)' : 'var(--gold)'}">${acc}%</strong></span>
-                <span>平均 <strong class="${totalPnl >= 0 ? 'text-rise' : 'text-fall'}">${totalPnl >= 0 ? '+' : ''}${avg}%</strong></span>
-                <span>命中 <strong style="color:var(--accent)">${correct}/${total}</strong></span>
-              </div>`;
-            }
-          }
-
-          // 强烈买入
-          if (strongBuy.length) {
-            html += `<div class="history-rec-group">
-              <span class="history-rec-label rise">强烈买入 ${strongBuy.length}只</span>
-              <div class="history-stocks">${strongBuy.map(s => {
-                const curChg = s.change_pct;
-                const hasCurChg = curChg != null && isFinite(curChg);
-                const estChg = this._findEst(s.code, h.scores);
-                const actChg = this._findActual(s.code, si < daySnapshots.length - 1 ? daySnapshots[si+1].scores : latestScores, s.price);
-                const cls = hasCurChg && curChg >= 0 ? 'rise' : hasCurChg ? 'fall' : '';
-                return `<span class="history-stock-tag ${cls}" style="cursor:pointer" onclick="App.showPage('home');App.openStock('${s.code}')">
-                  ${this.esc(s.name)}${hasCurChg ? (curChg >= 0 ? '+' : '') + curChg.toFixed(1) + '%' : ''}${estChg !== null ? ' / 明日预估'+(estChg >= 0 ? '+' : '')+estChg.toFixed(1)+'%' : ''}${actChg !== null ? ' / 实际'+(actChg >= 0 ? '+' : '')+actChg.toFixed(1)+'%' : ''}
-                </span>`;
-              }).join('')}</div>
-            </div>`;
-          }
-
-          // 建议买入
-          if (buy.length) {
-            html += `<div class="history-rec-group">
-              <span class="history-rec-label buy">建议买入 ${buy.length}只</span>
-              <div class="history-stocks">${buy.map(s => {
-                const curChg = s.change_pct;
-                const hasCurChg = curChg != null && isFinite(curChg);
-                const actChg = this._findActual(s.code, si < daySnapshots.length - 1 ? daySnapshots[si+1].scores : latestScores, s.price);
-                return `<span class="history-stock-tag" style="cursor:pointer" onclick="App.showPage('home');App.openStock('${s.code}')">
-                  ${this.esc(s.name)}${hasCurChg ? (curChg >= 0 ? '+' : '') + curChg.toFixed(1) + '%' : ''}${actChg !== null ? ' / 实际'+(actChg >= 0 ? '+' : '')+actChg.toFixed(1)+'%' : ''}
-                </span>`;
-              }).join('')}</div>
-            </div>`;
-          }
-
-          // 策略
-          if (strategies.length) {
-            html += `<div class="history-strategies">`;
-            strategies.forEach(st => {
-              // 策略准确率：看策略中股票的实际表现
-              const stStocks = st.stocks || [];
-              let stCorrect = 0, stTotal = 0, stPnl = 0;
-              stStocks.forEach(ss => {
-                const actChg = this._findActual(ss.code, si < daySnapshots.length - 1 ? daySnapshots[si+1].scores : latestScores);
-                if (actChg !== null) {
-                  stTotal++;
-                  if (actChg > 0) stCorrect++;
-                  stPnl += actChg;
-                }
-              });
-
-              html += `<div class="history-strategy-item">
-                <div class="history-strategy-name">${this.esc(st.name)}
-                  ${stTotal > 0 ? `<span class="strategy-accuracy">准确率${(stCorrect/stTotal*100).toFixed(0)}% (${stCorrect}/${stTotal})</span>` : ''}
-                </div>
-                <div class="history-strategy-desc">${this.esc(st.desc)}</div>
-                ${stStocks.length ? `<div class="history-stocks">${stStocks.map(ss => {
-                  const actChg = this._findActual(ss.code, si < daySnapshots.length - 1 ? daySnapshots[si+1].scores : latestScores);
-                  return `<span class="history-stock-tag" style="cursor:pointer" onclick="App.showPage('home');App.openStock('${ss.code}')">${this.esc(ss.name)}${actChg !== null ? ' '+(actChg >= 0 ? '+' : '')+actChg.toFixed(1)+'%' : ''}</span>`;
-                }).join('')}</div>` : ''}
-              </div>`;
-            });
-            html += '</div>';
-          }
-
-          html += '</div>'; // .history-slot
+          const sentCls = (h.market_sentiment || '') === '偏多' ? 'text-rise' : (h.market_sentiment || '') === '偏空' ? 'text-fall' : '';
+          html += `<div class="hl-item" onclick="App.showHistoryDetail('${h.file}')">
+            <div class="hl-time">⏰ ${time}</div>
+            <div class="hl-stats">
+              <span class="hl-stat hl-sb">🔥${h.strong_buy_count || '?'}</span>
+              <span class="hl-stat hl-buy">📈${h.buy_count || '?'}</span>
+              <span class="hl-stat hl-watch">👀${h.watch_count || '?'}</span>
+              <span class="hl-sent ${sentCls}">${h.market_sentiment || ''} ${h.avg_score || ''}分</span>
+            </div>
+            <div class="hl-action">
+              <span class="hl-btn">查看详情 →</span>
+            </div>
+          </div>`;
         });
 
-        html += '</div>'; // .history-date-group
+        html += '</div>';
       });
 
-      el.innerHTML = html || '<div class="empty">暂无历史记录</div>';
+      html += '</div>';
+      el.innerHTML = html;
     } catch (e) {
       el.innerHTML = '<div class="empty">加载失败</div>';
     }
   },
 
-  // 辅助：查找预估涨幅
-  _findEst(code, scores) {
-    if (!scores || !scores[code]) return null;
-    const s = scores[code];
-    // 从当前数据找
-    const stock = this.findStock(code);
-    if (stock?.next_day_estimate?.estimate !== undefined) return stock.next_day_estimate.estimate;
-    return null;
+  showHistoryDetail(file) {
+    this._historyDetailFile = file;
+    this.renderHistory();
   },
 
-  // 辅助：查找实际涨幅
-  _findActual(code, laterScores, prevPrice) {
-    if (!laterScores || !laterScores[code] || !prevPrice || prevPrice <= 0) return null;
-    const later = laterScores[code];
-    const laterPrice = later.price;
-    if (!laterPrice || laterPrice <= 0) return null;
-    return (laterPrice - prevPrice) / prevPrice * 100;
+  async _renderHistoryDetail(file) {
+    const el = document.getElementById('history-content');
+
+    el.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text3)">加载中...</div>';
+
+    try {
+      let detail;
+      if (this._apiAvailable) {
+        const res = await fetch(this.API_BASE + '/api/history_detail?file=' + encodeURIComponent(file));
+        if (res.ok) detail = await res.json();
+      }
+      if (!detail) {
+        const res = await fetch('data/history/' + file);
+        if (!res.ok) throw new Error('not found');
+        const raw = await res.json();
+        const rec = raw.recommendations || {};
+        detail = {
+          update_time: raw.update_time,
+          market_sentiment: raw.market_sentiment,
+          avg_score: raw.avg_score,
+          market_analysis: raw.market_analysis,
+          next_day_advice: raw.next_day_advice,
+          strategies: raw.strategies || [],
+          recommendations: [
+            ...(rec.strong_buy || []).map(s => ({...s, recommendation: '强烈买入'})),
+            ...(rec.buy || []).map(s => ({...s, recommendation: '买入'})),
+            ...(rec.watch || []).map(s => ({...s, recommendation: '关注'})),
+            ...(rec.avoid || []).map(s => ({...s, recommendation: '回避'})),
+          ],
+          macro_indices: raw.macro_indices || {},
+        };
+      }
+
+
+      let html = `<div class="hl-detail-page">
+        <button class="btn-back" onclick="App._historyDetailFile=null;App.renderHistory()" style="margin-bottom:16px">← 返回列表</button>
+
+        <div class="hl-detail-header">
+          <div class="hl-detail-time">${detail.update_time}</div>
+          <div class="hl-detail-sent">${detail.market_sentiment} · ${detail.avg_score}分</div>
+        </div>`;
+
+      // 推荐股票明细表格（仅强烈买入和建议买入）
+      const allRecs = detail.recommendations || [];
+      const recs = [
+        ...(allRecs.strong_buy || []).map(s => ({...s, recommendation: '强烈买入'})),
+        ...(allRecs.buy || []).map(s => ({...s, recommendation: '建议买入'})),
+      ];
+
+      html += `<div class="hl-detail-table-section">
+        <h3 style="font-size:15px;font-weight:700;margin-bottom:12px">📊 推荐股票明细（${recs.length}只）</h3>
+        <div style="overflow-x:auto">
+          <table class="hl-detail-table">
+            <thead>
+              <tr>
+                <th>股票名称</th>
+                <th>现价</th>
+                <th>当前涨幅</th>
+                <th>建议买入价</th>
+                <th>买入时间</th>
+                <th>目标价</th>
+                <th>止损价</th>
+                <th>明日预估涨幅</th>
+                <th>次日表现</th>
+                <th>预测验证</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>`;
+
+      recs.forEach(s => {
+        const chgCls = s.change_pct >= 0 ? 'text-rise' : 'text-fall';
+        const chgSign = s.change_pct >= 0 ? '+' : '';
+        const est = s.next_day_estimate;
+        const estStr = est ? (est.estimate >= 0 ? '+' : '') + est.estimate.toFixed(1) + '%' : '-';
+        const estCls = est ? (est.estimate >= 0 ? 'text-rise' : 'text-fall') : '';
+        const recTag = `<span class="stock-rec-tag ${s.recommendation}">${s.recommendation}</span>`;
+
+        html += `<tr>
+          <td>${this.esc(s.name)}<br><span style="font-size:11px;color:var(--text3)">${s.code}</span><br>${recTag}</td>
+          <td class="rt-price-cell" data-rt-code="${s.code}" data-rt-field="price">${(s.price || 0).toFixed(2)}</td>
+          <td class="${chgCls} rt-price-cell" data-rt-code="${s.code}" data-rt-field="change_pct" data-bold="1">${chgSign}${(s.change_pct || 0).toFixed(2)}%</td>
+          <td style="color:var(--fall)">${s.buy_point ? s.buy_point.toFixed(2) : '-'}</td>
+          <td style="font-size:12px">${s.buy_time ? s.buy_time.replace(/\(.*\)/, '') : '-'}</td>
+          <td style="color:var(--rise)">${s.target_price ? s.target_price.toFixed(2) : '-'}</td>
+          <td style="color:var(--fall)">${s.stop_loss ? s.stop_loss.toFixed(2) : '-'}</td>
+          <td class="${estCls}">${estStr}</td>
+          <td class="hl-actual-cell" id="actual-${s.code}">待计算</td>
+          <td class="hl-accuracy-cell" id="acc-${s.code}">-</td>
+          <td><button class="btn-tiny" onclick="App.toggleInlineKline('${s.code}','${file}')">📈 走势</button></td>
+        </tr>
+        <tr id="krow-${s.code}" style="display:none"><td colspan="11" style="padding:8px 12px;background:var(--bg2)">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <span style="font-size:13px;font-weight:600" id="ktitle-${s.code}">📈 ${this.esc(s.name)} 价格走势</span>
+            <button class="btn-tiny" onclick="App.toggleInlineKline('${s.code}','${file}')">收起</button>
+          </div>
+          <div id="kmsg-${s.code}" style="padding:8px;color:var(--text3);font-size:12px;display:none"></div>
+          <canvas id="kcanvas-${s.code}" width="800" height="220" style="width:100%;height:220px;background:rgba(255,255,255,0.02);border-radius:6px"></canvas>
+        </td></tr>`;
+      });
+
+      html += `</tbody></table></div></div>`;
+
+      html += '</div>';
+      el.innerHTML = html;
+
+      // 尝试计算明日实际涨幅和准确率
+      this._calcHistoryAccuracy(file, recs);
+
+      // 启动实时数据更新
+      if (this.realtimeTimer) {
+        // 复用已有的实时数据更新机制
+      }
+
+    } catch (e) {
+      el.innerHTML = '<div class="empty">加载失败: ' + e.message + '</div>';
+    }
   },
 
-  // === 个股详情页（需求4：持仓股票详情加强） ===
+  async _calcHistoryAccuracy(file, recs) {
+    // 找到这条记录所属日期的【下一天】的第一条记录，计算实际涨幅
+    try {
+      const histDir = 'data/history/';
+      const res = await fetch(histDir);
+      const text = await res.text();
+      const files = (text.match(/"[^"]+\.json"/g) || []).map(f => f.replace(/"/g, '')).sort();
+      const idx = files.indexOf(file);
+      if (idx < 0 || idx >= files.length - 1) return;
+
+      // 从当前文件名提取日期（如 2026-05-18_1328 -> 2026-05-18）
+      const curDate = file.substring(0, 10);
+
+      // 找到下一天的第一条记录（不是同一天的下一条）
+      let nextFile = null;
+      for (let i = idx + 1; i < files.length; i++) {
+        const nextDate = files[i].substring(0, 10);
+        if (nextDate > curDate) {
+          nextFile = files[i];
+          break;
+        }
+      }
+      if (!nextFile) return; // 还没有下一天的数据
+
+      const nextRes = await fetch(histDir + nextFile);
+      const nextData = await nextRes.json();
+      const nextScores = nextData.scores || {};
+
+      recs.forEach(s => {
+        const laterPrice = nextScores[s.code]?.price;
+        const prevPrice = s.price || s.prev_close;
+        if (laterPrice && prevPrice && prevPrice > 0) {
+          const actualPct = (laterPrice - prevPrice) / prevPrice * 100;
+          const sign = actualPct >= 0 ? '+' : '';
+          const cls = actualPct >= 0 ? 'text-rise' : 'text-fall';
+
+          // 次日表现：显示实际涨幅
+          const actualEl = document.getElementById('actual-' + s.code);
+          if (actualEl) {
+            const est = s.next_day_estimate?.estimate || 0;
+            const diff = actualPct - est;
+            const diffStr = diff >= 0 ? `+${diff.toFixed(1)}` : `${diff.toFixed(1)}`;
+            actualEl.innerHTML = `<span class="${cls}" style="font-weight:600">${sign}${actualPct.toFixed(2)}%</span><br><span style="font-size:10px;color:var(--text3)">vs预估${diffStr}</span>`;
+          }
+
+          // 预测验证：方向+幅度综合判断
+          const est = s.next_day_estimate?.estimate || 0;
+          const predictedUp = est > 0;
+          const actualUp = actualPct > 0;
+          const hit = predictedUp === actualUp;
+          const accEl = document.getElementById('acc-' + s.code);
+          if (accEl) {
+            // 三级验证：✓命中 / ≈接近 / ✗偏差
+            const absDiff = Math.abs(actualPct - est);
+            let icon, label, vcls;
+            if (hit && absDiff < 1.5) {
+              icon = '✓'; label = '精准'; vcls = 'text-rise';
+            } else if (hit) {
+              icon = '✓'; label = '命中'; vcls = 'text-rise';
+            } else if (absDiff < 1) {
+              icon = '≈'; label = '接近'; vcls = 'var(--gold)';
+            } else {
+              icon = '✗'; label = '偏差'; vcls = 'text-fall';
+            }
+            accEl.innerHTML = `<span style="color:${vcls};font-weight:600">${icon} ${label}</span>`;
+          }
+        }
+      });
+    } catch {}
+  },
+
+  async toggleInlineKline(code, historyFile) {
+    const row = document.getElementById('krow-' + code);
+    if (!row) return;
+    const show = row.style.display === 'none';
+    row.style.display = show ? '' : 'none';
+    if (!show) return;
+
+    // Already loaded?
+    if (row.dataset.loaded) return;
+    row.dataset.loaded = '1';
+
+    const canvas = document.getElementById('kcanvas-' + code);
+    const msgEl = document.getElementById('kmsg-' + code);
+
+    try {
+      let points = [];
+      if (this._apiAvailable) {
+        const res = await fetch(this.API_BASE + '/api/price_history?code=' + code + '&days=3');
+        if (res.ok) { const data = await res.json(); points = data.points || []; }
+      }
+      if (points.length < 2) {
+        canvas.style.display = 'none';
+        msgEl.style.display = '';
+        msgEl.textContent = '暂无足够价格记录（需多次分析积累数据）';
+        return;
+      }
+      this._drawPriceLine(canvas, points);
+    } catch {
+      canvas.style.display = 'none';
+      msgEl.style.display = '';
+      msgEl.textContent = '数据加载失败';
+    }
+  },
+
+  _drawPriceLine(canvas, points) {
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    const pad = { top: 30, right: 60, bottom: 30, left: 10 };
+    const cW = W - pad.left - pad.right;
+    const cH = H - pad.top - pad.bottom;
+    ctx.clearRect(0, 0, W, H);
+
+    const prices = points.map(p => p.price);
+    let minP = Math.min(...prices), maxP = Math.max(...prices);
+    const range = maxP - minP || 1;
+    minP -= range * 0.08;
+    maxP += range * 0.08;
+    const totalRange = maxP - minP;
+    const toY = p => pad.top + (1 - (p - minP) / totalRange) * cH;
+    const toX = i => pad.left + (i / (points.length - 1)) * cW;
+
+    // Grid
+    ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+    ctx.lineWidth = 0.5;
+    for (let i = 0; i <= 4; i++) {
+      const y = pad.top + (cH / 4) * i;
+      ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(W - pad.right, y); ctx.stroke();
+      const price = maxP - (totalRange / 4) * i;
+      ctx.fillStyle = 'rgba(255,255,255,0.4)';
+      ctx.font = '11px monospace';
+      ctx.textAlign = 'left';
+      ctx.fillText(price.toFixed(2), W - pad.right + 5, y + 4);
+    }
+
+    // Gradient fill under line
+    const grad = ctx.createLinearGradient(0, pad.top, 0, pad.top + cH);
+    grad.addColorStop(0, 'rgba(59,130,246,0.25)');
+    grad.addColorStop(1, 'rgba(59,130,246,0.02)');
+    ctx.beginPath();
+    ctx.moveTo(toX(0), toY(points[0].price));
+    points.forEach((p, i) => ctx.lineTo(toX(i), toY(p.price)));
+    ctx.lineTo(toX(points.length - 1), pad.top + cH);
+    ctx.lineTo(toX(0), pad.top + cH);
+    ctx.closePath();
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    // Line
+    ctx.beginPath();
+    ctx.moveTo(toX(0), toY(points[0].price));
+    points.forEach((p, i) => ctx.lineTo(toX(i), toY(p.price)));
+    ctx.strokeStyle = '#3b82f6';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Data points
+    points.forEach((p, i) => {
+      const x = toX(i), y = toY(p.price);
+      ctx.beginPath();
+      ctx.arc(x, y, 3, 0, Math.PI * 2);
+      ctx.fillStyle = '#3b82f6';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(59,130,246,0.4)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    });
+
+    // Time labels
+    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+    ctx.font = '10px monospace';
+    ctx.textAlign = 'center';
+    const step = Math.max(1, Math.floor(points.length / 6));
+    points.forEach((p, i) => {
+      if (i % step === 0 || i === points.length - 1) {
+        const label = p.time ? p.time.substring(5, 16) : '';
+        ctx.fillText(label, toX(i), H - 5);
+      }
+    });
+
+    // Start/End price info
+    const lastP = points[points.length - 1].price;
+    const firstP = points[0].price;
+    const chgPct = firstP > 0 ? ((lastP - firstP) / firstP * 100) : 0;
+    const chgSign = chgPct >= 0 ? '+' : '';
+    ctx.fillStyle = chgPct >= 0 ? '#ef4444' : '#22c55e';
+    ctx.font = 'bold 12px sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(`${chgSign}${chgPct.toFixed(2)}% (${firstP.toFixed(2)} -> ${lastP.toFixed(2)})`, pad.left, 18);
+  },
+
+  // === 个股详情页 ===
   openStock(code) {
     const stock = this.findStock(code);
     if (!stock) { this.showToast('未找到该股票'); return; }
 
-    // 判断是否在持仓中
     const portfolio = Portfolio.get();
     const isHolding = portfolio.some(p => p.code === code);
     const holding = portfolio.find(p => p.code === code);
 
     this.showPage('detail');
-    document.getElementById('detail-title').textContent = `${stock.name} ${code}${isHolding ? ' 💼' : ''}`;
+    document.getElementById('detail-title').textContent = stock.name + ' ' + code + (isHolding ? ' 💼' : '');
 
     const s = stock;
-    const chgCls = s.change_pct >= 0 ? 'text-rise' : 'text-fall';
-    const chgSign = s.change_pct >= 0 ? '+' : '';
+    // Use realtime if available
+    const rt = this.realtimeCache[code];
+    const displayPrice = rt ? rt.price : s.price;
+    const displayChgPct = rt ? rt.change_pct : s.change_pct;
+
+    const chgCls = displayChgPct >= 0 ? 'text-rise' : 'text-fall';
+    const chgSign = displayChgPct >= 0 ? '+' : '';
 
     const buyKw = ['金叉','超卖','放量上涨','多头','突破','低位','偏低','下轨','温和上涨','强势上涨','低PE','红柱'];
     const sellKw = ['死叉','超买','放量下跌','空头','高估','偏高','上轨','回调','大幅下跌','绿柱','缩量'];
 
     let html = '';
 
-    // 核心数据
     html += `<div class="detail-section">
       <h3>📊 实时行情</h3>
       <div style="text-align:center;margin-bottom:16px">
-        <div style="font-size:36px;font-weight:800" class="${chgCls}">${(s.price || 0).toFixed(2)}</div>
-        <div style="font-size:16px;font-weight:600" class="${chgCls}">${chgSign}${(s.change_pct || 0).toFixed(2)}%</div>
+        <div style="font-size:36px;font-weight:800" class="${chgCls}">${displayPrice.toFixed(2)}</div>
+        <div style="font-size:16px;font-weight:600" class="${chgCls}">${chgSign}${displayChgPct.toFixed(2)}%</div>
+        ${this._apiAvailable ? '<div style="font-size:10px;color:var(--text3)">实时数据 · 每30秒刷新</div>' : ''}
         <div style="font-size:24px;font-weight:800;margin-top:8px;color:${this.recColor(s.recommendation)}">${s.recommendation} · ${s.score}分</div>`;
 
     if (s.next_day_estimate) {
@@ -676,9 +1037,8 @@ const App = {
       </div>
     </div>`;
 
-    // 持仓盈亏（如果持仓中）
     if (isHolding && holding) {
-      const pnl = s.price - holding.cost;
+      const pnl = displayPrice - holding.cost;
       const pnlPct = holding.cost > 0 ? (pnl / holding.cost * 100) : 0;
       const pnlAmt = pnl * holding.qty;
       const pCls = pnl >= 0 ? 'text-rise' : 'text-fall';
@@ -689,67 +1049,47 @@ const App = {
         <div style="padding:12px 16px">
           <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px">
             <div style="text-align:center"><div style="font-size:11px;color:var(--text3)">成本价</div><div style="font-size:16px;font-weight:700">${holding.cost.toFixed(2)}</div></div>
-            <div style="text-align:center"><div style="font-size:11px;color:var(--text3)">现价</div><div style="font-size:16px;font-weight:700" class="${chgCls}">${s.price.toFixed(2)}</div></div>
+            <div style="text-align:center"><div style="font-size:11px;color:var(--text3)">现价</div><div style="font-size:16px;font-weight:700" class="${chgCls}">${displayPrice.toFixed(2)}</div></div>
             <div style="text-align:center"><div style="font-size:11px;color:var(--text3)">盈亏</div><div style="font-size:16px;font-weight:700" class="${pCls}">${pSign}${pnlAmt.toFixed(0)}元</div></div>
             <div style="text-align:center"><div style="font-size:11px;color:var(--text3)">盈亏比例</div><div style="font-size:16px;font-weight:700" class="${pCls}">${pSign}${pnlPct.toFixed(2)}%</div></div>
           </div>`;
 
-      // 持仓操作建议
       if (pnlPct < -5) {
-        html += `<div style="background:var(--rise-bg);padding:10px 14px;border-radius:8px;font-size:13px;color:var(--rise)">
-          ⚠️ 亏损较大，建议严格执行止损。止损位 ${s.stop_loss || '-'} 元，距止损 ${s.stop_loss ? ((s.price - s.stop_loss) / s.price * 100).toFixed(1) + '%' : '-'}。
-          若基本面无变化且技术面出现企稳信号，可考虑补仓降低成本。
-        </div>`;
+        html += `<div style="background:var(--rise-bg);padding:10px 14px;border-radius:8px;font-size:13px;color:var(--rise)">⚠️ 亏损较大，建议严格执行止损。止损位 ${s.stop_loss || '-'} 元。</div>`;
       } else if (pnlPct > 10) {
-        html += `<div style="background:var(--fall-bg);padding:10px 14px;border-radius:8px;font-size:13px;color:var(--fall)">
-          ✅ 盈利丰厚！目标价 ${s.target_price || '-'} 元，${s.target_price && s.price < s.target_price ? '尚未到达目标，可继续持有。' : '已达到目标区间，建议分批止盈。'}
-          ${s.sell_time ? '建议卖出时间：' + s.sell_time : ''}
-        </div>`;
+        html += `<div style="background:var(--fall-bg);padding:10px 14px;border-radius:8px;font-size:13px;color:var(--fall)">✅ 盈利丰厚！目标价 ${s.target_price || '-'} 元，${s.target_price && displayPrice < s.target_price ? '尚未到达目标，可继续持有。' : '已达到目标区间，建议分批止盈。'}</div>`;
       } else {
-        html += `<div style="background:var(--bg2);padding:10px 14px;border-radius:8px;font-size:13px;color:var(--text2)">
-          当前持仓浮${pnl >= 0 ? '盈' : '亏'}${Math.abs(pnlPct).toFixed(1)}%，${s.recommendation === '强烈买入' || s.recommendation === '买入' ? '趋势向好，建议持有等待目标价。' : s.recommendation === '卖出' || s.recommendation === '强烈卖出' ? '技术面转弱，建议逢高减仓。' : '建议继续观察。'}
-        </div>`;
+        html += `<div style="background:var(--bg2);padding:10px 14px;border-radius:8px;font-size:13px;color:var(--text2)">当前持仓浮${pnl >= 0 ? '盈' : '亏'}${Math.abs(pnlPct).toFixed(1)}%，${s.recommendation === '强烈买入' || s.recommendation === '买入' ? '趋势向好，建议持有等待目标价。' : s.recommendation === '卖出' || s.recommendation === '强烈卖出' ? '技术面转弱，建议逢高减仓。' : '建议继续观察。'}</div>`;
       }
-
       html += '</div></div>';
     }
 
-    // 技术指标
     if (s.ma5) {
-      html += `<div class="detail-section">
-        <h3>📈 技术指标</h3>
-        <div class="detail-grid">
-          <div class="detail-grid-item"><div class="detail-grid-label">MA5</div><div class="detail-grid-value">${s.ma5}</div></div>
-          <div class="detail-grid-item"><div class="detail-grid-label">MA10</div><div class="detail-grid-value">${s.ma10}</div></div>
-          <div class="detail-grid-item"><div class="detail-grid-label">MA20</div><div class="detail-grid-value">${s.ma20}</div></div>
-          ${s.ma60 ? `<div class="detail-grid-item"><div class="detail-grid-label">MA60</div><div class="detail-grid-value">${s.ma60}</div></div>` : ''}
-          ${s.rsi6 ? `<div class="detail-grid-item"><div class="detail-grid-label">RSI6</div><div class="detail-grid-value" style="color:${s.rsi6 < 30 ? 'var(--rise)' : s.rsi6 > 70 ? 'var(--fall)' : ''}">${s.rsi6}</div></div>` : ''}
-          ${s.rsi12 ? `<div class="detail-grid-item"><div class="detail-grid-label">RSI12</div><div class="detail-grid-value">${s.rsi12}</div></div>` : ''}
-          ${s.kdj_k ? `<div class="detail-grid-item"><div class="detail-grid-label">KDJ-K</div><div class="detail-grid-value">${s.kdj_k}</div></div>` : ''}
-          ${s.kdj_j ? `<div class="detail-grid-item"><div class="detail-grid-label">KDJ-J</div><div class="detail-grid-value" style="color:${s.kdj_j < 20 ? 'var(--rise)' : s.kdj_j > 100 ? 'var(--fall)' : ''}">${s.kdj_j}</div></div>` : ''}
-          ${s.macd_dif !== undefined ? `<div class="detail-grid-item"><div class="detail-grid-label">MACD DIF</div><div class="detail-grid-value" style="color:${s.macd_dif >= 0 ? 'var(--rise)' : 'var(--fall)'}">${s.macd_dif}</div></div>` : ''}
-          ${s.boll_upper ? `<div class="detail-grid-item"><div class="detail-grid-label">布林上轨</div><div class="detail-grid-value">${s.boll_upper}</div></div>` : ''}
-          ${s.boll_middle ? `<div class="detail-grid-item"><div class="detail-grid-label">布林中轨</div><div class="detail-grid-value">${s.boll_middle}</div></div>` : ''}
-          ${s.boll_lower ? `<div class="detail-grid-item"><div class="detail-grid-label">布林下轨</div><div class="detail-grid-value">${s.boll_lower}</div></div>` : ''}
-        </div>
-      </div>`;
+      html += `<div class="detail-section"><h3>📈 技术指标</h3><div class="detail-grid">
+        <div class="detail-grid-item"><div class="detail-grid-label">MA5</div><div class="detail-grid-value">${s.ma5}</div></div>
+        <div class="detail-grid-item"><div class="detail-grid-label">MA10</div><div class="detail-grid-value">${s.ma10}</div></div>
+        <div class="detail-grid-item"><div class="detail-grid-label">MA20</div><div class="detail-grid-value">${s.ma20}</div></div>
+        ${s.ma60 ? `<div class="detail-grid-item"><div class="detail-grid-label">MA60</div><div class="detail-grid-value">${s.ma60}</div></div>` : ''}
+        ${s.rsi6 ? `<div class="detail-grid-item"><div class="detail-grid-label">RSI6</div><div class="detail-grid-value" style="color:${s.rsi6 < 30 ? 'var(--rise)' : s.rsi6 > 70 ? 'var(--fall)' : ''}">${s.rsi6}</div></div>` : ''}
+        ${s.rsi12 ? `<div class="detail-grid-item"><div class="detail-grid-label">RSI12</div><div class="detail-grid-value">${s.rsi12}</div></div>` : ''}
+        ${s.kdj_k ? `<div class="detail-grid-item"><div class="detail-grid-label">KDJ-K</div><div class="detail-grid-value">${s.kdj_k}</div></div>` : ''}
+        ${s.kdj_j ? `<div class="detail-grid-item"><div class="detail-grid-label">KDJ-J</div><div class="detail-grid-value" style="color:${s.kdj_j < 20 ? 'var(--rise)' : (s.kdj_j > 100 ? 'var(--fall)' : '')}">${s.kdj_j}</div></div>` : ''}
+        ${s.macd_dif !== undefined ? `<div class="detail-grid-item"><div class="detail-grid-label">MACD DIF</div><div class="detail-grid-value" style="color:${s.macd_dif >= 0 ? 'var(--rise)' : 'var(--fall)'}">${s.macd_dif}</div></div>` : ''}
+        ${s.boll_upper ? `<div class="detail-grid-item"><div class="detail-grid-label">布林上轨</div><div class="detail-grid-value">${s.boll_upper}</div></div>` : ''}
+        ${s.boll_middle ? `<div class="detail-grid-item"><div class="detail-grid-label">布林中轨</div><div class="detail-grid-value">${s.boll_middle}</div></div>` : ''}
+        ${s.boll_lower ? `<div class="detail-grid-item"><div class="detail-grid-label">布林下轨</div><div class="detail-grid-value">${s.boll_lower}</div></div>` : ''}
+      </div></div>`;
     }
 
-    // 信号
     if (s.signals && s.signals.length) {
-      html += `<div class="detail-section">
-        <h3>📡 技术信号</h3>
-        <div class="signal-tags">${s.signals.map(sig => {
-          const isBuy = buyKw.some(k => sig.includes(k));
-          const isSell = sellKw.some(k => sig.includes(k));
-          return `<span class="signal-tag ${isBuy ? 'buy' : isSell ? 'sell' : 'neutral'}">${sig}</span>`;
-        }).join('')}</div>
-      </div>`;
+      html += `<div class="detail-section"><h3>📡 技术信号</h3><div class="signal-tags">${s.signals.map(sig => {
+        const isBuy = buyKw.some(k => sig.includes(k));
+        const isSell = sellKw.some(k => sig.includes(k));
+        return `<span class="signal-tag ${isBuy ? 'buy' : isSell ? 'sell' : 'neutral'}">${sig}</span>`;
+      }).join('')}</div></div>`;
     }
 
-    // 操作建议
-    html += `<div class="detail-section">
-      <h3>🎯 操作建议</h3>
+    html += `<div class="detail-section"><h3>🎯 操作建议</h3>
       <div class="op-row"><span class="op-label">综合建议</span><span class="op-value" style="color:${this.recColor(s.recommendation)};font-size:16px">${s.recommendation}（${s.score}分）</span></div>
       ${s.trend ? `<div class="op-row"><span class="op-label">趋势判断</span><span class="op-value">${s.trend === '上升' ? '⬆ 上升趋势' : s.trend === '下降' ? '⬇ 下降趋势' : '↔ 横盘震荡'}</span></div>` : ''}
       ${s.buy_point ? `<div class="op-row"><span class="op-label">建议买入区间</span><span class="op-value text-rise">${s.buy_point} 元</span></div>` : ''}
@@ -762,29 +1102,15 @@ const App = {
       ${!isHolding ? `<div style="padding:12px 16px"><button class="btn btn-primary" style="width:100%" onclick="App.addToPortfolio('${s.code}')">➕ 添加到我的持仓</button></div>` : ''}
     </div>`;
 
-    // 分析文本
     if (s.analysis_text) {
-      html += `<div class="detail-section">
-        <h3>📝 分析解读</h3>
-        <div class="analysis-text">${s.analysis_text}</div>
-      </div>`;
+      html += `<div class="detail-section"><h3>📝 分析解读</h3><div class="analysis-text">${s.analysis_text}</div></div>`;
     }
 
-    // === 持仓增强分析（需求4） ===
-    // 主力心理分析
     if (s.main_force_analysis) {
-      html += `<div class="detail-section" style="border-color:var(--accent2)">
-        <h3>🧠 主力心理分析</h3>
-        <div class="analysis-text">${s.main_force_analysis.replace(/\n/g, '<br>')}</div>
-      </div>`;
+      html += `<div class="detail-section" style="border-color:var(--accent2)"><h3>🧠 主力心理分析</h3><div class="analysis-text">${s.main_force_analysis.replace(/\n/g, '<br>')}</div></div>`;
     }
-
-    // 筹码分布分析
     if (s.chip_analysis) {
-      html += `<div class="detail-section" style="border-color:var(--gold)">
-        <h3>📊 筹码分布分析</h3>
-        <div class="analysis-text">${s.chip_analysis.replace(/\n/g, '<br>')}</div>
-      </div>`;
+      html += `<div class="detail-section" style="border-color:var(--gold)"><h3>📊 筹码分布分析</h3><div class="analysis-text">${s.chip_analysis.replace(/\n/g, '<br>')}</div></div>`;
     }
 
     document.getElementById('detail-content').innerHTML = html;
@@ -823,7 +1149,7 @@ const App = {
     const pick = available[0];
     document.getElementById('modal-code').value = pick.code;
     document.getElementById('modal-price').value = pick.price.toFixed(2);
-    this.showToast(`已选取：${pick.name}(${pick.score}分)`);
+    this.showToast('已选取：' + pick.name + '(' + pick.score + '分)');
   },
 
   closeModal() { document.getElementById('add-modal').classList.add('hidden'); },
@@ -851,11 +1177,128 @@ const App = {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById('page-' + id).classList.add('active');
     window.scrollTo(0, 0);
-    if (id === 'history') this.renderHistory();
+    if (id === 'history') { this._historyDetailFile = null; this.renderHistory(); }
     if (id === 'trading') this.renderTrading();
+    if (id === 'strategy') this.renderStrategy();
   },
 
   back() { this.showPage('home'); },
+
+  // === 策略分析页 ===
+  async renderStrategy() {
+    const el = document.getElementById('strategy-content');
+    if (!el) return;
+    el.innerHTML = '<div style="padding:40px;text-align:center;color:var(--text3)">加载策略数据...</div>';
+
+    try {
+      let data = null;
+      if (this._apiAvailable) {
+        const res = await fetch(this.API_BASE + '/api/strategy_results');
+        if (res.ok) data = await res.json();
+      }
+      if (!data) {
+        // 从 recommendations.json 加载
+        try {
+          const res = await fetch('data/recommendations.json');
+          if (res.ok) {
+            const rec = await res.json();
+            data = rec.strategy_results || null;
+          }
+        } catch {}
+      }
+      if (!data) {
+        el.innerHTML = '<div style="padding:40px;text-align:center;color:var(--text3)">暂无策略数据，等待下次分析更新</div>';
+        return;
+      }
+
+      const stats = data.stats || {};
+      const results = data.results || {};
+      const date = data.date || '';
+      document.getElementById('strategy-update-time').textContent = date ? date + ' 筛选' : '';
+
+      // 策略统计排行
+      let html = `<div style="margin-bottom:16px">
+        <div style="font-size:15px;font-weight:700;margin-bottom:12px">📊 策略表现排行</div>
+        <div style="font-size:11px;color:var(--text3);margin-bottom:8px">按胜率排序 · 追踪中 · 30天验证期</div>
+        <div style="overflow-x:auto"><table style="width:100%;font-size:12px;border-collapse:collapse">
+          <thead><tr style="border-bottom:1px solid var(--border)">
+            <th style="padding:6px 8px;text-align:left">策略</th>
+            <th style="padding:6px 4px">类别</th>
+            <th style="padding:6px 4px">胜率</th>
+            <th style="padding:6px 4px">平均收益</th>
+            <th style="padding:6px 4px">样本数</th>
+            <th style="padding:6px 4px">活跃天数</th>
+          </tr></thead><tbody>`;
+
+      const statEntries = Object.entries(stats);
+      statEntries.sort((a, b) => (b[1].win_rate || 0) - (a[1].win_rate || 0));
+
+      statEntries.forEach(([sid, st]) => {
+        const wr = st.win_rate || 0;
+        const wrCls = wr >= 50 ? 'text-rise' : 'text-fall';
+        const wrBar = `<div style="height:4px;border-radius:2px;background:${wr >= 50 ? 'var(--rise)' : 'var(--fall)'};width:${Math.min(wr, 100)}%;margin-top:2px"></div>`;
+        const avgCls = (st.avg_pnl || 0) >= 0 ? 'text-rise' : 'text-fall';
+        html += `<tr style="border-bottom:1px solid var(--border)">
+          <td style="padding:6px 8px;font-weight:600">${this.esc(st.name)}</td>
+          <td style="padding:6px 4px;color:var(--text3)">${st.category || ''}</td>
+          <td style="padding:6px 4px"><span class="${wrCls}">${wr}%</span>${wrBar}</td>
+          <td style="padding:6px 4px" class="${avgCls}">${st.avg_pnl >= 0 ? '+' : ''}${st.avg_pnl}%</td>
+          <td style="padding:6px 4px">${st.total_trades || 0}</td>
+          <td style="padding:6px 4px;color:var(--text3)">${st.days_active || 0}</td>
+        </tr>`;
+      });
+
+      html += '</tbody></table></div></div>';
+
+      // 今日筛选结果
+      html += '<div style="margin-top:16px"><div style="font-size:15px;font-weight:700;margin-bottom:12px">🎯 今日筛选结果</div>';
+
+      const resultEntries = Object.entries(results);
+      if (resultEntries.length === 0) {
+        html += '<div style="padding:20px;text-align:center;color:var(--text3)">今日无匹配策略</div>';
+      } else {
+        resultEntries.forEach(([sid, stocks]) => {
+          const stName = (stats[sid] || {}).name || sid;
+          html += `<div style="margin-bottom:12px">
+            <div style="font-size:13px;font-weight:600;margin-bottom:6px">📌 ${this.esc(stName)}（${stocks.length}只）</div>`;
+
+          stocks.forEach((s, i) => {
+            const chgCls = (s.change_pct || 0) >= 0 ? 'text-rise' : 'text-fall';
+            const chgSign = (s.change_pct || 0) >= 0 ? '+' : '';
+            html += `<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 10px;background:var(--bg2);border-radius:6px;margin-bottom:4px;font-size:12px">
+              <div>
+                <span style="font-weight:600">${this.esc(s.name)}</span>
+                <span style="color:var(--text3);margin-left:6px">${s.code}</span>
+                <span style="color:var(--text3);margin-left:4px">评分${s.score || '-'}</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px">
+                <span class="${chgCls}">${s.price?.toFixed(2) || '-'}元 ${chgSign}${(s.change_pct || 0).toFixed(2)}%</span>
+                <span style="color:var(--text3);font-size:11px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${this.esc(s.reason || '')}</span>
+              </div>
+            </div>`;
+          });
+
+          html += '</div>';
+        });
+      }
+
+      // 策略说明
+      html += `<div style="margin-top:20px;padding:12px;background:var(--bg2);border-radius:8px">
+        <div style="font-size:12px;color:var(--text3);line-height:1.6">
+          🧪 <strong>策略实验室说明</strong><br>
+          • 定义了20个短线策略，覆盖趋势、技术、形态、资金、庄家5大类别<br>
+          • 每次分析自动筛选符合条件的股票（每策略最多5只）<br>
+          • 追踪30天表现，统计各策略胜率和平均收益<br>
+          • 不断优化策略权重，目标是筛选出高收益强稳定性的策略<br>
+          • 策略基于技术指标和庄家行为分析，捕捉拉升前埋伏和回调吃利机会
+        </div>
+      </div>`;
+
+      el.innerHTML = html;
+    } catch (e) {
+      el.innerHTML = '<div style="padding:40px;text-align:center;color:var(--text3)">加载失败: ' + e.message + '</div>';
+    }
+  },
 
   // === 工具 ===
   findStock(code) {
@@ -918,7 +1361,7 @@ App.renderTrading = function() {
   const r = App.recData;
   const trading = r?.trading;
   if (!trading) {
-    document.getElementById('trading-overview').innerHTML = '<div class="empty">等待首次交易分析...</div><div class="empty">系统将在下次分析时自动执行交易决策</div>';
+    document.getElementById('trading-overview').innerHTML = '<div class="empty">等待首次交易分析...</div>';
     return;
   }
   this.renderTradingOverview(trading);
@@ -932,6 +1375,7 @@ App.showTradingTab = function(tab) {
   event.target.classList.add('active');
   if (tab === 'records') this.renderTradingRecords();
   if (tab === 'report') this.renderTradingReportFull();
+  if (tab === 'purchased') this.renderPurchasedStocks();
 };
 
 App.renderTradingOverview = function(trading) {
@@ -942,7 +1386,6 @@ App.renderTradingOverview = function(trading) {
   const retCls = totalReturn >= 0 ? 'text-rise' : 'text-fall';
   const retEmoji = totalReturn >= 0 ? '🚀' : '📉';
 
-  // 账户概览
   let html = `<div class="trading-overview">
     <div class="trading-account-card">
       <div class="trading-account-header">
@@ -959,14 +1402,12 @@ App.renderTradingOverview = function(trading) {
       </div>
     </div>
 
-    <!-- 交易统计 -->
     <div class="trading-stats-bar">
       <div class="ts-item"><span class="ts-val">${stats.total_trades || 0}</span><span class="ts-label">总交易</span></div>
       <div class="ts-item"><span class="ts-val">${stats.total_trades ? (stats.win_trades / stats.total_trades * 100).toFixed(0) : 0}%</span><span class="ts-label">胜率</span></div>
       <div class="ts-item"><span class="ts-val">${stats.max_drawdown || 0}%</span><span class="ts-label">最大回撤</span></div>
     </div>`;
 
-  // 当前持仓
   const holdings = p.holdings || {};
   const hKeys = Object.keys(holdings);
   if (hKeys.length) {
@@ -995,7 +1436,6 @@ App.renderTradingOverview = function(trading) {
     html += `<div class="trading-empty">空仓观望中</div>`;
   }
 
-  // 最新日报摘要
   const report = trading.latest_report;
   if (report) {
     html += `<div class="trading-section-title">📝 最近操作</div>`;
@@ -1031,16 +1471,11 @@ App.renderTradingOverview = function(trading) {
 };
 
 App.renderTradingReport = function(trading) {
-  // 简报显示在overview中，完整日报在report tab
   document.getElementById('trading-report').innerHTML = '<div class="empty">点击"日报"标签查看完整汇报</div>';
 };
 
 App.renderTradingReportFull = function() {
   const el = document.getElementById('trading-report');
-  const trading = App.recData?.trading;
-  if (!trading) { el.innerHTML = '<div class="empty">暂无数据</div>'; return; }
-
-  // 从 trade_log.json 加载完整日报
   fetch('data/portfolio.json').then(r => r.json()).then(data => {
     const reports = data.daily_reports || [];
     if (!reports.length) { el.innerHTML = '<div class="empty">暂无日报</div>'; return; }
@@ -1063,12 +1498,9 @@ App.renderTradingReportFull = function() {
           <div class="rn"><div class="rn-val ${pnlCls}">${pnlSign}${(report.today_pnl||0).toFixed(0)}元</div><div class="rn-label">今日盈亏</div></div>
           <div class="rn"><div class="rn-val">${(report.position_ratio||0).toFixed(0)}%</div><div class="rn-label">仓位</div></div>
         </div>`;
-
       if (report.buys?.length) {
         html += `<div class="report-section"><div class="rs-title">✅ 买入</div>`;
-        report.buys.forEach(b => {
-          html += `<div class="rs-item"><strong>${this.esc(b.name)}</strong> ${b.qty}股 × ${b.price.toFixed(2)}元 = ${(b.amount||0).toLocaleString('zh-CN', {maximumFractionDigits:0})}元<br><span class="rs-reason">${this.esc(b.reason)}</span></div>`;
-        });
+        report.buys.forEach(b => { html += `<div class="rs-item"><strong>${this.esc(b.name)}</strong> ${b.qty}股 × ${b.price.toFixed(2)}元<br><span class="rs-reason">${this.esc(b.reason)}</span></div>`; });
         html += '</div>';
       }
       if (report.sells?.length) {
@@ -1076,7 +1508,7 @@ App.renderTradingReportFull = function() {
         report.sells.forEach(s => {
           const sp = (s.pnl||0) >= 0 ? '+' : '';
           const sc = (s.pnl||0) >= 0 ? 'text-rise' : 'text-fall';
-          html += `<div class="rs-item"><strong>${this.esc(s.name)}</strong> ${s.qty}股 × ${s.price.toFixed(2)}元 · <span class="${sc}">${sp}${(s.pnl||0).toFixed(0)}元(${sp}${(s.pnl_pct||0).toFixed(1)}%)</span><br><span class="rs-reason">${this.esc(s.reason)}</span></div>`;
+          html += `<div class="rs-item"><strong>${this.esc(s.name)}</strong> ${s.qty}股 × ${s.price.toFixed(2)}元 · <span class="${sc}">${sp}${(s.pnl||0).toFixed(0)}元</span><br><span class="rs-reason">${this.esc(s.reason)}</span></div>`;
         });
         html += '</div>';
       }
@@ -1085,22 +1517,14 @@ App.renderTradingReportFull = function() {
         report.holdings.forEach(h => {
           const hc = (h.pnl||0) >= 0 ? 'text-rise' : 'text-fall';
           const hs = (h.pnl||0) >= 0 ? '+' : '';
-          html += `<div class="rsg-item"><span class="rsg-name">${this.esc(h.name)}</span><span class="rsg-info">${h.qty}股</span><span class="rsg-pnl ${hc}">${hs}${(h.pnl||0).toFixed(0)}元(${hs}${(h.pnl_pct||0).toFixed(1)}%)</span></div>`;
+          html += `<div class="rsg-item"><span class="rsg-name">${this.esc(h.name)}</span><span class="rsg-info">${h.qty}股</span><span class="rsg-pnl ${hc}">${hs}${(h.pnl||0).toFixed(0)}元</span></div>`;
         });
         html += '</div></div>';
       }
-      if (report.plans?.length) {
-        html += `<div class="report-section"><div class="rs-title">📋 后续计划</div>`;
-        report.plans.forEach(p => { html += `<div class="rs-plan">• ${this.esc(p)}</div>`; });
-        html += '</div>';
-      }
       html += '</div>';
     });
-
     el.innerHTML = html;
-  }).catch(() => {
-    el.innerHTML = '<div class="empty">加载失败</div>';
-  });
+  }).catch(() => { el.innerHTML = '<div class="empty">加载失败</div>'; });
 };
 
 App.renderTradingRecords = function() {
@@ -1108,25 +1532,15 @@ App.renderTradingRecords = function() {
   fetch('data/trade_log.json').then(r => r.json()).then(data => {
     const trades = data.trades || [];
     if (!trades.length) { el.innerHTML = '<div class="empty">暂无交易记录</div>'; return; }
-
-    // 验证完整性
     const verified = data.verified !== false;
 
-    let html = `<div class="records-header">
-      <span>共 ${trades.length} 笔交易</span>
-      <span class="records-verify">${verified ? '🔒 记录完整（hash链验证通过）' : '⚠️ 记录异常'}</span>
-    </div>`;
-
+    let html = `<div class="records-header"><span>共 ${trades.length} 笔交易</span><span class="records-verify">${verified ? '🔒 记录完整' : '⚠️ 记录异常'}</span></div>`;
     trades.slice().reverse().forEach(t => {
       const isBuy = t.type.includes('buy');
       const pnlSign = (t.pnl || 0) >= 0 ? '+' : '';
       const pnlCls = (t.pnl || 0) >= 0 ? 'text-rise' : 'text-fall';
-
       html += `<div class="record-item ${isBuy ? 'buy' : 'sell'}">
-        <div class="ri-left">
-          <span class="ri-type">${isBuy ? '✅ 买入' : '❌ 卖出'}</span>
-          <span class="ri-hash" title="${t.hash}" onclick="event.stopPropagation();navigator.clipboard?.writeText('${t.hash}')">${t.hash.substring(0, 8)}…</span>
-        </div>
+        <div class="ri-left"><span class="ri-type">${isBuy ? '✅ 买入' : '❌ 卖出'}</span><span class="ri-hash" title="${t.hash}">${(t.hash || '').substring(0, 8)}…</span></div>
         <div class="ri-main">
           <div class="ri-name">${this.esc(t.name)}（${t.code}）</div>
           <div class="ri-detail">${t.qty}股 × ${t.price.toFixed(2)}元 = ${(t.amount||0).toLocaleString('zh-CN', {maximumFractionDigits:0})}元 · 手续费${(t.commission||0).toFixed(1)}元${t.pnl != null ? ` · <span class="${pnlCls}">盈亏${pnlSign}${(t.pnl||0).toFixed(0)}元(${pnlSign}${(t.pnl_pct||0).toFixed(1)}%)</span>` : ''}</div>
@@ -1138,10 +1552,181 @@ App.renderTradingRecords = function() {
         </div>
       </div>`;
     });
+    el.innerHTML = html;
+  }).catch(() => { el.innerHTML = '<div class="empty">加载失败</div>'; });
+};
+
+// ========== 购买过的股票记录表 ==========
+App.renderPurchasedStocks = function() {
+  const el = document.getElementById('trading-purchased');
+  if (!this._apiAvailable) {
+    el.innerHTML = '<div class="empty">需要启动API服务器</div>';
+    return;
+  }
+  el.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text3)">加载中...</div>';
+
+  fetch(this.API_BASE + '/api/purchased_stocks').then(r => r.json()).then(data => {
+    const stocks = data.stocks || [];
+    if (!stocks.length) {
+      el.innerHTML = '<div class="empty">暂无购买记录</div>';
+      return;
+    }
+
+    let html = `<div style="padding:8px 0 16px;border-bottom:1px solid var(--border);margin-bottom:12px">
+      <div style="font-size:14px;font-weight:700">📊 购买过的股票记录（${stocks.length}只）</div>
+      <div style="font-size:11px;color:var(--text3);margin-top:4px">显示所有曾经买入的股票，含当前价格、买卖明细和K线走势</div>
+    </div>`;
+
+    stocks.forEach(s => {
+      const chgCls = s.change_pct >= 0 ? 'text-rise' : 'text-fall';
+      const chgSign = s.change_pct >= 0 ? '+' : '';
+      const statusColor = s.status === '已卖出' ? 'var(--gold)' : 'var(--accent)';
+      const statusEmoji = s.status === '已卖出' ? '📦' : '💼';
+      const pnlCls = (s.total_pnl || 0) >= 0 ? 'text-rise' : 'text-fall';
+      const pnlSign = (s.total_pnl || 0) >= 0 ? '+' : '';
+
+      html += `<div class="ps-card" id="ps-${s.code}">
+        <div class="ps-header" onclick="App.togglePsDetail('${s.code}')">
+          <div class="ps-left">
+            <span style="font-weight:700;font-size:14px">${this.esc(s.name)}</span>
+            <span style="color:var(--text3);font-size:11px;margin-left:6px">${s.code}</span>
+            <span class="ps-status" style="color:${statusColor};margin-left:8px">${statusEmoji} ${s.status}</span>
+          </div>
+          <div class="ps-right">
+            <span style="font-size:14px;font-weight:600" class="${chgCls}">${s.current_price.toFixed(2)}</span>
+            <span style="font-size:12px" class="${chgCls}">${chgSign}${s.change_pct.toFixed(2)}%</span>
+            <span class="ps-arrow" id="arrow-${s.code}">▼</span>
+          </div>
+        </div>
+
+        <div class="ps-detail" id="detail-${s.code}" style="display:none">
+          <div class="ps-grid">
+            <div class="ps-grid-item"><div class="ps-label">买入价格</div><div class="ps-value">${s.buy_price.toFixed(2)}元</div></div>
+            <div class="ps-grid-item"><div class="ps-label">买入时间</div><div class="ps-value">${s.buy_time}</div></div>
+            <div class="ps-grid-item"><div class="ps-label">买入数量</div><div class="ps-value">${s.buy_qty}股</div></div>
+            <div class="ps-grid-item"><div class="ps-label">当前股价</div><div class="ps-value ${chgCls}">${s.current_price.toFixed(2)}元</div></div>
+            ${s.sell_price ? `
+            <div class="ps-grid-item"><div class="ps-label">卖出价格</div><div class="ps-value">${s.sell_price.toFixed(2)}元</div></div>
+            <div class="ps-grid-item"><div class="ps-label">卖出时间</div><div class="ps-value">${s.sell_time}</div></div>
+            <div class="ps-grid-item"><div class="ps-label">卖出盈亏</div><div class="ps-value ${pnlCls}">${pnlSign}${(s.total_pnl||0).toFixed(0)}元 (${pnlSign}${(s.sell_pnl_pct||0).toFixed(1)}%)</div></div>
+            ` : `
+            <div class="ps-grid-item"><div class="ps-label">卖出价格</div><div class="ps-value" style="color:var(--text3)">未卖出</div></div>
+            <div class="ps-grid-item"><div class="ps-label">卖出时间</div><div class="ps-value" style="color:var(--text3)">-</div></div>
+            <div class="ps-grid-item"><div class="ps-label">浮动盈亏</div><div class="ps-value ${pnlCls}">${pnlSign}${((s.current_price - s.buy_price) * s.buy_qty).toFixed(0)}元</div></div>
+            `}
+            <div class="ps-grid-item"><div class="ps-label">交易次数</div><div class="ps-value">买入${s.total_buys}次 / 卖出${s.total_sells}次</div></div>
+          </div>
+
+          <div style="margin-top:12px">
+            <div style="font-size:12px;font-weight:600;margin-bottom:8px">📈 K线走势（买入后近3天 · 60分钟线）</div>
+            <canvas id="kline-ps-${s.code}" width="800" height="200" style="width:100%;height:200px;background:var(--bg2);border-radius:8px"></canvas>
+          </div>
+        </div>
+      </div>`;
+    });
 
     el.innerHTML = html;
   }).catch(() => {
     el.innerHTML = '<div class="empty">加载失败</div>';
+  });
+};
+
+App.togglePsDetail = function(code) {
+  const detail = document.getElementById('detail-' + code);
+  const arrow = document.getElementById('arrow-' + code);
+  if (!detail) return;
+  const isVisible = detail.style.display !== 'none';
+  detail.style.display = isVisible ? 'none' : '';
+  if (arrow) arrow.textContent = isVisible ? '▼' : '▲';
+
+  // 首次展开时加载K线
+  if (!isVisible) {
+    this.loadPsKline(code);
+  }
+};
+
+App.loadPsKline = function(code) {
+  const canvas = document.getElementById('kline-ps-' + code);
+  if (!canvas || canvas.dataset.loaded) return;
+  canvas.dataset.loaded = '1';
+  if (!this._apiAvailable) return;
+  fetch(this.API_BASE + '/api/price_history?code=' + code + '&days=3').then(r => r.json()).then(data => {
+    const points = data.points || [];
+    if (points.length < 2) {
+      canvas.style.display = 'none';
+      const parent = canvas.parentElement;
+      const msg = document.createElement('div');
+      msg.style.cssText = 'padding:12px;color:var(--text3);font-size:12px';
+      msg.textContent = '暂无价格记录';
+      parent.replaceChild(msg, canvas);
+      return;
+    }
+    this._drawPsPriceLine(canvas, points, code);
+  }).catch(() => { canvas.style.display = 'none'; });
+};
+
+App._drawPsPriceLine = function(canvas, points, code) {
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const pad = { top: 20, right: 50, bottom: 25, left: 10 };
+  const cW = W - pad.left - pad.right;
+  const cH = H - pad.top - pad.bottom;
+  ctx.clearRect(0, 0, W, H);
+
+  const prices = points.map(p => p.price);
+  let minP = Math.min(...prices), maxP = Math.max(...prices);
+  const range = maxP - minP || 1;
+  minP -= range * 0.08;
+  maxP += range * 0.08;
+  const totalRange = maxP - minP;
+  const toY = p => pad.top + (1 - (p - minP) / totalRange) * cH;
+  const toX = i => pad.left + (i / Math.max(points.length - 1, 1)) * cW;
+
+  // Grid
+  ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+  ctx.lineWidth = 0.5;
+  for (let i = 0; i <= 3; i++) {
+    const y = pad.top + (cH / 3) * i;
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(W - pad.right, y); ctx.stroke();
+    const price = maxP - (totalRange / 3) * i;
+    ctx.fillStyle = 'rgba(255,255,255,0.35)';
+    ctx.font = '10px monospace';
+    ctx.textAlign = 'left';
+    ctx.fillText(price.toFixed(2), W - pad.right + 4, y + 3);
+  }
+
+  // Gradient fill
+  const grad = ctx.createLinearGradient(0, pad.top, 0, pad.top + cH);
+  grad.addColorStop(0, 'rgba(59,130,246,0.2)');
+  grad.addColorStop(1, 'rgba(59,130,246,0.02)');
+  ctx.beginPath();
+  ctx.moveTo(toX(0), toY(points[0].price));
+  points.forEach((p, i) => ctx.lineTo(toX(i), toY(p.price)));
+  ctx.lineTo(toX(points.length - 1), pad.top + cH);
+  ctx.lineTo(toX(0), pad.top + cH);
+  ctx.closePath();
+  ctx.fillStyle = grad;
+  ctx.fill();
+
+  // Line
+  ctx.beginPath();
+  ctx.moveTo(toX(0), toY(points[0].price));
+  points.forEach((p, i) => ctx.lineTo(toX(i), toY(p.price)));
+  ctx.strokeStyle = '#3b82f6';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+
+  // Dots + time
+  const step = Math.max(1, Math.floor(points.length / 5));
+  points.forEach((p, i) => {
+    if (i % step === 0 || i === points.length - 1) {
+      const x = toX(i), y = toY(p.price);
+      ctx.beginPath(); ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+      ctx.fillStyle = '#3b82f6'; ctx.fill();
+      ctx.fillStyle = 'rgba(255,255,255,0.25)';
+      ctx.font = '9px monospace'; ctx.textAlign = 'center';
+      ctx.fillText(p.time ? p.time.substring(5, 16) : '', x, H - 4);
+    }
   });
 };
 

@@ -6,6 +6,13 @@ A股全市场智能分析系统 v2
 
 import requests
 import json
+
+def _load_json(path, default=None):
+    try:
+        with open(path, 'r') as f:
+            return json.load(f)
+    except:
+        return default if default is not None else {}
 import os
 import sys
 import time
@@ -1080,18 +1087,36 @@ def save_snapshot(all_stocks, recommendations):
     with open(os.path.join(DATA_DIR, 'recommendations.json'), 'w', encoding='utf-8') as f:
         json.dump(recommendations, f, ensure_ascii=False)
 
-    # 历史快照（包含价格，用于准确率统计）
+    # 历史快照（保存完整推荐数据用于详情查看）
+    def _stock_to_hist(s):
+        """将股票数据转为历史记录格式（保留所有关键字段）"""
+        keys_to_keep = ['code', 'name', 'score', 'price', 'prev_close', 'change_pct',
+                        'buy_point', 'buy_time', 'target_price', 'stop_loss', 'sell_time',
+                        'support', 'resistance', 'trend', 'recommendation',
+                        'next_day_estimate', 'signals', 'analysis_text',
+                        'ma5', 'ma10', 'ma20', 'ma60', 'rsi6', 'rsi12',
+                        'kdj_k', 'kdj_j', 'macd_dif', 'boll_upper', 'boll_middle', 'boll_lower']
+        result = {}
+        for k in keys_to_keep:
+            if k in s and s[k] is not None:
+                result[k] = s[k]
+        return result
+
     hist_data = {
         'update_time': ts,
+        'market_analysis': recommendations.get('market_analysis', ''),
+        'next_day_advice': recommendations.get('next_day_advice', ''),
         'recommendations': {
-            'strong_buy': [{'code': s['code'], 'name': s['name'], 'score': s['score'], 'price': s['price'], 'prev_close': s['prev_close'], 'change_pct': s.get('change_pct',0)} for s in recommendations['strong_buy']],
-            'buy': [{'code': s['code'], 'name': s['name'], 'score': s['score'], 'price': s['price'], 'prev_close': s['prev_close'], 'change_pct': s.get('change_pct',0)} for s in recommendations['buy']],
-            'avoid': [{'code': s['code'], 'name': s['name'], 'score': s['score'], 'price': s['price'], 'prev_close': s['prev_close'], 'change_pct': s.get('change_pct',0)} for s in recommendations['avoid']],
+            'strong_buy': [_stock_to_hist(s) for s in recommendations['strong_buy']],
+            'buy': [_stock_to_hist(s) for s in recommendations['buy']],
+            'watch': [_stock_to_hist(s) for s in recommendations.get('watch', [])],
+            'avoid': [_stock_to_hist(s) for s in recommendations.get('avoid', [])],
         },
         'scores': {s['code']: {'score': s['score'], 'price': s['price'], 'name': s['name'], 'change_pct': s.get('change_pct',0)} for s in all_stocks[:500]},
         'market_sentiment': recommendations['market_sentiment'],
         'avg_score': recommendations['avg_score'],
         'strategies': recommendations.get('strategies', []),
+        'macro_indices': recommendations.get('macro_indices', {}),
     }
     with open(os.path.join(HISTORY_DIR, f'{date_str}_{time_str}.json'), 'w', encoding='utf-8') as f:
         json.dump(hist_data, f, ensure_ascii=False)
@@ -1144,6 +1169,35 @@ def main():
     cleanup_history()
     print("\n  ✅ 分析完成！")
 
+    # 5.5 策略筛选（每次分析都执行）
+    print("\n  🧪 执行策略筛选...")
+    try:
+        from strategies import run_strategy_screening, save_tracking, get_strategy_stats, format_report
+        strategy_results = run_strategy_screening(stocks)
+        save_tracking(strategy_results)
+
+        # 更新历史追踪价格
+        from strategies import update_tracking_prices
+        update_tracking_prices(stocks)
+
+        # 计算并打印策略统计
+        strategy_stats = get_strategy_stats()
+        report = format_report(strategy_results, strategy_stats)
+        print("\n" + report)
+
+        # 保存策略结果到推荐文件
+        rec_data = _load_json(os.path.join(DATA_DIR, 'recommendations.json'), {})
+        rec_data['strategy_results'] = {
+            'date': datetime.now().strftime('%Y-%m-%d'),
+            'results': {sid: [{'code': s['code'], 'name': s['name'], 'price': s['price'], 'score': s['score'], 'reason': s.get('reason','')}
+                           for s in stk] for sid, stk in strategy_results.items() if stk},
+            'stats': strategy_stats,
+        }
+        with open(os.path.join(DATA_DIR, 'recommendations.json'), 'w') as f:
+            json.dump(rec_data, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        print(f"  ⚠️ 策略筛选失败: {e}")
+
     # 6. 虚拟交易
     print("\n  💰 执行虚拟交易决策...")
     from trader import (
@@ -1151,77 +1205,77 @@ def main():
         generate_daily_report, format_report_text, calc_total_assets
     )
     portfolio = load_portfolio()
-    decisions = make_trading_decision(portfolio, recommendations, stocks, macro_indices)
-    
-    if decisions:
-        print(f"  📋 交易决策：{len(decisions)}笔")
-        for d in decisions:
-            if d['action'] == 'buy':
-                print(f"     ✅ 买入 {d['name']}（{d['code']}）{d['qty']}股 × {d['price']:.2f}元 — {d['reason']}")
-            else:
-                print(f"     ❌ 卖出 {d['name']}（{d['code']}）{d['qty']}股 × {d['price']:.2f}元 — {d['reason']}")
-        
-        trades = execute_trades(portfolio, decisions, stocks)
+    decisions, buy_plan = make_trading_decision(portfolio, recommendations, stocks, macro_indices)
+
+    # 执行卖出决策（立即执行）
+    sell_decisions = [d for d in decisions if d['action'] == 'sell']
+    buy_decisions = [d for d in decisions if d['action'] == 'buy']
+
+    # 执行卖出决策（立即执行）
+    if sell_decisions:
+        trades = execute_trades(portfolio, sell_decisions, stocks)
         report = generate_daily_report(portfolio, trades, recommendations, stocks, macro_indices)
-        
-        # 打印日报
+        print(f"  📋 卖出决策：{len(sell_decisions)}笔")
+        for d in sell_decisions:
+            print(f"     ❌ 卖出 {d['name']}（{d['code']}）{d['qty']}股 × {d['price']:.2f}元 — {d['reason']}")
         print("\n" + format_report_text(report))
-        
-        # 保存交易相关数据到推荐文件（供前端展示）
-        total_assets = calc_total_assets(portfolio)
-        with open(os.path.join(DATA_DIR, 'recommendations.json'), 'r') as f:
-            rec_data = json.load(f)
-        rec_data['trading'] = {
-            'portfolio': {
-                'cash': portfolio['cash'],
-                'total_assets': total_assets,
-                'total_return': (total_assets - portfolio['initial_capital']) / portfolio['initial_capital'] * 100,
-                'position_value': total_assets - portfolio['cash'],
-                'position_ratio': (total_assets - portfolio['cash']) / total_assets * 100 if total_assets > 0 else 0,
-                'holdings': portfolio['holdings'],
-            },
-            'latest_report': report,
-            'stats': portfolio['trading_stats'],
-        }
-        with open(os.path.join(DATA_DIR, 'recommendations.json'), 'w') as f:
-            json.dump(rec_data, f, ensure_ascii=False, indent=2)
-        
+    else:
+        trades = []
+
+    # 买入不立即执行，写入观察计划
+    if buy_plan:
+        import subprocess
+        plan_json = json.dumps(buy_plan, ensure_ascii=False)
+        subprocess.run([sys.executable, os.path.join(os.path.dirname(os.path.abspath(__file__)), 'watcher.py'), '--save-plan', plan_json],
+                       capture_output=True, text=True, timeout=10)
+
+    # 保存交易相关数据到推荐文件（供前端展示）
+    portfolio = _load_json(os.path.join(DATA_DIR, 'portfolio.json'))
+    total_assets = calc_total_assets(portfolio) if sell_decisions else (portfolio.get('cash', 0) + sum(
+        h.get('qty', 0) * h.get('avg_cost', 0) for h in portfolio.get('holdings', {}).values()))
+    rec_data = _load_json(os.path.join(DATA_DIR, 'recommendations.json'), {})
+    rec_data['trading'] = {
+        'portfolio': {
+            'cash': portfolio['cash'],
+            'total_assets': total_assets,
+            'total_return': (total_assets - portfolio['initial_capital']) / portfolio['initial_capital'] * 100,
+            'position_value': total_assets - portfolio['cash'],
+            'position_ratio': (total_assets - portfolio['cash']) / total_assets * 100 if total_assets > 0 else 0,
+            'holdings': portfolio['holdings'],
+        },
+        'latest_report': report if sell_decisions else None,
+        'stats': portfolio['trading_stats'],
+    }
+    with open(os.path.join(DATA_DIR, 'recommendations.json'), 'w') as f:
+        json.dump(rec_data, f, ensure_ascii=False, indent=2)
+
+    if sell_decisions:
         print(f"\n  💰 账户总资产：{total_assets:,.2f} 元")
     else:
-        print("  📋 今日无交易决策（观望或持仓不动）")
-        # 仍然更新持仓价格和日报
-        for code, h in portfolio.get('holdings', {}).items():
-            for s in stocks:
-                if s['code'] == code:
-                    h['current_price'] = s['price']
-                    break
-        from trader import save_portfolio as sp
-        sp(portfolio)
-        
-        report = generate_daily_report(portfolio, [], recommendations, stocks, macro_indices)
-        
-        total_assets = calc_total_assets(portfolio)
-        with open(os.path.join(DATA_DIR, 'recommendations.json'), 'r') as f:
-            rec_data = json.load(f)
-        rec_data['trading'] = {
-            'portfolio': {
-                'cash': portfolio['cash'],
-                'total_assets': total_assets,
-                'total_return': (total_assets - portfolio['initial_capital']) / portfolio['initial_capital'] * 100,
-                'position_value': total_assets - portfolio['cash'],
-                'position_ratio': (total_assets - portfolio['cash']) / total_assets * 100 if total_assets > 0 else 0,
-                'holdings': portfolio['holdings'],
-            },
-            'latest_report': report,
-            'stats': portfolio['trading_stats'],
-        }
-        with open(os.path.join(DATA_DIR, 'recommendations.json'), 'w') as f:
-            json.dump(rec_data, f, ensure_ascii=False, indent=2)
-        
+        print("  📋 无卖出决策（持仓不动）")
         print(f"\n  💰 账户总资产：{total_assets:,.2f} 元（持仓观望）")
 
 
 if __name__ == '__main__':
+    # 自动启动 API 服务器（如果未运行）
+    try:
+        import socket
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        result = sock.connect_ex(('127.0.0.1', 8765))
+        sock.close()
+        if result != 0:  # 端口未被占用，启动服务器
+            import subprocess
+            server_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'server.py')
+            if os.path.exists(server_path):
+                subprocess.Popen([sys.executable, server_path],
+                    stdout=open('/dev/null', 'w'), stderr=open('/dev/null', 'w'),
+                    cwd=os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                    start_new_session=True)
+                time.sleep(2)  # 等待服务器启动
+                print("  🖥️  API 服务器已自动启动 (端口 8765)")
+    except:
+        pass
+
     try:
         main()
     except Exception as e:

@@ -877,6 +877,55 @@ body {
 .ri-time { font-size: 11px; color: var(--text3); }
 .ri-snapshot { font-size: 11px; color: var(--text2); margin-top: 2px; }
 
+/* === 历史更新列表页 (v3.0) === */
+.history-list-page { max-width: 900px; margin: 0 auto; }
+.hl-date-group { margin-bottom: 24px; }
+.hl-date-header { font-size: 16px; font-weight: 700; padding: 8px 0; border-bottom: 2px solid var(--accent); margin-bottom: 8px; color: var(--text1); }
+.hl-item { display: flex; align-items: center; padding: 12px 16px; margin-bottom: 4px; border-radius: 8px; background: var(--bg2); cursor: pointer; transition: background 0.15s; gap: 12px; }
+.hl-item:hover { background: rgba(59,130,246,0.08); }
+.hl-time { font-size: 14px; font-weight: 600; min-width: 70px; color: var(--accent); }
+.hl-stats { display: flex; gap: 8px; flex: 1; }
+.hl-stat { font-size: 13px; padding: 2px 8px; border-radius: 4px; background: rgba(255,255,255,0.04); }
+.hl-stat.hl-sb { color: #ef4444; }
+.hl-stat.hl-buy { color: #f87171; }
+.hl-stat.hl-watch { color: #fbbf24; }
+.hl-sent { font-size: 12px; color: var(--text3); }
+.hl-action { min-width: 80px; text-align: right; }
+.hl-btn { font-size: 12px; color: var(--accent); opacity: 0.7; transition: opacity 0.15s; }
+.hl-item:hover .hl-btn { opacity: 1; }
+
+/* === 历史详情页 === */
+.hl-detail-page { max-width: 1100px; margin: 0 auto; }
+.hl-detail-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); margin-bottom: 12px; }
+.hl-detail-time { font-size: 16px; font-weight: 700; color: var(--accent); }
+.hl-detail-sent { font-size: 14px; color: var(--text2); }
+.hl-detail-analysis { background: var(--bg2); padding: 14px 16px; border-radius: 8px; font-size: 13px; line-height: 1.8; color: var(--text2); margin-bottom: 12px; }
+.hl-detail-advice { background: rgba(59,130,246,0.08); padding: 12px 16px; border-radius: 8px; font-size: 13px; color: var(--accent); border-left: 3px solid var(--accent); margin-bottom: 16px; }
+.hl-detail-table-section { margin-bottom: 20px; }
+.hl-detail-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.hl-detail-table thead th { background: var(--bg2); padding: 8px 6px; text-align: center; font-weight: 600; color: var(--text2); border-bottom: 1px solid var(--border); white-space: nowrap; position: sticky; top: 0; }
+.hl-detail-table tbody td { padding: 7px 6px; text-align: center; border-bottom: 1px solid rgba(42,58,80,0.15); white-space: nowrap; }
+.hl-detail-table tbody tr:hover { background: rgba(59,130,246,0.04); }
+
+/* === 虚拟交易持仓卡片 === */
+.vh-card { transition: background 0.15s; }
+.vh-card:hover { background: rgba(59,130,246,0.04) !important; }
+.vh-trades { background: rgba(255,255,255,0.02); border-radius: 6px; padding: 6px 8px; }
+
+/* === 购买记录卡片 === */
+.ps-card { background: var(--bg2); border-radius: 10px; margin-bottom: 8px; overflow: hidden; }
+.ps-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; cursor: pointer; transition: background 0.15s; }
+.ps-header:hover { background: rgba(59,130,246,0.06); }
+.ps-left { display: flex; align-items: center; gap: 4px; }
+.ps-right { display: flex; align-items: center; gap: 8px; }
+.ps-status { font-size: 12px; font-weight: 600; }
+.ps-arrow { font-size: 11px; color: var(--text3); transition: transform 0.2s; }
+.ps-detail { padding: 0 16px 16px; border-top: 1px solid var(--border); }
+.ps-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; padding-top: 12px; }
+.ps-grid-item { background: rgba(255,255,255,0.03); padding: 8px 10px; border-radius: 6px; }
+.ps-label { font-size: 11px; color: var(--text3); margin-bottom: 2px; }
+.ps-value { font-size: 13px; font-weight: 600; color: var(--text1); }
+
 /* === 滚动条 === */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg); }

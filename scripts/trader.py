@@ -1,17 +1,24 @@
 #!/usr/bin/env python3
 """
-虚拟炒股引擎 v1.0
+虚拟炒股引擎 v3.0
 - 10万启动资金
 - 每天最多买入3只股票
+- T+1规则：今天买入的股票，明天才能卖出
 - 基于分析评分自动决策买卖
-- 支持日内回转
-- 不可篡改的交易记录
+- 不可篡改的交易记录（hash链）
 """
 
 import json
 import os
+import sys
 import hashlib
 from datetime import datetime
+
+# 导入统一交易日历
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+CALENDAR_DIR = SCRIPT_DIR
+sys.path.insert(0, CALENDAR_DIR)
+from market_calendar import is_trading_time, is_trading_day
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(SCRIPT_DIR, '..', 'data')
@@ -187,9 +194,10 @@ def get_buyable_amount(cash, price):
 def make_trading_decision(portfolio, recommendations, all_stocks, macro_indices):
     """
     核心交易决策引擎
-    返回: list of trade decisions
+    返回: (decisions, buy_plan) - decisions立即执行（仅卖出），buy_plan写入计划文件由watcher观察执行
     """
     decisions = []
+    buy_plan = []
     today = datetime.now().strftime('%Y-%m-%d')
     sentiment = recommendations.get('market_sentiment', '中性')
     avg_score = recommendations.get('avg_score', 50)
@@ -214,6 +222,11 @@ def make_trading_decision(portfolio, recommendations, all_stocks, macro_indices)
     for code, h in list(holdings.items()):
         info = price_map.get(code)
         if not info:
+            continue
+        
+        # T+1 规则：今天买入的股票不能今天卖出
+        buy_date = h.get('buy_date', '')
+        if buy_date == today:
             continue
         
         current_price = info['price']
@@ -265,31 +278,19 @@ def make_trading_decision(portfolio, recommendations, all_stocks, macro_indices)
                 'type': sell_type,
             })
     
-    # === 第二步：日内回转机会 ===
-    if portfolio.get('last_trade_date') == today:
-        # 当天已有持仓的股票，如果大幅下跌可低吸做T
-        for code, h in holdings.items():
-            info = price_map.get(code)
-            if not info:
-                continue
-            
-            # 如果持仓股当天大跌3%以上且评分不低，可低吸做T
-            if info['change_pct'] < -3 and info['score'] >= 50 and code not in [d['code'] for d in decisions if d['action'] == 'buy']:
-                t_qty = get_buyable_amount(portfolio['cash'] * 0.3, info['price'])  # 用30%现金做T
-                if t_qty >= 100:
-                    decisions.append({
-                        'action': 'buy',
-                        'code': code,
-                        'name': h['name'],
-                        'qty': t_qty,
-                        'price': calc_slippage_price(info['price'], True),
-                        'reason': f"日内低吸做T：{h['name']}跌{info['change_pct']:.1f}%但评分{info['score']}，低吸{t_qty}股等待反弹卖出",
-                        'type': 'day_trade_buy',
-                    })
+    # === 第二步：日内回转已移除（T+1规则下不支持） ===
     
     # === 第三步：买入新股票 ===
-    # 统计今天已经决定买入的次数
+    # 统计今天已经决定买入的次数（包括历史交易日志中的记录）
     buy_count_today = sum(1 for d in decisions if d['action'] == 'buy')
+    # 从交易日志中加载今天已有的买入记录数量
+    try:
+        tl = load_json(os.path.join(DATA_DIR, 'trade_log.json'), {'trades': []})
+        today_trades = [t for t in tl.get('trades', []) if t.get('timestamp', '').startswith(today) and t.get('type') == 'buy']
+        already_bought_codes = set(t['code'] for t in today_trades)
+        buy_count_today += len(today_trades)
+    except:
+        already_bought_codes = set()
     
     if buy_count_today < MAX_BUY_PER_DAY:
         # 市场环境判断
@@ -303,7 +304,7 @@ def make_trading_decision(portfolio, recommendations, all_stocks, macro_indices)
             
             # 强烈买入（高分优先）
             for s in recommendations.get('strong_buy', []):
-                if s['code'] not in holding_codes and s['code'] not in [d['code'] for d in decisions]:
+                if s['code'] not in holding_codes and s['code'] not in [d['code'] for d in decisions] and s['code'] not in already_bought_codes:
                     est = s.get('next_day_estimate', {})
                     est_val = est.get('estimate', 0) if est else 0
                     candidates.append({
@@ -318,7 +319,7 @@ def make_trading_decision(portfolio, recommendations, all_stocks, macro_indices)
             
             # 建议买入
             for s in recommendations.get('buy', []):
-                if s['code'] not in holding_codes and s['code'] not in [d['code'] for d in decisions]:
+                if s['code'] not in holding_codes and s['code'] not in [d['code'] for d in decisions] and s['code'] not in already_bought_codes:
                     est = s.get('next_day_estimate', {})
                     est_val = est.get('estimate', 0) if est else 0
                     candidates.append({
@@ -333,7 +334,7 @@ def make_trading_decision(portfolio, recommendations, all_stocks, macro_indices)
             
             # 值得关注中评分特别高的
             for s in recommendations.get('watch', []):
-                if s['score'] >= 75 and s['code'] not in holding_codes and s['code'] not in [d['code'] for d in decisions]:
+                if s['score'] >= 75 and s['code'] not in holding_codes and s['code'] not in [d['code'] for d in decisions] and s['code'] not in already_bought_codes:
                     candidates.append({
                         'code': s['code'],
                         'name': s['name'],
@@ -356,13 +357,13 @@ def make_trading_decision(portfolio, recommendations, all_stocks, macro_indices)
                 if available_cash < 5000:  # 至少留5000元
                     break
                 
-                # 根据评分调整仓位比例
+                # 根据评分调整仓位比例（仓位可以放大）
                 if c['score'] >= 90:
-                    ratio = 0.35
+                    ratio = 0.45
                 elif c['score'] >= 75:
-                    ratio = 0.30
+                    ratio = 0.35
                 else:
-                    ratio = 0.25
+                    ratio = 0.30
                 
                 alloc_cash = available_cash * ratio
                 qty = get_buyable_amount(alloc_cash, c['price'])
@@ -395,26 +396,53 @@ def make_trading_decision(portfolio, recommendations, all_stocks, macro_indices)
                         continue
                     buy_price = calc_slippage_price(c['price'], True)
                 
-                decisions.append({
-                    'action': 'buy',
+                # 不立即买入，加入观察计划
+                buy_plan.append({
                     'code': c['code'],
                     'name': c['name'],
-                    'qty': qty,
-                    'price': buy_price,
-                    'reason': '；'.join(reasons),
-                    'type': 'buy',
+                    'plan_qty': qty,
+                    'plan_price': buy_price,
+                    'target_price': c.get('buy_point', c['price']),
                     'score': c['score'],
+                    'reason': '；'.join(reasons),
+                    'est': c['est'],
+                    'ratio': ratio,
+                    'signals': c['signals'],
+                    'priority': c['priority'],
                 })
                 
                 available_cash -= buy_price * qty + calc_commission(buy_price, qty, 'buy')
     
-    return decisions
+    return decisions, buy_plan
 
 
 def execute_trades(portfolio, decisions, all_stocks):
     """执行交易决策，更新持仓"""
     trades_executed = []
     today = datetime.now().strftime('%Y-%m-%d')
+    
+    # ===== 交易时间校验 =====
+    if not is_trading_time():
+        print("\n  ⏰ 当前非交易时间，买卖指令仅记录为计划，不实际执行。")
+        print(f"     交易时间: 周一至周五 9:30-11:30, 13:00-15:00")
+        # 仍然记录卖出决策到 buy_plan 供开盘后 watcher 执行
+        sell_plans = []
+        for d in decisions:
+            if d['action'] == 'sell':
+                sell_plans.append({
+                    'code': d['code'],
+                    'name': d['name'],
+                    'qty': d['qty'],
+                    'price': d['price'],
+                    'reason': d['reason'],
+                    'type': 'sell',
+                })
+        if sell_plans:
+            plan_file = os.path.join(DATA_DIR, 'sell_plan.json')
+            with open(plan_file, 'w') as f:
+                json.dump({'date': today, 'items': sell_plans, 'created_at': datetime.now().strftime('%Y-%m-%d %H:%M:%S')}, f, ensure_ascii=False, indent=2)
+            print(f"  📋 已记录 {len(sell_plans)} 笔卖出计划到 sell_plan.json，开盘后由 watcher 执行。")
+        return trades_executed
     
     # 构建价格查询
     price_map = {s['code']: s['price'] for s in all_stocks}
