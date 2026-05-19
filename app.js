@@ -65,7 +65,7 @@ const App = {
 
   renderWatchList(data) {
     const card = document.getElementById('watch-card');
-    const el = document.getElementById('watch-list');
+    const el = document.getElementById('watch-plan-list');
     const timeEl = document.getElementById('watch-update-time');
     const items = data.items || [];
 
@@ -263,7 +263,7 @@ const App = {
 
     this.renderRecList('strong-buy-list', r.strong_buy || []);
     this.renderRecList('buy-list', r.buy || []);
-    this.renderRecList('watch-list', r.watch || []);
+    this.renderRecList('watch-buy-list', r.watch || []);
 
     this.renderMarketAnalysis(r);
     this.renderStrategies(r);

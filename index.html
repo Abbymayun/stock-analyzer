@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A股智能分析系统</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=3.2">
 </head>
 <body>
 
@@ -63,7 +63,7 @@
         <!-- 值得关注 -->
         <div class="card" style="margin-top:16px">
           <div class="card-head"><h3>👀 值得关注</h3></div>
-          <div class="card-body" id="watch-list"><div class="empty">加载中...</div></div>
+          <div class="card-body" id="watch-buy-list"><div class="empty">加载中...</div></div>
         </div>
       </div>
 
@@ -75,7 +75,7 @@
             <h3>🔍 待买入观察中</h3>
             <span style="font-size:11px;color:var(--text3)" id="watch-update-time">实时分析中</span>
           </div>
-          <div class="card-body" id="watch-list">
+          <div class="card-body" id="watch-plan-list">
             <div class="empty">暂无观察股票</div>
           </div>
         </div>
@@ -271,6 +271,6 @@
 <!-- Toast -->
 <div id="toast" class="toast hidden"></div>
 
-<script src="app.js"></script>
+<script src="app.js?v=3.2"></script>
 </body>
 </html>
