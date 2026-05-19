@@ -129,6 +129,8 @@ class Handler(SimpleHTTPRequestHandler):
                 self._handle_strategy_results()
             elif path == '/api/health':
                 self._json({'ok': True, 'ts': time.time()})
+            elif path == '/api/buy_plan':
+                self._handle_buy_plan()
             else:
                 super().do_GET()
         except Exception as e:
@@ -404,6 +406,50 @@ class Handler(SimpleHTTPRequestHandler):
             self._json({})
             return
         self._json(strategy)
+
+    def _handle_buy_plan(self):
+        """返回当前买入观察计划（含实时价格）"""
+        plan = load_json(os.path.join(DATA_DIR, 'buy_plan.json'), {})
+        items = plan.get('items', [])
+        if not items:
+            self._json({'date': plan.get('date', ''), 'items': [], 'created_at': plan.get('created_at', '')})
+            return
+
+        codes = [item['code'] for item in items]
+        rt = get_cached_realtime(codes) if codes else {}
+
+        # 读取K线分析状态
+        bars = load_json(os.path.join(DATA_DIR, 'price_bars.json'), {})
+
+        result = []
+        for item in items:
+            r = rt.get(item['code'], {})
+            stock_bars = bars.get(item['code'], [])
+            result.append({
+                'code': item['code'],
+                'name': item['name'],
+                'score': item.get('score', 0),
+                'plan_qty': item.get('plan_qty', 0),
+                'target_price': item.get('target_price', 0),
+                'reason': item.get('reason', ''),
+                'signals': item.get('signals', []),
+                'ratio': item.get('ratio', 0),
+                # 实时数据
+                'current_price': r.get('price', item.get('target_price', 0)),
+                'change_pct': r.get('change_pct', 0),
+                'high': r.get('high', 0),
+                'low': r.get('low', 0),
+                'volume': r.get('volume', 0),
+                # K线数据量
+                'bar_count': len(stock_bars),
+                'last_bar_time': stock_bars[-1]['time'] if stock_bars else '',
+            })
+
+        self._json({
+            'date': plan.get('date', ''),
+            'created_at': plan.get('created_at', ''),
+            'items': result,
+        })
 
     def log_message(self, fmt, *args):
         pass  # suppress logs

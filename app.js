@@ -11,6 +11,7 @@ const App = {
   realtimeCache: {},
   realtimeTimer: null,
   API_BASE: '',
+  watchTimer: null,
 
   // === 初始化 ===
   async init() {
@@ -39,12 +40,90 @@ const App = {
       // 启动实时数据刷新
       if (this._apiAvailable) {
         this.startRealtimeRefresh();
+        this.startWatchRefresh();
       }
     } catch (e) {
       document.getElementById('update-time').textContent = '暂无数据';
       document.getElementById('market-analysis').innerHTML =
         '<div class="empty"><div class="empty-icon">⏳</div><div>等待首次分析数据...</div></div>';
     }
+  },
+
+  // === 观察中股票刷新 ===
+  startWatchRefresh() {
+    const refresh = async () => {
+      try {
+        const res = await fetch(this.API_BASE + '/api/buy_plan');
+        if (!res.ok) return;
+        const data = await res.json();
+        this.renderWatchList(data);
+      } catch {}
+    };
+    refresh();
+    this.watchTimer = setInterval(refresh, 10000); // 10秒刷新
+  },
+
+  renderWatchList(data) {
+    const card = document.getElementById('watch-card');
+    const el = document.getElementById('watch-list');
+    const timeEl = document.getElementById('watch-update-time');
+    const items = data.items || [];
+
+    if (!items.length) {
+      card.style.display = 'none';
+      return;
+    }
+
+    card.style.display = '';
+    const now = new Date();
+    timeEl.textContent = `每10秒刷新 · ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+
+    let html = '<div style="display:flex;flex-direction:column;gap:10px">';
+
+    items.forEach(item => {
+      const chgCls = item.change_pct >= 0 ? 'text-rise' : 'text-fall';
+      const chgSign = item.change_pct >= 0 ? '+' : '';
+      const priceDiff = item.current_price - item.target_price;
+      const diffPct = item.target_price > 0 ? (priceDiff / item.target_price * 100) : 0;
+      const diffCls = diffPct > 0 ? 'text-rise' : diffPct < -2 ? 'text-fall' : '';
+      const diffLabel = diffPct > 0 ? '偏高于目标' : diffPct < -2 ? '低于目标✨' : '接近目标';
+      const barInfo = item.bar_count > 0 ? `已采集${item.bar_count}根K线` : '等待开盘采集';
+
+      // 信号标签
+      const signals = item.signals || [];
+      const buySignals = signals.filter(s => ['均线多头排列','MACD金叉','红柱放大','放量','主力资金流入'].some(k => s.includes(k)));
+
+      html += `<div style="background:var(--bg2);border-radius:10px;padding:12px 14px;cursor:pointer" onclick="App.openStock('${item.code}')">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-weight:700;font-size:15px">${this.esc(item.name)}</span>
+            <span style="color:var(--text3);font-size:11px">${item.code}</span>
+            <span class="stock-rec-tag 强烈买入" style="font-size:11px">${item.score}分</span>
+          </div>
+          <div style="text-align:right">
+            <div style="font-weight:700;font-size:18px" class="${chgCls}">${item.current_price.toFixed(2)}</div>
+            <div style="font-size:12px" class="${chgCls}">${chgSign}${item.change_pct.toFixed(2)}%</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:16px;font-size:11px;color:var(--text3);margin-bottom:8px">
+          <span>🎯 目标买入价: <span style="color:var(--fall);font-weight:600">${item.target_price.toFixed(2)}</span></span>
+          <span>📍 价差: <span class="${diffCls}" style="font-weight:600">${diffLabel} (${diffPct >= 0 ? '+' : ''}${diffPct.toFixed(1)}%)</span></span>
+          <span>📊 ${barInfo}</span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px">
+          ${buySignals.slice(0, 4).map(s => `<span style="font-size:10px;background:rgba(239,68,68,0.12);color:#ef4444;padding:2px 6px;border-radius:4px">${this.esc(s)}</span>`).join('')}
+          ${buySignals.length > 4 ? `<span style="font-size:10px;color:var(--text3)">+${buySignals.length - 4}</span>` : ''}
+        </div>
+        <div style="margin-top:6px;font-size:11px;color:var(--text2);line-height:1.5">
+          📋 ${this.esc(item.reason || '')}
+        </div>
+      </div>`;
+    });
+
+    html += '</div>';
+    html += '<div style="text-align:center;padding:8px;font-size:10px;color:var(--text3)">每分钟技术分析（黄金分割·量价·K线·均线·量能·动量），3维信号共振才买入</div>';
+
+    el.innerHTML = html;
   },
 
   // === 实时数据刷新 ===
