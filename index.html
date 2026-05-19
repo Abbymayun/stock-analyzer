@@ -3,10 +3,66 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+/* 交易通知 */
+#trade-notification {
+  position: fixed; top: -200px; left: 50%; transform: translateX(-50%);
+  z-index: 9999; width: 400px; max-width: 90vw;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 1px solid rgba(59,130,246,0.4);
+  border-radius: 14px; padding: 16px 20px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5), 0 0 20px rgba(59,130,246,0.2);
+  transition: top 0.5s cubic-bezier(0.34,1.56,0.64,1);
+  cursor: pointer;
+}
+#trade-notification.show { top: 20px; }
+#trade-notification .notif-header {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
+}
+#trade-notification .notif-type {
+  font-size: 16px; font-weight: 700;
+}
+#trade-notification .notif-type.buy { color: #ef4444; }
+#trade-notification .notif-type.sell { color: #22c55e; }
+#trade-notification .notif-time { font-size: 11px; color: #64748b; }
+#trade-notification .notif-body {
+  font-size: 14px; line-height: 1.8; color: #cbd5e1;
+}
+#trade-notification .notif-stock { font-weight: 700; color: #f1f5f9; }
+#trade-notification .notif-price { color: #fbbf24; font-weight: 600; }
+#trade-notification .notif-pnl.positive { color: #ef4444; }
+#trade-notification .notif-pnl.negative { color: #22c55e; }
+#trade-notification .notif-reason {
+  margin-top: 8px; font-size: 11px; color: #64748b; border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 8px; line-height: 1.5;
+}
+#trade-notification .notif-close {
+  position: absolute; top: 8px; right: 12px; color: #64748b; font-size: 18px; cursor: pointer;
+  line-height: 1;
+}
+#trade-notification .notif-close:hover { color: #94a3b8; }
+.notif-stack { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9998; display: flex; flex-direction: column; gap: 8px; width: 400px; max-width: 90vw; pointer-events: none; }
+.notif-stack-item {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 1px solid rgba(59,130,246,0.3);
+  border-radius: 10px; padding: 10px 16px;
+  font-size: 12px; color: #cbd5e1; line-height: 1.5;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  animation: notifSlideIn 0.4s ease-out;
+  pointer-events: auto;
+}
+@keyframes notifSlideIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.notif-stack-item .notif-stack-time { color: #64748b; font-size: 10px; }
+</style>
 <title>A股智能分析系统</title>
-<link rel="stylesheet" href="style.css?v=3.2">
+<link rel="stylesheet" href="style.css?v=3.4">
 </head>
 <body>
+<div id="trade-notification" onclick="App.dismissNotification()"></div>
+<div class="notif-stack" id="notif-stack"></div>
 
 <div id="app">
   <!-- ========== 首页仪表板 ========== -->
@@ -271,6 +327,6 @@
 <!-- Toast -->
 <div id="toast" class="toast hidden"></div>
 
-<script src="app.js?v=3.2"></script>
+<script src="app.js?v=3.4"></script>
 </body>
 </html>

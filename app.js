@@ -12,6 +12,8 @@ const App = {
   realtimeTimer: null,
   API_BASE: '',
   watchTimer: null,
+  tradeCheckTimer: null,
+  _lastTradeCount: 0,
 
   // === 初始化 ===
   async init() {
@@ -41,6 +43,7 @@ const App = {
       if (this._apiAvailable) {
         this.startRealtimeRefresh();
         this.startWatchRefresh();
+        this.startTradeNotification();
       }
     } catch (e) {
       document.getElementById('update-time').textContent = '暂无数据';
@@ -61,6 +64,129 @@ const App = {
     };
     refresh();
     this.watchTimer = setInterval(refresh, 10000); // 10秒刷新
+  },
+
+  // === 交易通知检测 ===
+  startTradeNotification() {
+    // 初始化时记录当前交易数
+    fetch(this.API_BASE + '/api/latest_trades').then(r => r.json()).then(d => {
+      this._lastTradeCount = d.total || 0;
+    }).catch(() => {});
+
+    const check = async () => {
+      try {
+        const res = await fetch(this.API_BASE + '/api/latest_trades');
+        if (!res.ok) return;
+        const data = await res.json();
+        const total = data.total || 0;
+        const trades = data.trades || [];
+
+        if (total > this._lastTradeCount && this._lastTradeCount > 0) {
+          // 有新交易！
+          const newTrades = trades.filter(t => {
+            // 按时间戳过滤新的
+            // 简单方式：展示所有最新的
+            return true;
+          });
+          // 从最早的新交易开始通知（避免倒序）
+          const newCount = total - this._lastTradeCount;
+          const recent = trades.slice(-newCount);
+          recent.forEach(t => {
+            this.showTradeNotification(t);
+            this.playTradeSound(t.type === 'buy');
+          });
+        }
+
+        this._lastTradeCount = total;
+      } catch {}
+    };
+    check();
+    this.tradeCheckTimer = setInterval(check, 8000); // 8秒检测一次
+  },
+
+  showTradeNotification(trade) {
+    const isBuy = trade.type === 'buy';
+    const emoji = isBuy ? '✅' : '❌';
+    const typeText = isBuy ? '买入成交' : '卖出成交';
+    const typeCls = isBuy ? 'buy' : 'sell';
+
+    const pnlHtml = trade.pnl != null ?
+      `<div class="notif-pnl ${trade.pnl >= 0 ? 'positive' : 'negative'}">${emoji} 盈亏 ${trade.pnl >= 0 ? '+' : ''}${trade.pnl.toFixed(0)}元 (${trade.pnl >= 0 ? '+' : ''}${trade.pnl_pct.toFixed(1)}%)</div>` : '';
+
+    const html = `
+      <div class="notif-close" onclick="event.stopPropagation()">✕</div>
+      <div class="notif-header">
+        <span class="notif-type ${typeCls}">${emoji} ${typeText}</span>
+        <span class="notif-time">${trade.timestamp}</span>
+      </div>
+      <div class="notif-body">
+        <span class="notif-stock">${this.esc(trade.name)}（${trade.code}）</span>
+        <span class="notif-price">${trade.qty}股 × ¥${trade.price.toFixed(2)}</span>
+        <span>= ¥${(trade.amount || trade.price * trade.qty).toLocaleString('zh-CN', {maximumFractionDigits: 0})}</span>
+        ${pnlHtml}
+      </div>
+      <div class="notif-reason">📋 ${this.esc(trade.reason || '')}</div>
+    `;
+
+    const el = document.getElementById('trade-notification');
+    el.innerHTML = html;
+    el.classList.add('show');
+
+    // 5秒后自动收起，移到历史栈
+    clearTimeout(this._notifTimer);
+    this._notifTimer = setTimeout(() => this.dismissNotification(), 6000);
+  },
+
+  dismissNotification() {
+    const el = document.getElementById('trade-notification');
+    const html = el.innerHTML;
+    if (html && el.classList.contains('show')) {
+      // 移到历史栈
+      const stack = document.getElementById('notif-stack');
+      const item = document.createElement('div');
+      item.className = 'notif-stack-item';
+      item.innerHTML = html.replace('notif-close" onclick="event.stopPropagation()">✕</div>', '').replace('<div class="notif-header', '<div class="notif-stack-time" style="margin-bottom:4px">' + new Date().toLocaleTimeString() + '</div><div');
+      stack.prepend(item);
+      // 最多保留5条历史
+      while (stack.children.length > 5) stack.removeChild(stack.lastChild);
+    }
+    el.classList.remove('show');
+    clearTimeout(this._notifTimer);
+  },
+
+  playTradeSound(isBuy) {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      if (isBuy) {
+        // 买入：两声上升音阶
+        [440, 660].forEach((freq, i) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.type = 'sine';
+          osc.frequency.value = freq;
+          gain.gain.setValueAtTime(0.15, ctx.currentTime + i * 0.15);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.15 + 0.3);
+          osc.start(ctx.currentTime + i * 0.15);
+          osc.stop(ctx.currentTime + i * 0.15 + 0.3);
+        });
+      } else {
+        // 卖出：两声下降音阶
+        [660, 440].forEach((freq, i) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.type = 'sine';
+          osc.frequency.value = freq;
+          gain.gain.setValueAtTime(0.15, ctx.currentTime + i * 0.15);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.15 + 0.3);
+          osc.start(ctx.currentTime + i * 0.15);
+          osc.stop(ctx.currentTime + i * 0.15 + 0.3);
+        });
+      }
+    } catch (e) { /* 静默失败 */ }
   },
 
   renderWatchList(data) {
@@ -801,7 +927,9 @@ const App = {
             <thead>
               <tr>
                 <th>股票名称</th>
+                <th>更新时价格</th>
                 <th>现价</th>
+                <th>更新时涨幅</th>
                 <th>当前涨幅</th>
                 <th>建议买入价</th>
                 <th>买入时间</th>
@@ -816,24 +944,50 @@ const App = {
             <tbody>`;
 
       recs.forEach(s => {
-        const chgCls = s.change_pct >= 0 ? 'text-rise' : 'text-fall';
-        const chgSign = s.change_pct >= 0 ? '+' : '';
+        const snapshotPrice = s.snapshot_price || s.price || 0;
+        const latestPrice = s.latest_price || s.price || 0;
+        const snapshotChg = s.change_pct || 0;
+        const latestChg = s.latest_change_pct != null ? s.latest_change_pct : s.change_pct || 0;
+        const chgCls = snapshotChg >= 0 ? 'text-rise' : 'text-fall';
+        const lChgCls = latestChg >= 0 ? 'text-rise' : 'text-fall';
+        const chgSign = snapshotChg >= 0 ? '+' : '';
+        const lChgSign = latestChg >= 0 ? '+' : '';
         const est = s.next_day_estimate;
         const estStr = est ? (est.estimate >= 0 ? '+' : '') + est.estimate.toFixed(1) + '%' : '-';
         const estCls = est ? (est.estimate >= 0 ? 'text-rise' : 'text-fall') : '';
         const recTag = `<span class="stock-rec-tag ${s.recommendation}">${s.recommendation}</span>`;
 
+        // 次日表现：优先用已回填的数据
+        const actual = s.next_day_actual;
+        let actualHtml = '待计算';
+        if (actual) {
+          const aSign = actual.actual_pct >= 0 ? '+' : '';
+          const aCls = actual.actual_pct >= 0 ? 'text-rise' : 'text-fall';
+          const vsEst = actual.vs_estimate != null ? (actual.vs_estimate >= 0 ? '+' : '') + actual.vs_estimate.toFixed(1) : '';
+          actualHtml = `<span class="${aCls}" style="font-weight:600">${aSign}${actual.actual_pct.toFixed(2)}%</span><br><span style="font-size:10px;color:var(--text3)">${actual.next_date || ''} ${vsEst ? 'vs预估' + vsEst : ''}</span>`;
+        }
+
+        // 预测验证
+        let accHtml = '-';
+        const pred = s.prediction_result;
+        if (pred) {
+          const vcls = pred.hit_dir ? 'text-rise' : (pred.label === '接近' ? 'var(--gold)' : 'text-fall');
+          accHtml = `<span style="color:${vcls};font-weight:600">${pred.icon} ${pred.label}</span>`;
+        }
+
         html += `<tr>
           <td>${this.esc(s.name)}<br><span style="font-size:11px;color:var(--text3)">${s.code}</span><br>${recTag}</td>
-          <td class="rt-price-cell" data-rt-code="${s.code}" data-rt-field="price">${(s.price || 0).toFixed(2)}</td>
-          <td class="${chgCls} rt-price-cell" data-rt-code="${s.code}" data-rt-field="change_pct" data-bold="1">${chgSign}${(s.change_pct || 0).toFixed(2)}%</td>
+          <td style="font-weight:600">${snapshotPrice.toFixed(2)}</td>
+          <td class="rt-price-cell" data-rt-code="${s.code}" data-rt-field="price">${latestPrice.toFixed(2)}</td>
+          <td class="${chgCls}">${chgSign}${snapshotChg.toFixed(2)}%</td>
+          <td class="${lChgCls} rt-price-cell" data-rt-code="${s.code}" data-rt-field="change_pct" data-bold="1">${lChgSign}${latestChg.toFixed(2)}%</td>
           <td style="color:var(--fall)">${s.buy_point ? s.buy_point.toFixed(2) : '-'}</td>
           <td style="font-size:12px">${s.buy_time ? s.buy_time.replace(/\(.*\)/, '') : '-'}</td>
           <td style="color:var(--rise)">${s.target_price ? s.target_price.toFixed(2) : '-'}</td>
           <td style="color:var(--fall)">${s.stop_loss ? s.stop_loss.toFixed(2) : '-'}</td>
           <td class="${estCls}">${estStr}</td>
-          <td class="hl-actual-cell" id="actual-${s.code}">待计算</td>
-          <td class="hl-accuracy-cell" id="acc-${s.code}">-</td>
+          <td>${actualHtml}</td>
+          <td>${accHtml}</td>
           <td><button class="btn-tiny" onclick="App.toggleInlineKline('${s.code}','${file}')">📈 走势</button></td>
         </tr>
         <tr id="krow-${s.code}" style="display:none"><td colspan="11" style="padding:8px 12px;background:var(--bg2)">
@@ -851,13 +1005,8 @@ const App = {
       html += '</div>';
       el.innerHTML = html;
 
-      // 尝试计算明日实际涨幅和准确率
-      this._calcHistoryAccuracy(file, recs);
-
-      // 启动实时数据更新
-      if (this.realtimeTimer) {
-        // 复用已有的实时数据更新机制
-      }
+      // 数据已回填，次日表现和预测验证直接显示
+      // 实时数据仅更新现价和当前涨幅（通过data-rt-code标记）
 
     } catch (e) {
       el.innerHTML = '<div class="empty">加载失败: ' + e.message + '</div>';

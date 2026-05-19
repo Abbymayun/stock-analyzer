@@ -1095,11 +1095,15 @@ def save_snapshot(all_stocks, recommendations):
                         'support', 'resistance', 'trend', 'recommendation',
                         'next_day_estimate', 'signals', 'analysis_text',
                         'ma5', 'ma10', 'ma20', 'ma60', 'rsi6', 'rsi12',
-                        'kdj_k', 'kdj_j', 'macd_dif', 'boll_upper', 'boll_middle', 'boll_lower']
+                        'kdj_k', 'kdj_j', 'macd_dif', 'boll_upper', 'boll_middle', 'boll_lower',
+                        'snapshot_price']
         result = {}
         for k in keys_to_keep:
             if k in s and s[k] is not None:
                 result[k] = s[k]
+        # snapshot_price 默认等于 price（分析时价格快照）
+        if 'snapshot_price' not in result and 'price' in result:
+            result['snapshot_price'] = result['price']
         return result
 
     hist_data = {
