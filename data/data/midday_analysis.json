@@ -1,0 +1,221 @@
+{
+  "update_time": "2026-05-22 12:13:28",
+  "us_indices": {
+    "int_dji": {
+      "name": "道琼斯",
+      "price": 46247.29,
+      "prev_close": 45948.62,
+      "change_pct": 0.65
+    },
+    "int_nasdaq": {
+      "name": "纳斯达克",
+      "price": 22484.07,
+      "prev_close": 22385.57,
+      "change_pct": 0.44
+    },
+    "int_sp500": {
+      "name": "标普500",
+      "price": 6643.7,
+      "prev_close": 6604.73,
+      "change_pct": 0.59
+    }
+  },
+  "commodities": {
+    "hf_GC": {
+      "name": "COMEX黄金",
+      "unit": "美元/盎司",
+      "price": 4529.61,
+      "prev_close": 4542.5,
+      "change_pct": -0.28
+    },
+    "hf_CL": {
+      "name": "WTI原油",
+      "unit": "美元/桶",
+      "price": 97.22,
+      "prev_close": 96.35,
+      "change_pct": 0.9
+    },
+    "hf_SI": {
+      "name": "COMEX白银",
+      "unit": "美元/盎司",
+      "price": 76.95,
+      "prev_close": 76.73,
+      "change_pct": 0.29
+    }
+  },
+  "fx": {
+    "usdcnh": {
+      "name": "美元/离岸人民币",
+      "price": 6.7999,
+      "prev_close": 6.7962,
+      "change_pct": 0.05
+    }
+  },
+  "global_indices": {
+    "hkHSI": {
+      "name": "恒生指数",
+      "price": 25641.8,
+      "prev_close": 25386.52,
+      "change_pct": 1.01
+    }
+  },
+  "cn_indices": {
+    "000001": {
+      "name": "上证指数",
+      "code": "000001",
+      "price": 4096.24,
+      "prev_close": 4077.28,
+      "change_pct": 0.47
+    },
+    "399001": {
+      "name": "深证成指",
+      "code": "399001",
+      "price": 15458.88,
+      "prev_close": 15247.27,
+      "change_pct": 1.39
+    },
+    "399006": {
+      "name": "创业板指",
+      "code": "399006",
+      "price": 3902.74,
+      "prev_close": 3829.78,
+      "change_pct": 1.91
+    },
+    "000688": {
+      "name": "科创50",
+      "code": "000688",
+      "price": 1763.27,
+      "prev_close": 1764.17,
+      "change_pct": -0.05
+    },
+    "000300": {
+      "name": "沪深300",
+      "code": "000300",
+      "price": 4816.59,
+      "prev_close": 4783.1,
+      "change_pct": 0.7
+    }
+  },
+  "us_impact": {
+    "direction": "小幅利好",
+    "level": "medium",
+    "avg_pct": 0.56,
+    "summary": "美股全线上涨，三大指数平均+0.56%。对A股：小幅利好",
+    "detail": "📈 道琼斯 46247.29 (+0.65%)\n📈 纳斯达克 22484.07 (+0.44%)\n📈 标普500 6643.70 (+0.59%)",
+    "affect_sectors": [],
+    "open_forecast": "A股可能平开或小幅高开，开盘后走势取决于自身技术面",
+    "coping": [
+      "• 外围偏暖但力度一般，维持正常操作节奏",
+      "• 科技方向可适度关注，但不必重仓追"
+    ]
+  },
+  "commodity_impact": {
+    "summary": "大宗商品波动平稳，对A股直接影响有限",
+    "detail": "📉 COMEX黄金 4529.61 美元/盎司 (-0.28%)\n📈 COMEX白银 76.95 美元/盎司 (+0.29%)\n📈 WTI原油 97.22 美元/桶 (+0.90%)",
+    "affect_sectors": [],
+    "coping": []
+  },
+  "fx_impact": {
+    "summary": "汇率相对稳定",
+    "detail": "💵 美元/离岸人民币 6.7999 (+0.05%)",
+    "affect_sectors": [],
+    "coping": []
+  },
+  "global_impact": {
+    "summary": "恒指+1.01%，带动A股开盘情绪",
+    "detail": "📈 恒生指数 25641.80 (+1.01%)",
+    "affect_sectors": [
+      "🟢 恒指小幅上涨，港股情绪偏暖，对A股有正面带动"
+    ],
+    "coping": []
+  },
+  "impact_summary": "🇺🇸 美股全线上涨，三大指数平均+0.56%。对A股：小幅利好\n📊 预计A股可能平开或小幅高开，开盘后走势取决于自身技术面\n\n🎯 受影响板块：\n  🟢 恒指小幅上涨，港股情绪偏暖，对A股有正面带动\n\n💡 应对方法：\n  • 外围偏暖但力度一般，维持正常操作节奏\n  • 科技方向可适度关注，但不必重仓追",
+  "strategy": {
+    "risk_score": 45,
+    "strategy_text": "✅ 美股利好兑现，上证+0.47%符合预期，午后看量能能否持续\n➡️ 上证指数午盘+0.47%，走势平稳\n\n🟢 【午后策略】中性环境\n  可择机低吸优质标的，但控制单票仓位\n  优先关注回调到支撑位的强势股\n\n  🚫 午后操作规则：\n  • 上午已涨超5%的不追（获利盘压力）\n  • 上午大幅下跌的股票不盲目抄底（等企稳信号）\n  • 临近尾盘（14:30后）谨慎操作",
+    "position_advice": {
+      "max": 0.4,
+      "single_max": 0.3
+    }
+  },
+  "top_buys": [
+    {
+      "code": "600237",
+      "name": "铜峰电子",
+      "score": 95,
+      "price": 9.91,
+      "change_pct": 4.43,
+      "buy_point": 9.48,
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
+      "stop_loss": 9.01,
+      "target_price": 10.26,
+      "signals": [
+        "温和上涨",
+        "大振幅",
+        "放量",
+        "均线多头排列",
+        "MA金叉",
+        "红柱放大",
+        "触布林上轨"
+      ],
+      "next_day_estimate": {
+        "estimate": 1.2,
+        "factors": [
+          "技术面偏强",
+          "MACD多头",
+          "触及布林上轨"
+        ]
+      }
+    },
+    {
+      "code": "002617",
+      "name": "露笑科技",
+      "score": 78,
+      "price": 9.15,
+      "change_pct": 2.92,
+      "buy_point": 9.06,
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
+      "stop_loss": 8.61,
+      "target_price": 10.44,
+      "signals": [
+        "温和上涨",
+        "放量",
+        "短期多头"
+      ],
+      "next_day_estimate": {
+        "estimate": 2.0,
+        "factors": [
+          "技术面偏强",
+          "MACD多头"
+        ]
+      }
+    },
+    {
+      "code": "002031",
+      "name": "巨轮智能",
+      "score": 78,
+      "price": 7.5,
+      "change_pct": 3.31,
+      "buy_point": 6.83,
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
+      "stop_loss": 6.49,
+      "target_price": 8.98,
+      "signals": [
+        "温和上涨",
+        "高换手",
+        "大振幅",
+        "放量",
+        "短期多头"
+      ],
+      "next_day_estimate": {
+        "estimate": 2.0,
+        "factors": [
+          "技术面偏强",
+          "MACD多头"
+        ]
+      }
+    }
+  ],
+  "market_summary": "全市场3065只：上涨1822只(59.4%)，下跌983只(32.1%) | 涨停60只，跌停4只，平均涨幅+1.03% | 赚钱效应一般",
+  "morning_risk": 45
+}

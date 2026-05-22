@@ -1,0 +1,226 @@
+{
+  "update_time": "2026-05-22 12:13:24",
+  "us_indices": {
+    "int_dji": {
+      "name": "道琼斯",
+      "price": 46247.29,
+      "prev_close": 45948.62,
+      "change_pct": 0.65
+    },
+    "int_nasdaq": {
+      "name": "纳斯达克",
+      "price": 22484.07,
+      "prev_close": 22385.57,
+      "change_pct": 0.44
+    },
+    "int_sp500": {
+      "name": "标普500",
+      "price": 6643.7,
+      "prev_close": 6604.73,
+      "change_pct": 0.59
+    }
+  },
+  "bond_yield": {},
+  "commodities": {
+    "hf_GC": {
+      "name": "COMEX黄金",
+      "unit": "美元/盎司",
+      "price": 4529.61,
+      "prev_close": 4542.5,
+      "change_pct": -0.28
+    },
+    "hf_CL": {
+      "name": "WTI原油",
+      "unit": "美元/桶",
+      "price": 97.22,
+      "prev_close": 96.35,
+      "change_pct": 0.9
+    },
+    "hf_SI": {
+      "name": "COMEX白银",
+      "unit": "美元/盎司",
+      "price": 76.95,
+      "prev_close": 76.73,
+      "change_pct": 0.29
+    }
+  },
+  "fx": {
+    "usdcnh": {
+      "name": "美元/离岸人民币",
+      "price": 6.7999,
+      "prev_close": 6.7962,
+      "change_pct": 0.05
+    }
+  },
+  "global_indices": {
+    "hkHSI": {
+      "name": "恒生指数",
+      "price": 25641.8,
+      "prev_close": 25386.52,
+      "change_pct": 1.01
+    }
+  },
+  "cn_indices": {
+    "000001": {
+      "name": "上证指数",
+      "code": "000001",
+      "price": 4096.24,
+      "prev_close": 4077.28,
+      "change_pct": 0.47
+    },
+    "399001": {
+      "name": "深证成指",
+      "code": "399001",
+      "price": 15458.88,
+      "prev_close": 15247.27,
+      "change_pct": 1.39
+    },
+    "399006": {
+      "name": "创业板指",
+      "code": "399006",
+      "price": 3902.74,
+      "prev_close": 3829.78,
+      "change_pct": 1.91
+    },
+    "000688": {
+      "name": "科创50",
+      "code": "000688",
+      "price": 1763.27,
+      "prev_close": 1764.17,
+      "change_pct": -0.05
+    },
+    "000300": {
+      "name": "沪深300",
+      "code": "000300",
+      "price": 4816.59,
+      "prev_close": 4783.1,
+      "change_pct": 0.7
+    }
+  },
+  "us_impact": {
+    "direction": "小幅利好",
+    "level": "medium",
+    "avg_pct": 0.56,
+    "summary": "美股全线上涨，三大指数平均+0.56%。对A股：小幅利好",
+    "detail": "📈 道琼斯 46247.29 (+0.65%)\n📈 纳斯达克 22484.07 (+0.44%)\n📈 标普500 6643.70 (+0.59%)",
+    "affect_sectors": [],
+    "open_forecast": "A股可能平开或小幅高开，开盘后走势取决于自身技术面",
+    "coping": [
+      "• 外围偏暖但力度一般，维持正常操作节奏",
+      "• 科技方向可适度关注，但不必重仓追"
+    ]
+  },
+  "commodity_impact": {
+    "summary": "大宗商品波动平稳，对A股直接影响有限",
+    "detail": "📉 COMEX黄金 4529.61 美元/盎司 (-0.28%)\n📈 COMEX白银 76.95 美元/盎司 (+0.29%)\n📈 WTI原油 97.22 美元/桶 (+0.90%)",
+    "affect_sectors": [],
+    "coping": []
+  },
+  "fx_impact": {
+    "summary": "汇率相对稳定",
+    "detail": "💵 美元/离岸人民币 6.7999 (+0.05%)",
+    "affect_sectors": [],
+    "coping": []
+  },
+  "global_impact": {
+    "summary": "恒指+1.01%，带动A股开盘情绪",
+    "detail": "📈 恒生指数 25641.80 (+1.01%)",
+    "affect_sectors": [
+      "🟢 恒指小幅上涨，港股情绪偏暖，对A股有正面带动"
+    ],
+    "coping": []
+  },
+  "impact_summary": "🇺🇸 美股全线上涨，三大指数平均+0.56%。对A股：小幅利好\n📊 预计A股可能平开或小幅高开，开盘后走势取决于自身技术面\n\n🎯 受影响板块：\n  🟢 恒指小幅上涨，港股情绪偏暖，对A股有正面带动\n\n💡 应对方法：\n  • 外围偏暖但力度一般，维持正常操作节奏\n  • 科技方向可适度关注，但不必重仓追",
+  "strategy": {
+    "risk_score": 45,
+    "strategy_text": "\n🟢 【当日总体策略】中性环境\n  建议：中等仓位（4-6成），精选个股\n  操作：关注技术面信号明确的标的，分批建仓\n  策略：回调低吸为主，突破追涨为辅\n\n  📊 建议仓位：4-6成 | 风险评分：45/100\n\n  🚫 当日买入过滤规则：\n  • 今天涨幅 > 5% 的股票不买（追高风险）\n  • 昨天涨停的股票今天不追（获利盘抛压）\n  • 评分 < 50 的股票不考虑买入\n  • 买入价格必须低于MA5（回调买入，不追高）\n  • 单票仓位不超过总资金的30%",
+    "position_advice": {
+      "max": 0.4,
+      "single_max": 0.3
+    }
+  },
+  "top_buys": [
+    {
+      "code": "002196",
+      "name": "方正电机",
+      "score": 90,
+      "price": 16.84,
+      "change_pct": 2.31,
+      "buy_point": 16.47,
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
+      "stop_loss": 15.65,
+      "target_price": 18.13,
+      "signals": [
+        "温和上涨",
+        "高换手",
+        "收在高位",
+        "大振幅",
+        "高PE",
+        "放量",
+        "均线多头排列",
+        "红柱放大"
+      ],
+      "next_day_estimate": {
+        "estimate": 3.0,
+        "factors": [
+          "技术面偏强",
+          "连续上涨",
+          "MACD多头"
+        ]
+      }
+    },
+    {
+      "code": "002576",
+      "name": "通达动力",
+      "score": 93,
+      "price": 19.25,
+      "change_pct": 1.8,
+      "buy_point": 19.14,
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
+      "stop_loss": 18.18,
+      "target_price": 19.99,
+      "signals": [
+        "温和上涨",
+        "收在高位",
+        "大振幅",
+        "放量",
+        "均线多头排列",
+        "红柱放大"
+      ],
+      "next_day_estimate": {
+        "estimate": 2.0,
+        "factors": [
+          "技术面偏强",
+          "MACD多头"
+        ]
+      }
+    },
+    {
+      "code": "600222",
+      "name": "太龙药业",
+      "score": 90,
+      "price": 7.94,
+      "change_pct": 4.06,
+      "buy_point": 7.8,
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
+      "stop_loss": 7.41,
+      "target_price": 8.3,
+      "signals": [
+        "温和上涨",
+        "大振幅",
+        "放量",
+        "均线多头排列",
+        "红柱放大"
+      ],
+      "next_day_estimate": {
+        "estimate": 2.0,
+        "factors": [
+          "技术面偏强",
+          "MACD多头"
+        ]
+      }
+    }
+  ],
+  "yesterday_sentiment": "中性",
+  "yesterday_score": 45.6
+}

@@ -1,0 +1,15 @@
+{
+  "cash": 100000,
+  "initial_capital": 100000,
+  "holdings": {},
+  "total_assets": 100000,
+  "total_return": 0,
+  "trading_stats": {
+    "total_trades": 0,
+    "win_trades": 0,
+    "lose_trades": 0,
+    "total_pnl": 0,
+    "total_commission": 0,
+    "max_drawdown": 0
+  }
+}
