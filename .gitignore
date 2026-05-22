@@ -1,13 +1,9 @@
-# 大数据文件不提交到 Git，由 GitHub Actions 生成
-data/all_stocks.json
-data/stock_list.json
-data/history/
+# 运行时/交易相关数据（含账户信息，不提交）
 data/portfolio.json
 data/trade_log.json
-data/recommendations.json
 data/buy_plan.json
 data/sell_plan.json
-data/strategy_tracking.json
+data/logs/
 
 # 临时文件
 *.pyc

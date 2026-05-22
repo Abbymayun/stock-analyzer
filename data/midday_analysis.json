@@ -1,0 +1,223 @@
+{
+  "update_time": "2026-05-20 18:27:09",
+  "us_indices": {
+    "int_dji": {
+      "name": "道琼斯",
+      "price": 46247.29,
+      "prev_close": 45948.62,
+      "change_pct": 0.65
+    },
+    "int_nasdaq": {
+      "name": "纳斯达克",
+      "price": 22484.07,
+      "prev_close": 22385.57,
+      "change_pct": 0.44
+    },
+    "int_sp500": {
+      "name": "标普500",
+      "price": 6643.7,
+      "prev_close": 6604.73,
+      "change_pct": 0.59
+    }
+  },
+  "commodities": {
+    "hf_GC": {
+      "name": "COMEX黄金",
+      "unit": "美元/盎司",
+      "price": 4495.98,
+      "prev_close": 4511.2,
+      "change_pct": -0.34
+    },
+    "hf_CL": {
+      "name": "WTI原油",
+      "unit": "美元/桶",
+      "price": 102.16,
+      "prev_close": 104.15,
+      "change_pct": -1.91
+    },
+    "hf_SI": {
+      "name": "COMEX白银",
+      "unit": "美元/盎司",
+      "price": 75.79,
+      "prev_close": 75.16,
+      "change_pct": 0.83
+    }
+  },
+  "fx": {
+    "usdcnh": {
+      "name": "美元/离岸人民币",
+      "price": 6.8056,
+      "prev_close": 6.8023,
+      "change_pct": 0.05
+    }
+  },
+  "global_indices": {
+    "hkHSI": {
+      "name": "恒生指数",
+      "price": 25709.62,
+      "prev_close": 25797.85,
+      "change_pct": -0.34
+    }
+  },
+  "cn_indices": {
+    "000001": {
+      "name": "上证指数",
+      "code": "000001",
+      "price": 4162.18,
+      "prev_close": 4169.54,
+      "change_pct": -0.18
+    },
+    "399001": {
+      "name": "深证成指",
+      "code": "399001",
+      "price": 15569.98,
+      "prev_close": 15569.91,
+      "change_pct": 0.0
+    },
+    "399006": {
+      "name": "创业板指",
+      "code": "399006",
+      "price": 3921.79,
+      "prev_close": 3908.44,
+      "change_pct": 0.34
+    },
+    "000688": {
+      "name": "科创50",
+      "code": "000688",
+      "price": 1832.02,
+      "prev_close": 1775.13,
+      "change_pct": 3.2
+    },
+    "000300": {
+      "name": "沪深300",
+      "code": "000300",
+      "price": 4850.7,
+      "prev_close": 4852.88,
+      "change_pct": -0.04
+    }
+  },
+  "us_impact": {
+    "direction": "小幅利好",
+    "level": "medium",
+    "avg_pct": 0.56,
+    "summary": "美股全线上涨，三大指数平均+0.56%。对A股：小幅利好",
+    "detail": "📈 道琼斯 46247.29 (+0.65%)\n📈 纳斯达克 22484.07 (+0.44%)\n📈 标普500 6643.70 (+0.59%)",
+    "affect_sectors": [],
+    "open_forecast": "A股可能平开或小幅高开，开盘后走势取决于自身技术面",
+    "coping": [
+      "• 外围偏暖但力度一般，维持正常操作节奏",
+      "• 科技方向可适度关注，但不必重仓追"
+    ]
+  },
+  "commodity_impact": {
+    "summary": "油价暴跌1.9%，利好航空/利空气油",
+    "detail": "📉 COMEX黄金 4495.98 美元/盎司 (-0.34%)\n📈 COMEX白银 75.79 美元/盎司 (+0.83%)\n📉 WTI原油 102.16 美元/桶 (-1.91%)",
+    "affect_sectors": [],
+    "coping": []
+  },
+  "fx_impact": {
+    "summary": "汇率相对稳定",
+    "detail": "💵 美元/离岸人民币 6.8056 (+0.05%)",
+    "affect_sectors": [],
+    "coping": []
+  },
+  "global_impact": {
+    "summary": "外围市场整体平稳",
+    "detail": "📉 恒生指数 25709.62 (-0.34%)",
+    "affect_sectors": [],
+    "coping": []
+  },
+  "impact_summary": "🇺🇸 美股全线上涨，三大指数平均+0.56%。对A股：小幅利好\n📊 预计A股可能平开或小幅高开，开盘后走势取决于自身技术面\n\n💡 应对方法：\n  • 外围偏暖但力度一般，维持正常操作节奏\n  • 科技方向可适度关注，但不必重仓追",
+  "strategy": {
+    "risk_score": 75,
+    "strategy_text": "⚠️ 美股利好未兑现，上证-0.18%高开低走，午后承压\n➡️ 上证指数午盘-0.18%，走势平稳\n📈 科创50(+3.20%)远强于主板，资金向科技方向集中\n🔴 赚钱效应极差（仅24%上涨），多数个股下跌，午后不宜追高\n\n💼 持仓午间检查：\n  • 兴瑞科技(002937) 1200股 成本36.75 现价35.97 亏损2.12%\n  • 易德龙(603380) 400股 成本43.04 现价43.08 盈利0.09%\n\n🔴 【午后策略】高风险环境\n  不加仓、不追高，持仓股若继续走弱可考虑减仓\n  若大盘午后继续下跌，优先保护本金\n\n  🚫 午后操作规则：\n  • 上午已涨超5%的不追（获利盘压力）\n  • 上午大幅下跌的股票不盲目抄底（等企稳信号）\n  • 临近尾盘（14:30后）谨慎操作",
+    "position_advice": {
+      "max": 0.2,
+      "single_max": 0.3
+    }
+  },
+  "top_buys": [
+    {
+      "code": "002922",
+      "name": "伊戈尔",
+      "score": 93,
+      "price": 44.91,
+      "change_pct": 1.72,
+      "buy_point": 43.69,
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
+      "stop_loss": 41.5,
+      "target_price": 46.92,
+      "signals": [
+        "温和上涨",
+        "高换手",
+        "收在高位",
+        "大振幅",
+        "放量",
+        "均线多头排列",
+        "红柱放大"
+      ],
+      "next_day_estimate": {
+        "estimate": 3.0,
+        "factors": [
+          "技术面偏强",
+          "连续上涨",
+          "MACD多头"
+        ]
+      }
+    },
+    {
+      "code": "002429",
+      "name": "兆驰股份",
+      "score": 93,
+      "price": 13.36,
+      "change_pct": 4.46,
+      "buy_point": 12.98,
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
+      "stop_loss": 12.33,
+      "target_price": 14.16,
+      "signals": [
+        "温和上涨",
+        "收在高位",
+        "大振幅",
+        "放量",
+        "均线多头排列",
+        "红柱放大"
+      ],
+      "next_day_estimate": {
+        "estimate": 3.0,
+        "factors": [
+          "技术面偏强",
+          "连续上涨",
+          "MACD多头"
+        ]
+      }
+    },
+    {
+      "code": "002159",
+      "name": "三特索道",
+      "score": 79,
+      "price": 16.27,
+      "change_pct": 2.46,
+      "buy_point": 15.96,
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
+      "stop_loss": 15.16,
+      "target_price": 18.13,
+      "signals": [
+        "温和上涨",
+        "大振幅",
+        "放量",
+        "MA金叉",
+        "红柱放大"
+      ],
+      "next_day_estimate": {
+        "estimate": 2.0,
+        "factors": [
+          "技术面偏强",
+          "MACD多头"
+        ]
+      }
+    }
+  ],
+  "market_summary": "全市场3063只：上涨749只(24.5%)，下跌2102只(68.6%) | 涨停50只，跌停23只，平均涨幅-0.88% | 赚钱效应很差，控制风险",
+  "morning_risk": 50
+}

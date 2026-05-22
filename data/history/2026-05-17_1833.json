@@ -1,0 +1,2865 @@
+{
+  "update_time": "2026-05-17 18:33:34",
+  "recommendations": {
+    "strong_buy": [
+      {
+        "code": "000559",
+        "name": "万向钱潮",
+        "score": 100,
+        "price": 17.5,
+        "prev_close": 16.54,
+        "snapshot_price": 17.5,
+        "latest_price": 18.12,
+        "latest_change_pct": 0.78,
+        "next_day_actual": {
+          "actual_pct": 2.74,
+          "actual_close": 17.98,
+          "next_date": "2026-05-18",
+          "vs_estimate": 2.74
+        },
+        "prediction_result": {
+          "label": "超预期+2.7%",
+          "icon": "🔥",
+          "hit_dir": false
+        }
+      },
+      {
+        "code": "002050",
+        "name": "三花智控",
+        "score": 100,
+        "price": 52.06,
+        "prev_close": 49.43,
+        "snapshot_price": 52.06,
+        "latest_price": 52.33,
+        "latest_change_pct": -1.11,
+        "next_day_actual": {
+          "actual_pct": 1.65,
+          "actual_close": 52.92,
+          "next_date": "2026-05-18",
+          "vs_estimate": 1.65
+        },
+        "prediction_result": {
+          "label": "超预期",
+          "icon": "✓",
+          "hit_dir": false
+        }
+      },
+      {
+        "code": "603127",
+        "name": "昭衍新药",
+        "score": 100,
+        "price": 39.96,
+        "prev_close": 37.95,
+        "snapshot_price": 39.96,
+        "latest_price": 38.43,
+        "latest_change_pct": -1.89,
+        "next_day_actual": {
+          "actual_pct": -1.98,
+          "actual_close": 39.17,
+          "next_date": "2026-05-18",
+          "vs_estimate": -1.98
+        },
+        "prediction_result": {
+          "label": "低于预期",
+          "icon": "↓",
+          "hit_dir": true
+        }
+      },
+      {
+        "code": "002952",
+        "name": "亚世光电",
+        "score": 100,
+        "price": 29.89,
+        "prev_close": 28.54,
+        "snapshot_price": 29.89,
+        "latest_price": 28.75,
+        "latest_change_pct": -1.61,
+        "next_day_actual": {
+          "actual_pct": -2.24,
+          "actual_close": 29.22,
+          "next_date": "2026-05-18",
+          "vs_estimate": -2.24
+        },
+        "prediction_result": {
+          "label": "低于预期",
+          "icon": "↓",
+          "hit_dir": true
+        }
+      },
+      {
+        "code": "600415",
+        "name": "小商品城",
+        "score": 100,
+        "price": 13.75,
+        "prev_close": 13.53,
+        "snapshot_price": 13.75,
+        "latest_price": 14.22,
+        "latest_change_pct": 5.72,
+        "next_day_actual": {
+          "actual_pct": -2.18,
+          "actual_close": 13.45,
+          "next_date": "2026-05-18",
+          "vs_estimate": -2.18
+        },
+        "prediction_result": {
+          "label": "低于预期",
+          "icon": "↓",
+          "hit_dir": true
+        }
+      }
+    ],
+    "buy": [
+      {
+        "code": "002658",
+        "name": "雪迪龙",
+        "score": 78,
+        "price": 10.06,
+        "prev_close": 9.7,
+        "snapshot_price": 10.06,
+        "latest_price": 9.56,
+        "latest_change_pct": -4.88,
+        "next_day_actual": {
+          "actual_pct": -0.1,
+          "actual_close": 10.05,
+          "next_date": "2026-05-18",
+          "vs_estimate": -0.1
+        },
+        "prediction_result": {
+          "label": "精准命中",
+          "icon": "✓",
+          "hit_dir": true
+        }
+      },
+      {
+        "code": "605177",
+        "name": "东亚药业",
+        "score": 78,
+        "price": 22.83,
+        "prev_close": 22.4,
+        "snapshot_price": 22.83,
+        "latest_price": 22.27,
+        "latest_change_pct": -0.4,
+        "next_day_actual": {
+          "actual_pct": -2.06,
+          "actual_close": 22.36,
+          "next_date": "2026-05-18",
+          "vs_estimate": -2.06
+        },
+        "prediction_result": {
+          "label": "低于预期",
+          "icon": "↓",
+          "hit_dir": true
+        }
+      },
+      {
+        "code": "000710",
+        "name": "贝瑞基因",
+        "score": 78,
+        "price": 10.41,
+        "prev_close": 10.3,
+        "snapshot_price": 10.41,
+        "latest_price": 10.46,
+        "latest_change_pct": -1.32,
+        "next_day_actual": {
+          "actual_pct": 1.83,
+          "actual_close": 10.6,
+          "next_date": "2026-05-18",
+          "vs_estimate": 1.83
+        },
+        "prediction_result": {
+          "label": "超预期",
+          "icon": "✓",
+          "hit_dir": false
+        }
+      },
+      {
+        "code": "002048",
+        "name": "宁波华翔",
+        "score": 78,
+        "price": 29.21,
+        "prev_close": 28.61,
+        "snapshot_price": 29.21,
+        "latest_price": 28.83,
+        "latest_change_pct": -1.2,
+        "next_day_actual": {
+          "actual_pct": -0.1,
+          "actual_close": 29.18,
+          "next_date": "2026-05-18",
+          "vs_estimate": -0.1
+        },
+        "prediction_result": {
+          "label": "精准命中",
+          "icon": "✓",
+          "hit_dir": true
+        }
+      },
+      {
+        "code": "002334",
+        "name": "英威腾",
+        "score": 78,
+        "price": 9.04,
+        "prev_close": 8.84,
+        "snapshot_price": 9.04,
+        "latest_price": 9.29,
+        "latest_change_pct": 0.32,
+        "next_day_actual": {
+          "actual_pct": 2.43,
+          "actual_close": 9.26,
+          "next_date": "2026-05-18",
+          "vs_estimate": 2.43
+        },
+        "prediction_result": {
+          "label": "超预期+2.4%",
+          "icon": "🔥",
+          "hit_dir": false
+        }
+      },
+      {
+        "code": "002335",
+        "name": "科华数据",
+        "score": 78,
+        "price": 67.82,
+        "prev_close": 65.8,
+        "snapshot_price": 67.82,
+        "latest_price": 67.72,
+        "latest_change_pct": 0.06,
+        "next_day_actual": {
+          "actual_pct": -0.21,
+          "actual_close": 67.68,
+          "next_date": "2026-05-18",
+          "vs_estimate": -0.21
+        },
+        "prediction_result": {
+          "label": "精准命中",
+          "icon": "✓",
+          "hit_dir": true
+        }
+      },
+      {
+        "code": "002611",
+        "name": "东方精工",
+        "score": 78,
+        "price": 18.39,
+        "prev_close": 17.91,
+        "snapshot_price": 18.39,
+        "latest_price": 20.35,
+        "latest_change_pct": 5.01,
+        "next_day_actual": {
+          "actual_pct": 5.38,
+          "actual_close": 19.38,
+          "next_date": "2026-05-18",
+          "vs_estimate": 5.38
+        },
+        "prediction_result": {
+          "label": "超预期+5.4%",
+          "icon": "🔥",
+          "hit_dir": false
+        }
+      },
+      {
+        "code": "600143",
+        "name": "金发科技",
+        "score": 78,
+        "price": 17.51,
+        "prev_close": 17.13,
+        "snapshot_price": 17.51,
+        "latest_price": 17.79,
+        "latest_change_pct": 2.07,
+        "next_day_actual": {
+          "actual_pct": -0.46,
+          "actual_close": 17.43,
+          "next_date": "2026-05-18",
+          "vs_estimate": -0.46
+        },
+        "prediction_result": {
+          "label": "精准命中",
+          "icon": "✓",
+          "hit_dir": true
+        }
+      },
+      {
+        "code": "603028",
+        "name": "赛福天",
+        "score": 78,
+        "price": 9.49,
+        "prev_close": 9.3,
+        "snapshot_price": 9.49,
+        "latest_price": 9.48,
+        "latest_change_pct": 0.0,
+        "next_day_actual": {
+          "actual_pct": -0.11,
+          "actual_close": 9.48,
+          "next_date": "2026-05-18",
+          "vs_estimate": -0.11
+        },
+        "prediction_result": {
+          "label": "精准命中",
+          "icon": "✓",
+          "hit_dir": true
+        }
+      },
+      {
+        "code": "603039",
+        "name": "泛微网络",
+        "score": 78,
+        "price": 46.9,
+        "prev_close": 45.72,
+        "snapshot_price": 46.9,
+        "latest_price": 48.91,
+        "latest_change_pct": 3.14,
+        "next_day_actual": {
+          "actual_pct": 1.11,
+          "actual_close": 47.42,
+          "next_date": "2026-05-18",
+          "vs_estimate": 1.11
+        },
+        "prediction_result": {
+          "label": "超预期",
+          "icon": "✓",
+          "hit_dir": false
+        }
+      }
+    ],
+    "avoid": [
+      {
+        "code": "601778",
+        "name": "晶科科技",
+        "score": 30,
+        "price": 6.96,
+        "prev_close": 7.52
+      },
+      {
+        "code": "603007",
+        "name": "顺景科技",
+        "score": 30,
+        "price": 8.37,
+        "prev_close": 9.26
+      },
+      {
+        "code": "000066",
+        "name": "中国长城",
+        "score": 27,
+        "price": 20.5,
+        "prev_close": 22.67
+      },
+      {
+        "code": "002309",
+        "name": "中利集团",
+        "score": 27,
+        "price": 4.65,
+        "prev_close": 5.17
+      },
+      {
+        "code": "603118",
+        "name": "共进股份",
+        "score": 27,
+        "price": 15.93,
+        "prev_close": 17.7
+      }
+    ]
+  },
+  "scores": {
+    "000559": {
+      "score": 100,
+      "price": 17.5,
+      "name": "万向钱潮"
+    },
+    "002050": {
+      "score": 100,
+      "price": 52.06,
+      "name": "三花智控"
+    },
+    "603127": {
+      "score": 100,
+      "price": 39.96,
+      "name": "昭衍新药"
+    },
+    "002952": {
+      "score": 100,
+      "price": 29.89,
+      "name": "亚世光电"
+    },
+    "600415": {
+      "score": 100,
+      "price": 13.75,
+      "name": "小商品城"
+    },
+    "002786": {
+      "score": 98,
+      "price": 8.41,
+      "name": "银宝山新"
+    },
+    "603416": {
+      "score": 98,
+      "price": 64.11,
+      "name": "信捷电气"
+    },
+    "600699": {
+      "score": 98,
+      "price": 30.37,
+      "name": "均胜电子"
+    },
+    "003021": {
+      "score": 97,
+      "price": 105.99,
+      "name": "兆威机电"
+    },
+    "600201": {
+      "score": 97,
+      "price": 15.0,
+      "name": "生物股份"
+    },
+    "000863": {
+      "score": 95,
+      "price": 5.62,
+      "name": "三湘印象"
+    },
+    "603757": {
+      "score": 95,
+      "price": 61.8,
+      "name": "大元泵业"
+    },
+    "002637": {
+      "score": 95,
+      "price": 13.31,
+      "name": "赞宇科技"
+    },
+    "003028": {
+      "score": 95,
+      "price": 28.88,
+      "name": "振邦智能"
+    },
+    "600577": {
+      "score": 95,
+      "price": 14.07,
+      "name": "精达股份"
+    },
+    "603739": {
+      "score": 94,
+      "price": 15.55,
+      "name": "蔚蓝生物"
+    },
+    "605128": {
+      "score": 94,
+      "price": 34.87,
+      "name": "上海沿浦"
+    },
+    "002249": {
+      "score": 93,
+      "price": 9.91,
+      "name": "大洋电机"
+    },
+    "002403": {
+      "score": 93,
+      "price": 11.68,
+      "name": "爱仕达"
+    },
+    "002406": {
+      "score": 93,
+      "price": 8.43,
+      "name": "远东传动"
+    },
+    "000839": {
+      "score": 92,
+      "price": 3.44,
+      "name": "国安股份"
+    },
+    "600078": {
+      "score": 92,
+      "price": 15.47,
+      "name": "澄星股份"
+    },
+    "603728": {
+      "score": 92,
+      "price": 64.99,
+      "name": "鸣志电器"
+    },
+    "002889": {
+      "score": 91,
+      "price": 13.62,
+      "name": "东方嘉盛"
+    },
+    "000620": {
+      "score": 90,
+      "price": 3.26,
+      "name": "盈新发展"
+    },
+    "000700": {
+      "score": 90,
+      "price": 13.83,
+      "name": "模塑科技"
+    },
+    "002011": {
+      "score": 90,
+      "price": 12.87,
+      "name": "盾安环境"
+    },
+    "002484": {
+      "score": 90,
+      "price": 48.66,
+      "name": "江海股份"
+    },
+    "600246": {
+      "score": 90,
+      "price": 13.31,
+      "name": "万通发展"
+    },
+    "600584": {
+      "score": 90,
+      "price": 58.05,
+      "name": "长电科技"
+    },
+    "600853": {
+      "score": 90,
+      "price": 4.13,
+      "name": "龙建股份"
+    },
+    "601177": {
+      "score": 90,
+      "price": 16.97,
+      "name": "杭齿前进"
+    },
+    "601689": {
+      "score": 90,
+      "price": 69.93,
+      "name": "拓普集团"
+    },
+    "601882": {
+      "score": 90,
+      "price": 24.34,
+      "name": "海天精工"
+    },
+    "603081": {
+      "score": 90,
+      "price": 12.89,
+      "name": "大丰实业"
+    },
+    "603320": {
+      "score": 90,
+      "price": 26.18,
+      "name": "迪贝电气"
+    },
+    "603897": {
+      "score": 90,
+      "price": 56.6,
+      "name": "长城科技"
+    },
+    "603986": {
+      "score": 90,
+      "price": 375.34,
+      "name": "兆易创新"
+    },
+    "000591": {
+      "score": 90,
+      "price": 6.01,
+      "name": "太阳能"
+    },
+    "002006": {
+      "score": 90,
+      "price": 18.61,
+      "name": "精工科技"
+    },
+    "002371": {
+      "score": 90,
+      "price": 592.0,
+      "name": "北方华创"
+    },
+    "002472": {
+      "score": 90,
+      "price": 42.5,
+      "name": "双环传动"
+    },
+    "002474": {
+      "score": 90,
+      "price": 8.23,
+      "name": "榕基软件"
+    },
+    "002698": {
+      "score": 90,
+      "price": 14.7,
+      "name": "博实股份"
+    },
+    "002801": {
+      "score": 90,
+      "price": 33.06,
+      "name": "微光股份"
+    },
+    "002878": {
+      "score": 90,
+      "price": 19.86,
+      "name": "元隆雅图"
+    },
+    "003025": {
+      "score": 90,
+      "price": 14.54,
+      "name": "思进智能"
+    },
+    "600367": {
+      "score": 90,
+      "price": 24.95,
+      "name": "红星发展"
+    },
+    "600580": {
+      "score": 90,
+      "price": 40.48,
+      "name": "卧龙电驱"
+    },
+    "600698": {
+      "score": 90,
+      "price": 7.88,
+      "name": "湖南天雁"
+    },
+    "600727": {
+      "score": 90,
+      "price": 8.52,
+      "name": "鲁北化工"
+    },
+    "603270": {
+      "score": 90,
+      "price": 29.14,
+      "name": "金帝股份"
+    },
+    "603331": {
+      "score": 90,
+      "price": 15.9,
+      "name": "百达精工"
+    },
+    "603662": {
+      "score": 88,
+      "price": 64.02,
+      "name": "柯力传感"
+    },
+    "603217": {
+      "score": 87,
+      "price": 32.47,
+      "name": "元利科技"
+    },
+    "002747": {
+      "score": 87,
+      "price": 25.43,
+      "name": "埃斯顿"
+    },
+    "600618": {
+      "score": 86,
+      "price": 12.64,
+      "name": "氯碱化工"
+    },
+    "603350": {
+      "score": 86,
+      "price": 36.25,
+      "name": "安乃达"
+    },
+    "002489": {
+      "score": 85,
+      "price": 4.01,
+      "name": "浙江永强"
+    },
+    "000551": {
+      "score": 85,
+      "price": 17.09,
+      "name": "创元科技"
+    },
+    "000678": {
+      "score": 85,
+      "price": 13.45,
+      "name": "襄阳轴承"
+    },
+    "002119": {
+      "score": 85,
+      "price": 23.24,
+      "name": "康强电子"
+    },
+    "002158": {
+      "score": 85,
+      "price": 33.1,
+      "name": "汉钟精机"
+    },
+    "002184": {
+      "score": 85,
+      "price": 12.22,
+      "name": "海得控制"
+    },
+    "002298": {
+      "score": 85,
+      "price": 11.34,
+      "name": "中电鑫龙"
+    },
+    "002354": {
+      "score": 85,
+      "price": 6.44,
+      "name": "天娱数科"
+    },
+    "002355": {
+      "score": 85,
+      "price": 6.61,
+      "name": "兴民智通"
+    },
+    "002457": {
+      "score": 85,
+      "price": 12.11,
+      "name": "青龙管业"
+    },
+    "002458": {
+      "score": 85,
+      "price": 9.16,
+      "name": "益生股份"
+    },
+    "002576": {
+      "score": 85,
+      "price": 18.95,
+      "name": "通达动力"
+    },
+    "002584": {
+      "score": 85,
+      "price": 8.2,
+      "name": "西陇科学"
+    },
+    "002643": {
+      "score": 85,
+      "price": 18.08,
+      "name": "万润股份"
+    },
+    "002664": {
+      "score": 85,
+      "price": 23.26,
+      "name": "信质集团"
+    },
+    "002823": {
+      "score": 85,
+      "price": 16.71,
+      "name": "凯中精密"
+    },
+    "002927": {
+      "score": 85,
+      "price": 19.6,
+      "name": "泰永长征"
+    },
+    "003017": {
+      "score": 85,
+      "price": 33.45,
+      "name": "大洋生物"
+    },
+    "600358": {
+      "score": 85,
+      "price": 6.82,
+      "name": "国旅联合"
+    },
+    "600400": {
+      "score": 85,
+      "price": 3.01,
+      "name": "红豆股份"
+    },
+    "600480": {
+      "score": 85,
+      "price": 12.05,
+      "name": "凌云股份"
+    },
+    "600563": {
+      "score": 85,
+      "price": 133.97,
+      "name": "法拉电子"
+    },
+    "600743": {
+      "score": 85,
+      "price": 2.69,
+      "name": "华远控股"
+    },
+    "600984": {
+      "score": 85,
+      "price": 5.03,
+      "name": "建设机械"
+    },
+    "601330": {
+      "score": 85,
+      "price": 9.35,
+      "name": "绿色动力"
+    },
+    "601566": {
+      "score": 85,
+      "price": 11.4,
+      "name": "九牧王"
+    },
+    "603166": {
+      "score": 85,
+      "price": 14.77,
+      "name": "福达股份"
+    },
+    "603179": {
+      "score": 85,
+      "price": 74.31,
+      "name": "新泉股份"
+    },
+    "603190": {
+      "score": 85,
+      "price": 28.58,
+      "name": "亚通精工"
+    },
+    "603275": {
+      "score": 85,
+      "price": 52.92,
+      "name": "众辰科技"
+    },
+    "603305": {
+      "score": 85,
+      "price": 16.56,
+      "name": "旭升集团"
+    },
+    "002347": {
+      "score": 84,
+      "price": 8.44,
+      "name": "泰尔股份"
+    },
+    "002174": {
+      "score": 83,
+      "price": 11.96,
+      "name": "游族网络"
+    },
+    "003019": {
+      "score": 83,
+      "price": 36.55,
+      "name": "宸展光电"
+    },
+    "603037": {
+      "score": 83,
+      "price": 15.34,
+      "name": "凯众股份"
+    },
+    "603115": {
+      "score": 83,
+      "price": 75.7,
+      "name": "海星股份"
+    },
+    "000782": {
+      "score": 83,
+      "price": 8.25,
+      "name": "恒申新材"
+    },
+    "000697": {
+      "score": 83,
+      "price": 12.95,
+      "name": "炼石航空"
+    },
+    "603212": {
+      "score": 83,
+      "price": 15.13,
+      "name": "赛伍技术"
+    },
+    "600933": {
+      "score": 83,
+      "price": 17.64,
+      "name": "爱柯迪"
+    },
+    "603119": {
+      "score": 82,
+      "price": 72.76,
+      "name": "DR浙江荣"
+    },
+    "605055": {
+      "score": 81,
+      "price": 12.87,
+      "name": "迎丰股份"
+    },
+    "600382": {
+      "score": 81,
+      "price": 9.06,
+      "name": "广东明珠"
+    },
+    "000695": {
+      "score": 80,
+      "price": 15.49,
+      "name": "滨海能源"
+    },
+    "002531": {
+      "score": 80,
+      "price": 12.44,
+      "name": "天顺风能"
+    },
+    "603931": {
+      "score": 80,
+      "price": 46.29,
+      "name": "格林达"
+    },
+    "603978": {
+      "score": 80,
+      "price": 33.9,
+      "name": "深圳新星"
+    },
+    "605178": {
+      "score": 80,
+      "price": 76.45,
+      "name": "时空科技"
+    },
+    "000672": {
+      "score": 80,
+      "price": 17.18,
+      "name": "上峰水泥"
+    },
+    "000802": {
+      "score": 80,
+      "price": 5.16,
+      "name": "北京文化"
+    },
+    "000981": {
+      "score": 80,
+      "price": 4.41,
+      "name": "山子高科"
+    },
+    "002044": {
+      "score": 80,
+      "price": 6.23,
+      "name": "美年健康"
+    },
+    "002068": {
+      "score": 80,
+      "price": 9.94,
+      "name": "黑猫股份"
+    },
+    "002301": {
+      "score": 80,
+      "price": 8.18,
+      "name": "齐心集团"
+    },
+    "002600": {
+      "score": 80,
+      "price": 16.94,
+      "name": "领益智造"
+    },
+    "002795": {
+      "score": 80,
+      "price": 9.96,
+      "name": "永和智控"
+    },
+    "002871": {
+      "score": 80,
+      "price": 20.95,
+      "name": "伟隆股份"
+    },
+    "002963": {
+      "score": 80,
+      "price": 19.42,
+      "name": "豪尔赛"
+    },
+    "003030": {
+      "score": 80,
+      "price": 25.3,
+      "name": "祖名股份"
+    },
+    "600455": {
+      "score": 80,
+      "price": 29.36,
+      "name": "博通股份"
+    },
+    "601126": {
+      "score": 80,
+      "price": 76.51,
+      "name": "四方股份"
+    },
+    "603080": {
+      "score": 80,
+      "price": 23.72,
+      "name": "新疆火炬"
+    },
+    "603155": {
+      "score": 80,
+      "price": 19.51,
+      "name": "新亚强"
+    },
+    "603172": {
+      "score": 80,
+      "price": 22.95,
+      "name": "万丰股份"
+    },
+    "603324": {
+      "score": 80,
+      "price": 27.81,
+      "name": "盛剑科技"
+    },
+    "603373": {
+      "score": 80,
+      "price": 46.68,
+      "name": "安邦护卫"
+    },
+    "002658": {
+      "score": 78,
+      "price": 10.06,
+      "name": "雪迪龙"
+    },
+    "605177": {
+      "score": 78,
+      "price": 22.83,
+      "name": "东亚药业"
+    },
+    "000710": {
+      "score": 78,
+      "price": 10.41,
+      "name": "贝瑞基因"
+    },
+    "002048": {
+      "score": 78,
+      "price": 29.21,
+      "name": "宁波华翔"
+    },
+    "002334": {
+      "score": 78,
+      "price": 9.04,
+      "name": "英威腾"
+    },
+    "002335": {
+      "score": 78,
+      "price": 67.82,
+      "name": "科华数据"
+    },
+    "002611": {
+      "score": 78,
+      "price": 18.39,
+      "name": "东方精工"
+    },
+    "600143": {
+      "score": 78,
+      "price": 17.51,
+      "name": "金发科技"
+    },
+    "603028": {
+      "score": 78,
+      "price": 9.49,
+      "name": "赛福天"
+    },
+    "603039": {
+      "score": 78,
+      "price": 46.9,
+      "name": "泛微网络"
+    },
+    "603466": {
+      "score": 78,
+      "price": 9.99,
+      "name": "风语筑"
+    },
+    "002612": {
+      "score": 76,
+      "price": 16.39,
+      "name": "朗姿股份"
+    },
+    "600626": {
+      "score": 76,
+      "price": 3.99,
+      "name": "申达股份"
+    },
+    "000523": {
+      "score": 75,
+      "price": 3.45,
+      "name": "红棉股份"
+    },
+    "002034": {
+      "score": 75,
+      "price": 23.03,
+      "name": "旺能环境"
+    },
+    "002520": {
+      "score": 75,
+      "price": 6.93,
+      "name": "日发精机"
+    },
+    "002768": {
+      "score": 75,
+      "price": 62.32,
+      "name": "国恩股份"
+    },
+    "600791": {
+      "score": 75,
+      "price": 16.05,
+      "name": "京能置业"
+    },
+    "600936": {
+      "score": 75,
+      "price": 5.47,
+      "name": "北投科技"
+    },
+    "603116": {
+      "score": 75,
+      "price": 7.96,
+      "name": "红蜻蜓"
+    },
+    "603269": {
+      "score": 75,
+      "price": 21.68,
+      "name": "海鸥股份"
+    },
+    "000887": {
+      "score": 74,
+      "price": 18.36,
+      "name": "中鼎股份"
+    },
+    "002150": {
+      "score": 74,
+      "price": 29.72,
+      "name": "正泰电源"
+    },
+    "600592": {
+      "score": 74,
+      "price": 19.94,
+      "name": "龙溪股份"
+    },
+    "603507": {
+      "score": 73,
+      "price": 45.35,
+      "name": "振江股份"
+    },
+    "002785": {
+      "score": 73,
+      "price": 55.3,
+      "name": "万里石"
+    },
+    "002357": {
+      "score": 72,
+      "price": 12.04,
+      "name": "富临运业"
+    },
+    "002326": {
+      "score": 71,
+      "price": 23.52,
+      "name": "永太科技"
+    },
+    "002291": {
+      "score": 70,
+      "price": 6.8,
+      "name": "遥望科技"
+    },
+    "002533": {
+      "score": 70,
+      "price": 13.95,
+      "name": "金杯电工"
+    },
+    "002759": {
+      "score": 70,
+      "price": 36.43,
+      "name": "天际股份"
+    },
+    "600855": {
+      "score": 70,
+      "price": 19.71,
+      "name": "航天长峰"
+    },
+    "600875": {
+      "score": 70,
+      "price": 39.07,
+      "name": "东方电气"
+    },
+    "601137": {
+      "score": 70,
+      "price": 20.38,
+      "name": "博威合金"
+    },
+    "000910": {
+      "score": 69,
+      "price": 6.57,
+      "name": "大亚圣象"
+    },
+    "002825": {
+      "score": 69,
+      "price": 10.78,
+      "name": "纳尔股份"
+    },
+    "603163": {
+      "score": 69,
+      "price": 110.75,
+      "name": "圣晖集成"
+    },
+    "603227": {
+      "score": 69,
+      "price": 8.84,
+      "name": "雪峰科技"
+    },
+    "600433": {
+      "score": 68,
+      "price": 4.6,
+      "name": "冠豪高新"
+    },
+    "000422": {
+      "score": 67,
+      "price": 15.4,
+      "name": "湖北宜化"
+    },
+    "603092": {
+      "score": 67,
+      "price": 74.03,
+      "name": "德力佳"
+    },
+    "603293": {
+      "score": 67,
+      "price": 51.51,
+      "name": "埃泰克"
+    },
+    "603418": {
+      "score": 67,
+      "price": 55.98,
+      "name": "友升股份"
+    },
+    "603579": {
+      "score": 67,
+      "price": 22.33,
+      "name": "荣泰健康"
+    },
+    "603610": {
+      "score": 67,
+      "price": 19.3,
+      "name": "麒盛科技"
+    },
+    "603636": {
+      "score": 67,
+      "price": 11.1,
+      "name": "南威软件"
+    },
+    "603650": {
+      "score": 67,
+      "price": 57.58,
+      "name": "彤程新材"
+    },
+    "603666": {
+      "score": 67,
+      "price": 30.6,
+      "name": "亿嘉和"
+    },
+    "603683": {
+      "score": 67,
+      "price": 28.28,
+      "name": "晶华新材"
+    },
+    "603722": {
+      "score": 67,
+      "price": 41.31,
+      "name": "阿科力"
+    },
+    "603726": {
+      "score": 67,
+      "price": 27.41,
+      "name": "朗迪集团"
+    },
+    "603790": {
+      "score": 67,
+      "price": 29.03,
+      "name": "雅运股份"
+    },
+    "603859": {
+      "score": 67,
+      "price": 41.2,
+      "name": "能科科技"
+    },
+    "603876": {
+      "score": 67,
+      "price": 30.0,
+      "name": "鼎胜新材"
+    },
+    "603903": {
+      "score": 67,
+      "price": 13.81,
+      "name": "中持股份"
+    },
+    "603912": {
+      "score": 67,
+      "price": 11.57,
+      "name": "佳力图"
+    },
+    "603915": {
+      "score": 67,
+      "price": 19.16,
+      "name": "国茂股份"
+    },
+    "603926": {
+      "score": 67,
+      "price": 25.3,
+      "name": "铁流股份"
+    },
+    "603928": {
+      "score": 67,
+      "price": 16.92,
+      "name": "兴业股份"
+    },
+    "603933": {
+      "score": 67,
+      "price": 26.78,
+      "name": "睿能科技"
+    },
+    "603958": {
+      "score": 67,
+      "price": 24.67,
+      "name": "哈森股份"
+    },
+    "603982": {
+      "score": 67,
+      "price": 7.65,
+      "name": "泉峰汽车"
+    },
+    "605069": {
+      "score": 67,
+      "price": 16.46,
+      "name": "正和生态"
+    },
+    "605189": {
+      "score": 67,
+      "price": 18.82,
+      "name": "富春染织"
+    },
+    "605303": {
+      "score": 67,
+      "price": 25.95,
+      "name": "园林股份"
+    },
+    "605399": {
+      "score": 67,
+      "price": 15.39,
+      "name": "晨光新材"
+    },
+    "605555": {
+      "score": 67,
+      "price": 16.35,
+      "name": "德昌股份"
+    },
+    "605566": {
+      "score": 67,
+      "price": 35.71,
+      "name": "福莱蒽特"
+    },
+    "000913": {
+      "score": 66,
+      "price": 12.85,
+      "name": "钱江摩托"
+    },
+    "002170": {
+      "score": 66,
+      "price": 12.71,
+      "name": "芭田股份"
+    },
+    "002582": {
+      "score": 66,
+      "price": 12.13,
+      "name": "好想你"
+    },
+    "601799": {
+      "score": 66,
+      "price": 136.01,
+      "name": "星宇股份"
+    },
+    "601918": {
+      "score": 66,
+      "price": 8.84,
+      "name": "新集能源"
+    },
+    "603486": {
+      "score": 66,
+      "price": 65.15,
+      "name": "科沃斯"
+    },
+    "603518": {
+      "score": 66,
+      "price": 9.64,
+      "name": "锦泓集团"
+    },
+    "002709": {
+      "score": 65,
+      "price": 57.54,
+      "name": "天赐材料"
+    },
+    "600123": {
+      "score": 65,
+      "price": 6.66,
+      "name": "兰花科创"
+    },
+    "603026": {
+      "score": 65,
+      "price": 100.65,
+      "name": "石大胜华"
+    },
+    "002159": {
+      "score": 64,
+      "price": 15.97,
+      "name": "三特索道"
+    },
+    "600256": {
+      "score": 64,
+      "price": 6.4,
+      "name": "广汇能源"
+    },
+    "600376": {
+      "score": 64,
+      "price": 4.58,
+      "name": "首开股份"
+    },
+    "600844": {
+      "score": 64,
+      "price": 3.5,
+      "name": "金煤科技"
+    },
+    "603231": {
+      "score": 64,
+      "price": 17.42,
+      "name": "索宝蛋白"
+    },
+    "000628": {
+      "score": 64,
+      "price": 63.48,
+      "name": "高新发展"
+    },
+    "000831": {
+      "score": 64,
+      "price": 55.88,
+      "name": "中国稀土"
+    },
+    "000837": {
+      "score": 64,
+      "price": 12.35,
+      "name": "秦川机床"
+    },
+    "000962": {
+      "score": 64,
+      "price": 51.24,
+      "name": "东方钽业"
+    },
+    "002012": {
+      "score": 64,
+      "price": 7.08,
+      "name": "凯恩股份"
+    },
+    "002195": {
+      "score": 64,
+      "price": 8.69,
+      "name": "岩山科技"
+    },
+    "002248": {
+      "score": 64,
+      "price": 13.39,
+      "name": "华东数控"
+    },
+    "002271": {
+      "score": 64,
+      "price": 14.97,
+      "name": "东方雨虹"
+    },
+    "002380": {
+      "score": 64,
+      "price": 42.18,
+      "name": "科远智慧"
+    },
+    "002400": {
+      "score": 64,
+      "price": 8.88,
+      "name": "省广集团"
+    },
+    "002442": {
+      "score": 64,
+      "price": 6.1,
+      "name": "龙星科技"
+    },
+    "002443": {
+      "score": 64,
+      "price": 12.33,
+      "name": "金洲管道"
+    },
+    "002470": {
+      "score": 64,
+      "price": 2.82,
+      "name": "金正大"
+    },
+    "002482": {
+      "score": 64,
+      "price": 1.65,
+      "name": "广田集团"
+    },
+    "002527": {
+      "score": 64,
+      "price": 13.73,
+      "name": "新时达"
+    },
+    "002565": {
+      "score": 64,
+      "price": 18.8,
+      "name": "顺灏股份"
+    },
+    "002602": {
+      "score": 64,
+      "price": 14.9,
+      "name": "世纪华通"
+    },
+    "002655": {
+      "score": 64,
+      "price": 37.41,
+      "name": "共达电声"
+    },
+    "002896": {
+      "score": 64,
+      "price": 80.6,
+      "name": "中大力德"
+    },
+    "002919": {
+      "score": 64,
+      "price": 26.83,
+      "name": "名臣健康"
+    },
+    "002931": {
+      "score": 64,
+      "price": 58.54,
+      "name": "锋龙股份"
+    },
+    "002965": {
+      "score": 64,
+      "price": 35.82,
+      "name": "祥鑫科技"
+    },
+    "002983": {
+      "score": 64,
+      "price": 24.97,
+      "name": "芯瑞达"
+    },
+    "003001": {
+      "score": 64,
+      "price": 19.69,
+      "name": "中岩大地"
+    },
+    "003013": {
+      "score": 64,
+      "price": 13.89,
+      "name": "地铁设计"
+    },
+    "003026": {
+      "score": 64,
+      "price": 48.7,
+      "name": "中晶科技"
+    },
+    "003043": {
+      "score": 64,
+      "price": 59.79,
+      "name": "华亚智能"
+    },
+    "600160": {
+      "score": 64,
+      "price": 35.91,
+      "name": "巨化股份"
+    },
+    "600578": {
+      "score": 64,
+      "price": 7.01,
+      "name": "京能电力"
+    },
+    "600610": {
+      "score": 64,
+      "price": 10.23,
+      "name": "中毅达"
+    },
+    "600619": {
+      "score": 64,
+      "price": 18.3,
+      "name": "海立股份"
+    },
+    "600629": {
+      "score": 64,
+      "price": 20.1,
+      "name": "华建集团"
+    },
+    "600749": {
+      "score": 64,
+      "price": 16.05,
+      "name": "西藏旅游"
+    },
+    "600903": {
+      "score": 64,
+      "price": 8.01,
+      "name": "贵州燃气"
+    },
+    "600962": {
+      "score": 64,
+      "price": 24.63,
+      "name": "国投中鲁"
+    },
+    "603009": {
+      "score": 64,
+      "price": 51.85,
+      "name": "北特科技"
+    },
+    "603015": {
+      "score": 64,
+      "price": 12.68,
+      "name": "弘讯科技"
+    },
+    "603023": {
+      "score": 64,
+      "price": 5.06,
+      "name": "威帝股份"
+    },
+    "603061": {
+      "score": 64,
+      "price": 309.79,
+      "name": "金海通"
+    },
+    "603076": {
+      "score": 64,
+      "price": 29.7,
+      "name": "乐惠国际"
+    },
+    "603199": {
+      "score": 64,
+      "price": 35.85,
+      "name": "九华旅游"
+    },
+    "603203": {
+      "score": 64,
+      "price": 66.0,
+      "name": "快克智能"
+    },
+    "603319": {
+      "score": 64,
+      "price": 32.49,
+      "name": "美湖股份"
+    },
+    "603379": {
+      "score": 64,
+      "price": 62.49,
+      "name": "三美股份"
+    },
+    "603601": {
+      "score": 64,
+      "price": 16.87,
+      "name": "再升科技"
+    },
+    "603663": {
+      "score": 64,
+      "price": 42.89,
+      "name": "三祥新材"
+    },
+    "603798": {
+      "score": 64,
+      "price": 19.0,
+      "name": "康普顿"
+    },
+    "603819": {
+      "score": 64,
+      "price": 14.6,
+      "name": "神力股份"
+    },
+    "603895": {
+      "score": 64,
+      "price": 39.62,
+      "name": "天永智能"
+    },
+    "603985": {
+      "score": 64,
+      "price": 27.05,
+      "name": "恒润股份"
+    },
+    "603988": {
+      "score": 64,
+      "price": 24.84,
+      "name": "中电电机"
+    },
+    "603990": {
+      "score": 64,
+      "price": 16.56,
+      "name": "麦迪科技"
+    },
+    "605186": {
+      "score": 64,
+      "price": 25.63,
+      "name": "健麾信息"
+    },
+    "605376": {
+      "score": 64,
+      "price": 123.0,
+      "name": "博迁新材"
+    },
+    "605488": {
+      "score": 64,
+      "price": 35.02,
+      "name": "福莱新材"
+    },
+    "000921": {
+      "score": 63,
+      "price": 24.46,
+      "name": "海信家电"
+    },
+    "600027": {
+      "score": 63,
+      "price": 5.34,
+      "name": "华电国际"
+    },
+    "600060": {
+      "score": 63,
+      "price": 25.47,
+      "name": "海信视像"
+    },
+    "600483": {
+      "score": 63,
+      "price": 10.6,
+      "name": "福能股份"
+    },
+    "600938": {
+      "score": 63,
+      "price": 36.51,
+      "name": "中国海油"
+    },
+    "601100": {
+      "score": 63,
+      "price": 116.02,
+      "name": "恒立液压"
+    },
+    "603035": {
+      "score": 63,
+      "price": 13.15,
+      "name": "常熟汽饰"
+    },
+    "603337": {
+      "score": 63,
+      "price": 41.62,
+      "name": "杰克科技"
+    },
+    "603365": {
+      "score": 63,
+      "price": 20.6,
+      "name": "水星家纺"
+    },
+    "603611": {
+      "score": 63,
+      "price": 19.14,
+      "name": "诺力股份"
+    },
+    "603638": {
+      "score": 63,
+      "price": 26.13,
+      "name": "艾迪精密"
+    },
+    "603699": {
+      "score": 63,
+      "price": 65.2,
+      "name": "纽威股份"
+    },
+    "000026": {
+      "score": 61,
+      "price": 20.22,
+      "name": "飞亚达"
+    },
+    "000034": {
+      "score": 61,
+      "price": 40.72,
+      "name": "神州数码"
+    },
+    "000338": {
+      "score": 61,
+      "price": 34.77,
+      "name": "潍柴动力"
+    },
+    "000402": {
+      "score": 61,
+      "price": 3.01,
+      "name": "金 融 街"
+    },
+    "000530": {
+      "score": 61,
+      "price": 5.99,
+      "name": "冰山冷热"
+    },
+    "000545": {
+      "score": 61,
+      "price": 2.92,
+      "name": "金浦钛业"
+    },
+    "000552": {
+      "score": 61,
+      "price": 2.77,
+      "name": "甘肃能化"
+    },
+    "000659": {
+      "score": 61,
+      "price": 4.16,
+      "name": "珠海中富"
+    },
+    "000670": {
+      "score": 61,
+      "price": 8.2,
+      "name": "盈方微"
+    },
+    "000712": {
+      "score": 61,
+      "price": 10.98,
+      "name": "锦龙股份"
+    },
+    "000803": {
+      "score": 61,
+      "price": 8.49,
+      "name": "山高环能"
+    },
+    "000892": {
+      "score": 61,
+      "price": 4.37,
+      "name": "欢瑞世纪"
+    },
+    "000949": {
+      "score": 61,
+      "price": 8.28,
+      "name": "新乡化纤"
+    },
+    "000997": {
+      "score": 61,
+      "price": 22.45,
+      "name": "新 大 陆"
+    },
+    "002021": {
+      "score": 61,
+      "price": 3.12,
+      "name": "中捷资源"
+    },
+    "002033": {
+      "score": 61,
+      "price": 9.01,
+      "name": "丽江股份"
+    },
+    "002054": {
+      "score": 61,
+      "price": 8.58,
+      "name": "德美化工"
+    },
+    "002062": {
+      "score": 61,
+      "price": 9.75,
+      "name": "宏润建设"
+    },
+    "002072": {
+      "score": 61,
+      "price": 7.34,
+      "name": "凯瑞德"
+    },
+    "002079": {
+      "score": 61,
+      "price": 12.7,
+      "name": "苏州固锝"
+    },
+    "002127": {
+      "score": 61,
+      "price": 3.22,
+      "name": "南极电商"
+    },
+    "002139": {
+      "score": 61,
+      "price": 11.02,
+      "name": "拓邦股份"
+    },
+    "002154": {
+      "score": 61,
+      "price": 4.55,
+      "name": "报 喜 鸟"
+    },
+    "002156": {
+      "score": 61,
+      "price": 57.02,
+      "name": "通富微电"
+    },
+    "002173": {
+      "score": 61,
+      "price": 23.33,
+      "name": "创新医疗"
+    },
+    "002185": {
+      "score": 61,
+      "price": 14.3,
+      "name": "华天科技"
+    },
+    "002190": {
+      "score": 61,
+      "price": 31.76,
+      "name": "成飞集成"
+    },
+    "002191": {
+      "score": 61,
+      "price": 3.98,
+      "name": "劲嘉股份"
+    },
+    "002194": {
+      "score": 61,
+      "price": 12.68,
+      "name": "武汉凡谷"
+    },
+    "002225": {
+      "score": 61,
+      "price": 4.36,
+      "name": "濮耐股份"
+    },
+    "002241": {
+      "score": 61,
+      "price": 25.33,
+      "name": "歌尔股份"
+    },
+    "002243": {
+      "score": 61,
+      "price": 8.93,
+      "name": "力合科创"
+    },
+    "002256": {
+      "score": 61,
+      "price": 4.85,
+      "name": "兆新股份"
+    },
+    "002258": {
+      "score": 61,
+      "price": 12.34,
+      "name": "利尔化学"
+    },
+    "002284": {
+      "score": 61,
+      "price": 12.95,
+      "name": "亚太股份"
+    },
+    "002293": {
+      "score": 61,
+      "price": 11.59,
+      "name": "罗莱生活"
+    },
+    "002319": {
+      "score": 61,
+      "price": 11.56,
+      "name": "乐通股份"
+    },
+    "002324": {
+      "score": 61,
+      "price": 14.37,
+      "name": "普利特"
+    },
+    "002327": {
+      "score": 61,
+      "price": 7.55,
+      "name": "富安娜"
+    },
+    "002329": {
+      "score": 61,
+      "price": 4.75,
+      "name": "皇氏集团"
+    },
+    "002331": {
+      "score": 61,
+      "price": 9.63,
+      "name": "皖通科技"
+    },
+    "002388": {
+      "score": 61,
+      "price": 5.34,
+      "name": "新亚制程"
+    },
+    "002409": {
+      "score": 61,
+      "price": 107.46,
+      "name": "雅克科技"
+    },
+    "002412": {
+      "score": 61,
+      "price": 7.23,
+      "name": "汉森制药"
+    },
+    "002413": {
+      "score": 61,
+      "price": 12.65,
+      "name": "雷科防务"
+    },
+    "002434": {
+      "score": 61,
+      "price": 7.8,
+      "name": "万里扬"
+    },
+    "002439": {
+      "score": 61,
+      "price": 15.97,
+      "name": "启明星辰"
+    },
+    "002441": {
+      "score": 61,
+      "price": 10.2,
+      "name": "众业达"
+    },
+    "002454": {
+      "score": 61,
+      "price": 9.93,
+      "name": "松芝股份"
+    },
+    "002467": {
+      "score": 61,
+      "price": 6.74,
+      "name": "二六三"
+    },
+    "002513": {
+      "score": 61,
+      "price": 6.58,
+      "name": "蓝丰生化"
+    },
+    "002518": {
+      "score": 61,
+      "price": 57.92,
+      "name": "科士达"
+    },
+    "002519": {
+      "score": 61,
+      "price": 7.95,
+      "name": "银河电子"
+    },
+    "002539": {
+      "score": 61,
+      "price": 14.23,
+      "name": "云图控股"
+    },
+    "002590": {
+      "score": 61,
+      "price": 12.58,
+      "name": "万安科技"
+    },
+    "002597": {
+      "score": 61,
+      "price": 24.55,
+      "name": "金禾实业"
+    },
+    "002635": {
+      "score": 61,
+      "price": 16.76,
+      "name": "安洁科技"
+    },
+    "002647": {
+      "score": 61,
+      "price": 12.33,
+      "name": "仁东控股"
+    },
+    "002648": {
+      "score": 61,
+      "price": 28.08,
+      "name": "卫星化学"
+    },
+    "002652": {
+      "score": 61,
+      "price": 6.18,
+      "name": "扬子新材"
+    },
+    "002676": {
+      "score": 61,
+      "price": 6.27,
+      "name": "顺威股份"
+    },
+    "002681": {
+      "score": 61,
+      "price": 5.5,
+      "name": "奋达科技"
+    },
+    "002692": {
+      "score": 61,
+      "price": 5.51,
+      "name": "远程股份"
+    },
+    "002703": {
+      "score": 61,
+      "price": 19.0,
+      "name": "浙江世宝"
+    },
+    "002708": {
+      "score": 61,
+      "price": 15.53,
+      "name": "光洋股份"
+    },
+    "002715": {
+      "score": 61,
+      "price": 17.4,
+      "name": "登云股份"
+    },
+    "002741": {
+      "score": 61,
+      "price": 22.79,
+      "name": "光华科技"
+    },
+    "002757": {
+      "score": 61,
+      "price": 31.95,
+      "name": "南兴股份"
+    },
+    "002765": {
+      "score": 61,
+      "price": 9.74,
+      "name": "蓝黛科技"
+    },
+    "002766": {
+      "score": 61,
+      "price": 4.77,
+      "name": "索菱股份"
+    },
+    "002771": {
+      "score": 61,
+      "price": 14.45,
+      "name": "真视通"
+    },
+    "002777": {
+      "score": 61,
+      "price": 16.57,
+      "name": "久远银海"
+    },
+    "002787": {
+      "score": 61,
+      "price": 26.78,
+      "name": "华源控股"
+    },
+    "002798": {
+      "score": 61,
+      "price": 8.28,
+      "name": "帝欧水华"
+    },
+    "002799": {
+      "score": 61,
+      "price": 8.77,
+      "name": "环球印务"
+    },
+    "002802": {
+      "score": 61,
+      "price": 14.33,
+      "name": "洪汇新材"
+    },
+    "002813": {
+      "score": 61,
+      "price": 24.98,
+      "name": "路畅科技"
+    },
+    "002828": {
+      "score": 61,
+      "price": 11.16,
+      "name": "贝肯能源"
+    },
+    "002830": {
+      "score": 61,
+      "price": 23.17,
+      "name": "名雕股份"
+    },
+    "002832": {
+      "score": 61,
+      "price": 21.14,
+      "name": "比音勒芬"
+    },
+    "002860": {
+      "score": 61,
+      "price": 14.05,
+      "name": "星帅尔"
+    },
+    "002887": {
+      "score": 61,
+      "price": 14.35,
+      "name": "绿茵生态"
+    },
+    "002888": {
+      "score": 61,
+      "price": 22.4,
+      "name": "惠威科技"
+    },
+    "002893": {
+      "score": 61,
+      "price": 10.98,
+      "name": "京能热力"
+    },
+    "002906": {
+      "score": 61,
+      "price": 31.6,
+      "name": "华阳集团"
+    },
+    "002920": {
+      "score": 61,
+      "price": 105.0,
+      "name": "德赛西威"
+    },
+    "002921": {
+      "score": 61,
+      "price": 31.01,
+      "name": "联诚精密"
+    },
+    "002929": {
+      "score": 61,
+      "price": 92.99,
+      "name": "润建股份"
+    },
+    "002940": {
+      "score": 61,
+      "price": 43.23,
+      "name": "昂利康"
+    },
+    "002947": {
+      "score": 61,
+      "price": 82.08,
+      "name": "恒铭达"
+    },
+    "002957": {
+      "score": 61,
+      "price": 45.52,
+      "name": "科瑞技术"
+    },
+    "002973": {
+      "score": 61,
+      "price": 13.92,
+      "name": "侨银股份"
+    },
+    "002989": {
+      "score": 61,
+      "price": 32.43,
+      "name": "中天精装"
+    },
+    "002993": {
+      "score": 61,
+      "price": 59.1,
+      "name": "奥海科技"
+    },
+    "002997": {
+      "score": 61,
+      "price": 35.05,
+      "name": "瑞鹄模具"
+    },
+    "002999": {
+      "score": 61,
+      "price": 6.89,
+      "name": "天禾股份"
+    },
+    "003003": {
+      "score": 61,
+      "price": 13.55,
+      "name": "天元股份"
+    },
+    "003011": {
+      "score": 61,
+      "price": 23.27,
+      "name": "海象新材"
+    },
+    "003015": {
+      "score": 61,
+      "price": 14.55,
+      "name": "日久光电"
+    },
+    "003033": {
+      "score": 61,
+      "price": 55.11,
+      "name": "征和工业"
+    },
+    "600075": {
+      "score": 61,
+      "price": 6.31,
+      "name": "新疆天业"
+    },
+    "600101": {
+      "score": 61,
+      "price": 9.98,
+      "name": "明星电力"
+    },
+    "600111": {
+      "score": 61,
+      "price": 53.78,
+      "name": "北方稀土"
+    },
+    "600114": {
+      "score": 61,
+      "price": 33.37,
+      "name": "东睦股份"
+    },
+    "600130": {
+      "score": 61,
+      "price": 6.39,
+      "name": "波导股份"
+    },
+    "600171": {
+      "score": 61,
+      "price": 29.28,
+      "name": "上海贝岭"
+    },
+    "600215": {
+      "score": 61,
+      "price": 6.9,
+      "name": "派斯林"
+    },
+    "600222": {
+      "score": 61,
+      "price": 7.76,
+      "name": "太龙药业"
+    },
+    "600262": {
+      "score": 61,
+      "price": 24.88,
+      "name": "北方股份"
+    },
+    "600303": {
+      "score": 61,
+      "price": 3.2,
+      "name": "曙光股份"
+    },
+    "600366": {
+      "score": 61,
+      "price": 13.35,
+      "name": "宁波韵升"
+    },
+    "600392": {
+      "score": 61,
+      "price": 25.14,
+      "name": "盛和资源"
+    },
+    "600410": {
+      "score": 61,
+      "price": 22.94,
+      "name": "华胜天成"
+    },
+    "600539": {
+      "score": 61,
+      "price": 16.44,
+      "name": "狮头股份"
+    },
+    "600560": {
+      "score": 61,
+      "price": 14.54,
+      "name": "金自天正"
+    },
+    "600573": {
+      "score": 61,
+      "price": 13.7,
+      "name": "惠泉啤酒"
+    },
+    "600617": {
+      "score": 61,
+      "price": 3.68,
+      "name": "国新能源"
+    },
+    "600733": {
+      "score": 61,
+      "price": 6.94,
+      "name": "北汽蓝谷"
+    },
+    "600800": {
+      "score": 61,
+      "price": 4.63,
+      "name": "渤海化学"
+    },
+    "600835": {
+      "score": 61,
+      "price": 23.78,
+      "name": "上海机电"
+    },
+    "600847": {
+      "score": 61,
+      "price": 15.36,
+      "name": "万里股份"
+    },
+    "600884": {
+      "score": 61,
+      "price": 15.29,
+      "name": "杉杉股份"
+    },
+    "600935": {
+      "score": 61,
+      "price": 2.7,
+      "name": "华塑股份"
+    },
+    "601026": {
+      "score": 61,
+      "price": 18.28,
+      "name": "道生天合"
+    },
+    "601101": {
+      "score": 61,
+      "price": 10.65,
+      "name": "昊华能源"
+    },
+    "601225": {
+      "score": 61,
+      "price": 23.86,
+      "name": "陕西煤业"
+    },
+    "601619": {
+      "score": 61,
+      "price": 5.81,
+      "name": "嘉泽新能"
+    },
+    "601868": {
+      "score": 61,
+      "price": 3.24,
+      "name": "中国能建"
+    },
+    "601898": {
+      "score": 61,
+      "price": 16.81,
+      "name": "中煤能源"
+    },
+    "601969": {
+      "score": 61,
+      "price": 11.21,
+      "name": "海南矿业"
+    },
+    "603004": {
+      "score": 61,
+      "price": 20.8,
+      "name": "鼎龙科技"
+    },
+    "603005": {
+      "score": 61,
+      "price": 32.94,
+      "name": "晶方科技"
+    },
+    "603032": {
+      "score": 61,
+      "price": 22.66,
+      "name": "德新科技"
+    },
+    "603041": {
+      "score": 61,
+      "price": 14.36,
+      "name": "美思德"
+    },
+    "603045": {
+      "score": 61,
+      "price": 69.93,
+      "name": "福达合金"
+    },
+    "603067": {
+      "score": 61,
+      "price": 39.46,
+      "name": "振华股份"
+    },
+    "603073": {
+      "score": 61,
+      "price": 20.62,
+      "name": "彩蝶实业"
+    },
+    "603075": {
+      "score": 61,
+      "price": 24.66,
+      "name": "热威股份"
+    },
+    "603088": {
+      "score": 61,
+      "price": 11.88,
+      "name": "宁波精达"
+    },
+    "603125": {
+      "score": 61,
+      "price": 25.53,
+      "name": "常青科技"
+    },
+    "603131": {
+      "score": 61,
+      "price": 23.03,
+      "name": "上海沪工"
+    },
+    "603138": {
+      "score": 61,
+      "price": 18.55,
+      "name": "海量数据"
+    },
+    "603178": {
+      "score": 61,
+      "price": 22.23,
+      "name": "圣龙股份"
+    },
+    "603188": {
+      "score": 61,
+      "price": 5.15,
+      "name": "亚邦股份"
+    },
+    "603193": {
+      "score": 61,
+      "price": 24.12,
+      "name": "润本股份"
+    },
+    "603197": {
+      "score": 61,
+      "price": 35.26,
+      "name": "保隆科技"
+    },
+    "603219": {
+      "score": 61,
+      "price": 18.35,
+      "name": "富佳股份"
+    },
+    "603239": {
+      "score": 61,
+      "price": 23.65,
+      "name": "浙江仙通"
+    },
+    "603257": {
+      "score": 61,
+      "price": 64.4,
+      "name": "中国瑞林"
+    },
+    "603262": {
+      "score": 61,
+      "price": 26.16,
+      "name": "技源集团"
+    },
+    "603266": {
+      "score": 61,
+      "price": 20.58,
+      "name": "天龙股份"
+    },
+    "603276": {
+      "score": 61,
+      "price": 17.91,
+      "name": "恒兴新材"
+    },
+    "603283": {
+      "score": 61,
+      "price": 61.2,
+      "name": "赛腾股份"
+    },
+    "603284": {
+      "score": 61,
+      "price": 46.16,
+      "name": "林平发展"
+    },
+    "603286": {
+      "score": 61,
+      "price": 68.72,
+      "name": "日盈电子"
+    },
+    "603290": {
+      "score": 61,
+      "price": 124.95,
+      "name": "斯达半导"
+    },
+    "603301": {
+      "score": 61,
+      "price": 91.95,
+      "name": "振德医疗"
+    },
+    "603312": {
+      "score": 61,
+      "price": 38.47,
+      "name": "西典新能"
+    },
+    "603316": {
+      "score": 61,
+      "price": 18.61,
+      "name": "诚邦股份"
+    },
+    "603322": {
+      "score": 61,
+      "price": 35.75,
+      "name": "超讯通信"
+    },
+    "603332": {
+      "score": 61,
+      "price": 14.52,
+      "name": "苏州龙杰"
+    },
+    "603335": {
+      "score": 61,
+      "price": 7.33,
+      "name": "迪生力"
+    },
+    "603341": {
+      "score": 61,
+      "price": 39.29,
+      "name": "龙旗科技"
+    },
+    "603352": {
+      "score": 61,
+      "price": 35.65,
+      "name": "至信股份"
+    },
+    "603356": {
+      "score": 61,
+      "price": 19.91,
+      "name": "华菱精工"
+    },
+    "603376": {
+      "score": 61,
+      "price": 30.63,
+      "name": "大明电子"
+    },
+    "603391": {
+      "score": 61,
+      "price": 62.85,
+      "name": "力聚热能"
+    },
+    "603393": {
+      "score": 61,
+      "price": 30.58,
+      "name": "新天然气"
+    },
+    "603407": {
+      "score": 61,
+      "price": 76.8,
+      "name": "C长裕"
+    },
+    "603409": {
+      "score": 61,
+      "price": 43.09,
+      "name": "汇通控股"
+    },
+    "603458": {
+      "score": 61,
+      "price": 13.36,
+      "name": "勘设股份"
+    },
+    "603489": {
+      "score": 61,
+      "price": 39.35,
+      "name": "八方股份"
+    },
+    "603501": {
+      "score": 61,
+      "price": 101.39,
+      "name": "豪威集团"
+    },
+    "603578": {
+      "score": 61,
+      "price": 15.04,
+      "name": "三星新材"
+    },
+    "603583": {
+      "score": 61,
+      "price": 28.54,
+      "name": "捷昌驱动"
+    },
+    "603619": {
+      "score": 61,
+      "price": 28.95,
+      "name": "中曼石油"
+    },
+    "603679": {
+      "score": 61,
+      "price": 17.86,
+      "name": "华体科技"
+    },
+    "603682": {
+      "score": 61,
+      "price": 9.03,
+      "name": "锦和商管"
+    },
+    "603686": {
+      "score": 61,
+      "price": 18.57,
+      "name": "福龙马"
+    },
+    "603758": {
+      "score": 61,
+      "price": 13.25,
+      "name": "秦安股份"
+    },
+    "603809": {
+      "score": 61,
+      "price": 11.48,
+      "name": "豪能股份"
+    },
+    "603880": {
+      "score": 61,
+      "price": 8.58,
+      "name": "南卫股份"
+    },
+    "603901": {
+      "score": 61,
+      "price": 13.02,
+      "name": "永创智能"
+    },
+    "603920": {
+      "score": 61,
+      "price": 63.92,
+      "name": "世运电路"
+    },
+    "603929": {
+      "score": 61,
+      "price": 190.7,
+      "name": "亚翔集成"
+    },
+    "603949": {
+      "score": 61,
+      "price": 18.14,
+      "name": "雪龙集团"
+    },
+    "603969": {
+      "score": 61,
+      "price": 10.02,
+      "name": "银龙股份"
+    },
+    "603977": {
+      "score": 61,
+      "price": 14.35,
+      "name": "国泰集团"
+    },
+    "605088": {
+      "score": 61,
+      "price": 36.72,
+      "name": "冠盛股份"
+    },
+    "605133": {
+      "score": 61,
+      "price": 39.49,
+      "name": "嵘泰股份"
+    },
+    "605166": {
+      "score": 61,
+      "price": 11.6,
+      "name": "聚合顺"
+    },
+    "605196": {
+      "score": 61,
+      "price": 41.55,
+      "name": "华通线缆"
+    },
+    "605208": {
+      "score": 61,
+      "price": 15.54,
+      "name": "永茂泰"
+    },
+    "605298": {
+      "score": 61,
+      "price": 61.8,
+      "name": "必得科技"
+    },
+    "605319": {
+      "score": 61,
+      "price": 26.21,
+      "name": "无锡振华"
+    },
+    "605358": {
+      "score": 61,
+      "price": 51.61,
+      "name": "立昂微"
+    },
+    "605588": {
+      "score": 61,
+      "price": 59.04,
+      "name": "冠石科技"
+    },
+    "605589": {
+      "score": 61,
+      "price": 42.08,
+      "name": "圣泉集团"
+    },
+    "689009": {
+      "score": 61,
+      "price": 41.58,
+      "name": "九号公司-WD"
+    },
+    "000404": {
+      "score": 60,
+      "price": 8.52,
+      "name": "长虹华意"
+    },
+    "605299": {
+      "score": 60,
+      "price": 25.24,
+      "name": "舒华体育"
+    },
+    "000681": {
+      "score": 60,
+      "price": 21.92,
+      "name": "视觉中国"
+    },
+    "002712": {
+      "score": 60,
+      "price": 5.6,
+      "name": "思美传媒"
+    },
+    "603062": {
+      "score": 60,
+      "price": 53.85,
+      "name": "XD麦加芯"
+    },
+    "000543": {
+      "score": 60,
+      "price": 8.43,
+      "name": "皖能电力"
+    },
+    "002215": {
+      "score": 60,
+      "price": 10.13,
+      "name": "诺 普 信"
+    },
+    "002555": {
+      "score": 60,
+      "price": 21.05,
+      "name": "三七互娱"
+    },
+    "002758": {
+      "score": 60,
+      "price": 8.81,
+      "name": "浙农股份"
+    },
+    "002884": {
+      "score": 60,
+      "price": 18.54,
+      "name": "凌霄泵业"
+    },
+    "600096": {
+      "score": 60,
+      "price": 32.35,
+      "name": "云天化"
+    },
+    "601033": {
+      "score": 60,
+      "price": 15.0,
+      "name": "永兴股份"
+    },
+    "603049": {
+      "score": 60,
+      "price": 47.59,
+      "name": "中策橡胶"
+    },
+    "603325": {
+      "score": 60,
+      "price": 60.18,
+      "name": "博隆技术"
+    },
+    "002510": {
+      "score": 59,
+      "price": 7.37,
+      "name": "天汽模"
+    },
+    "600227": {
+      "score": 59,
+      "price": 3.66,
+      "name": "赤天化"
+    },
+    "603108": {
+      "score": 59,
+      "price": 13.23,
+      "name": "润达医疗"
+    },
+    "002066": {
+      "score": 59,
+      "price": 26.06,
+      "name": "瑞泰科技"
+    },
+    "002164": {
+      "score": 59,
+      "price": 14.29,
+      "name": "宁波东力"
+    },
+    "002348": {
+      "score": 59,
+      "price": 13.72,
+      "name": "高乐股份"
+    },
+    "002374": {
+      "score": 59,
+      "price": 3.55,
+      "name": "中锐股份"
+    },
+    "002395": {
+      "score": 59,
+      "price": 21.19,
+      "name": "双象股份"
+    },
+    "002407": {
+      "score": 59,
+      "price": 36.47,
+      "name": "多氟多"
+    },
+    "002421": {
+      "score": 59,
+      "price": 3.21,
+      "name": "达实智能"
+    },
+    "002729": {
+      "score": 59,
+      "price": 20.91,
+      "name": "好利科技"
+    },
+    "002979": {
+      "score": 59,
+      "price": 59.8,
+      "name": "雷赛智能"
+    },
+    "600088": {
+      "score": 59,
+      "price": 18.65,
+      "name": "中视传媒"
+    }
+  },
+  "market_sentiment": "中性",
+  "avg_score": 51.2
+}

@@ -105,6 +105,13 @@ class Handler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=os.path.dirname(os.path.abspath(__file__)), **kwargs)
 
+    def end_headers(self):
+        # JSON数据文件不缓存
+        if self.path.startswith('/data/') and self.path.endswith('.json'):
+            self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            self.send_header('Pragma', 'no-cache')
+        super().end_headers()
+
     def do_GET(self):
         parsed = urlparse(self.path)
         path = parsed.path
@@ -131,6 +138,14 @@ class Handler(SimpleHTTPRequestHandler):
                 self._json({'ok': True, 'ts': time.time()})
             elif path == '/api/buy_plan':
                 self._handle_buy_plan()
+            elif path == '/api/latest_trades':
+                self._handle_latest_trades()
+            elif path == '/api/morning_analysis':
+                self._handle_morning_analysis()
+            elif path == '/api/midday_analysis':
+                self._handle_midday_analysis()
+            elif path == '/api/closing_analysis':
+                self._handle_closing_analysis()
             else:
                 super().do_GET()
         except Exception as e:
@@ -138,6 +153,35 @@ class Handler(SimpleHTTPRequestHandler):
                 self._json({'error': str(e)})
             except Exception:
                 pass
+
+    def do_POST(self):
+        parsed = urlparse(self.path)
+        path = parsed.path
+        try:
+            content_length = int(self.headers.get('Content-Length', 0))
+            body = self.rfile.read(content_length) if content_length > 0 else b'{}'
+            params = json.loads(body.decode('utf-8'))
+
+            if path == '/api/manual_buy':
+                self._handle_manual_buy(params)
+            elif path == '/api/manual_sell':
+                self._handle_manual_sell(params)
+            elif path == '/api/reset_portfolio':
+                self._handle_reset_portfolio(params)
+            else:
+                self.send_response(404)
+                self.end_headers()
+        except json.JSONDecodeError:
+            self._json({'error': 'invalid JSON'})
+        except Exception as e:
+            self._json({'error': str(e)})
+
+    def do_OPTIONS(self):
+        self.send_response(200)
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        self.end_headers()
 
     def _handle_realtime(self, parsed):
         params = parse_qs(parsed.query)
@@ -451,8 +495,244 @@ class Handler(SimpleHTTPRequestHandler):
             'items': result,
         })
 
+    def _handle_latest_trades(self):
+        """返回最新的交易记录（用于通知检测）"""
+        tl = load_json(os.path.join(DATA_DIR, 'trade_log.json'), {'trades': []})
+        trades = tl.get('trades', [])
+        # 返回最近5条
+        recent = []
+        for t in trades[-5:]:
+            recent.append({
+                'id': t.get('id', 0),
+                'type': t.get('type', ''),
+                'code': t.get('code', ''),
+                'name': t.get('name', ''),
+                'price': t.get('price', 0),
+                'qty': t.get('qty', 0),
+                'amount': t.get('amount', 0),
+                'pnl': t.get('pnl', 0),
+                'pnl_pct': t.get('pnl_pct', 0),
+                'reason': t.get('reason', ''),
+                'timestamp': t.get('timestamp', ''),
+                'hash': t.get('hash', ''),
+            })
+        self._json({
+            'total': len(trades),
+            'trades': recent,
+        })
+
     def log_message(self, fmt, *args):
         pass  # suppress logs
+
+    def _handle_morning_analysis(self):
+        """晨间综合分析数据"""
+        data = load_json(os.path.join(DATA_DIR, 'morning_analysis.json'))
+        if data:
+            self._json(data)
+        else:
+            self._json({'error': '晨间分析数据暂无', 'update_time': None})
+
+    def _handle_midday_analysis(self):
+        """午间综合分析数据"""
+        data = load_json(os.path.join(DATA_DIR, 'midday_analysis.json'))
+        if data:
+            self._json(data)
+        else:
+            self._json({'error': '午间分析数据暂无', 'update_time': None})
+
+    def _handle_closing_analysis(self):
+        """收盘综合分析数据"""
+        data = load_json(os.path.join(DATA_DIR, 'closing_analysis.json'))
+        if data:
+            self._json(data)
+        else:
+            self._json({'error': '收盘分析数据暂无', 'update_time': None})
+
+    def _handle_manual_buy(self, params):
+        """手动买入：用户点击推荐股票的买入按钮"""
+        code = params.get('code', '').strip()
+        name = params.get('name', '').strip()
+        price = float(params.get('price', 0))
+        qty = int(params.get('qty', 0))
+        reason = params.get('reason', '手动买入')
+
+        if not code or not name:
+            self._json({'error': '缺少股票代码或名称'})
+            return
+        if price <= 0 or qty <= 0:
+            self._json({'error': '价格和数量必须大于0'})
+            return
+
+        amount = price * qty
+        commission = max(5, round(amount * 0.0003, 2))  # 最低5元
+
+        pf_path = os.path.join(DATA_DIR, 'portfolio.json')
+        pf = load_json(pf_path)
+        if not pf:
+            pf = {'cash': 100000, 'initial_capital': 100000, 'holdings': {},
+                  'total_assets': 100000, 'total_return': 0,
+                  'trading_stats': {'total_trades': 0, 'win_trades': 0, 'lose_trades': 0, 'total_pnl': 0, 'total_commission': 0, 'max_drawdown': 0}}
+
+        if pf['cash'] < amount + commission:
+            self._json({'error': f'资金不足，需要{amount + commission:.2f}元，可用{pf["cash"]:.2f}元'})
+            return
+
+        # Update holdings
+        holdings = pf.get('holdings', {})
+        if code in holdings:
+            h = holdings[code]
+            old_total = h['avg_cost'] * h['qty']
+            new_total = price * qty
+            h['qty'] += qty
+            h['avg_cost'] = round((old_total + new_total) / h['qty'], 3)
+        else:
+            holdings[code] = {
+                'name': name, 'code': code,
+                'qty': qty, 'avg_cost': price,
+                'buy_date': time.strftime('%Y-%m-%d'),
+                'buy_score': params.get('score', 0),
+                'signals': params.get('signals', []),
+            }
+        pf['holdings'] = holdings
+        pf['cash'] = round(pf['cash'] - amount - commission, 2)
+
+        # Recalculate total assets
+        total_position = sum(h['avg_cost'] * h['qty'] for h in holdings.values())
+        pf['total_assets'] = round(pf['cash'] + total_position, 2)
+        pf['total_return'] = round((pf['total_assets'] - pf['initial_capital']) / pf['initial_capital'] * 100, 2)
+
+        # Stats
+        stats = pf.get('trading_stats', {})
+        stats['total_trades'] = stats.get('total_trades', 0) + 1
+        stats['total_commission'] = round(stats.get('total_commission', 0) + commission, 2)
+        pf['trading_stats'] = stats
+
+        # Trade log
+        tl_path = os.path.join(DATA_DIR, 'trade_log.json')
+        tl = load_json(tl_path, {'trades': [], 'next_id': 1})
+        trade = {
+            'id': tl.get('next_id', 1),
+            'type': 'buy',
+            'code': code, 'name': name,
+            'price': price, 'qty': qty,
+            'amount': round(amount, 2),
+            'commission': commission,
+            'reason': reason,
+            'timestamp': time.strftime('%Y-%m-%d %H:%M:%S'),
+        }
+        tl['trades'].append(trade)
+        tl['next_id'] = trade['id'] + 1
+
+        # Save
+        with open(pf_path, 'w') as f:
+            json.dump(pf, f, ensure_ascii=False, indent=2)
+        with open(tl_path, 'w') as f:
+            json.dump(tl, f, ensure_ascii=False, indent=2)
+
+        self._json({'ok': True, 'message': f'买入 {name} {qty}股 × {price}元，手续费{commission}元', 'trade': trade, 'cash': pf['cash']})
+
+    def _handle_manual_sell(self, params):
+        """手动卖出：用户对持仓股票执行卖出"""
+        code = params.get('code', '').strip()
+        price = float(params.get('price', 0))
+        qty = int(params.get('qty', 0))
+        reason = params.get('reason', '手动卖出')
+
+        if not code:
+            self._json({'error': '缺少股票代码'})
+            return
+        if price <= 0 or qty <= 0:
+            self._json({'error': '价格和数量必须大于0'})
+            return
+
+        pf_path = os.path.join(DATA_DIR, 'portfolio.json')
+        pf = load_json(pf_path)
+        if not pf:
+            self._json({'error': '虚拟盘数据异常'})
+            return
+
+        holdings = pf.get('holdings', {})
+        if code not in holdings:
+            self._json({'error': '未持有该股票'})
+            return
+
+        h = holdings[code]
+        if qty > h['qty']:
+            self._json({'error': f'持有{h["qty"]}股，不能卖{qty}股'})
+            return
+
+        amount = price * qty
+        commission = max(5, round(amount * 0.0003, 2))
+        pnl = (price - h['avg_cost']) * qty - commission
+        pnl_pct = round((price - h['avg_cost']) / h['avg_cost'] * 100, 2)
+        name = h['name']
+
+        # Update or remove holding
+        if qty == h['qty']:
+            del holdings[code]
+        else:
+            h['qty'] -= qty
+
+        pf['holdings'] = holdings
+        pf['cash'] = round(pf['cash'] + amount - commission, 2)
+
+        # Recalculate
+        total_position = sum(x['avg_cost'] * x['qty'] for x in holdings.values())
+        pf['total_assets'] = round(pf['cash'] + total_position, 2)
+        pf['total_return'] = round((pf['total_assets'] - pf['initial_capital']) / pf['initial_capital'] * 100, 2)
+
+        # Stats
+        stats = pf.get('trading_stats', {})
+        stats['total_trades'] = stats.get('total_trades', 0) + 1
+        stats['total_commission'] = round(stats.get('total_commission', 0) + commission, 2)
+        stats['total_pnl'] = round(stats.get('total_pnl', 0) + pnl, 2)
+        if pnl > 0:
+            stats['win_trades'] = stats.get('win_trades', 0) + 1
+        else:
+            stats['lose_trades'] = stats.get('lose_trades', 0) + 1
+        pf['trading_stats'] = stats
+
+        # Trade log
+        tl_path = os.path.join(DATA_DIR, 'trade_log.json')
+        tl = load_json(tl_path, {'trades': [], 'next_id': 1})
+        trade = {
+            'id': tl.get('next_id', 1),
+            'type': 'sell',
+            'code': code, 'name': name,
+            'price': price, 'qty': qty,
+            'amount': round(amount, 2),
+            'commission': commission,
+            'pnl': round(pnl, 2),
+            'pnl_pct': pnl_pct,
+            'reason': reason,
+            'timestamp': time.strftime('%Y-%m-%d %H:%M:%S'),
+        }
+        tl['trades'].append(trade)
+        tl['next_id'] = trade['id'] + 1
+
+        with open(pf_path, 'w') as f:
+            json.dump(pf, f, ensure_ascii=False, indent=2)
+        with open(tl_path, 'w') as f:
+            json.dump(tl, f, ensure_ascii=False, indent=2)
+
+        pnl_sign = '+' if pnl >= 0 else ''
+        self._json({'ok': True, 'message': f'卖出 {name} {qty}股 × {price}元，{pnl_sign}{pnl:.2f}元({pnl_sign}{pnl_pct}%)', 'trade': trade, 'cash': pf['cash']})
+
+    def _handle_reset_portfolio(self, params):
+        """重置虚拟盘"""
+        pf_path = os.path.join(DATA_DIR, 'portfolio.json')
+        tl_path = os.path.join(DATA_DIR, 'trade_log.json')
+        portfolio = {
+            'cash': 100000, 'initial_capital': 100000, 'holdings': {},
+            'total_assets': 100000, 'total_return': 0,
+            'trading_stats': {'total_trades': 0, 'win_trades': 0, 'lose_trades': 0, 'total_pnl': 0, 'total_commission': 0, 'max_drawdown': 0}
+        }
+        trade_log = {'trades': [], 'next_id': 1}
+        with open(pf_path, 'w') as f:
+            json.dump(portfolio, f, ensure_ascii=False, indent=2)
+        with open(tl_path, 'w') as f:
+            json.dump(trade_log, f, ensure_ascii=False, indent=2)
+        self._json({'ok': True, 'message': '虚拟盘已重置'})
 
 
 if __name__ == '__main__':

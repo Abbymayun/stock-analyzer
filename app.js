@@ -366,7 +366,7 @@ const App = {
       const files = text.match(/"[^"]+\.json"/g);
       if (!files) return;
       const fileNames = files.map(f => f.replace(/"/g, '').split('/').pop()).sort().reverse();
-      const promises = fileNames.map(f => fetch(`data/history/${f}`).then(r => r.json()).catch(() => null));
+      const promises = fileNames.map(f => fetch(`data/history/${f}`, {cache: 'no-store'}).then(r => r.json()).catch(() => null));
       const results = await Promise.all(promises);
       this.historyData = results.filter(Boolean);
       if (this.historyData.length >= 2) this.yesterdayData = this.historyData[1];
@@ -391,13 +391,456 @@ const App = {
     this.renderRecList('buy-list', r.buy || []);
     this.renderRecList('watch-buy-list', r.watch || []);
 
-    this.renderMarketAnalysis(r);
-    this.renderStrategies(r);
-    this.filterRecList();
+    // 更新左侧推荐列表时间
+    const updateTime = this.allData.update_time || '';
+    const _setTs = (id, t) => { const el = document.getElementById(id); if (el && t) el.textContent = t; };
+    _setTs('sb-update-time', updateTime);
+    _setTs('buy-update-time', updateTime);
+    _setTs('watch-update-time2', updateTime);
 
+    this.loadMorningAnalysis();
+    this.loadMiddayAnalysis();
+    this.loadClosingAnalysis();
+    this.renderStrategies(r);
     this.renderAccuracy();
     this.renderPortfolio();
     this.renderVirtualHoldings();
+  },
+
+  // === 晨间综合分析 ===
+  async loadMorningAnalysis() {
+    try {
+      const r = this._apiAvailable
+        ? await fetch(`${this.API_BASE}/api/morning_analysis`)
+        : await fetch('data/morning_analysis.json');
+      if (r.ok) {
+        const data = await r.json();
+        this.renderMorningAnalysis(data);
+      }
+    } catch {}
+  },
+
+  renderMorningAnalysis(data) {
+    if (!data || data.error) return;
+
+    const el = document.getElementById('morning-analysis-section');
+    const ts = document.getElementById('morning-update-time');
+    if (ts && data.update_time) {
+      ts.textContent = data.update_time;  // 显示完整日期+时间
+    }
+
+    const strategy = data.strategy || {};
+    const riskScore = strategy.risk_score || 50;
+    const riskLevel = riskScore >= 70 ? '高' : riskScore >= 55 ? '中高' : riskScore >= 40 ? '中低' : '低';
+    const riskColor = riskScore >= 70 ? '#ef4444' : riskScore >= 55 ? '#f59e0b' : '#22c55e';
+    const riskBg = riskScore >= 70 ? 'rgba(239,68,68,0.1)' : riskScore >= 55 ? 'rgba(245,158,11,0.1)' : 'rgba(34,197,94,0.1)';
+
+    // 各维度行情
+    const usIdx = data.us_indices || {};
+    const usImpact = data.us_impact || {};
+    const commodities = data.commodities || {};
+    const fx = data.fx || {};
+    const globalIdx = data.global_indices || {};
+    const cnIdx = data.cn_indices || {};
+
+    const _fmtSection = (items) => items.map(([code, info]) => {
+      const emoji = info.change_pct >= 0 ? '📈' : '📉';
+      const cls = info.change_pct >= 0 ? 'text-rise' : 'text-fall';
+      const sign = info.change_pct >= 0 ? '+' : '';
+      if (info.unit) return `<span style="margin-right:10px">${emoji} ${info.name} <span class="${cls}">${sign}${info.change_pct.toFixed(2)}%</span></span>`;
+      if (code === 'usdcnh') return `<span style="margin-right:10px">💵 ${info.name} ${info.price.toFixed(4)} (<span class="${info.change_pct > 0 ? 'text-fall' : 'text-rise'}">${sign}${info.change_pct.toFixed(2)}%</span>)</span>`;
+      return `<span style="margin-right:10px">${emoji} ${info.name} <span class="${cls}">${sign}${info.change_pct.toFixed(2)}%</span></span>`;
+    }).join('');
+
+    const usDirection = usImpact.direction || '未知';
+    const usColor = usDirection.includes('利空') ? '#ef4444' : usDirection.includes('利好') ? '#22c55e' : '#94a3b8';
+
+    // 外围综合影响总结
+    const impactSummary = data.impact_summary || '';
+    const impactHtml = impactSummary ? `<div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:6px;margin-top:2px;font-size:11px;line-height:1.6;color:var(--text2);white-space:pre-line;overflow:hidden;display:-webkit-box;-webkit-line-clamp:8;-webkit-box-orient:vertical"><span style="font-weight:600;color:var(--text1)">🌐 外围综合影响</span>\n${this.esc(impactSummary)}</div>` : '';
+
+    // 建议买入3只（今日买入明日卖出）
+    const topBuys = data.top_buys || [];
+    const topBuysHtml = topBuys.length > 0 ? (() => {
+      const hdr = `<div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:8px;margin-top:4px">
+        <span style="font-size:12px;font-weight:600">💰 建议买入（${topBuys.length}只 · 今日买明日卖）</span>
+        <div style="display:flex;align-items:center;gap:6px;padding:3px 0 1px;margin-top:4px;font-size:10px;color:var(--text3)">
+          <span style="min-width:52px">名称</span>
+          <span style="min-width:48px">代码</span>
+          <span style="min-width:52px;text-align:right">当前涨幅</span>
+          <span style="min-width:50px;text-align:right">明日预估</span>
+          <span style="min-width:52px;text-align:right">买入价</span>
+          <span style="min-width:52px;text-align:right">目标价</span>
+          <span style="min-width:46px;text-align:right">止损</span>
+          <span style="min-width:34px;text-align:right">评分</span>
+        </div>`;
+      const rows = topBuys.map((s, i) => {
+        const chgCls = s.change_pct >= 0 ? 'text-rise' : 'text-fall';
+        const chgSign = s.change_pct >= 0 ? '+' : '';
+        const est = s.next_day_estimate;
+        const estVal = est ? est.estimate : null;
+        const estStr = estVal != null ? (estVal >= 0 ? '+' : '') + estVal.toFixed(1) + '%' : '-';
+        const estCls = estVal != null ? (estVal >= 0 ? 'text-rise' : 'text-fall') : '';
+        return `<div style="display:flex;align-items:center;gap:6px;padding:4px 0;${i > 0 ? 'border-top:1px solid rgba(255,255,255,0.04)' : ''}">
+          <div style="flex:1;cursor:pointer;display:flex;align-items:center;gap:6px" onclick="App.openStock('${s.code}')">
+          <span style="font-weight:600;color:var(--text1);min-width:52px;font-size:12px">${this.esc(s.name)}</span>
+          <span style="font-size:10px;color:var(--text3);min-width:48px">${s.code}</span>
+          <span style="min-width:52px;text-align:right" class="${chgCls}">${chgSign}${s.change_pct.toFixed(2)}%</span>
+          <span style="min-width:50px;text-align:right;font-size:11px" class="${estCls}">${estStr}</span>
+          <span style="min-width:52px;text-align:right;font-size:11px;color:var(--rise)">${s.buy_point?.toFixed(2) || '-'}</span>
+          <span style="min-width:52px;text-align:right;font-size:11px;color:var(--rise)">${s.target_price?.toFixed(2) || '-'}</span>
+          <span style="min-width:46px;text-align:right;font-size:11px;color:var(--fall)">${s.stop_loss?.toFixed(2) || '-'}</span>
+          <span style="min-width:34px;text-align:right;color:var(--text2);font-size:11px">${s.score}</span>
+          </div>
+          <button onclick="event.stopPropagation();App.manualBuy('${s.code}','${this.esc(s.name)}',${s.buy_point || 0},${s.score || 0})" style="padding:2px 8px;background:#22c55e22;color:#22c55e;border:1px solid #22c55e44;border-radius:4px;cursor:pointer;font-size:11px;white-space:nowrap">买入</button>
+        </div>`;
+      }).join('');
+      return hdr + '<div style="margin-top:1px">' + rows + '</div></div>';
+    })() : '';
+
+    let html = `
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;margin-bottom:6px">
+        <div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">
+            <span style="font-size:12px;font-weight:600">🇺🇸 美股隔夜</span>
+            <span style="font-size:10px;color:${usColor};background:${usColor}15;padding:1px 6px;border-radius:8px">对A股：${usDirection}</span>
+          </div>
+          <div style="font-size:11px;line-height:1.5">${_fmtSection(Object.entries(usIdx)) || '<span style="color:var(--text3)">暂无数据</span>'}</div>
+        </div>
+        <div>
+          <span style="font-size:12px;font-weight:600">🌏 亚太/欧洲</span>
+          <div style="font-size:11px;line-height:1.5;margin-top:3px">${_fmtSection(Object.entries(globalIdx)) || '<span style="color:var(--text3)">-</span>'}</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px 16px;margin-bottom:6px;font-size:11px;line-height:1.5">
+        ${Object.keys(commodities).length ? `<div><span style="font-size:12px;font-weight:600">📦 大宗商品</span><div style="margin-top:2px">${_fmtSection(Object.entries(commodities))}</div></div>` : '<div></div>'}
+        ${Object.keys(fx).length ? `<div><span style="font-size:12px;font-weight:600">💱 汇率</span><div style="margin-top:2px">${_fmtSection(Object.entries(fx))}</div></div>` : '<div></div>'}
+      </div>
+
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:8px 12px;border-top:1px solid rgba(255,255,255,0.06);padding-top:6px;margin-top:2px">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
+          <span style="font-size:11px;font-weight:600;color:var(--text2)">🎯 当日风险评估</span>
+          <span style="background:${riskBg};color:${riskColor};padding:4px 10px;border-radius:8px;font-size:16px;font-weight:700;line-height:1.2;text-align:center">${riskScore}<div style="font-size:9px;font-weight:400;margin-top:2px">${riskLevel}风险</div></span>
+        </div>
+        <div style="font-size:11px;line-height:1.5;color:var(--text2);white-space:pre-line;overflow:hidden;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical">${(strategy.strategy_text || '').replace(/\*\*/g, '')}</div>
+      </div>
+
+      ${impactHtml}
+      ${topBuysHtml}
+    `;
+
+    el.innerHTML = html;
+  },
+
+  // === 午间综合分析 ===
+  async loadMiddayAnalysis() {
+    try {
+      const r = this._apiAvailable
+        ? await fetch(`${this.API_BASE}/api/midday_analysis`)
+        : await fetch('data/midday_analysis.json');
+      if (r.ok) {
+        const data = await r.json();
+        this.renderMiddayAnalysis(data);
+      }
+    } catch {}
+  },
+
+  renderMiddayAnalysis(data) {
+    if (!data || data.error) return;
+
+    const el = document.getElementById('midday-analysis-section');
+    const ts = document.getElementById('midday-update-time');
+    if (ts && data.update_time) {
+      ts.textContent = data.update_time;  // 显示完整日期+时间
+    }
+
+    const strategy = data.strategy || {};
+    const riskScore = strategy.risk_score || 50;
+    const riskLevel = riskScore >= 70 ? '高' : riskScore >= 55 ? '中高' : riskScore >= 40 ? '中低' : '低';
+    const riskColor = riskScore >= 70 ? '#ef4444' : riskScore >= 55 ? '#f59e0b' : '#22c55e';
+    const riskBg = riskScore >= 70 ? 'rgba(239,68,68,0.1)' : riskScore >= 55 ? 'rgba(245,158,11,0.1)' : 'rgba(34,197,94,0.1)';
+
+    const usIdx = data.us_indices || {};
+    const commodities = data.commodities || {};
+    const fx = data.fx || {};
+    const globalIdx = data.global_indices || {};
+    const cnIdx = data.cn_indices || {};
+
+    const _fmt = (items) => items.map(([code, info]) => {
+      const emoji = info.change_pct >= 0 ? '📈' : '📉';
+      const cls = info.change_pct >= 0 ? 'text-rise' : 'text-fall';
+      const sign = info.change_pct >= 0 ? '+' : '';
+      if (info.unit) return `<span style="margin-right:10px">${emoji} ${info.name} <span class="${cls}">${sign}${info.change_pct.toFixed(2)}%</span></span>`;
+      return `<span style="margin-right:10px">${emoji} ${info.name} <span class="${cls}">${sign}${info.change_pct.toFixed(2)}%</span></span>`;
+    }).join('');
+
+    // 半日市场概况
+    let cnHtml = '';
+    if (Object.keys(cnIdx).length) {
+      cnHtml = `<div style="margin-bottom:6px">
+        <span style="font-size:12px;font-weight:600">🇨🇳 A股半日行情</span>
+        <div style="font-size:11px;line-height:1.5;margin-top:2px">${_fmt(Object.entries(cnIdx))}</div>
+        ${data.market_summary ? `<div style="font-size:10px;color:var(--text3);margin-top:1px">${this.esc(data.market_summary)}</div>` : ''}
+      </div>`;
+    }
+
+    // 外围综合影响总结
+    const midImpactSummary = data.impact_summary || '';
+    const midImpactHtml = midImpactSummary ? `<div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:6px;margin-top:2px;font-size:11px;line-height:1.6;color:var(--text2);white-space:pre-line;overflow:hidden;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical"><span style="font-weight:600;color:var(--text1)">🌐 外围最新动态</span>\n${this.esc(midImpactSummary)}</div>` : '';
+
+    // 建议买入（今日买入明日卖出）
+    const topBuys = data.top_buys || [];
+    const topBuysHtml = topBuys.length > 0 ? (() => {
+      const hdr = `<div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:8px;margin-top:4px">
+        <span style="font-size:12px;font-weight:600">💰 午后建议买入（${topBuys.length}只 · 今日买明日卖）</span>
+        <div style="display:flex;align-items:center;gap:6px;padding:3px 0 1px;margin-top:4px;font-size:10px;color:var(--text3)">
+          <span style="min-width:52px">名称</span>
+          <span style="min-width:48px">代码</span>
+          <span style="min-width:52px;text-align:right">当前涨幅</span>
+          <span style="min-width:50px;text-align:right">明日预估</span>
+          <span style="min-width:52px;text-align:right">买入价</span>
+          <span style="min-width:52px;text-align:right">目标价</span>
+          <span style="min-width:46px;text-align:right">止损</span>
+          <span style="min-width:34px;text-align:right">评分</span>
+        </div>`;
+      const rows = topBuys.map((s, i) => {
+        const chgCls = s.change_pct >= 0 ? 'text-rise' : 'text-fall';
+        const chgSign = s.change_pct >= 0 ? '+' : '';
+        const est = s.next_day_estimate;
+        const estVal = est ? est.estimate : null;
+        const estStr = estVal != null ? (estVal >= 0 ? '+' : '') + estVal.toFixed(1) + '%' : '-';
+        const estCls = estVal != null ? (estVal >= 0 ? 'text-rise' : 'text-fall') : '';
+        return `<div style="display:flex;align-items:center;gap:6px;padding:4px 0;${i > 0 ? 'border-top:1px solid rgba(255,255,255,0.04)' : ''}">
+          <div style="flex:1;cursor:pointer;display:flex;align-items:center;gap:6px" onclick="App.openStock('${s.code}')">
+          <span style="font-weight:600;color:var(--text1);min-width:52px;font-size:12px">${this.esc(s.name)}</span>
+          <span style="font-size:10px;color:var(--text3);min-width:48px">${s.code}</span>
+          <span style="min-width:52px;text-align:right" class="${chgCls}">${chgSign}${s.change_pct.toFixed(2)}%</span>
+          <span style="min-width:50px;text-align:right;font-size:11px" class="${estCls}">${estStr}</span>
+          <span style="min-width:52px;text-align:right;font-size:11px;color:var(--rise)">${s.buy_point?.toFixed(2) || '-'}</span>
+          <span style="min-width:52px;text-align:right;font-size:11px;color:var(--rise)">${s.target_price?.toFixed(2) || '-'}</span>
+          <span style="min-width:46px;text-align:right;font-size:11px;color:var(--fall)">${s.stop_loss?.toFixed(2) || '-'}</span>
+          <span style="min-width:34px;text-align:right;color:var(--text2);font-size:11px">${s.score}</span>
+          </div>
+          <button onclick="event.stopPropagation();App.manualBuy('${s.code}','${this.esc(s.name)}',${s.buy_point || 0},${s.score || 0})" style="padding:2px 8px;background:#22c55e22;color:#22c55e;border:1px solid #22c55e44;border-radius:4px;cursor:pointer;font-size:11px;white-space:nowrap">买入</button>
+        </div>`;
+      }).join('');
+      return hdr + '<div style="margin-top:1px">' + rows + '</div></div>';
+    })() : '';
+
+    // 大宗商品+汇率+全球 合并两列
+    const extraHtml = (Object.keys(commodities).length || Object.keys(fx).length || Object.keys(globalIdx).length)
+      ? `<div style="display:grid;grid-template-columns:1fr 1fr;gap:3px 16px;margin-bottom:6px;font-size:11px;line-height:1.5">
+          ${(Object.keys(commodities).length || Object.keys(fx).length)
+            ? `<div>${Object.keys(commodities).length ? `<span style="font-size:12px;font-weight:600">📦 大宗商品</span><div style="margin-top:2px">${_fmt(Object.entries(commodities))}</div>` : ''}${Object.keys(fx).length ? `<div style="margin-top:3px"><span style="font-size:12px;font-weight:600">💱 汇率</span><div style="margin-top:2px">${_fmt(Object.entries(fx))}</div></div>` : ''}</div>`
+            : '<div></div>'}
+          ${Object.keys(globalIdx).length
+            ? `<div><span style="font-size:12px;font-weight:600">🌏 亚太/欧洲</span><div style="margin-top:2px">${_fmt(Object.entries(globalIdx))}</div></div>`
+            : '<div></div>'}
+        </div>`
+      : '';
+
+    html = cnHtml + extraHtml;
+
+    html += `<div style="display:grid;grid-template-columns:auto 1fr;gap:8px 12px;border-top:1px solid rgba(255,255,255,0.06);padding-top:6px;margin-top:2px">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
+        <span style="font-size:11px;font-weight:600;color:var(--text2)">🎯 午后风险评估</span>
+        <span style="background:${riskBg};color:${riskColor};padding:4px 10px;border-radius:8px;font-size:16px;font-weight:700;line-height:1.2;text-align:center">${riskScore}<div style="font-size:9px;font-weight:400;margin-top:2px">${riskLevel}风险</div></span>
+      </div>
+      <div style="font-size:11px;line-height:1.5;color:var(--text2);white-space:pre-line;overflow:hidden;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical">${(strategy.strategy_text || '').replace(/\*\*/g, '')}</div>
+    </div>`;
+
+    html += midImpactHtml;
+    html += topBuysHtml;
+
+    el.innerHTML = html;
+  },
+
+  // === 收盘综合分析 ===
+  async loadClosingAnalysis() {
+    try {
+      const r = this._apiAvailable
+        ? await fetch(`${this.API_BASE}/api/closing_analysis`)
+        : await fetch('data/closing_analysis.json');
+      if (r.ok) {
+        const data = await r.json();
+        this.renderClosingAnalysis(data);
+      }
+    } catch {}
+  },
+
+  renderClosingAnalysis(data) {
+    if (!data || data.error) return;
+
+    const el = document.getElementById('closing-analysis-section');
+    const ts = document.getElementById('closing-update-time');
+    if (ts && data.update_time) {
+      ts.textContent = data.update_time;
+    }
+
+    const perfs = data.performances || [];
+    const cnIdx = data.cn_indices || {};
+    const tomorrowRisk = data.tomorrow_risk || {};
+    const tomorrowBuys = data.tomorrow_buys || [];
+    const summary = data.summary || '';
+
+    const riskScore = tomorrowRisk.risk_score || 50;
+    const riskLevel = tomorrowRisk.risk_level || '中低';
+    const riskColor = riskScore >= 70 ? '#ef4444' : riskScore >= 55 ? '#f59e0b' : '#22c55e';
+    const riskBg = riskScore >= 70 ? 'rgba(239,68,68,0.1)' : riskScore >= 55 ? 'rgba(245,158,11,0.1)' : 'rgba(34,197,94,0.1)';
+
+    // A股收盘
+    let cnHtml = '';
+    if (Object.keys(cnIdx).length) {
+      cnHtml = `<div style="margin-bottom:6px">
+        <span style="font-size:12px;font-weight:600">🇨🇳 A股收盘</span>
+        <div style="font-size:11px;line-height:1.5;margin-top:2px">${Object.values(cnIdx).map(i => {
+          const cls = i.change_pct >= 0 ? 'text-rise' : 'text-fall';
+          const sign = i.change_pct >= 0 ? '+' : '';
+          return `${i.name} <span class="${cls}">${sign}${i.change_pct.toFixed(2)}%</span>`;
+        }).join(' · ')}</div>
+      </div>`;
+    }
+
+    // 今日总结
+    let summaryHtml = '';
+    if (summary) {
+      summaryHtml = `<div style="font-size:11px;line-height:1.5;color:var(--text2);margin-bottom:6px;white-space:pre-line">${this.esc(summary)}</div>`;
+    }
+
+    // 推荐股票表现表格
+    let perfHtml = '';
+    if (perfs.length > 0) {
+      perfHtml = `<div style="margin-bottom:6px">
+        <span style="font-size:12px;font-weight:600">📋 今日推荐表现</span>
+        <div style="display:flex;gap:6px;padding:3px 0 1px;margin-top:4px;font-size:10px;color:var(--text3)">
+          <span style="min-width:52px">名称</span>
+          <span style="min-width:42px">来源</span>
+          <span style="min-width:48px;text-align:right">推荐时涨幅</span>
+          <span style="min-width:48px;text-align:right">收盘涨幅</span>
+          <span style="min-width:36px;text-align:right">评价</span>
+          <span style="min-width:56px;text-align:right">买入价</span>
+          <span style="min-width:44px;text-align:right">是否买入</span>
+          <span style="min-width:44px;text-align:right">收益率</span>
+        </div>
+        <div style="margin-top:1px">${perfs.map((p, i) => {
+          const mCls = p.morning_chg >= 0 ? 'text-rise' : 'text-fall';
+          const dCls = p.day_chg >= 0 ? 'text-rise' : 'text-fall';
+          const mSign = p.morning_chg >= 0 ? '+' : '';
+          const dSign = p.day_chg >= 0 ? '+' : '';
+          const src = p.source === 'morning' ? '🌅' : '☀️';
+          const buyExec = p.buy_triggered || p.held;
+          const profit = p.buy_profit;
+          return `<div style="display:flex;align-items:center;gap:6px;padding:4px 0;${i > 0 ? 'border-top:1px solid rgba(255,255,255,0.04)' : ''};cursor:pointer" onclick="App.openStock('${p.code}')">
+            <span style="font-weight:600;color:var(--text1);min-width:52px;font-size:12px">${this.esc(p.name)}</span>
+            <span style="font-size:10px;color:var(--text3);min-width:42px">${src}</span>
+            <span style="min-width:48px;text-align:right" class="${mCls}">${mSign}${p.morning_chg.toFixed(2)}%</span>
+            <span style="min-width:48px;text-align:right" class="${dCls}">${dSign}${p.day_chg.toFixed(2)}%</span>
+            <span style="min-width:36px;text-align:right;font-size:11px">${p.icon}</span>
+            <span style="min-width:56px;text-align:right;font-size:11px;color:var(--rise)">${p.buy_point?.toFixed(2) || '-'}</span>
+            <span style="min-width:44px;text-align:right;font-size:11px;color:${buyExec ? 'var(--rise)' : 'var(--text3)'}">${buyExec ? '✅已买' : '❌未买'}</span>
+            <span style="min-width:44px;text-align:right;font-size:11px" class="${profit != null ? (profit >= 0 ? 'text-rise' : 'text-fall') : ''}">${profit != null ? (profit >= 0 ? '+' : '') + profit.toFixed(2) + '%' : '-'}</span>
+          </div>`;
+        }).join('')}</div>
+      </div>`;
+
+      // 持仓管理建议（替代原来的"明日操作建议"）
+      const heldPerfs = perfs.filter(p => p.held);
+      const allPerfs = perfs;
+      let adviceHtml = '';
+
+      // 持仓股票的卖出/持有策略
+      if (heldPerfs.length > 0) {
+        adviceHtml += `<div style="padding:4px 0"><span style="font-size:12px;font-weight:600">💼 持仓管理策略（触及买入点已建仓）</span>`;
+        for (const p of heldPerfs) {
+          adviceHtml += `<div style="margin-top:6px;padding:6px 8px;background:rgba(255,255,255,0.03);border-radius:6px;border-left:3px solid ${p.stop_triggered ? 'var(--fall)' : (p.buy_profit > 0 ? 'var(--rise)' : 'var(--gold)')}">
+            <div style="font-weight:600;font-size:12px">${this.esc(p.name)} <span style="color:var(--text3)">(${p.code})</span> <span style="font-size:11px">${p.position_status}</span></div>
+            <div style="font-size:11px;color:var(--text2);margin-top:2px">${this.esc(p.position_advice || '')}</div>`;
+          if (p.sell_strategy) {
+            adviceHtml += `<div style="font-size:11px;color:var(--text2);margin-top:4px;white-space:pre-line">${this.esc(p.sell_strategy)}</div>`;
+          }
+          if (p.hold_conditions) {
+            adviceHtml += `<div style="font-size:11px;color:var(--text2);margin-top:4px;white-space:pre-line">${this.esc(p.hold_conditions)}</div>`;
+          }
+          adviceHtml += `</div>`;
+        }
+        adviceHtml += `</div>`;
+      }
+
+      // 未建仓股票的继续关注建议
+      const unheldPerfs = perfs.filter(p => !p.held);
+      if (unheldPerfs.length > 0) {
+        adviceHtml += `<div style="padding:4px 0"><span style="font-size:12px;font-weight:600">👀 未建仓股票（继续观察）</span>`;
+        for (const p of unheldPerfs) {
+          adviceHtml += `<div style="display:flex;gap:8px;padding:3px 0;font-size:11px">
+            <span style="font-weight:600;color:var(--text1);min-width:60px">${this.esc(p.name)}</span>
+            <span style="color:var(--text2)">${this.esc(p.position_advice || p.verdict || '')}</span>
+          </div>`;
+        }
+        adviceHtml += `</div>`;
+      }
+
+      if (adviceHtml) {
+        perfHtml += `<div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:6px;margin-top:4px">
+          <span style="font-size:12px;font-weight:600">📝 明日操作建议</span>
+          <div style="margin-top:4px">${adviceHtml}</div>
+        </div>`;
+      }
+    }
+
+    // 明日风险 + 策略 并排
+    let riskHtml = `<div style="display:grid;grid-template-columns:auto 1fr;gap:8px 12px;border-top:1px solid rgba(255,255,255,0.06);padding-top:6px;margin-top:4px">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
+        <span style="font-size:11px;font-weight:600;color:var(--text2)">🎯 明日风险评估</span>
+        <span style="background:${riskBg};color:${riskColor};padding:4px 10px;border-radius:8px;font-size:16px;font-weight:700;line-height:1.2;text-align:center">${riskScore}<div style="font-size:9px;font-weight:400;margin-top:2px">${riskLevel}风险</div></span>
+      </div>
+      <div style="font-size:11px;line-height:1.5;color:var(--text2);white-space:pre-line;overflow:hidden;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical">${(tomorrowRisk.strategy_text || '').replace(/\*\*/g, '')}</div>
+    </div>`;
+
+    // 收盘外围影响总结
+    const closingImpact = data.impact_summary || '';
+    const closingImpactHtml = closingImpact ? `<div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:6px;margin-top:2px;font-size:11px;line-height:1.6;color:var(--text2);white-space:pre-line;overflow:hidden;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical"><span style="font-weight:600;color:var(--text1)">🌐 收盘外围动态</span>\n${this.esc(closingImpact)}</div>` : '';
+
+    // 明日推荐
+    let buysHtml = '';
+    if (tomorrowBuys.length > 0) {
+      buysHtml = `<div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:8px;margin-top:4px">
+        <span style="font-size:12px;font-weight:600">💰 明日建议买入（${tomorrowBuys.length}只 · 明日买后日卖）</span>
+        <div style="display:flex;align-items:center;gap:6px;padding:3px 0 1px;margin-top:4px;font-size:10px;color:var(--text3)">
+          <span style="min-width:52px">名称</span>
+          <span style="min-width:48px">代码</span>
+          <span style="min-width:52px;text-align:right">今日涨幅</span>
+          <span style="min-width:50px;text-align:right">明日预估</span>
+          <span style="min-width:52px;text-align:right">买入价</span>
+          <span style="min-width:52px;text-align:right">目标价</span>
+          <span style="min-width:46px;text-align:right">止损</span>
+          <span style="min-width:34px;text-align:right">评分</span>
+        </div>
+        <div style="margin-top:1px">${tomorrowBuys.map((s, i) => {
+          const chgCls = s.change_pct >= 0 ? 'text-rise' : 'text-fall';
+          const chgSign = s.change_pct >= 0 ? '+' : '';
+          const est = s.next_day_estimate;
+          const estVal = est ? est.estimate : null;
+          const estStr = estVal != null ? (estVal >= 0 ? '+' : '') + estVal.toFixed(1) + '%' : '-';
+          const estCls = estVal != null ? (estVal >= 0 ? 'text-rise' : 'text-fall') : '';
+          return `<div style="display:flex;align-items:center;gap:6px;padding:4px 0;${i > 0 ? 'border-top:1px solid rgba(255,255,255,0.04)' : ''}">
+            <div style="flex:1;cursor:pointer;display:flex;align-items:center;gap:6px" onclick="App.openStock('${s.code}')">
+            <span style="font-weight:600;color:var(--text1);min-width:52px;font-size:12px">${this.esc(s.name)}</span>
+            <span style="font-size:10px;color:var(--text3);min-width:48px">${s.code}</span>
+            <span style="min-width:52px;text-align:right" class="${chgCls}">${chgSign}${s.change_pct.toFixed(2)}%</span>
+            <span style="min-width:50px;text-align:right;font-size:11px" class="${estCls}">${estStr}</span>
+            <span style="min-width:52px;text-align:right;font-size:11px;color:var(--rise)">${s.buy_point?.toFixed(2) || '-'}</span>
+            <span style="min-width:52px;text-align:right;font-size:11px;color:var(--rise)">${s.target_price?.toFixed(2) || '-'}</span>
+            <span style="min-width:46px;text-align:right;font-size:11px;color:var(--fall)">${s.stop_loss?.toFixed(2) || '-'}</span>
+            <span style="min-width:34px;text-align:right;color:var(--text2);font-size:11px">${s.score}</span>
+            </div>
+            <button onclick="event.stopPropagation();App.manualBuy('${s.code}','${this.esc(s.name)}',${s.buy_point || 0},${s.score || 0})" style="padding:2px 8px;background:#22c55e22;color:#22c55e;border:1px solid #22c55e44;border-radius:4px;cursor:pointer;font-size:11px;white-space:nowrap">买入</button>
+          </div>`;
+        }).join('')}</div>
+      </div>`;
+    }
+
+    el.innerHTML = cnHtml + summaryHtml + perfHtml + riskHtml + closingImpactHtml + buysHtml;
   },
 
   // === 左栏推荐列表 ===
@@ -422,78 +865,6 @@ const App = {
         </div>
       </div>`;
     }).join('');
-  },
-
-  // === 中栏 - 大盘分析 ===
-  renderMarketAnalysis(r) {
-    const el = document.getElementById('market-analysis');
-    document.getElementById('analysis-update-time').textContent = r.update_time || '';
-
-    const macro = r.macro_indices || {};
-    const idxMap = {
-      'sh000001': ['sh000001', '000001'],
-      'sz399001': ['sz399001', '399001'],
-      'sz399006': ['sz399006', '399006'],
-      'int_dji': ['int_dji'],
-      'int_nasdaq': ['int_nasdaq'],
-      'int_sp500': ['int_sp500'],
-    };
-    const getIdx = (code) => {
-      const keys = idxMap[code] || [code];
-      for (const k of keys) { if (macro[k]) return macro[k]; }
-      return null;
-    };
-
-    let html = `<div class="market-sentiment-badge ${r.market_sentiment}">
-      ${r.market_sentiment === '偏多' ? '📈' : r.market_sentiment === '偏空' ? '📉' : '➡️'} 
-      市场情绪：${r.market_sentiment} · 综合评分 ${r.avg_score}分
-    </div>`;
-
-    html += `<div class="indices-row">`;
-    const idxList = [
-      { code: 'sh000001', label: '上证' },
-      { code: 'sz399001', label: '深证' },
-      { code: 'sz399006', label: '创业板' },
-      { code: 'int_dji', label: '道琼斯' },
-      { code: 'int_nasdaq', label: '纳斯达克' },
-      { code: 'int_sp500', label: '标普500' },
-    ];
-    idxList.forEach(idx => {
-      const info = getIdx(idx.code);
-      if (info) {
-        const cls = info.change_pct >= 0 ? 'text-rise' : 'text-fall';
-        const sign = info.change_pct >= 0 ? '+' : '';
-        const tag = idx.code.startsWith('int') ? 'us' : '';
-        html += `<div class="idx-item ${tag}"><div class="idx-label">${idx.label}</div><div class="idx-val ${cls}">${info.price?.toFixed(2) || '-'}</div><div class="idx-chg ${cls}">${sign}${info.change_pct.toFixed(2)}%</div></div>`;
-      }
-    });
-    html += '</div>';
-
-    const stocks = this.allData.stocks || [];
-    const rise = stocks.filter(s => s.change_pct > 0).length;
-    const fall = stocks.filter(s => s.change_pct < 0).length;
-    const flat = stocks.length - rise - fall;
-    const zt = stocks.filter(s => s.change_pct >= 9.8).length;
-    const dt = stocks.filter(s => s.change_pct <= -9.8).length;
-
-    html += `<div class="market-stats-row">
-      <div class="market-stat-item"><div class="market-stat-val text-rise">${rise}</div><div class="market-stat-label">上涨</div></div>
-      <div class="market-stat-item"><div class="market-stat-val text-fall">${fall}</div><div class="market-stat-label">下跌</div></div>
-      <div class="market-stat-item"><div class="market-stat-val">${flat}</div><div class="market-stat-label">平盘</div></div>
-      <div class="market-stat-item"><div class="market-stat-val text-rise">${zt}</div><div class="market-stat-label">涨停</div></div>
-      <div class="market-stat-item"><div class="market-stat-val text-fall">${dt}</div><div class="market-stat-label">跌停</div></div>
-    </div>`;
-
-    if (r.market_analysis) {
-      html += `<div class="market-text">${this.esc(r.market_analysis)}</div>`;
-    }
-
-    el.innerHTML = html;
-
-    if (r.next_day_advice) {
-      document.getElementById('next-day-card').style.display = '';
-      document.getElementById('next-day-advice').textContent = r.next_day_advice;
-    }
   },
 
   // === 策略 ===
@@ -589,57 +960,136 @@ const App = {
   // === 右栏 - 准确率统计 ===
   renderAccuracy() {
     const el = document.getElementById('accuracy-section');
-    if (!this.yesterdayData || !this.yesterdayData.recommendations) {
-      if (this.historyData.length >= 2) {
-        for (let i = 1; i < this.historyData.length; i++) {
-          if (this.historyData[i].recommendations?.strong_buy?.length) { this.yesterdayData = this.historyData[i]; break; }
-        }
-      }
-      if (!this.yesterdayData || !this.yesterdayData.recommendations?.strong_buy?.length) {
-        el.innerHTML = '<div class="empty"><div class="empty-icon">📊</div><div>需要至少2次分析数据才能统计准确率</div></div>';
-        return;
+
+    // 从历史数据中收集近3天强烈买入的股票
+    let results = [];
+    const seen = new Set();
+    const now = new Date();
+    const threeDaysAgo = new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000);
+    const threeDaysAgoStr = threeDaysAgo.toISOString().substring(0, 10);
+
+    for (let i = this.historyData.length - 1; i >= 0; i--) {
+      const hd = this.historyData[i];
+      if (!hd.recommendations) continue;
+      const dateStr = hd.update_time?.substring(0, 10);
+      if (!dateStr || dateStr < threeDaysAgoStr) continue; // 只看近3天
+      const strongBuys = hd.recommendations.strong_buy || [];
+      for (const s of strongBuys) {
+        if (!s.prediction_result || !s.next_day_actual) continue;
+        const key = `${s.code}_${hd.update_time?.substring(0,10)}`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        results.push({
+          code: s.code,
+          name: s.name,
+          rec: '强烈买入',
+          snapshot_price: s.snapshot_price || s.price,
+          actual_close: s.next_day_actual.actual_close,
+          actual_pct: s.next_day_actual.actual_pct,
+          pred_pct: s.next_day_estimate?.estimate || 0,
+          pred_result: s.prediction_result,
+          update_time: hd.update_time,
+          next_date: s.next_day_actual.next_date,
+          score: s.score,
+        });
       }
     }
 
-    const ydStrongBuy = this.yesterdayData.recommendations.strong_buy || [];
-    const todayTime = this.historyData[0]?.update_time || '';
-    const ydTime = this.yesterdayData.update_time || '';
+    if (!results.length) {
+      // 降级：尝试用旧逻辑（比较相邻两次分析的价格）
+      if (this.historyData.length >= 2) {
+        for (let i = 1; i < this.historyData.length; i++) {
+          const hd = this.historyData[i];
+          if (!hd.recommendations?.strong_buy?.length) continue;
+          const nextHd = this.historyData[i-1];
+          const ydStrongBuy = hd.recommendations.strong_buy || [];
+          for (const s of ydStrongBuy) {
+            const todayStock = this.findStock(s.code) || (nextHd.recommendations?.strong_buy || []).find(x => x.code === s.code);
+            if (!todayStock) continue;
+            const ydPrice = s.price || s.prev_close;
+            const chgPct = todayStock.price > 0 && ydPrice > 0 ? (todayStock.price - ydPrice) / ydPrice * 100 : 0;
+            const diff = chgPct - (s.next_day_estimate?.estimate || 0);
+            let icon, label;
+            if (diff >= 2) { icon = '🔥'; label = '超预期'; }
+            else if (diff >= 0.5) { icon = '✓'; label = '超预期'; }
+            else if (Math.abs(diff) < 0.5) { icon = '✓'; label = '精准'; }
+            else if (diff >= -1) { icon = '≈'; label = '基本符合'; }
+            else if (diff >= -3) { icon = '↓'; label = '低于预期'; }
+            else { icon = '✗'; label = '远低预期'; }
+            results.push({
+              code: s.code, name: s.name, rec: '强烈买入',
+              snapshot_price: ydPrice, actual_close: todayStock.price,
+              actual_pct: chgPct, pred_pct: s.next_day_estimate?.estimate || 0,
+              pred_result: { icon, label, hit_dir: chgPct > 0 },
+              update_time: hd.update_time, score: s.score,
+            });
+          }
+          break;
+        }
+      }
+    }
 
-    if (!ydStrongBuy.length) { el.innerHTML = '<div class="empty">暂无数据</div>'; return; }
+    if (!results.length) {
+      el.innerHTML = '<div class="empty"><div class="empty-icon">📊</div><div>需要至少2次分析数据才能统计准确率</div></div>';
+      return;
+    }
 
-    let correct = 0, wrong = 0, totalPnl = 0, details = [];
-    ydStrongBuy.forEach(s => {
-      const todayStock = this.findStock(s.code);
-      if (!todayStock) { details.push({ name: s.name, code: s.code, pred_price: s.price, actual: null }); return; }
-      const ydPrice = s.price || s.prev_close;
-      const chgPct = todayStock.price > 0 && ydPrice > 0 ? (todayStock.price - ydPrice) / ydPrice * 100 : 0;
-      if (chgPct > 0) correct++; else wrong++;
-      totalPnl += chgPct;
-      details.push({ name: s.name, code: s.code, pred_price: ydPrice, actual: todayStock.price, chg_pct: chgPct, hit: chgPct > 0 });
-    });
+    // 统计
+    const total = results.length;
+    const exceeds = results.filter(r => r.pred_result.icon === '🔥' || r.pred_result.icon === '✓').length;
+    const accurate = results.filter(r => r.pred_result.label === '精准命中').length;
+    const ok = results.filter(r => r.pred_result.icon === '≈').length;
+    const below = results.filter(r => r.pred_result.icon === '↓').length;
+    const farBelow = results.filter(r => r.pred_result.icon === '✗').length;
+    const avgPnl = results.reduce((s, r) => s + r.actual_pct, 0) / total;
+    const exceedRate = (exceeds + accurate) / total * 100;
 
-    const total = correct + wrong;
-    const accuracy = total > 0 ? (correct / total * 100) : 0;
-    const avgPnl = total > 0 ? totalPnl / total : 0;
+    let html = `<div style="text-align:center;margin-bottom:10px;font-size:11px;color:var(--text3)">🔥 近3天强烈买入 · 共 ${total} 只</div>`;
 
-    let html = `<div style="text-align:center;margin-bottom:8px;font-size:11px;color:var(--text3)">${ydTime} 预测 → ${todayTime} 实际</div>`;
+    // 摘要卡片
     html += `<div class="accuracy-summary">
-      <div class="accuracy-summary-item"><div class="accuracy-summary-num" style="color:${accuracy >= 60 ? 'var(--fall)' : 'var(--gold)'}">${accuracy.toFixed(0)}%</div><div class="accuracy-summary-label">胜率</div></div>
-      <div class="accuracy-summary-item"><div class="accuracy-summary-num ${avgPnl >= 0 ? 'text-rise' : 'text-fall'}">${avgPnl >= 0 ? '+' : ''}${avgPnl.toFixed(2)}%</div><div class="accuracy-summary-label">平均收益</div></div>
-      <div class="accuracy-summary-item"><div class="accuracy-summary-num" style="color:var(--accent)">${correct}/${total}</div><div class="accuracy-summary-label">正确/总计</div></div>
+      <div class="accuracy-summary-item"><div class="accuracy-summary-num" style="color:${exceedRate >= 60 ? 'var(--rise)' : 'var(--gold)'}">${exceedRate.toFixed(0)}%</div><div class="accuracy-summary-label">超预期率</div></div>
+      <div class="accuracy-summary-item"><div class="accuracy-summary-num ${avgPnl >= 0 ? 'text-rise' : 'text-fall'}">${avgPnl >= 0 ? '+' : ''}${avgPnl.toFixed(2)}%</div><div class="accuracy-summary-label">平均涨幅</div></div>
+      <div class="accuracy-summary-item"><div class="accuracy-summary-num" style="color:var(--rise)">🔥${exceeds}</div><div class="accuracy-summary-label">超预期</div></div>
     </div>`;
 
+    // 分类统计条
+    html += `<div style="display:flex;gap:4px;flex-wrap:wrap;margin:10px 0;font-size:10px">
+      <span style="background:rgba(239,68,68,0.12);color:#ef4444;padding:2px 6px;border-radius:4px">🔥超预期${exceeds}</span>
+      <span style="background:rgba(34,197,94,0.12);color:#22c55e;padding:2px 6px;border-radius:4px">✓精准${accurate}</span>
+      <span style="background:rgba(234,179,8,0.12);color:#eab308;padding:2px 6px;border-radius:4px">≈符合${ok}</span>
+      <span style="background:rgba(59,130,246,0.12);color:#3b82f6;padding:2px 6px;border-radius:4px">↓低于${below}</span>
+      <span style="background:rgba(156,163,175,0.12);color:#9ca3af;padding:2px 6px;border-radius:4px">✗远低${farBelow}</span>
+    </div>`;
+
+    // 明细列表
     html += '<div class="accuracy-detail">';
-    details.forEach(d => {
-      if (d.actual === null) {
-        html += `<div class="accuracy-row" onclick="App.openStock('${d.code}')" style="cursor:pointer"><span class="name">${this.esc(d.name)}</span><span class="pred">${d.pred_price?.toFixed(2) || '-'}</span><span class="actual" style="color:var(--text3)">未找到</span></div>`;
-      } else {
-        const chgSign = d.chg_pct >= 0 ? '+' : '';
-        html += `<div class="accuracy-row" onclick="App.openStock('${d.code}')" style="cursor:pointer"><span class="name">${this.esc(d.name)}</span><span class="pred">${d.pred_price.toFixed(2)}</span><span class="actual ${d.hit ? 'correct' : 'wrong'}">${chgSign}${d.chg_pct.toFixed(2)}% ${d.hit ? '✓' : '✗'}</span></div>`;
-      }
+    // 按涨幅排序（高的在前）
+    const sorted = [...results].sort((a, b) => b.actual_pct - a.actual_pct);
+    sorted.forEach(d => {
+      const chgSign = d.actual_pct >= 0 ? '+' : '';
+      const chgCls = d.actual_pct >= 0 ? 'correct' : 'wrong';
+      const predIcon = d.pred_result.icon || '?';
+      const predLabel = d.pred_result.label || '?';
+      const predCls = (predIcon === '🔥' || predIcon === '✓') ? 'correct' : (predIcon === '≈' ? '' : 'wrong');
+      const scoreStr = d.score ? `<span style="font-size:9px;color:var(--text3);margin-left:2px">${d.score}分</span>` : '';
+
+      html += `<div class="accuracy-row" onclick="App.openStock('${d.code}')" style="cursor:pointer">
+        <span class="name">🔥${this.esc(d.name)}${scoreStr}</span>
+        <span class="pred">${d.snapshot_price.toFixed(2)}→${d.actual_close?.toFixed(2) || '?'}</span>
+        <span class="actual ${chgCls}">${chgSign}${d.actual_pct.toFixed(2)}%</span>
+        <span class="actual ${predCls}">${predIcon} ${predLabel}</span>
+      </div>`;
     });
     html += '</div>';
     el.innerHTML = html;
+
+    // 更新准确率时间标签
+    const accTimeEl = document.getElementById('accuracy-update-time');
+    if (accTimeEl && total > 0) {
+      const latestTime = sorted[0]?.next_date || sorted[0]?.update_time?.substring(0,10) || '';
+      accTimeEl.textContent = latestTime ? `截止${latestTime}` : '昨日强烈买入';
+    }
   },
 
   // === 右栏 - 持仓 ===
@@ -771,6 +1221,9 @@ const App = {
               ${h.buys.length ? '买入' + h.buys.length + '笔' : ''}${h.sells.length ? ' · 卖出' + h.sells.length + '笔' : ''}
             </div>
             <div class="vh-pct ${hCls}" style="font-size:12px">${hSign}${(h.pnl_pct || 0).toFixed(2)}%</div>
+          </div>
+          <div style="margin-top:4px">
+            <button onclick="event.stopPropagation();App.manualSell('${h.code}','${this.esc(h.name)}',${h.qty})" style="padding:2px 8px;background:#ef444422;color:#ef4444;border:1px solid #ef444444;border-radius:4px;cursor:pointer;font-size:11px">卖出</button>
           </div>`;
 
         // 交易明细（折叠）
@@ -914,11 +1367,18 @@ const App = {
         </div>`;
 
       // 推荐股票明细表格（仅强烈买入和建议买入）
-      const allRecs = detail.recommendations || [];
-      const recs = [
-        ...(allRecs.strong_buy || []).map(s => ({...s, recommendation: '强烈买入'})),
-        ...(allRecs.buy || []).map(s => ({...s, recommendation: '建议买入'})),
-      ];
+      // recommendations 可能是扁平数组（fallback时已展平），也可能是 {strong_buy, buy, ...} 结构
+      let allRecs = detail.recommendations || [];
+      let recs;
+      if (Array.isArray(allRecs)) {
+        // 已经是扁平数组，每个元素有 recommendation 字段
+        recs = allRecs.filter(s => s.recommendation === '强烈买入' || s.recommendation === '买入');
+      } else {
+        recs = [
+          ...(allRecs.strong_buy || []).map(s => ({...s, recommendation: '强烈买入'})),
+          ...(allRecs.buy || []).map(s => ({...s, recommendation: '建议买入'})),
+        ];
+      }
 
       html += `<div class="hl-detail-table-section">
         <h3 style="font-size:15px;font-weight:700;margin-bottom:12px">📊 推荐股票明细（${recs.length}只）</h3>
@@ -957,22 +1417,26 @@ const App = {
         const estCls = est ? (est.estimate >= 0 ? 'text-rise' : 'text-fall') : '';
         const recTag = `<span class="stock-rec-tag ${s.recommendation}">${s.recommendation}</span>`;
 
-        // 次日表现：优先用已回填的数据
+        // 次日表现：用收盘价 vs 更新时价格
         const actual = s.next_day_actual;
         let actualHtml = '待计算';
         if (actual) {
           const aSign = actual.actual_pct >= 0 ? '+' : '';
           const aCls = actual.actual_pct >= 0 ? 'text-rise' : 'text-fall';
-          const vsEst = actual.vs_estimate != null ? (actual.vs_estimate >= 0 ? '+' : '') + actual.vs_estimate.toFixed(1) : '';
-          actualHtml = `<span class="${aCls}" style="font-weight:600">${aSign}${actual.actual_pct.toFixed(2)}%</span><br><span style="font-size:10px;color:var(--text3)">${actual.next_date || ''} ${vsEst ? 'vs预估' + vsEst : ''}</span>`;
+          const closeStr = actual.actual_close != null ? actual.actual_close.toFixed(2) : '?';
+          const diffFromSnap = (actual.actual_close || 0) - snapshotPrice;
+          const diffSign = diffFromSnap >= 0 ? '+' : '';
+          actualHtml = `<span class="${aCls}" style="font-weight:700;font-size:14px">${aSign}${actual.actual_pct.toFixed(2)}%</span><br><span style="font-size:10px;color:var(--text3)">${actual.next_date || ''}收盘${closeStr}（${diffSign}${diffFromSnap.toFixed(2)}元）</span>`;
         }
 
         // 预测验证
         let accHtml = '-';
         const pred = s.prediction_result;
         if (pred) {
-          const vcls = pred.hit_dir ? 'text-rise' : (pred.label === '接近' ? 'var(--gold)' : 'text-fall');
-          accHtml = `<span style="color:${vcls};font-weight:600">${pred.icon} ${pred.label}</span>`;
+          const isPositive = pred.icon === '🔥' || pred.icon === '✓';
+          const isNeutral = pred.icon === '≈';
+          const vcls = isPositive ? 'text-rise' : (isNeutral ? 'var(--gold)' : 'text-fall');
+          accHtml = `<span style="color:${vcls};font-weight:700">${pred.icon} ${pred.label}</span>`;
         }
 
         html += `<tr>
@@ -1956,6 +2420,119 @@ App._drawPsPriceLine = function(canvas, points, code) {
       ctx.fillText(p.time ? p.time.substring(5, 16) : '', x, H - 4);
     }
   });
+};
+
+// ========== 手动买入/卖出弹窗 ==========
+
+App._showTradeModal = function(opts) {
+  // opts: { mode:'buy'|'sell', code, name, price, qty, maxQty }
+  const isBuy = opts.mode === 'buy';
+  const title = isBuy ? '买入' : '卖出';
+  const priceHint = opts.price ? '参考价: ' + opts.price : '';
+
+  // Create modal if not exists
+  let modal = document.getElementById('trade-modal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'trade-modal';
+    modal.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:center;justify-content:center';
+    document.body.appendChild(modal);
+  }
+
+  modal.innerHTML = '<div style="background:var(--bg1);border:1px solid var(--border);border-radius:12px;padding:20px;width:340px;box-shadow:0 8px 32px rgba(0,0,0,0.3)">' +
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">' +
+    '<span style="font-size:16px;font-weight:700">' + (isBuy ? '🟢' : '🔴') + ' ' + title + ' ' + this.esc(opts.name) + ' (' + opts.code + ')</span>' +
+    '<span style="cursor:pointer;font-size:18px;color:var(--text3)" onclick="App._closeTradeModal()">&#10005;</span>' +
+    '</div>' +
+    '<div style="margin-bottom:12px;font-size:12px;color:var(--text3)">' + priceHint + (opts.maxQty ? ' · 持有' + opts.maxQty + '股' : '') + '</div>' +
+    '<div style="margin-bottom:12px">' +
+    '<label style="font-size:12px;color:var(--text2);display:block;margin-bottom:4px">' + title + '价格（元）</label>' +
+    '<input id="trade-price" type="text" inputmode="decimal" value="' + (opts.price || '') + '" placeholder="输入价格" ' +
+    'style="width:100%;padding:8px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text1);font-size:14px;outline:none;box-sizing:border-box" />' +
+    '</div>' +
+    '<div style="margin-bottom:16px">' +
+    '<label style="font-size:12px;color:var(--text2);display:block;margin-bottom:4px">' + title + '数量（股）</label>' +
+    '<input id="trade-qty" type="text" inputmode="numeric" value="' + (opts.qty || '') + '" placeholder="输入股数" ' +
+    (isBuy && opts.maxQty ? '' : '') + ' ' +
+    'style="width:100%;padding:8px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text1);font-size:14px;outline:none;box-sizing:border-box" />' +
+    '<div id="trade-amount" style="font-size:11px;color:var(--text3);margin-top:4px"></div>' +
+    '</div>' +
+    '<div style="display:flex;gap:8px">' +
+    '<button onclick="App._closeTradeModal()" style="flex:1;padding:10px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--text2);cursor:pointer;font-size:14px">取消</button>' +
+    '<button id="trade-confirm-btn" style="flex:1;padding:10px;background:' + (isBuy ? '#22c55e' : '#ef4444') + ';border:none;border-radius:8px;color:#fff;cursor:pointer;font-size:14px;font-weight:600">确认' + title + '</button>' +
+    '</div>' +
+    '<div id="trade-error" style="color:var(--fall);font-size:12px;margin-top:8px;display:none"></div>' +
+    '</div>';
+  modal.style.display = 'flex';
+
+  // Store context on confirm button
+  var confirmBtn = document.getElementById('trade-confirm-btn');
+  confirmBtn.onclick = function() { App._confirmTrade(opts.mode, opts.code, opts.name, opts.score || 0); };
+
+  // Auto-calc amount
+  var priceInput = document.getElementById('trade-price');
+  var qtyInput = document.getElementById('trade-qty');
+  var amountDiv = document.getElementById('trade-amount');
+  var updateAmount = function() {
+    var p = parseFloat(priceInput.value) || 0;
+    var q = parseInt(qtyInput.value) || 0;
+    if (p > 0 && q > 0) {
+      var amt = p * q;
+      var comm = Math.max(5, Math.round(amt * 0.0003 * 100) / 100);
+      if (isBuy) {
+        amountDiv.textContent = '金额: ' + amt.toFixed(2) + '元 · 手续费: ' + comm.toFixed(2) + '元 · 总计: ' + (amt + comm).toFixed(2) + '元';
+      } else {
+        amountDiv.textContent = '金额: ' + amt.toFixed(2) + '元 · 手续费: ' + comm.toFixed(2) + '元 · 到账: ' + (amt - comm).toFixed(2) + '元';
+      }
+    } else {
+      amountDiv.textContent = '';
+    }
+  };
+  priceInput.addEventListener('input', updateAmount);
+  qtyInput.addEventListener('input', updateAmount);
+  updateAmount();
+  priceInput.focus();
+};
+
+App._closeTradeModal = function() {
+  var modal = document.getElementById('trade-modal');
+  if (modal) modal.style.display = 'none';
+};
+
+App._confirmTrade = async function(mode, code, name, score) {
+  var price = parseFloat(document.getElementById('trade-price').value);
+  var qty = parseInt(document.getElementById('trade-qty').value);
+  var errDiv = document.getElementById('trade-error');
+
+  if (!price || price <= 0) { errDiv.textContent = '请输入有效的价格'; errDiv.style.display = 'block'; return; }
+  if (!qty || qty <= 0) { errDiv.textContent = '请输入有效的数量'; errDiv.style.display = 'block'; return; }
+
+  var btn = document.getElementById('trade-confirm-btn');
+  btn.disabled = true; btn.textContent = '处理中...'; errDiv.style.display = 'none';
+
+  try {
+    var res = await fetch(this.API_BASE + (mode === 'buy' ? '/api/manual_buy' : '/api/manual_sell'), {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ code: code, name: name, price: price, qty: qty, score: score, reason: mode === 'buy' ? '推荐买入' : '手动卖出' }),
+    });
+    var data = await res.json();
+    if (data.error) { errDiv.textContent = data.error; errDiv.style.display = 'block'; btn.disabled = false; btn.textContent = '确认' + (mode === 'buy' ? '买入' : '卖出'); return; }
+    this._closeTradeModal();
+    this.showToast(data.message || (mode === 'buy' ? '买入成功' : '卖出成功'));
+    this.renderVirtualHoldings();
+    this.loadPortfolio();
+  } catch (e) {
+    errDiv.textContent = '请求失败'; errDiv.style.display = 'block'; btn.disabled = false;
+  }
+};
+
+App.manualBuy = function(code, name, buyPoint, score) {
+  this._showTradeModal({ mode: 'buy', code: code, name: name, price: buyPoint || '', score: score || 0 });
+};
+
+App.manualSell = function(code, name, maxQty) {
+  this._showTradeModal({ mode: 'sell', code: code, name: name, price: '', maxQty: maxQty });
 };
 
 document.addEventListener('DOMContentLoaded', () => App.init());

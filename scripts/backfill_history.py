@@ -209,45 +209,62 @@ def main():
                 s['snapshot_price'] = price
                 modified = True
             
-            # 2. 次日表现
-            if next_date and 'next_day_actual' not in s:
+            # 2. 次日表现：用次日收盘价（或最新价）vs snapshot_price
+            if 'next_day_actual' in s or (next_date and 'next_day_actual' not in s):
                 kc = kline_cache.get(code, {})
                 next_kline = kc.get(next_date)
                 snapshot = s.get('snapshot_price') or price
-                if next_kline and snapshot and snapshot > 0:
-                    actual_pct = (next_kline['open'] - snapshot) / snapshot * 100
-                    est = s.get('next_day_estimate', {}).get('estimate', 0)
-                    s['next_day_actual'] = {
-                        'actual_pct': round(actual_pct, 2),
-                        'next_open': next_kline['open'],
-                        'next_close': next_kline['close'],
-                        'next_date': next_date,
-                        'vs_estimate': round(actual_pct - est, 2),
-                    }
-                    modified = True
-                    stats['with_actual'] += 1
+                if snapshot and snapshot > 0:
+                    if next_kline:
+                        # 有次日K线：用收盘价
+                        actual_close = next_kline['close']
+                        actual_pct = (actual_close - snapshot) / snapshot * 100
+                    elif code in rt and rt[code]['price'] > 0:
+                        # 没有次日K线但有实时价（同日或跨日）
+                        actual_close = rt[code]['price']
+                        actual_pct = (actual_close - snapshot) / snapshot * 100
+                        next_date_str = date if date == sorted_dates[-1] else 'N/A'
+                    else:
+                        actual_close = None
+                    
+                    if actual_close is not None:
+                        est = s.get('next_day_estimate', {}).get('estimate', 0)
+                        s['next_day_actual'] = {
+                            'actual_pct': round(actual_pct, 2),
+                            'actual_close': actual_close,
+                            'next_date': next_date or date,
+                            'vs_estimate': round(actual_pct - est, 2),
+                        }
+                        modified = True
+                        stats['with_actual'] += 1
             
             # 3. 预测验证
             if 'prediction_result' not in s and s.get('next_day_actual'):
                 actual_pct = s['next_day_actual']['actual_pct']
                 est = s.get('next_day_estimate', {}).get('estimate', 0)
+                diff = actual_pct - est  # 正值=超预期，负值=低于预期
                 predicted_up = est > 0
                 actual_up = actual_pct > 0
                 hit_dir = predicted_up == actual_up
                 abs_diff = abs(actual_pct - est)
                 
-                if hit_dir and abs_diff < 1.5:
-                    label, icon = '精准', '✓'
-                elif hit_dir:
-                    label, icon = '命中', '✓'
-                elif abs_diff < 1:
-                    label, icon = '接近', '≈'
+                # 判断逻辑：实际涨跌幅与预估的对比
+                if diff >= 2:
+                    label, icon = f'超预期+{diff:.1f}%', '🔥'
+                elif diff >= 0.5:
+                    label, icon = '超预期', '✓'
+                elif abs_diff < 0.5:
+                    label, icon = '精准命中', '✓'
+                elif diff >= -1:
+                    label, icon = '基本符合', '≈'
+                elif diff >= -3:
+                    label, icon = '低于预期', '↓'
                 else:
-                    label, icon = '偏差', '✗'
+                    label, icon = f'远低预期{diff:.1f}%', '✗'
                 
                 s['prediction_result'] = {'label': label, 'icon': icon, 'hit_dir': hit_dir}
                 modified = True
-                if hit_dir:
+                if hit_dir or diff >= 0:
                     stats['accurate'] += 1
             
             # 4. 当前价格

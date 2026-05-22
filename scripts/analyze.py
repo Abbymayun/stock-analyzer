@@ -333,9 +333,9 @@ def basic_analyze(stock):
     if 1 <= chg < 5:
         score += 8; signals.append('温和上涨')
     elif 5 <= chg < 9.5:
-        score += 13; signals.append('强势上涨')
+        score -= 5; signals.append('强势上涨')  # 修复：不再加分，改为扣分（追高风险）
     elif chg >= 9.5:
-        score -= 3; signals.append('涨停')
+        score -= 15; signals.append('涨停')  # 修复：大幅扣分（追涨停=接盘）
     elif -1 <= chg < 1:
         score += 2; signals.append('横盘整理')
     elif -5 < chg < -1:
@@ -513,9 +513,11 @@ def deep_analyze(stock, basic, hist):
         r_lo = min(lows[-min(20, len(lows)):])
         r['support'] = round(r_lo, 2)
         r['resistance'] = round(r_hi, 2)
-        r['buy_point'] = round((ma20 if ma20 else r_lo) * 0.98, 2)
-        r['stop_loss'] = round(r_lo * 0.97, 2)
-        r['target_price'] = round(r_hi * 1.03, 2)
+        # 修复买入点：使用MA5和MA10作为合理支撑位，而非深跌12%+
+        buy_ref = ma5 if ma5 and ma5 < cp else (ma10 if ma10 and ma10 < cp else (ma20 if ma20 else cp * 0.97))
+        r['buy_point'] = round(buy_ref, 2)
+        r['stop_loss'] = round(buy_ref * 0.95, 2)  # 买入点下方5%止损
+        r['target_price'] = round(r_hi * 1.02, 2)  # 前高附近2%止盈
 
     # 明日预估涨幅（基于技术面信号综合判断）
     r['next_day_estimate'] = calc_next_day_estimate(r, closes, vols)
@@ -895,9 +897,22 @@ def gen_market_analysis(all_stocks, scored, rec, macro_indices):
         lines.append(f"涨停{len(zt)}只中{'，' if zt_strong else ''}评分60+的有{len(zt_strong)}只，{'涨停质量较高' if len(zt_strong) > len(zt)*0.5 else '涨停质量一般'}。")
 
     # === 综合结论 ===
-    lines.append(f"\n【综合结论】市场情绪{rec['market_sentiment']}，综合评分{rec['avg_score']}分。")
-    if rec['avg_score'] > 55:
-        lines.append("技术面偏强，短线可适度积极，关注强势板块龙头。")
+    # 赚钱效应评估
+    earning_ratio = len(rise) / total * 100 if total else 0
+    if earning_ratio > 60:
+        earning_effect = '赚钱效应良好'
+    elif earning_ratio > 45:
+        earning_effect = '赚钱效应一般'
+    elif earning_ratio > 30:
+        earning_effect = '赚钱效应较差'
+    else:
+        earning_effect = '赚钱效应很差'
+
+    lines.append(f"\n【综合结论】市场情绪{rec['market_sentiment']}，综合评分{rec['avg_score']}分。{earning_effect}。")
+    if rec['avg_score'] > 55 and earning_ratio > 50:
+        lines.append("技术面偏强且赚钱效应良好，短线可适度积极，关注强势板块龙头。")
+    elif rec['avg_score'] > 55 and earning_ratio <= 40:
+        lines.append("⚠️ 指数偏强但赚钱效应差，市场分化严重，不宜追涨，精选个股为主。")
     elif rec['avg_score'] < 45:
         lines.append("技术面偏弱，注意控制风险，以防守为主，等待企稳信号。")
     else:
@@ -976,11 +991,36 @@ def gen_next_day_advice(all_stocks, scored, rec):
 
 def generate_recommendations_with_macro(all_stocks, macro_indices):
     scored = [s for s in all_stocks if s.get('score') is not None]
-    scored.sort(key=lambda x: x['score'], reverse=True)
 
-    strong_buy = scored[:5]
-    buy_list = [s for s in scored if 65 <= s['score'] < 80][:10]
-    watch = [s for s in scored if 50 <= s['score'] < 65][:5]
+    # ===== 过滤器：排除不适合买入的股票 =====
+    filtered = []
+    for s in scored:
+        chg = s.get('change_pct', 0)
+        signals_str = ' '.join(s.get('signals', []))
+
+        # 规则1: 当天涨幅 > 5% 的不推荐买入（追高风险）
+        if chg > 5:
+            s['_filtered_reason'] = f'当日涨幅{chg:.1f}%过高，追涨风险大'
+            continue
+        # 规则2: 涨停的不推荐（获利盘抛压）
+        if '涨停' in signals_str:
+            s['_filtered_reason'] = '涨停板次日回调风险大'
+            continue
+        # 规则3: 触布林上轨且RSI超买的不推荐
+        if '触布林上轨' in signals_str and ('RSI超买' in signals_str or 'RSI偏高' in signals_str):
+            s['_filtered_reason'] = '技术面过热，短期回调风险大'
+            continue
+        # 规则4: 评分 < 50 的不推荐
+        if s.get('score', 0) < 50:
+            s['_filtered_reason'] = f'评分{s["score"]}分，未达推荐标准'
+            continue
+        filtered.append(s)
+
+    filtered.sort(key=lambda x: x['score'], reverse=True)
+
+    strong_buy = filtered[:5]
+    buy_list = [s for s in filtered if 50 <= s['score'] < 80][:10]
+    watch = [s for s in filtered if 35 <= s['score'] < 50][:5]
     avoid = [s for s in scored if s['score'] < 35][-5:]
 
     strategies = []

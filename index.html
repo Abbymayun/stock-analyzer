@@ -58,7 +58,7 @@
 .notif-stack-item .notif-stack-time { color: #64748b; font-size: 10px; }
 </style>
 <title>A股智能分析系统</title>
-<link rel="stylesheet" href="style.css?v=3.4">
+<link rel="stylesheet" href="style.css?v=4.0">
 </head>
 <body>
 <div id="trade-notification" onclick="App.dismissNotification()"></div>
@@ -106,19 +106,19 @@
 
         <!-- 强烈买入列表 -->
         <div class="card">
-          <div class="card-head"><h3>🔥 强烈买入</h3></div>
+          <div class="card-head"><h3>🔥 强烈买入</h3><span style="font-size:11px;color:var(--text3)" id="sb-update-time"></span></div>
           <div class="card-body" id="strong-buy-list"><div class="empty">加载中...</div></div>
         </div>
 
         <!-- 建议买入 -->
         <div class="card" style="margin-top:16px">
-          <div class="card-head"><h3>📈 建议买入</h3></div>
+          <div class="card-head"><h3>📈 建议买入</h3><span style="font-size:11px;color:var(--text3)" id="buy-update-time"></span></div>
           <div class="card-body" id="buy-list"><div class="empty">加载中...</div></div>
         </div>
 
         <!-- 值得关注 -->
         <div class="card" style="margin-top:16px">
-          <div class="card-head"><h3>👀 值得关注</h3></div>
+          <div class="card-head"><h3>👀 值得关注</h3><span style="font-size:11px;color:var(--text3)" id="watch-update-time2"></span></div>
           <div class="card-body" id="watch-buy-list"><div class="empty">加载中...</div></div>
         </div>
       </div>
@@ -136,14 +136,36 @@
           </div>
         </div>
 
-        <!-- 大盘综合分析 -->
-        <div class="card" style="margin-bottom:16px">
+        <!-- 晨间综合分析 -->
+        <div class="card" style="margin-bottom:16px;border-left:3px solid #f59e0b">
           <div class="card-head">
-            <h3>🌐 大盘综合分析</h3>
-            <span style="font-size:11px;color:var(--text3)" id="analysis-update-time"></span>
+            <h3>🌅 晨间综合分析</h3>
+            <span style="font-size:11px;color:var(--text3)" id="morning-update-time">等待数据...</span>
           </div>
-          <div class="card-body" id="market-analysis">
-            <div class="empty">等待分析数据...</div>
+          <div class="card-body" id="morning-analysis-section">
+            <div class="empty">每日8:00自动更新...</div>
+          </div>
+        </div>
+
+        <!-- 午间综合分析 -->
+        <div class="card" style="margin-bottom:16px;border-left:3px solid #8b5cf6">
+          <div class="card-head">
+            <h3>☀️ 午间综合分析</h3>
+            <span style="font-size:11px;color:var(--text3)" id="midday-update-time">等待数据...</span>
+          </div>
+          <div class="card-body" id="midday-analysis-section">
+            <div class="empty">每日12:00自动更新...</div>
+          </div>
+        </div>
+
+        <!-- 收盘综合分析 -->
+        <div class="card" style="margin-bottom:16px;border-left:3px solid #10b981">
+          <div class="card-head">
+            <h3>📊 收盘综合分析</h3>
+            <span style="font-size:11px;color:var(--text3)" id="closing-update-time">等待数据...</span>
+          </div>
+          <div class="card-body" id="closing-analysis-section">
+            <div class="empty">每日15:00自动更新...</div>
           </div>
         </div>
 
@@ -154,42 +176,6 @@
         </div>
 
         <!-- 推荐股票列表（只显示推荐的） -->
-        <div class="card">
-          <div class="card-head">
-            <h3 style="font-size:14px;font-weight:600">📋 推荐股票明细 <span id="rec-count" class="badge"></span></h3>
-            <div class="filter-bar">
-              <select id="filter-rec" onchange="App.filterRecList()">
-                <option value="all">全部推荐</option>
-                <option value="强烈买入">🔥 强烈买入</option>
-                <option value="买入">📈 建议买入</option>
-                <option value="关注">👀 值得关注</option>
-              </select>
-              <select id="filter-sort" onchange="App.filterRecList()">
-                <option value="score_desc">评分 ↓</option>
-                <option value="estimate_desc">预估涨幅 ↓</option>
-                <option value="change_desc">今日涨幅 ↓</option>
-              </select>
-            </div>
-          </div>
-          <div class="card-body">
-            <!-- 表头 -->
-            <div class="rec-table-head">
-              <span class="col-name">股票</span>
-              <span class="col-price">现价</span>
-              <span class="col-chg">涨幅</span>
-              <span class="col-buy-p">建议买入价</span>
-              <span class="col-buy-t">买入时间</span>
-              <span class="col-target">目标价</span>
-              <span class="col-stop">止损价</span>
-              <span class="col-est">明日预估</span>
-              <span class="col-score">评分</span>
-            </div>
-            <div id="rec-list"></div>
-            <div id="load-more-area">
-              <button id="btn-load-more" class="btn-load-more" onclick="App.loadMore()">加载更多</button>
-            </div>
-          </div>
-        </div>
       </div>
 
       <!-- ====== 右栏 ====== -->
@@ -198,7 +184,7 @@
         <div class="card" style="margin-bottom:16px">
           <div class="card-head">
             <h3>🎯 预测准确率</h3>
-            <span style="font-size:11px;color:var(--text3)">昨日强烈买入</span>
+            <span style="font-size:11px;color:var(--text3)" id="accuracy-update-time">昨日强烈买入</span>
           </div>
           <div class="card-body" id="accuracy-section">
             <div class="empty">等待数据积累...</div>
@@ -327,6 +313,6 @@
 <!-- Toast -->
 <div id="toast" class="toast hidden"></div>
 
-<script src="app.js?v=3.4"></script>
+<script src="app.js?v=4.0"></script>
 </body>
 </html>

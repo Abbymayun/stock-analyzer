@@ -327,8 +327,8 @@ body {
 .accuracy-row .name { font-weight: 600; flex: 1; }
 .accuracy-row .pred { color: var(--text3); width: 50px; text-align: center; }
 .accuracy-row .actual { width: 70px; text-align: right; font-weight: 600; }
-.accuracy-row .correct { color: var(--fall); }
-.accuracy-row .wrong { color: var(--rise); }
+.accuracy-row .correct { color: var(--rise); }
+.accuracy-row .wrong { color: var(--fall); }
 
 .accuracy-summary {
   display: flex;
