@@ -1,0 +1,221 @@
+{
+  "update_time": "2026-05-25 18:52:06",
+  "cn_indices": {
+    "000001": {
+      "name": "上证指数",
+      "code": "000001",
+      "price": 4152.57,
+      "prev_close": 4112.9,
+      "change_pct": 0.96
+    },
+    "399001": {
+      "name": "深证成指",
+      "code": "399001",
+      "price": 15856.61,
+      "prev_close": 15597.3,
+      "change_pct": 1.66
+    },
+    "399006": {
+      "name": "创业板指",
+      "code": "399006",
+      "price": 4021.16,
+      "prev_close": 3938.5,
+      "change_pct": 2.1
+    },
+    "000688": {
+      "name": "科创50",
+      "code": "000688",
+      "price": 1896.04,
+      "prev_close": 1790.77,
+      "change_pct": 5.88
+    },
+    "000300": {
+      "name": "沪深300",
+      "code": "000300",
+      "price": 4921.6,
+      "prev_close": 4845.1,
+      "change_pct": 1.58
+    },
+    "399005": {
+      "name": "中小100",
+      "code": "399005",
+      "price": 9731.81,
+      "prev_close": 9576.06,
+      "change_pct": 1.63
+    }
+  },
+  "recommended_stocks": [
+    {
+      "code": "002196",
+      "name": "方正电机",
+      "status": "下跌",
+      "current_price": 16.72,
+      "change_pct": -0.12,
+      "high": 17.0,
+      "low": 16.2,
+      "turnover_rate": 15.78,
+      "amplitude": 4.78,
+      "pnl_pct": 1.52,
+      "action": "🟡 小幅波动，继续观察",
+      "action_type": "观察"
+    },
+    {
+      "code": "002576",
+      "name": "通达动力",
+      "status": "下跌",
+      "current_price": 19.48,
+      "change_pct": -0.87,
+      "high": 20.09,
+      "low": 19.22,
+      "turnover_rate": 8.26,
+      "amplitude": 4.43,
+      "pnl_pct": 1.78,
+      "action": "🟡 小幅波动，继续观察",
+      "action_type": "观察"
+    },
+    {
+      "code": "600222",
+      "name": "太龙药业",
+      "status": "下跌",
+      "current_price": 7.88,
+      "change_pct": -1.25,
+      "high": 8.36,
+      "low": 7.8,
+      "turnover_rate": 4.59,
+      "amplitude": 7.02,
+      "pnl_pct": 1.03,
+      "action": "🟡 小幅波动，继续观察",
+      "action_type": "观察"
+    }
+  ],
+  "market_stats": {
+    "total": 3066,
+    "up": 1209,
+    "down": 1613,
+    "flat": 244,
+    "limit_up": 91,
+    "limit_down": 14,
+    "up_ratio": 39.4,
+    "avg_change": 0.01
+  },
+  "sentiment": {
+    "000001": {
+      "level": "偏强",
+      "score": 60,
+      "emoji": "↗️"
+    },
+    "399001": {
+      "level": "强势",
+      "score": 80,
+      "emoji": "📈"
+    },
+    "399006": {
+      "level": "强势",
+      "score": 80,
+      "emoji": "📈"
+    },
+    "000688": {
+      "level": "强势",
+      "score": 80,
+      "emoji": "📈"
+    },
+    "000300": {
+      "level": "强势",
+      "score": 80,
+      "emoji": "📈"
+    },
+    "399005": {
+      "level": "强势",
+      "score": 80,
+      "emoji": "📈"
+    }
+  },
+  "advices": [
+    "↗️ 大盘偏强（上证+0.96%），走势稳健，维持现有仓位",
+    "🟢 推荐股平均浮盈 +1.4%，走势良好，继续持有",
+    "⚠️ 赚钱效应较差（39.4%上涨），操作需谨慎",
+    "⏰ 距收盘约40分钟，避免尾盘追涨杀跌"
+  ],
+  "source_recommendations": [
+    {
+      "code": "002196",
+      "name": "方正电机",
+      "score": 90,
+      "price": 16.84,
+      "change_pct": 2.31,
+      "buy_point": 16.47,
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
+      "stop_loss": 15.65,
+      "target_price": 18.13,
+      "signals": [
+        "温和上涨",
+        "高换手",
+        "收在高位",
+        "大振幅",
+        "高PE",
+        "放量",
+        "均线多头排列",
+        "红柱放大"
+      ],
+      "next_day_estimate": {
+        "estimate": 3.0,
+        "factors": [
+          "技术面偏强",
+          "连续上涨",
+          "MACD多头"
+        ]
+      }
+    },
+    {
+      "code": "002576",
+      "name": "通达动力",
+      "score": 93,
+      "price": 19.25,
+      "change_pct": 1.8,
+      "buy_point": 19.14,
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
+      "stop_loss": 18.18,
+      "target_price": 19.99,
+      "signals": [
+        "温和上涨",
+        "收在高位",
+        "大振幅",
+        "放量",
+        "均线多头排列",
+        "红柱放大"
+      ],
+      "next_day_estimate": {
+        "estimate": 2.0,
+        "factors": [
+          "技术面偏强",
+          "MACD多头"
+        ]
+      }
+    },
+    {
+      "code": "600222",
+      "name": "太龙药业",
+      "score": 90,
+      "price": 7.94,
+      "change_pct": 4.06,
+      "buy_point": 7.8,
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
+      "stop_loss": 7.41,
+      "target_price": 8.3,
+      "signals": [
+        "温和上涨",
+        "大振幅",
+        "放量",
+        "均线多头排列",
+        "红柱放大"
+      ],
+      "next_day_estimate": {
+        "estimate": 2.0,
+        "factors": [
+          "技术面偏强",
+          "MACD多头"
+        ]
+      }
+    }
+  ]
+}
