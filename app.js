@@ -757,6 +757,44 @@ const App = {
       perfHtml = hdr + '<div style="margin-top:1px">' + rows + '</div></div>';
     }
 
+    // 尾盘新推荐股票
+    const topBuys = data.top_buys || [];
+    let recHtml = '';
+    if (topBuys.length > 0) {
+      const recHdr = `<div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:8px;margin-top:4px">
+        <span style="font-size:12px;font-weight:600">🎯 尾盘推荐买入</span>
+        <div style="display:flex;align-items:center;gap:6px;padding:3px 0 1px;margin-top:4px;font-size:10px;color:var(--text3)">
+          <span style="min-width:52px">名称</span>
+          <span style="min-width:48px">代码</span>
+          <span style="min-width:52px;text-align:right">评分</span>
+          <span style="min-width:52px;text-align:right">买点</span>
+          <span style="min-width:52px;text-align:right">目标</span>
+          <span style="min-width:52px;text-align:right">止损</span>
+          <span style="flex:1;text-align:right">趋势信号</span>
+        </div>`;
+      const recRows = topBuys.map((s, i) => {
+        const scoreColor = s.score >= 90 ? 'var(--rise)' : s.score >= 80 ? '#22c55e' : '#f59e0b';
+        const signals = (s.signals || []).slice(0, 3).map(sig => {
+          if (sig === '均线多头排列') return '多头';
+          if (sig === 'MACD金叉') return '金叉';
+          if (sig === '放量') return '放量';
+          return sig;
+        }).join('·');
+        return `<div style="display:flex;align-items:center;gap:6px;padding:4px 0;${i > 0 ? 'border-top:1px solid rgba(255,255,255,0.04)' : ''}">
+          <div style="flex:1;cursor:pointer;display:flex;align-items:center;gap:6px" onclick="App.openStock('${s.code}')">
+            <span style="font-weight:600;color:var(--text1);min-width:52px;font-size:12px">${this.esc(s.name)}</span>
+            <span style="font-size:10px;color:var(--text3);min-width:48px">${s.code}</span>
+            <span style="min-width:52px;text-align:right;font-weight:700;color:${scoreColor};font-size:12px">${s.score}</span>
+            <span style="min-width:52px;text-align:right;font-size:11px;color:var(--rise)">${s.buy_point?.toFixed(2) || '-'}</span>
+            <span style="min-width:52px;text-align:right;font-size:11px">${s.target_price?.toFixed(2) || '-'}</span>
+            <span style="min-width:52px;text-align:right;font-size:11px;color:var(--fall)">${s.stop_loss?.toFixed(2) || '-'}</span>
+          </div>
+          <span style="flex:1;text-align:right;font-size:10px;color:var(--text2);white-space:nowrap">${signals}</span>
+        </div>`;
+      }).join('');
+      recHtml = recHdr + '<div style="margin-top:1px">' + recRows + '</div></div>';
+    }
+
     // 尾盘操作建议
     let adviceHtml = '';
     if (advices.length > 0) {
@@ -767,7 +805,7 @@ const App = {
       </div>`;
     }
 
-    el.innerHTML = cnHtml + sentimentHtml + statsHtml + perfHtml + adviceHtml;
+    el.innerHTML = cnHtml + sentimentHtml + statsHtml + recHtml + perfHtml + adviceHtml;
   },
 
   // === 收盘综合分析 ===

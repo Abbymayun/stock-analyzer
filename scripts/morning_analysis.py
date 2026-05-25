@@ -411,8 +411,13 @@ def format_strategy_text(analysis):
 
 
 def load_top_buys():
-    """从今日推荐数据中筛选适合'今日买入明日卖出'的3只股票
-    条件：今日已涨(动量确认)、明日预估涨(预期延续)、评分高
+    """晨间推荐：选出适合开盘立即买入并持有的股票
+    策略：入口点买入，不追涨。选趋势强但尚未过度拉升的标的。
+    核心逻辑：
+      1. 趋势信号强（均线多头/MACD金叉/放量）= 多日上涨潜力
+      2. 现价在买点附近或买点之下 = 还没拉升，有入场空间
+      3. 昨日涨幅不过大 = 不是追高，有持股空间
+      4. 明日预估为正 = 短期趋势延续
     """
     rec_path = os.path.join(DATA_DIR, 'recommendations.json')
     rec_data = _load_json(rec_path)
@@ -423,44 +428,102 @@ def load_top_buys():
     buy_list = rec_data.get('buy', [])
     all_candidates = strong_buy + buy_list
 
-    # 筛选：今日涨幅>0(动量) + 明日预估>0(延续) + 评分>=70
+    # 趋势信号评分（多日持股的依据）
+    TREND_SIGNALS = {'均线多头排列', 'MA金叉', 'MACD金叉', '红柱放大', '放量'}
+    # 追高风险信号
+    CHASE_SIGNALS = {'涨停', '强势上涨', '触布林上轨', 'RSI偏高'}
+
     filtered = []
     for s in all_candidates:
+        signals = set(s.get('signals', []))
         chg = s.get('change_pct', 0)
         est = (s.get('next_day_estimate') or {}).get('estimate', None)
         score = s.get('score', 0)
-        if chg <= 0:
-            continue  # 今天没涨，动量不足
+        price = s.get('price', 0)
+        buy_point = s.get('buy_point', 0)
+        ma5 = s.get('ma5', 0)
+
+        # 至少有1个趋势信号（这是多日持股的基础）
+        if not (signals & TREND_SIGNALS):
+            continue
+        # 昨日涨幅不超过6%（超过的追高风险大）
+        if chg > 6:
+            continue
+        # 明日预估为正
         if est is None or est <= 0:
-            continue  # 明日不看好，不符合隔日策略
+            continue
+        # 评分 >= 70
         if score < 70:
-            continue  # 评分太低
+            continue
+
+        # 计算入口质量分
+        entry_score = 0
+        # 现价在MA5附近或之下（回调到均线买入，不是追高）
+        if ma5 > 0:
+            price_vs_ma5 = (price - ma5) / ma5 * 100
+            if -2 <= price_vs_ma5 <= 1:
+                entry_score += 10  # 刚好在MA5附近，最佳入场
+            elif -5 <= price_vs_ma5 < -2:
+                entry_score += 6   # 略低于MA5，回调整理中
+            elif price_vs_ma5 > 1:
+                entry_score += 2   # 远离MA5，追高风险
+            else:
+                entry_score -= 3  # 大幅低于MA5，趋势可能破位
+
+        # 有明确的买点且价格接近或低于买点
+        if buy_point > 0 and price > 0:
+            if price <= buy_point * 1.01:
+                entry_score += 8  # 还在买点之下，入场空间大
+            elif price <= buy_point * 1.03:
+                entry_score += 4  # 略高于买点，可接受
+            # 远高于买点不加分
+
+        # 风险/收益比
+        target = s.get('target_price', 0)
+        stop = s.get('stop_loss', 0)
+        if buy_point > 0 and stop > 0 and target > 0:
+            rr = (target - buy_point) / (buy_point - stop)
+            if rr >= 3:
+                entry_score += 5
+            elif rr >= 2:
+                entry_score += 3
+
+        # 趋势信号越多越好
+        trend_count = len(signals & TREND_SIGNALS)
+        entry_score += min(trend_count * 3, 12)
+
+        # 追高风险扣分
+        chase_count = len(signals & CHASE_SIGNALS)
+        entry_score -= chase_count * 3
+
+        s['_entry_score'] = entry_score
         filtered.append(s)
 
-    # 按综合分排序：评分*0.4 + 明日预估*10*0.3 + 适中涨幅*0.3
+    # 综合排序：入口质量分 * 0.4 + 评分 * 0.3 + 明日预估 * 8 * 0.3
     def rank_key(s):
-        est = (s.get('next_day_estimate') or {}).get('estimate', 0)
-        chg = s.get('change_pct', 0)
+        entry = s.get('_entry_score', 0)
         score = s.get('score', 0)
-        # 涨幅适中(2-5%)得分最高，太高或太低扣分
-        chg_score = max(0, 10 - abs(chg - 3.5) * 2) if chg else 0
-        return score * 0.4 + est * 10 * 0.3 + chg_score * 0.3
+        est = (s.get('next_day_estimate') or {}).get('estimate', 0)
+        return entry * 0.4 + score * 0.3 + est * 8 * 0.3
 
     filtered.sort(key=rank_key, reverse=True)
-
-    # 取前3只
     selected = filtered[:3]
-    if not selected:
-        # 退而求其次：放宽到只要求明日预估>0
+
+    # 不够3只时放宽：只要评分>=60且明日预估>0
+    if len(selected) < 3:
+        selected_codes = {s.get('code', '') for s in selected}
         for s in all_candidates:
+            if s.get('code', '') in selected_codes:
+                continue
             est = (s.get('next_day_estimate') or {}).get('estimate', None)
-            if est is not None and est > 0:
+            if est and est > 0 and s.get('score', 0) >= 60 and s.get('change_pct', 0) <= 6:
                 selected.append(s)
             if len(selected) >= 3:
                 break
 
     result = []
     for s in selected:
+        entry = s.get('_entry_score', 0)
         result.append({
             'code': s.get('code', ''),
             'name': s.get('name', ''),
@@ -468,11 +531,12 @@ def load_top_buys():
             'price': s.get('price', 0),
             'change_pct': s.get('change_pct', 0),
             'buy_point': s.get('buy_point'),
-            'buy_time': s.get('buy_time', ''),
+            'buy_time': s.get('buy_time', '开盘30分钟内 (9:30-10:00)'),
             'stop_loss': s.get('stop_loss'),
             'target_price': s.get('target_price'),
             'signals': s.get('signals', []),
             'next_day_estimate': s.get('next_day_estimate', {}),
+            'entry_score': entry,
         })
     return result
 

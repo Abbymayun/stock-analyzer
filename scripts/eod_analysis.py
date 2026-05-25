@@ -221,7 +221,140 @@ def get_all_stocks_change(all_stocks):
     }
 
 
-def generate_advice(cn_indices, performances, market_stats):
+def load_top_buys():
+    """尾盘推荐：选出适合收盘前买入并持有的股票（排除晨间+午间已推荐）
+    策略：盘中趋势已确认、尚未过度拉升、尾盘买入博次日延续
+    核心逻辑：
+      1. 趋势信号强（均线多头/MACD金叉/放量）= 多日上涨潜力
+      2. 现价在买点附近 = 还未过度拉升
+      3. 盘中涨幅不过大（0-4%），尾盘追高风险低
+      4. 明日预估为正 = 次日有延续
+    """
+    rec_path = os.path.join(DATA_DIR, 'recommendations.json')
+    rec_data = _load_json(rec_path)
+    if not rec_data:
+        return []
+
+    # 排除晨间和午间已推荐
+    excluded = set()
+    for fname in ['morning_analysis.json', 'midday_analysis.json']:
+        data = _load_json(os.path.join(DATA_DIR, fname))
+        for s in (data or {}).get('top_buys', []):
+            excluded.add(s.get('code', ''))
+
+    strong_buy = rec_data.get('strong_buy', [])
+    buy_list = rec_data.get('buy', [])
+    all_candidates = strong_buy + buy_list
+
+    TREND_SIGNALS = {'均线多头排列', 'MA金叉', 'MACD金叉', '红柱放大', '放量'}
+    CHASE_SIGNALS = {'涨停', '强势上涨', '触布林上轨', 'RSI偏高'}
+
+    filtered = []
+    for s in all_candidates:
+        signals = set(s.get('signals', []))
+        chg = s.get('change_pct', 0)
+        est = (s.get('next_day_estimate') or {}).get('estimate', None)
+        score = s.get('score', 0)
+        code = s.get('code', '')
+        price = s.get('price', 0)
+        buy_point = s.get('buy_point', 0)
+        ma5 = s.get('ma5', 0)
+
+        if code in excluded:
+            continue
+        if not (signals & TREND_SIGNALS):
+            continue
+        # 尾盘特有：涨幅不超过4%（尾盘追高风险更大）
+        if chg > 4:
+            continue
+        if est is None or est <= 0:
+            continue
+        if score < 70:
+            continue
+
+        # 入口质量分
+        entry_score = 0
+        if ma5 > 0:
+            price_vs_ma5 = (price - ma5) / ma5 * 100
+            if -2 <= price_vs_ma5 <= 1:
+                entry_score += 10
+            elif -5 <= price_vs_ma5 < -2:
+                entry_score += 6
+            elif price_vs_ma5 > 1:
+                entry_score += 2
+            else:
+                entry_score -= 3
+
+        if buy_point > 0 and price > 0:
+            if price <= buy_point * 1.01:
+                entry_score += 8
+            elif price <= buy_point * 1.03:
+                entry_score += 4
+
+        # 尾盘特有：涨幅0-3%最佳（尾盘买入安全区间）
+        if 0 <= chg <= 3:
+            entry_score += 6
+        elif 3 < chg <= 4:
+            entry_score += 2
+        elif chg < 0:
+            entry_score += 3  # 微跌的可能是低吸机会
+
+        target = s.get('target_price', 0)
+        stop = s.get('stop_loss', 0)
+        if buy_point > 0 and stop > 0 and target > 0:
+            rr = (target - buy_point) / (buy_point - stop)
+            if rr >= 3:
+                entry_score += 5
+            elif rr >= 2:
+                entry_score += 3
+
+        trend_count = len(signals & TREND_SIGNALS)
+        entry_score += min(trend_count * 3, 12)
+
+        chase_count = len(signals & CHASE_SIGNALS)
+        entry_score -= chase_count * 3
+
+        s['_entry_score'] = entry_score
+        filtered.append(s)
+
+    # 排序：入口质量 * 0.4 + 明日预估 * 10 * 0.35 + 评分 * 0.25
+    def rank_key(s):
+        entry = s.get('_entry_score', 0)
+        score = s.get('score', 0)
+        est = (s.get('next_day_estimate') or {}).get('estimate', 0)
+        return entry * 0.4 + est * 10 * 0.35 + score * 0.25
+
+    filtered.sort(key=rank_key, reverse=True)
+    selected = filtered[:3]
+
+    if len(selected) < 3:
+        selected_codes = {s.get('code', '') for s in selected}
+        for s in all_candidates:
+            if s.get('code', '') in selected_codes or s.get('code', '') in excluded:
+                continue
+            est = (s.get('next_day_estimate') or {}).get('estimate', None)
+            if est and est > 0 and s.get('score', 0) >= 60 and s.get('change_pct', 0) <= 4:
+                selected.append(s)
+            if len(selected) >= 3:
+                break
+
+    result = []
+    for s in selected:
+        result.append({
+            'code': s.get('code', ''), 'name': s.get('name', ''),
+            'score': s.get('score', 0), 'price': s.get('price', 0),
+            'change_pct': s.get('change_pct', 0),
+            'buy_point': s.get('buy_point'),
+            'buy_time': '尾盘买入 (14:20-14:50)',
+            'stop_loss': s.get('stop_loss'), 'target_price': s.get('target_price'),
+            'signals': s.get('signals', []),
+            'next_day_estimate': s.get('next_day_estimate', {}),
+            'entry_score': s.get('_entry_score', 0),
+        })
+    return result
+
+
+def generate_advice(cn_indices, performances, market_stats, new_recs):
     """生成尾盘操作建议"""
     advices = []
     sh_pct = cn_indices.get('000001', {}).get('change_pct', 0)
@@ -309,7 +442,7 @@ def main():
         print(f"        {perf['name']}: {perf.get('current_price', '-')} ({change:+.2f}%) {emoji} {perf['action']}")
 
     # 4. 市场情绪分析
-    print("  [4/5] 分析市场情绪...")
+    print("  [4/6] 分析市场情绪...")
     all_stocks = _load_json(os.path.join(DATA_DIR, 'all_stocks.json'))
     market_stats = get_all_stocks_change(all_stocks)
     sentiment = assess_intraday_sentiment(cn_indices)
@@ -321,15 +454,22 @@ def main():
     print(f"        涨跌比: {market_stats.get('up', 0)}涨 / {market_stats.get('down', 0)}跌 | "
           f"涨停{market_stats.get('limit_up', 0)} / 跌停{market_stats.get('limit_down', 0)}")
 
-    # 5. 生成尾盘建议
-    print("  [5/5] 生成尾盘操作建议...")
-    advices = generate_advice(cn_indices, performances, market_stats)
+    # 5. 筛选尾盘推荐股票
+    print("  [5/6] 筛选尾盘推荐股票...")
+    top_buys = load_top_buys()
+    for s in top_buys:
+        print(f"        {s['name']}({s['code']}): 评分{s['score']}, 买点{s['buy_point']}, 目标{s['target_price']}, 信号{','.join(s['signals'][:3])}")
+
+    # 6. 生成尾盘建议
+    print("  [6/6] 生成尾盘操作建议...")
+    advices = generate_advice(cn_indices, performances, market_stats, top_buys)
 
     # 保存分析数据
     analysis = {
         'update_time': now.strftime('%Y-%m-%d %H:%M:%S'),
         'cn_indices': cn_indices,
         'recommended_stocks': performances,
+        'top_buys': top_buys,
         'market_stats': market_stats,
         'sentiment': sentiment,
         'advices': advices,

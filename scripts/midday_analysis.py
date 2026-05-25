@@ -211,18 +211,20 @@ def fetch_market_summary(all_stocks):
 
 
 def load_top_buys():
-    """午间推荐：选出与晨间不同的3只股票
-    晨间看重动量（已涨+明日预估涨），午间更看重午后空间：
-    - 上午涨幅适中（1-5%），午后还有上涨空间
-    - 明日预估为正
-    - 排除晨间已推荐的股票
+    """午间推荐：选出适合午后立即买入并持有的股票（排除晨间已推荐）
+    策略：上午震荡/温和上涨、趋势信号强、午后有拉升空间的标的
+    核心逻辑：
+      1. 上午涨幅适中（0-5%），午后还有空间
+      2. 趋势信号强（均线多头/MACD金叉/放量）= 后续延续力强
+      3. 现价在买点附近 = 还未过度拉升
+      4. 排除晨间已推荐的（分散持仓）
     """
     rec_path = os.path.join(DATA_DIR, 'recommendations.json')
     rec_data = _load_json(rec_path)
     if not rec_data:
         return []
 
-    # 获取晨间推荐的股票，排除
+    # 排除晨间已推荐
     morning_data = _load_json(os.path.join(DATA_DIR, 'morning_analysis.json'))
     morning_codes = set()
     for s in (morning_data or {}).get('top_buys', []):
@@ -232,42 +234,91 @@ def load_top_buys():
     buy_list = rec_data.get('buy', [])
     all_candidates = strong_buy + buy_list
 
+    TREND_SIGNALS = {'均线多头排列', 'MA金叉', 'MACD金叉', '红柱放大', '放量'}
+
     filtered = []
     for s in all_candidates:
+        signals = set(s.get('signals', []))
         chg = s.get('change_pct', 0)
         est = (s.get('next_day_estimate') or {}).get('estimate', None)
         score = s.get('score', 0)
         code = s.get('code', '')
+        price = s.get('price', 0)
+        buy_point = s.get('buy_point', 0)
+        ma5 = s.get('ma5', 0)
 
         if code in morning_codes:
-            continue  # 排除晨间已推荐
+            continue
+        # 至少1个趋势信号
+        if not (signals & TREND_SIGNALS):
+            continue
+        # 上午涨幅不超过5%（过大的午后追高风险大）
+        if chg > 5:
+            continue
         if est is None or est <= 0:
-            continue  # 明日不看好的排除
+            continue
         if score < 70:
             continue
-        # 午间偏好：涨幅1-5%（还有午后空间），不宜太大
-        if chg < 1 or chg > 5:
-            continue
+
+        # 入口质量分
+        entry_score = 0
+        if ma5 > 0:
+            price_vs_ma5 = (price - ma5) / ma5 * 100
+            if -2 <= price_vs_ma5 <= 1:
+                entry_score += 10
+            elif -5 <= price_vs_ma5 < -2:
+                entry_score += 6
+            elif price_vs_ma5 > 1:
+                entry_score += 2
+            else:
+                entry_score -= 3
+
+        if buy_point > 0 and price > 0:
+            if price <= buy_point * 1.01:
+                entry_score += 8
+            elif price <= buy_point * 1.03:
+                entry_score += 4
+
+        # 午间特有：上午涨幅0-3%最佳（午后空间最大）
+        if 0 <= chg <= 3:
+            entry_score += 6
+        elif 3 < chg <= 5:
+            entry_score += 2
+        elif chg < 0:
+            entry_score += 1  # 微跌但趋势在，可能是低吸机会
+
+        target = s.get('target_price', 0)
+        stop = s.get('stop_loss', 0)
+        if buy_point > 0 and stop > 0 and target > 0:
+            rr = (target - buy_point) / (buy_point - stop)
+            if rr >= 3:
+                entry_score += 5
+            elif rr >= 2:
+                entry_score += 3
+
+        trend_count = len(signals & TREND_SIGNALS)
+        entry_score += min(trend_count * 3, 12)
+
+        s['_entry_score'] = entry_score
         filtered.append(s)
 
-    # 午间排序：偏向涨幅适中（2-4%最佳，午后还有空间）+ 高评分 + 强预估
+    # 排序：入口质量 * 0.4 + 明日预估 * 8 * 0.35 + 评分 * 0.25
     def rank_key(s):
-        est = (s.get('next_day_estimate') or {}).get('estimate', 0)
-        chg = s.get('change_pct', 0)
+        entry = s.get('_entry_score', 0)
         score = s.get('score', 0)
-        # 涨幅2-4%得分最高（午后还有空间）
-        chg_score = max(0, 10 - abs(chg - 3) * 2.5) if chg else 0
-        return score * 0.3 + est * 10 * 0.4 + chg_score * 0.3
+        est = (s.get('next_day_estimate') or {}).get('estimate', 0)
+        return entry * 0.4 + est * 8 * 0.35 + score * 0.25
 
     filtered.sort(key=rank_key, reverse=True)
     selected = filtered[:3]
 
-    # 不够3只时放宽：不限涨幅上限
     if len(selected) < 3:
+        selected_codes = {s.get('code', '') for s in selected}
         for s in all_candidates:
+            if s.get('code', '') in selected_codes or s.get('code', '') in morning_codes:
+                continue
             est = (s.get('next_day_estimate') or {}).get('estimate', None)
-            code = s.get('code', '')
-            if est and est > 0 and code not in morning_codes and code not in [x.get('code', '') for x in selected]:
+            if est and est > 0 and s.get('score', 0) >= 60 and s.get('change_pct', 0) <= 5:
                 selected.append(s)
             if len(selected) >= 3:
                 break
@@ -278,10 +329,12 @@ def load_top_buys():
             'code': s.get('code', ''), 'name': s.get('name', ''),
             'score': s.get('score', 0), 'price': s.get('price', 0),
             'change_pct': s.get('change_pct', 0),
-            'buy_point': s.get('buy_point'), 'buy_time': s.get('buy_time', ''),
+            'buy_point': s.get('buy_point'),
+            'buy_time': '午间买入 (12:00-13:00)',
             'stop_loss': s.get('stop_loss'), 'target_price': s.get('target_price'),
             'signals': s.get('signals', []),
             'next_day_estimate': s.get('next_day_estimate', {}),
+            'entry_score': s.get('_entry_score', 0),
         })
     return result
 
