@@ -60,8 +60,8 @@
         "boll_middle": 8.41,
         "boll_lower": 7.45,
         "snapshot_price": 9.59,
-        "latest_price": 9.59,
-        "latest_change_pct": 8.36,
+        "latest_price": 9.19,
+        "latest_change_pct": -5.55,
         "next_day_actual": {
           "actual_pct": -5.11,
           "actual_close": 9.1,
@@ -130,8 +130,8 @@
         "boll_middle": 11.62,
         "boll_lower": 10.84,
         "snapshot_price": 12.9,
-        "latest_price": 12.9,
-        "latest_change_pct": 5.91,
+        "latest_price": 12.15,
+        "latest_change_pct": -0.33,
         "next_day_actual": {
           "actual_pct": -3.26,
           "actual_close": 12.48,
@@ -192,8 +192,8 @@
         "boll_middle": 7.05,
         "boll_lower": 6.58,
         "snapshot_price": 7.49,
-        "latest_price": 7.49,
-        "latest_change_pct": 5.2,
+        "latest_price": 7.18,
+        "latest_change_pct": 1.84,
         "next_day_actual": {
           "actual_pct": -5.87,
           "actual_close": 7.05,
@@ -253,8 +253,8 @@
         "boll_middle": 14.56,
         "boll_lower": 13.49,
         "snapshot_price": 15.18,
-        "latest_price": 15.18,
-        "latest_change_pct": 4.04,
+        "latest_price": 13.97,
+        "latest_change_pct": 2.49,
         "next_day_actual": {
           "actual_pct": -6.79,
           "actual_close": 14.15,
@@ -314,13 +314,13 @@
         "boll_middle": 5.63,
         "boll_lower": 5.43,
         "snapshot_price": 5.81,
-        "latest_price": 5.81,
-        "latest_change_pct": 4.31,
+        "latest_price": 5.37,
+        "latest_change_pct": 1.9,
         "next_day_actual": {
-          "actual_pct": -5.85,
-          "actual_close": 5.47,
+          "actual_pct": -7.57,
+          "actual_close": 5.37,
           "next_date": "2026-05-20",
-          "vs_estimate": -8.85
+          "vs_estimate": -10.57
         },
         "prediction_result": {
           "label": "远低预期-8.8%",
@@ -374,8 +374,8 @@
         "boll_middle": 20.83,
         "boll_lower": 19.89,
         "snapshot_price": 21.12,
-        "latest_price": 21.12,
-        "latest_change_pct": 4.14,
+        "latest_price": 20.44,
+        "latest_change_pct": 2.56,
         "next_day_actual": {
           "actual_pct": -5.3,
           "actual_close": 20.0,
@@ -432,8 +432,8 @@
         "boll_middle": 27.01,
         "boll_lower": 24.54,
         "snapshot_price": 26.29,
-        "latest_price": 26.29,
-        "latest_change_pct": 5.16,
+        "latest_price": 25.19,
+        "latest_change_pct": -3.15,
         "next_day_actual": {
           "actual_pct": -0.04,
           "actual_close": 26.28,
@@ -489,13 +489,13 @@
         "boll_middle": 33.47,
         "boll_lower": 31.32,
         "snapshot_price": 33.77,
-        "latest_price": 33.77,
-        "latest_change_pct": 5.17,
+        "latest_price": 39.06,
+        "latest_change_pct": 4.3,
         "next_day_actual": {
-          "actual_pct": -1.72,
-          "actual_close": 33.19,
+          "actual_pct": -2.61,
+          "actual_close": 32.89,
           "next_date": "2026-05-20",
-          "vs_estimate": -2.22
+          "vs_estimate": -3.11
         },
         "prediction_result": {
           "label": "低于预期",
@@ -545,8 +545,8 @@
         "boll_middle": 17.75,
         "boll_lower": 16.99,
         "snapshot_price": 17.6,
-        "latest_price": 17.6,
-        "latest_change_pct": 3.83,
+        "latest_price": 19.16,
+        "latest_change_pct": -0.26,
         "next_day_actual": {
           "actual_pct": 4.15,
           "actual_close": 18.33,
@@ -608,8 +608,8 @@
         "boll_middle": 21.36,
         "boll_lower": 19.31,
         "snapshot_price": 23.67,
-        "latest_price": 23.67,
-        "latest_change_pct": 4.32,
+        "latest_price": 25.74,
+        "latest_change_pct": 3.75,
         "next_day_actual": {
           "actual_pct": -1.82,
           "actual_close": 23.24,
@@ -671,8 +671,8 @@
         "boll_middle": 7.31,
         "boll_lower": 6.27,
         "snapshot_price": 8.52,
-        "latest_price": 8.52,
-        "latest_change_pct": 4.93,
+        "latest_price": 8.4,
+        "latest_change_pct": 0.84,
         "next_day_actual": {
           "actual_pct": 0.12,
           "actual_close": 8.53,
@@ -735,8 +735,8 @@
         "boll_middle": 11.58,
         "boll_lower": 8.0,
         "snapshot_price": 15.29,
-        "latest_price": 15.29,
-        "latest_change_pct": 3.24,
+        "latest_price": 12.89,
+        "latest_change_pct": -0.69,
         "next_day_actual": {
           "actual_pct": -10.01,
           "actual_close": 13.76,
@@ -800,8 +800,8 @@
         "boll_middle": 93.87,
         "boll_lower": 74.32,
         "snapshot_price": 115.96,
-        "latest_price": 115.96,
-        "latest_change_pct": 1.55,
+        "latest_price": 128.15,
+        "latest_change_pct": 10.0,
         "next_day_actual": {
           "actual_pct": 3.97,
           "actual_close": 120.56,
@@ -864,8 +864,8 @@
         "boll_middle": 3.58,
         "boll_lower": 3.0,
         "snapshot_price": 4.2,
-        "latest_price": 4.2,
-        "latest_change_pct": 2.44,
+        "latest_price": 3.84,
+        "latest_change_pct": -1.54,
         "next_day_actual": {
           "actual_pct": -1.9,
           "actual_close": 4.12,
@@ -928,8 +928,8 @@
         "boll_middle": 50.84,
         "boll_lower": 40.01,
         "snapshot_price": 64.47,
-        "latest_price": 64.47,
-        "latest_change_pct": 1.77,
+        "latest_price": 60.3,
+        "latest_change_pct": -3.37,
         "next_day_actual": {
           "actual_pct": -0.12,
           "actual_close": 64.39,
@@ -989,8 +989,8 @@
         "boll_middle": 11.09,
         "boll_lower": 10.09,
         "snapshot_price": 11.46,
-        "latest_price": 11.46,
-        "latest_change_pct": 1.96,
+        "latest_price": 10.52,
+        "latest_change_pct": -1.77,
         "next_day_actual": {
           "actual_pct": -0.7,
           "actual_close": 11.38,
@@ -1045,8 +1045,8 @@
         "boll_middle": 40.6,
         "boll_lower": 35.87,
         "snapshot_price": 38.5,
-        "latest_price": 38.5,
-        "latest_change_pct": 2.69,
+        "latest_price": 36.0,
+        "latest_change_pct": 0.25,
         "next_day_actual": {
           "actual_pct": -4.0,
           "actual_close": 36.96,
@@ -1100,8 +1100,8 @@
         "boll_middle": 16.08,
         "boll_lower": 13.01,
         "snapshot_price": 16.51,
-        "latest_price": 16.51,
-        "latest_change_pct": 1.04,
+        "latest_price": 16.34,
+        "latest_change_pct": 1.62,
         "next_day_actual": {
           "actual_pct": -5.03,
           "actual_close": 15.68,
@@ -1157,8 +1157,8 @@
         "boll_middle": 6.85,
         "boll_lower": 5.92,
         "snapshot_price": 6.54,
-        "latest_price": 6.54,
-        "latest_change_pct": 2.67,
+        "latest_price": 6.43,
+        "latest_change_pct": 1.42,
         "next_day_actual": {
           "actual_pct": -1.07,
           "actual_close": 6.47,
@@ -1186,8 +1186,8 @@
           "放量"
         ],
         "snapshot_price": 7.3,
-        "latest_price": 7.3,
-        "latest_change_pct": -0.68,
+        "latest_price": 7.7,
+        "latest_change_pct": 1.72,
         "next_day_actual": {
           "actual_pct": -0.68,
           "actual_close": 7.25,
