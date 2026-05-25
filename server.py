@@ -146,6 +146,8 @@ class Handler(SimpleHTTPRequestHandler):
                 self._handle_midday_analysis()
             elif path == '/api/closing_analysis':
                 self._handle_closing_analysis()
+            elif path == '/api/eod_analysis':
+                self._handle_eod_analysis()
             else:
                 super().do_GET()
         except Exception as e:
@@ -547,6 +549,14 @@ class Handler(SimpleHTTPRequestHandler):
             self._json(data)
         else:
             self._json({'error': '收盘分析数据暂无', 'update_time': None})
+
+    def _handle_eod_analysis(self):
+        """尾盘综合分析数据"""
+        data = load_json(os.path.join(DATA_DIR, 'eod_analysis.json'))
+        if data:
+            self._json(data)
+        else:
+            self._json({'error': '尾盘分析数据暂无', 'update_time': None})
 
     def _handle_manual_buy(self, params):
         """手动买入：用户点击推荐股票的买入按钮"""

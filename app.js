@@ -400,6 +400,7 @@ const App = {
 
     this.loadMorningAnalysis();
     this.loadMiddayAnalysis();
+    this.loadEodAnalysis();
     this.loadClosingAnalysis();
     this.renderStrategies(r);
     this.renderAccuracy();
@@ -654,6 +655,119 @@ const App = {
     html += topBuysHtml;
 
     el.innerHTML = html;
+  },
+
+  // === 尾盘综合分析 ===
+
+  async loadEodAnalysis() {
+    try {
+      const r = this._apiAvailable
+        ? await fetch(`${this.API_BASE}/api/eod_analysis`)
+        : await fetch('data/eod_analysis.json');
+      if (r.ok) {
+        const data = await r.json();
+        this.renderEodAnalysis(data);
+      }
+    } catch {}
+  },
+
+  renderEodAnalysis(data) {
+    if (!data || data.error) return;
+
+    const el = document.getElementById('eod-analysis-section');
+    const ts = document.getElementById('eod-update-time');
+    if (ts && data.update_time) {
+      ts.textContent = data.update_time;
+    }
+
+    const cnIdx = data.cn_indices || {};
+    const sentiment = data.sentiment || {};
+    const perfs = data.recommended_stocks || [];
+    const stats = data.market_stats || {};
+    const advices = data.advices || [];
+
+    // A股即时行情
+    let cnHtml = '';
+    if (Object.keys(cnIdx).length) {
+      const items = Object.entries(cnIdx).map(([code, info]) => {
+        const emoji = info.change_pct >= 0 ? '📈' : '📉';
+        const cls = info.change_pct >= 0 ? 'text-rise' : 'text-fall';
+        const sign = info.change_pct >= 0 ? '+' : '';
+        return `<span style="margin-right:10px">${emoji} ${info.name} <span class="${cls}">${sign}${info.change_pct.toFixed(2)}%</span></span>`;
+      }).join('');
+      cnHtml = `<div style="margin-bottom:6px">
+        <span style="font-size:12px;font-weight:600">🇨🇳 A股即时行情</span>
+        <div style="font-size:11px;line-height:1.5;margin-top:2px">${items}</div>
+      </div>`;
+    }
+
+    // 市场情绪评级
+    let sentimentHtml = '';
+    if (Object.keys(sentiment).length) {
+      const rows = Object.entries(sentiment).map(([code, s]) => {
+        const idx = cnIdx[code] || {};
+        return `<span style="display:inline-flex;align-items:center;gap:3px;margin-right:10px;font-size:11px;padding:2px 8px;border-radius:6px;background:rgba(255,255,255,0.04)">
+          ${s.emoji} <span style="font-weight:600">${idx.name || code}</span> <span style="color:${s.score >= 60 ? 'var(--rise)' : s.score >= 40 ? '#f59e0b' : 'var(--fall)'}">${s.level}</span>
+        </span>`;
+      }).join('');
+      sentimentHtml = `<div style="margin-bottom:6px"><span style="font-size:12px;font-weight:600">🌡️ 盘中情绪</span><div style="margin-top:2px">${rows}</div></div>`;
+    }
+
+    // 市场概况
+    let statsHtml = '';
+    if (stats.total) {
+      const upCls = stats.up_ratio >= 60 ? 'text-rise' : stats.up_ratio >= 40 ? '' : 'text-fall';
+      statsHtml = `<div style="margin-bottom:6px;font-size:11px;line-height:1.5;color:var(--text2)">
+        📊 涨跌: <span class="text-rise">${stats.up}涨</span> / <span class="text-fall">${stats.down}跌</span> / ${stats.flat}平 · 
+        涨停<span style="color:var(--rise)">${stats.limit_up}</span> / 跌停<span style="color:var(--fall)">${stats.limit_down}</span> · 
+        赚钱效应 <span class="${upCls}">${stats.up_ratio}%</span> · 平均 <span class="${stats.avg_change >= 0 ? 'text-rise' : 'text-fall'}">${stats.avg_change >= 0 ? '+' : ''}${stats.avg_change}%</span>
+      </div>`;
+    }
+
+    // 推荐股票表现
+    let perfHtml = '';
+    if (perfs.length > 0) {
+      const hdr = `<div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:8px;margin-top:4px">
+        <span style="font-size:12px;font-weight:600">🎯 推荐股票表现</span>
+        <div style="display:flex;align-items:center;gap:6px;padding:3px 0 1px;margin-top:4px;font-size:10px;color:var(--text3)">
+          <span style="min-width:52px">名称</span>
+          <span style="min-width:48px">代码</span>
+          <span style="min-width:52px;text-align:right">现价</span>
+          <span style="min-width:52px;text-align:right">涨幅</span>
+          <span style="min-width:52px;text-align:right">浮盈</span>
+          <span style="flex:1;text-align:right">操作建议</span>
+        </div>`;
+      const rows = perfs.map((p, i) => {
+        const chgCls = p.change_pct >= 0 ? 'text-rise' : 'text-fall';
+        const chgSign = p.change_pct >= 0 ? '+' : '';
+        const pnlCls = p.pnl_pct >= 0 ? 'text-rise' : 'text-fall';
+        const pnlSign = p.pnl_pct >= 0 ? '+' : '';
+        const actionColor = p.action_type === '止损' ? 'var(--fall)' : p.action_type === '止盈' ? 'var(--rise)' : p.action_type === '持有' ? '#22c55e' : '#f59e0b';
+        return `<div style="display:flex;align-items:center;gap:6px;padding:4px 0;${i > 0 ? 'border-top:1px solid rgba(255,255,255,0.04)' : ''}">
+          <div style="flex:1;cursor:pointer;display:flex;align-items:center;gap:6px" onclick="App.openStock('${p.code}')">
+            <span style="font-weight:600;color:var(--text1);min-width:52px;font-size:12px">${this.esc(p.name)}</span>
+            <span style="font-size:10px;color:var(--text3);min-width:48px">${p.code}</span>
+            <span style="min-width:52px;text-align:right;font-size:11px">${p.current_price?.toFixed(2) || '-'}</span>
+            <span style="min-width:52px;text-align:right" class="${chgCls}">${chgSign}${p.change_pct?.toFixed(2) || '0'}%</span>
+            <span style="min-width:52px;text-align:right" class="${pnlCls}">${pnlSign}${p.pnl_pct?.toFixed(1) || '0'}%</span>
+          </div>
+          <span style="flex:1;text-align:right;font-size:11px;color:${actionColor};white-space:nowrap">${p.action || '-'}</span>
+        </div>`;
+      }).join('');
+      perfHtml = hdr + '<div style="margin-top:1px">' + rows + '</div></div>';
+    }
+
+    // 尾盘操作建议
+    let adviceHtml = '';
+    if (advices.length > 0) {
+      const items = advices.map(a => `<div style="font-size:11px;line-height:1.5;color:var(--text2);padding:2px 0">${a}</div>`).join('');
+      adviceHtml = `<div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:6px;margin-top:4px">
+        <span style="font-size:12px;font-weight:600">💡 尾盘操作建议</span>
+        <div style="margin-top:4px">${items}</div>
+      </div>`;
+    }
+
+    el.innerHTML = cnHtml + sentimentHtml + statsHtml + perfHtml + adviceHtml;
   },
 
   // === 收盘综合分析 ===
