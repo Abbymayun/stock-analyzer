@@ -1,0 +1,16 @@
+{
+  "initial_capital": 100000.0,
+  "cash": 100000.0,
+  "holdings": {},
+  "daily_reports": [],
+  "trading_stats": {
+    "total_trades": 0,
+    "win_trades": 0,
+    "total_pnl": 0,
+    "max_drawdown": 0,
+    "best_trade": null,
+    "worst_trade": null
+  },
+  "created_at": "2026-05-25 18:38:16",
+  "last_trade_date": null
+}
