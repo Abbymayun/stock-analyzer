@@ -1,5 +1,5 @@
 {
-  "update_time": "2026-05-25 18:38",
+  "update_time": "2026-05-26 08:31",
   "market_sentiment": "中性",
   "avg_score": 51.7,
   "strong_buy": [
@@ -218,10 +218,10 @@
         "放量上涨"
       ],
       "trend": "上升",
-      "ma5": 9.13,
-      "ma10": 9.11,
-      "ma20": 8.57,
-      "ma60": 8.77,
+      "ma5": 9.07,
+      "ma10": 9.04,
+      "ma20": 8.51,
+      "ma60": 8.71,
       "macd_dif": 0.2151,
       "macd_dea": 0.1322,
       "macd_hist": 0.1657,
@@ -230,14 +230,14 @@
       "kdj_k": 60.6,
       "kdj_d": 53.5,
       "kdj_j": 74.7,
-      "boll_upper": 9.81,
-      "boll_middle": 8.57,
-      "boll_lower": 7.33,
-      "support": 7.66,
-      "resistance": 9.57,
-      "buy_point": 9.13,
-      "stop_loss": 8.68,
-      "target_price": 9.76,
+      "boll_upper": 9.75,
+      "boll_middle": 8.51,
+      "boll_lower": 7.27,
+      "support": 7.6,
+      "resistance": 9.51,
+      "buy_point": 9.07,
+      "stop_loss": 8.62,
+      "target_price": 9.7,
       "next_day_estimate": {
         "estimate": 4.0,
         "factors": [
@@ -247,11 +247,11 @@
           "放量上攻"
         ]
       },
-      "main_force_analysis": "📊 主力行为判断：量价关系正常，主力暂无明显异动。\n\n💰 主力估算成本区间：7.71 - 9.40 元，中位成本约 8.57 元。\n现价 9.40 高于主力成本中位 9.7%，主力已有浮盈，注意获利了结压力。\n\n🎯 操盘特征：近5日振幅较大（9.8%），主力可能采用宽幅震荡洗盘手法。\n\n💡 操作建议：主力暂未表态，建议保持观察，等待放量突破或缩量企稳信号。",
-      "chip_analysis": "📊 20日筹码分布分析（现价 9.40 元）：\n\n🔴 筹码高度集中（27.0%），主力控盘迹象明显。\n\n筹码密集价位：\n  9.2元 [  下方] █████████████ 27.0%\n  9.1元 [  下方] ███████ 15.8%\n  9.3元 [  下方] ██████ 12.0%\n  8.8元 [  下方] █████ 10.1%\n  9.4元 [  当前] ███ 7.8%\n\n📈 估算获利盘：92.2% | 📉 估算套牢盘：0.0%\n⚠️ 获利盘比例过高，上方抛压风险较大，追高需谨慎。\n\n🔄 筹码转移：近10日筹码重心在 9.14 元附近，与现价接近，筹码相对稳定。",
+      "main_force_analysis": "📊 主力行为判断：量价关系正常，主力暂无明显异动。\n\n💰 主力估算成本区间：7.65 - 9.34 元，中位成本约 8.51 元。\n现价 9.34 高于主力成本中位 9.8%，主力已有浮盈，注意获利了结压力。\n\n🎯 操盘特征：近5日振幅较大（9.9%），主力可能采用宽幅震荡洗盘手法。\n\n💡 操作建议：主力暂未表态，建议保持观察，等待放量突破或缩量企稳信号。",
+      "chip_analysis": "📊 20日筹码分布分析（现价 9.34 元）：\n\n🔴 筹码高度集中（27.0%），主力控盘迹象明显。\n\n筹码密集价位：\n  9.1元 [  下方] █████████████ 27.0%\n  9.0元 [  下方] ██████████ 21.7%\n  9.2元 [  下方] ██████ 12.0%\n  9.3元 [  下方] ███ 7.8%\n  7.8元 [  下方] ██ 5.9%\n\n📈 估算获利盘：100.0% | 📉 估算套牢盘：0.0%\n⚠️ 获利盘比例过高，上方抛压风险较大，追高需谨慎。\n\n🔄 筹码转移：近10日筹码重心下移至 9.05 元，低于现价，低位筹码堆积，可能为主力吸筹。",
       "buy_time": "开盘30分钟内 (9:30-10:00)",
       "sell_time": "冲高回落时 (10:30-11:00 或 14:00-14:30)",
-      "analysis_text": "该股处于上升趋势，现价9.40元运行在MA5(9.13)上方。综合评分67分，操作建议：买入。参考买入区间 9.13 元，止损 8.68 元，目标 9.76 元。"
+      "analysis_text": "该股处于上升趋势，现价9.34元运行在MA5(9.07)上方。综合评分67分，操作建议：买入。参考买入区间 9.07 元，止损 8.62 元，目标 9.7 元。"
     },
     {
       "code": "002652",
@@ -1171,7 +1171,7 @@
   "market_analysis": "【A股大盘】\n\n全市场3066只股票：上涨1209只（39.4%），下跌1613只（52.6%），平均涨幅+0.01%。涨停91只，跌停14只。\n两市总成交额约17097亿元。\n\n【美股隔夜行情】\n美股数据暂未获取（可能为非交易时段）\n\n【板块资金动向】\n高换手率（>10%）个股169只，市场活跃度较高。\n涨停91只中评分60+的有0只，涨停质量一般。\n\n【综合结论】市场情绪中性，综合评分51.7分。赚钱效应较差。\n技术面中性，市场分化明显，建议精选个股，控制仓位。",
   "next_day_advice": "【明日总体策略】市场震荡分化，精选个股为主。\n仓位控制在5成左右，灵活应对。\n\n========================================\n【重点推荐操作计划】\n========================================\n\n📌 1. 上海贝岭（600171）评分100分 | 明日预估+3.0%\n   现价：30.58元  今日涨幅：+3.49%\n   建议买入区间：29.73 元\n   止损位：28.24 元\n   目标价位：31.41 元\n   买入时间：开盘30分钟内 (9:30-10:00)\n   关键信号：均线多头排列、MA金叉、MACD金叉、红柱放大\n   👉 操作计划：\n      开盘观察竞价量能，若高开1-2%且量能放大，可在29.73附近介入。\n      目标31.41元（约2.7%空间），止损28.24元。\n\n📌 2. 北部湾港（000582）评分100分 | 明日预估+2.0%\n   现价：12.89元  今日涨幅：+4.12%\n   建议买入区间：12.65 元\n   止损位：12.01 元\n   目标价位：13.97 元\n   买入时间：开盘30分钟内 (9:30-10:00)\n   关键信号：均线多头排列、MACD金叉、红柱放大\n   👉 操作计划：\n      开盘观察竞价量能，若高开1-2%且量能放大，可在12.65附近介入。\n      目标13.97元（约8.4%空间），止损12.01元。\n\n📌 3. 泰瑞机器（603289）评分97分 | 明日预估+3.0%\n   现价：12.39元  今日涨幅：+2.14%\n   建议买入区间：11.72 元\n   止损位：11.13 元\n   目标价位：13.13 元\n   买入时间：开盘30分钟内 (9:30-10:00)\n   关键信号：MA金叉、MACD金叉、红柱放大\n   👉 操作计划：\n      开盘观察竞价量能，若高开1-2%且量能放大，可在11.72附近介入。\n      目标13.13元（约6.0%空间），止损11.13元。\n\n========================================\n【备选买入标的】\n========================================\n   • TCL科技（000100）79分 | 预估+2.2% | 买入4.34元 | 目标4.74元 | 止损4.13元\n   • 科陆电子（002121）79分 | 预估+2.2% | 买入7.45元 | 目标8.15元 | 止损7.08元\n   • 明阳智能（601615）79分 | 预估+2.2% | 买入16.87元 | 目标17.95元 | 止损16.02元\n\n【回调低吸策略】技术面超卖或触及支撑位的强势股，可在支撑位附近分批建仓\n\n【技术突破策略】MACD/MA出现金叉确认信号，趋势有望延续",
   "strategy_results": {
-    "date": "2026-05-25",
+    "date": "2026-05-26",
     "results": {
       "s02_volume_breakout": [
         {
@@ -1637,85 +1637,85 @@
       ]
     },
     "stats": {
-      "s02_volume_breakout": {
-        "name": "放量突破",
-        "category": "资金",
-        "total_trades": 2,
-        "win_rate": 100.0,
-        "avg_pnl": 5.5,
-        "days_active": 6
-      },
-      "s05_pullback_ma20": {
-        "name": "缩量回调买入",
-        "category": "趋势",
-        "total_trades": 2,
-        "win_rate": 100.0,
-        "avg_pnl": 2.6,
-        "days_active": 6
+      "s04_boll_lower_bounce": {
+        "name": "布林下轨反弹",
+        "category": "技术",
+        "total_trades": 5,
+        "win_rate": 60.0,
+        "avg_pnl": 0.78,
+        "days_active": 7
       },
       "s09_w_bottom": {
         "name": "W底形态",
         "category": "形态",
-        "total_trades": 3,
-        "win_rate": 100.0,
-        "avg_pnl": 1.5,
-        "days_active": 6
+        "total_trades": 8,
+        "win_rate": 37.5,
+        "avg_pnl": 0.56,
+        "days_active": 7
+      },
+      "s02_volume_breakout": {
+        "name": "放量突破",
+        "category": "资金",
+        "total_trades": 7,
+        "win_rate": 28.6,
+        "avg_pnl": 1.57,
+        "days_active": 7
+      },
+      "s05_pullback_ma20": {
+        "name": "缩量回调买入",
+        "category": "趋势",
+        "total_trades": 7,
+        "win_rate": 28.6,
+        "avg_pnl": 0.74,
+        "days_active": 7
       },
       "s10_smart_money_inflow": {
         "name": "主力资金流入",
         "category": "资金",
-        "total_trades": 2,
-        "win_rate": 100.0,
-        "avg_pnl": 5.5,
-        "days_active": 6
+        "total_trades": 7,
+        "win_rate": 28.6,
+        "avg_pnl": 1.57,
+        "days_active": 7
       },
       "s13_chip_concentration": {
         "name": "筹码集中启动",
         "category": "庄家",
-        "total_trades": 2,
-        "win_rate": 100.0,
-        "avg_pnl": 5.5,
-        "days_active": 6
-      },
-      "s15_high_turnover_start": {
-        "name": "高换手启动",
-        "category": "资金",
-        "total_trades": 1,
-        "win_rate": 100.0,
-        "avg_pnl": 2.63,
-        "days_active": 6
+        "total_trades": 7,
+        "win_rate": 28.6,
+        "avg_pnl": 1.57,
+        "days_active": 7
       },
       "s18_guiding_star": {
         "name": "仙人指路",
         "category": "形态",
-        "total_trades": 2,
-        "win_rate": 100.0,
-        "avg_pnl": 5.5,
-        "days_active": 6
+        "total_trades": 7,
+        "win_rate": 28.6,
+        "avg_pnl": 1.57,
+        "days_active": 7
+      },
+      "s15_high_turnover_start": {
+        "name": "高换手启动",
+        "category": "资金",
+        "total_trades": 6,
+        "win_rate": 16.7,
+        "avg_pnl": 0.44,
+        "days_active": 7
       },
       "s20_makers_silent_acc": {
         "name": "庄家静默吸筹",
         "category": "庄家",
-        "total_trades": 1,
-        "win_rate": 100.0,
-        "avg_pnl": 4.32,
-        "days_active": 6
-      },
-      "s04_boll_lower_bounce": {
-        "name": "布林下轨反弹",
-        "category": "技术",
-        "total_trades": 4,
-        "win_rate": 75.0,
-        "avg_pnl": 0.97,
-        "days_active": 6
+        "total_trades": 6,
+        "win_rate": 16.7,
+        "avg_pnl": 0.72,
+        "days_active": 7
       },
       "s03_macd_dif_bottom": {
         "name": "MACD底背离",
         "category": "技术",
-        "total_trades": 2,
-        "win_rate": 50.0,
-        "avg_pnl": 0.66,
-        "days_active": 6
+        "total_trades": 7,
+        "win_rate": 14.3,
+        "avg_pnl": 0.19,
+        "days_active": 7
       },
       "s01_ma_golden_cross": {
         "name": "均线金叉",
@@ -1744,34 +1744,34 @@
       "s08_platform_breakout": {
         "name": "平台突破",
         "category": "形态",
-        "total_trades": 0,
-        "win_rate": 0,
-        "avg_pnl": 0,
-        "days_active": 4
+        "total_trades": 1,
+        "win_rate": 0.0,
+        "avg_pnl": 0.0,
+        "days_active": 5
       },
       "s11_ma_bull_align": {
         "name": "多头排列",
         "category": "趋势",
-        "total_trades": 0,
-        "win_rate": 0,
-        "avg_pnl": 0,
-        "days_active": 6
+        "total_trades": 5,
+        "win_rate": 0.0,
+        "avg_pnl": 0.0,
+        "days_active": 7
       },
       "s12_rsi_oversold_recover": {
         "name": "RSI超卖回升",
         "category": "技术",
-        "total_trades": 0,
-        "win_rate": 0,
-        "avg_pnl": 0,
-        "days_active": 6
+        "total_trades": 5,
+        "win_rate": 0.0,
+        "avg_pnl": 0.0,
+        "days_active": 7
       },
       "s14_gap_up_fill": {
         "name": "跳空缺口回补",
         "category": "形态",
-        "total_trades": 1,
+        "total_trades": 6,
         "win_rate": 0.0,
-        "avg_pnl": -25.52,
-        "days_active": 6
+        "avg_pnl": -4.25,
+        "days_active": 7
       },
       "s16_small_yang_accumulate": {
         "name": "小阳线吸筹",

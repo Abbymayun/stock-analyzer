@@ -6528,6 +6528,1253 @@
                 "触布林上轨",
                 "放量上涨"
               ],
+              "reason": "[放量突破] 成交量放大",
+              "current_price": 11.86,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "002334",
+              "name": "英威腾",
+              "price": 9.4,
+              "change_pct": 3.75,
+              "score": 95,
+              "signals": [
+                "温和上涨",
+                "高换手",
+                "大振幅",
+                "放量",
+                "均线多头排列",
+                "红柱放大",
+                "放量上涨"
+              ],
+              "reason": "[放量突破] 成交量放大",
+              "current_price": 9.4,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "002617",
+              "name": "露笑科技",
+              "price": 9.58,
+              "change_pct": 4.7,
+              "score": 93,
+              "signals": [
+                "温和上涨",
+                "高换手",
+                "收在高位",
+                "大振幅",
+                "放量",
+                "均线多头排列",
+                "红柱放大"
+              ],
+              "reason": "[放量突破] 成交量放大",
+              "current_price": 9.58,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "002815",
+              "name": "崇达技术",
+              "price": 16.95,
+              "change_pct": 3.86,
+              "score": 90,
+              "signals": [
+                "温和上涨",
+                "高换手",
+                "收在高位",
+                "放量",
+                "MACD金叉",
+                "红柱放大"
+              ],
+              "reason": "[放量突破] 成交量放大",
+              "current_price": 16.95,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "002706",
+              "name": "良信股份",
+              "price": 13.48,
+              "change_pct": 4.82,
+              "score": 90,
+              "signals": [
+                "温和上涨",
+                "高换手",
+                "大振幅",
+                "放量",
+                "均线多头排列",
+                "红柱放大"
+              ],
+              "reason": "[放量突破] 成交量放大",
+              "current_price": 13.48,
+              "pnl_pct": 0.0
+            }
+          ],
+          "count": 5
+        },
+        "s03_macd_dif_bottom": {
+          "name": "MACD底背离",
+          "category": "技术",
+          "stocks": [
+            {
+              "code": "002300",
+              "name": "太阳电缆",
+              "price": 9.38,
+              "change_pct": 1.19,
+              "score": 67,
+              "signals": [
+                "温和上涨",
+                "放量",
+                "绿柱放大",
+                "KDJ超卖"
+              ],
+              "reason": "[MACD底背离] ",
+              "current_price": 9.38,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "600118",
+              "name": "中国卫星",
+              "price": 87.84,
+              "change_pct": 3.11,
+              "score": 64,
+              "signals": [
+                "温和上涨",
+                "收在高位",
+                "高PE",
+                "放量"
+              ],
+              "reason": "[MACD底背离] ",
+              "current_price": 87.84,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "605090",
+              "name": "九丰能源",
+              "price": 39.56,
+              "change_pct": 1.49,
+              "score": 62,
+              "signals": [
+                "温和上涨",
+                "大振幅",
+                "放量",
+                "均线空头排列",
+                "RSI偏低",
+                "KDJ超卖"
+              ],
+              "reason": "[MACD底背离] ",
+              "current_price": 39.56,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "600343",
+              "name": "航天动力",
+              "price": 32.84,
+              "change_pct": 1.26,
+              "score": 57,
+              "signals": [
+                "温和上涨",
+                "放量",
+                "均线空头排列",
+                "KDJ超卖"
+              ],
+              "reason": "[MACD底背离] ",
+              "current_price": 32.84,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "000037",
+              "name": "深南电A",
+              "price": 10.0,
+              "change_pct": 1.11,
+              "score": 49,
+              "signals": [
+                "温和上涨",
+                "放量",
+                "均线空头排列"
+              ],
+              "reason": "[MACD底背离] ",
+              "current_price": 10.0,
+              "pnl_pct": 0.0
+            }
+          ],
+          "count": 5
+        },
+        "s04_boll_lower_bounce": {
+          "name": "布林下轨反弹",
+          "category": "技术",
+          "stocks": [
+            {
+              "code": "605090",
+              "name": "九丰能源",
+              "price": 39.56,
+              "change_pct": 1.49,
+              "score": 62,
+              "signals": [
+                "温和上涨",
+                "大振幅",
+                "放量",
+                "均线空头排列",
+                "RSI偏低",
+                "KDJ超卖"
+              ],
+              "reason": "[布林下轨反弹] 触及布林下轨38.89",
+              "current_price": 39.56,
+              "pnl_pct": 0.0
+            }
+          ],
+          "count": 1
+        },
+        "s05_pullback_ma20": {
+          "name": "缩量回调买入",
+          "category": "趋势",
+          "stocks": [
+            {
+              "code": "000809",
+              "name": "和展能源",
+              "price": 3.99,
+              "change_pct": 1.53,
+              "score": 78,
+              "signals": [
+                "温和上涨",
+                "高换手",
+                "大振幅",
+                "放量",
+                "短期多头"
+              ],
+              "reason": "[缩量回调买入] 缩量回调至均线附近",
+              "current_price": 3.99,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "603019",
+              "name": "中科曙光",
+              "price": 96.45,
+              "change_pct": 1.74,
+              "score": 73,
+              "signals": [
+                "温和上涨",
+                "收在高位",
+                "放量"
+              ],
+              "reason": "[缩量回调买入] 缩量回调至均线附近",
+              "current_price": 96.45,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "002515",
+              "name": "金字火腿",
+              "price": 7.0,
+              "change_pct": 1.01,
+              "score": 73,
+              "signals": [
+                "温和上涨",
+                "收在高位",
+                "大振幅",
+                "高PE",
+                "放量",
+                "短期多头",
+                "绿柱放大"
+              ],
+              "reason": "[缩量回调买入] 缩量回调至均线附近",
+              "current_price": 7.0,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "600133",
+              "name": "东湖高新",
+              "price": 9.18,
+              "change_pct": 1.32,
+              "score": 65,
+              "signals": [
+                "温和上涨",
+                "大振幅",
+                "放量",
+                "绿柱放大"
+              ],
+              "reason": "[缩量回调买入] 缩量回调至均线附近",
+              "current_price": 9.18,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "002127",
+              "name": "南极电商",
+              "price": 3.15,
+              "change_pct": 1.29,
+              "score": 61,
+              "signals": [
+                "温和上涨",
+                "放量",
+                "短期多头",
+                "MACD死叉",
+                "绿柱放大"
+              ],
+              "reason": "[缩量回调买入] 缩量回调至均线附近",
+              "current_price": 3.15,
+              "pnl_pct": 0.0
+            }
+          ],
+          "count": 5
+        },
+        "s06_limit_up_continue": {
+          "name": "涨停板接力",
+          "category": "资金",
+          "stocks": [],
+          "count": 0
+        },
+        "s07_oversold_bounce": {
+          "name": "超跌反弹",
+          "category": "技术",
+          "stocks": [],
+          "count": 0
+        },
+        "s08_platform_breakout": {
+          "name": "平台突破",
+          "category": "形态",
+          "stocks": [
+            {
+              "code": "600199",
+              "name": "金种子酒",
+              "price": 8.62,
+              "change_pct": 4.87,
+              "score": 90,
+              "signals": [
+                "温和上涨",
+                "大振幅",
+                "放量",
+                "均线多头排列",
+                "红柱放大",
+                "触布林上轨",
+                "放量上涨"
+              ],
+              "reason": "[平台突破] ",
+              "current_price": 8.62,
+              "pnl_pct": 0.0
+            }
+          ],
+          "count": 1
+        },
+        "s09_w_bottom": {
+          "name": "W底形态",
+          "category": "形态",
+          "stocks": [
+            {
+              "code": "002300",
+              "name": "太阳电缆",
+              "price": 9.38,
+              "change_pct": 1.19,
+              "score": 67,
+              "signals": [
+                "温和上涨",
+                "放量",
+                "绿柱放大",
+                "KDJ超卖"
+              ],
+              "reason": "[W底形态] ",
+              "current_price": 9.38,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "605090",
+              "name": "九丰能源",
+              "price": 39.56,
+              "change_pct": 1.49,
+              "score": 62,
+              "signals": [
+                "温和上涨",
+                "大振幅",
+                "放量",
+                "均线空头排列",
+                "RSI偏低",
+                "KDJ超卖"
+              ],
+              "reason": "[W底形态] ",
+              "current_price": 39.56,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "000037",
+              "name": "深南电A",
+              "price": 10.0,
+              "change_pct": 1.11,
+              "score": 49,
+              "signals": [
+                "温和上涨",
+                "放量",
+                "均线空头排列"
+              ],
+              "reason": "[W底形态] ",
+              "current_price": 10.0,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "002791",
+              "name": "坚朗五金",
+              "price": 16.29,
+              "change_pct": 3.3,
+              "score": 49,
+              "signals": [
+                "温和上涨",
+                "大振幅",
+                "放量",
+                "均线空头排列"
+              ],
+              "reason": "[W底形态] ",
+              "current_price": 16.29,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "600930",
+              "name": "华电新能",
+              "price": 6.14,
+              "change_pct": 1.49,
+              "score": 49,
+              "signals": [
+                "温和上涨",
+                "放量",
+                "均线空头排列"
+              ],
+              "reason": "[W底形态] ",
+              "current_price": 6.14,
+              "pnl_pct": 0.0
+            }
+          ],
+          "count": 5
+        },
+        "s10_smart_money_inflow": {
+          "name": "主力资金流入",
+          "category": "资金",
+          "stocks": [
+            {
+              "code": "002106",
+              "name": "莱宝高科",
+              "price": 11.86,
+              "change_pct": 3.94,
+              "score": 95,
+              "signals": [
+                "温和上涨",
+                "大振幅",
+                "放量",
+                "均线多头排列",
+                "MA金叉",
+                "红柱放大",
+                "RSI偏高",
+                "触布林上轨",
+                "放量上涨"
+              ],
+              "reason": "[主力资金流入] ",
+              "current_price": 11.86,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "002334",
+              "name": "英威腾",
+              "price": 9.4,
+              "change_pct": 3.75,
+              "score": 95,
+              "signals": [
+                "温和上涨",
+                "高换手",
+                "大振幅",
+                "放量",
+                "均线多头排列",
+                "红柱放大",
+                "放量上涨"
+              ],
+              "reason": "[主力资金流入] ",
+              "current_price": 9.4,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "600199",
+              "name": "金种子酒",
+              "price": 8.62,
+              "change_pct": 4.87,
+              "score": 90,
+              "signals": [
+                "温和上涨",
+                "大振幅",
+                "放量",
+                "均线多头排列",
+                "红柱放大",
+                "触布林上轨",
+                "放量上涨"
+              ],
+              "reason": "[主力资金流入] ",
+              "current_price": 8.62,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "002766",
+              "name": "索菱股份",
+              "price": 5.46,
+              "change_pct": 1.87,
+              "score": 88,
+              "signals": [
+                "温和上涨",
+                "高换手",
+                "收在高位",
+                "大振幅",
+                "放量",
+                "均线多头排列",
+                "红柱放大",
+                "RSI偏高",
+                "触布林上轨",
+                "放量上涨"
+              ],
+              "reason": "[主力资金流入] ",
+              "current_price": 5.46,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "600529",
+              "name": "山东药玻",
+              "price": 19.44,
+              "change_pct": 4.63,
+              "score": 86,
+              "signals": [
+                "温和上涨",
+                "大振幅",
+                "放量",
+                "MA金叉",
+                "MACD金叉",
+                "红柱放大",
+                "RSI超买",
+                "放量上涨"
+              ],
+              "reason": "[主力资金流入] ",
+              "current_price": 19.44,
+              "pnl_pct": 0.0
+            }
+          ],
+          "count": 5
+        },
+        "s11_ma_bull_align": {
+          "name": "多头排列",
+          "category": "趋势",
+          "stocks": [
+            {
+              "code": "600171",
+              "name": "上海贝岭",
+              "price": 30.58,
+              "change_pct": 3.49,
+              "score": 100,
+              "signals": [
+                "温和上涨",
+                "收在高位",
+                "大振幅",
+                "放量",
+                "均线多头排列",
+                "MA金叉",
+                "MACD金叉",
+                "红柱放大"
+              ],
+              "reason": "[多头排列] 均线多头排列",
+              "current_price": 30.58,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "000582",
+              "name": "北部湾港",
+              "price": 12.89,
+              "change_pct": 4.12,
+              "score": 100,
+              "signals": [
+                "温和上涨",
+                "大振幅",
+                "放量",
+                "均线多头排列",
+                "MACD金叉",
+                "红柱放大"
+              ],
+              "reason": "[多头排列] 均线多头排列",
+              "current_price": 12.89,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "002652",
+              "name": "扬子新材",
+              "price": 6.48,
+              "change_pct": 1.57,
+              "score": 95,
+              "signals": [
+                "温和上涨",
+                "高换手",
+                "大振幅",
+                "放量",
+                "均线多头排列",
+                "MA金叉"
+              ],
+              "reason": "[多头排列] 均线多头排列",
+              "current_price": 6.48,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "600207",
+              "name": "安彩高科",
+              "price": 6.85,
+              "change_pct": 1.78,
+              "score": 95,
+              "signals": [
+                "温和上涨",
+                "放量",
+                "均线多头排列",
+                "MA金叉",
+                "红柱放大",
+                "RSI偏高"
+              ],
+              "reason": "[多头排列] 均线多头排列",
+              "current_price": 6.85,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "002617",
+              "name": "露笑科技",
+              "price": 9.58,
+              "change_pct": 4.7,
+              "score": 93,
+              "signals": [
+                "温和上涨",
+                "高换手",
+                "收在高位",
+                "大振幅",
+                "放量",
+                "均线多头排列",
+                "红柱放大"
+              ],
+              "reason": "[多头排列] 均线多头排列",
+              "current_price": 9.58,
+              "pnl_pct": 0.0
+            }
+          ],
+          "count": 5
+        },
+        "s12_rsi_oversold_recover": {
+          "name": "RSI超卖回升",
+          "category": "技术",
+          "stocks": [
+            {
+              "code": "600961",
+              "name": "株冶集团",
+              "price": 27.44,
+              "change_pct": 1.14,
+              "score": 75,
+              "signals": [
+                "温和上涨",
+                "低PE",
+                "放量"
+              ],
+              "reason": "[RSI超卖回升] RSI=44超卖",
+              "current_price": 27.44,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "002115",
+              "name": "三维通信",
+              "price": 13.68,
+              "change_pct": 1.11,
+              "score": 70,
+              "signals": [
+                "温和上涨",
+                "收在高位",
+                "高PE",
+                "放量"
+              ],
+              "reason": "[RSI超卖回升] RSI=45超卖",
+              "current_price": 13.68,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "002921",
+              "name": "联诚精密",
+              "price": 28.6,
+              "change_pct": 2.58,
+              "score": 70,
+              "signals": [
+                "温和上涨",
+                "高换手",
+                "大振幅",
+                "放量",
+                "绿柱放大",
+                "放量上涨"
+              ],
+              "reason": "[RSI超卖回升] RSI=41超卖",
+              "current_price": 28.6,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "601083",
+              "name": "锦江航运",
+              "price": 11.87,
+              "change_pct": 1.54,
+              "score": 69,
+              "signals": [
+                "温和上涨",
+                "低PE",
+                "放量"
+              ],
+              "reason": "[RSI超卖回升] RSI=44超卖",
+              "current_price": 11.87,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "601015",
+              "name": "陕西黑猫",
+              "price": 3.63,
+              "change_pct": 2.54,
+              "score": 69,
+              "signals": [
+                "温和上涨",
+                "大振幅",
+                "放量",
+                "放量上涨"
+              ],
+              "reason": "[RSI超卖回升] RSI=39超卖",
+              "current_price": 3.63,
+              "pnl_pct": 0.0
+            }
+          ],
+          "count": 5
+        },
+        "s13_chip_concentration": {
+          "name": "筹码集中启动",
+          "category": "庄家",
+          "stocks": [
+            {
+              "code": "002106",
+              "name": "莱宝高科",
+              "price": 11.86,
+              "change_pct": 3.94,
+              "score": 95,
+              "signals": [
+                "温和上涨",
+                "大振幅",
+                "放量",
+                "均线多头排列",
+                "MA金叉",
+                "红柱放大",
+                "RSI偏高",
+                "触布林上轨",
+                "放量上涨"
+              ],
+              "reason": "[筹码集中启动] ",
+              "current_price": 11.86,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "002334",
+              "name": "英威腾",
+              "price": 9.4,
+              "change_pct": 3.75,
+              "score": 95,
+              "signals": [
+                "温和上涨",
+                "高换手",
+                "大振幅",
+                "放量",
+                "均线多头排列",
+                "红柱放大",
+                "放量上涨"
+              ],
+              "reason": "[筹码集中启动] ",
+              "current_price": 9.4,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "600199",
+              "name": "金种子酒",
+              "price": 8.62,
+              "change_pct": 4.87,
+              "score": 90,
+              "signals": [
+                "温和上涨",
+                "大振幅",
+                "放量",
+                "均线多头排列",
+                "红柱放大",
+                "触布林上轨",
+                "放量上涨"
+              ],
+              "reason": "[筹码集中启动] ",
+              "current_price": 8.62,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "600529",
+              "name": "山东药玻",
+              "price": 19.44,
+              "change_pct": 4.63,
+              "score": 86,
+              "signals": [
+                "温和上涨",
+                "大振幅",
+                "放量",
+                "MA金叉",
+                "MACD金叉",
+                "红柱放大",
+                "RSI超买",
+                "放量上涨"
+              ],
+              "reason": "[筹码集中启动] ",
+              "current_price": 19.44,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "603678",
+              "name": "火炬电子",
+              "price": 39.5,
+              "change_pct": 4.83,
+              "score": 85,
+              "signals": [
+                "温和上涨",
+                "高换手",
+                "大振幅",
+                "放量",
+                "均线多头排列",
+                "红柱放大",
+                "RSI偏高",
+                "触布林上轨",
+                "放量上涨"
+              ],
+              "reason": "[筹码集中启动] ",
+              "current_price": 39.5,
+              "pnl_pct": 0.0
+            }
+          ],
+          "count": 5
+        },
+        "s14_gap_up_fill": {
+          "name": "跳空缺口回补",
+          "category": "形态",
+          "stocks": [
+            {
+              "code": "002652",
+              "name": "扬子新材",
+              "price": 6.48,
+              "change_pct": 1.57,
+              "score": 95,
+              "signals": [
+                "温和上涨",
+                "高换手",
+                "大振幅",
+                "放量",
+                "均线多头排列",
+                "MA金叉"
+              ],
+              "reason": "[跳空缺口回补] ",
+              "current_price": 6.48,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "002453",
+              "name": "华软科技",
+              "price": 6.35,
+              "change_pct": 1.44,
+              "score": 92,
+              "signals": [
+                "温和上涨",
+                "高换手",
+                "放量",
+                "MACD金叉",
+                "红柱放大",
+                "放量上涨"
+              ],
+              "reason": "[跳空缺口回补] ",
+              "current_price": 6.35,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "002584",
+              "name": "西陇科学",
+              "price": 8.45,
+              "change_pct": 1.81,
+              "score": 90,
+              "signals": [
+                "温和上涨",
+                "放量",
+                "均线多头排列",
+                "红柱放大"
+              ],
+              "reason": "[跳空缺口回补] ",
+              "current_price": 8.45,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "002837",
+              "name": "英维克",
+              "price": 106.1,
+              "change_pct": 1.11,
+              "score": 90,
+              "signals": [
+                "温和上涨",
+                "收在高位",
+                "高PE",
+                "放量",
+                "均线多头排列",
+                "红柱放大"
+              ],
+              "reason": "[跳空缺口回补] ",
+              "current_price": 106.1,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "603590",
+              "name": "康辰药业",
+              "price": 38.3,
+              "change_pct": 1.43,
+              "score": 90,
+              "signals": [
+                "温和上涨",
+                "放量",
+                "均线多头排列",
+                "红柱放大"
+              ],
+              "reason": "[跳空缺口回补] ",
+              "current_price": 38.3,
+              "pnl_pct": 0.0
+            }
+          ],
+          "count": 5
+        },
+        "s15_high_turnover_start": {
+          "name": "高换手启动",
+          "category": "资金",
+          "stocks": [
+            {
+              "code": "002334",
+              "name": "英威腾",
+              "price": 9.4,
+              "change_pct": 3.75,
+              "score": 95,
+              "signals": [
+                "温和上涨",
+                "高换手",
+                "大振幅",
+                "放量",
+                "均线多头排列",
+                "红柱放大",
+                "放量上涨"
+              ],
+              "reason": "[高换手启动] ",
+              "current_price": 9.4,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "002617",
+              "name": "露笑科技",
+              "price": 9.58,
+              "change_pct": 4.7,
+              "score": 93,
+              "signals": [
+                "温和上涨",
+                "高换手",
+                "收在高位",
+                "大振幅",
+                "放量",
+                "均线多头排列",
+                "红柱放大"
+              ],
+              "reason": "[高换手启动] ",
+              "current_price": 9.58,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "002815",
+              "name": "崇达技术",
+              "price": 16.95,
+              "change_pct": 3.86,
+              "score": 90,
+              "signals": [
+                "温和上涨",
+                "高换手",
+                "收在高位",
+                "放量",
+                "MACD金叉",
+                "红柱放大"
+              ],
+              "reason": "[高换手启动] ",
+              "current_price": 16.95,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "002706",
+              "name": "良信股份",
+              "price": 13.48,
+              "change_pct": 4.82,
+              "score": 90,
+              "signals": [
+                "温和上涨",
+                "高换手",
+                "大振幅",
+                "放量",
+                "均线多头排列",
+                "红柱放大"
+              ],
+              "reason": "[高换手启动] ",
+              "current_price": 13.48,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "603690",
+              "name": "至纯科技",
+              "price": 30.9,
+              "change_pct": 3.55,
+              "score": 88,
+              "signals": [
+                "温和上涨",
+                "高换手",
+                "收在高位",
+                "大振幅",
+                "放量",
+                "均线多头排列",
+                "红柱放大",
+                "RSI偏高"
+              ],
+              "reason": "[高换手启动] ",
+              "current_price": 30.9,
+              "pnl_pct": 0.0
+            }
+          ],
+          "count": 5
+        },
+        "s16_small_yang_accumulate": {
+          "name": "小阳线吸筹",
+          "category": "庄家",
+          "stocks": [],
+          "count": 0
+        },
+        "s17_duck_head": {
+          "name": "老鸭头形态",
+          "category": "形态",
+          "stocks": [],
+          "count": 0
+        },
+        "s18_guiding_star": {
+          "name": "仙人指路",
+          "category": "形态",
+          "stocks": [
+            {
+              "code": "600171",
+              "name": "上海贝岭",
+              "price": 30.58,
+              "change_pct": 3.49,
+              "score": 100,
+              "signals": [
+                "温和上涨",
+                "收在高位",
+                "大振幅",
+                "放量",
+                "均线多头排列",
+                "MA金叉",
+                "MACD金叉",
+                "红柱放大"
+              ],
+              "reason": "[仙人指路] ",
+              "current_price": 30.58,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "000582",
+              "name": "北部湾港",
+              "price": 12.89,
+              "change_pct": 4.12,
+              "score": 100,
+              "signals": [
+                "温和上涨",
+                "大振幅",
+                "放量",
+                "均线多头排列",
+                "MACD金叉",
+                "红柱放大"
+              ],
+              "reason": "[仙人指路] ",
+              "current_price": 12.89,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "603289",
+              "name": "泰瑞机器",
+              "price": 12.39,
+              "change_pct": 2.14,
+              "score": 97,
+              "signals": [
+                "温和上涨",
+                "放量",
+                "MA金叉",
+                "MACD金叉",
+                "红柱放大"
+              ],
+              "reason": "[仙人指路] ",
+              "current_price": 12.39,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "002106",
+              "name": "莱宝高科",
+              "price": 11.86,
+              "change_pct": 3.94,
+              "score": 95,
+              "signals": [
+                "温和上涨",
+                "大振幅",
+                "放量",
+                "均线多头排列",
+                "MA金叉",
+                "红柱放大",
+                "RSI偏高",
+                "触布林上轨",
+                "放量上涨"
+              ],
+              "reason": "[仙人指路] ",
+              "current_price": 11.86,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "002334",
+              "name": "英威腾",
+              "price": 9.4,
+              "change_pct": 3.75,
+              "score": 95,
+              "signals": [
+                "温和上涨",
+                "高换手",
+                "大振幅",
+                "放量",
+                "均线多头排列",
+                "红柱放大",
+                "放量上涨"
+              ],
+              "reason": "[仙人指路] ",
+              "current_price": 9.4,
+              "pnl_pct": 0.0
+            }
+          ],
+          "count": 5
+        },
+        "s19_downtrend_pullback": {
+          "name": "下跌回调吃利",
+          "category": "趋势",
+          "stocks": [],
+          "count": 0
+        },
+        "s20_makers_silent_acc": {
+          "name": "庄家静默吸筹",
+          "category": "庄家",
+          "stocks": [
+            {
+              "code": "600992",
+              "name": "贵绳股份",
+              "price": 12.4,
+              "change_pct": 1.14,
+              "score": 78,
+              "signals": [
+                "温和上涨",
+                "放量",
+                "短期多头"
+              ],
+              "reason": "[庄家静默吸筹] 横盘整理中",
+              "current_price": 12.4,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "002439",
+              "name": "启明星辰",
+              "price": 15.57,
+              "change_pct": 1.76,
+              "score": 73,
+              "signals": [
+                "温和上涨",
+                "收在高位",
+                "放量"
+              ],
+              "reason": "[庄家静默吸筹] 横盘整理中",
+              "current_price": 15.57,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "603019",
+              "name": "中科曙光",
+              "price": 96.45,
+              "change_pct": 1.74,
+              "score": 73,
+              "signals": [
+                "温和上涨",
+                "收在高位",
+                "放量"
+              ],
+              "reason": "[庄家静默吸筹] 横盘整理中",
+              "current_price": 96.45,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "002515",
+              "name": "金字火腿",
+              "price": 7.0,
+              "change_pct": 1.01,
+              "score": 73,
+              "signals": [
+                "温和上涨",
+                "收在高位",
+                "大振幅",
+                "高PE",
+                "放量",
+                "短期多头",
+                "绿柱放大"
+              ],
+              "reason": "[庄家静默吸筹] 横盘整理中",
+              "current_price": 7.0,
+              "pnl_pct": 0.0
+            },
+            {
+              "code": "002612",
+              "name": "朗姿股份",
+              "price": 16.7,
+              "change_pct": 1.21,
+              "score": 71,
+              "signals": [
+                "温和上涨",
+                "收在高位",
+                "低PE",
+                "放量",
+                "红柱放大"
+              ],
+              "reason": "[庄家静默吸筹] 横盘整理中",
+              "current_price": 16.7,
+              "pnl_pct": 0.0
+            }
+          ],
+          "count": 5
+        }
+      }
+    },
+    "2026-05-26": {
+      "date": "2026-05-26",
+      "time": "08:31",
+      "strategies": {
+        "s01_ma_golden_cross": {
+          "name": "均线金叉",
+          "category": "趋势",
+          "stocks": [],
+          "count": 0
+        },
+        "s02_volume_breakout": {
+          "name": "放量突破",
+          "category": "资金",
+          "stocks": [
+            {
+              "code": "002106",
+              "name": "莱宝高科",
+              "price": 11.86,
+              "change_pct": 3.94,
+              "score": 95,
+              "signals": [
+                "温和上涨",
+                "大振幅",
+                "放量",
+                "均线多头排列",
+                "MA金叉",
+                "红柱放大",
+                "RSI偏高",
+                "触布林上轨",
+                "放量上涨"
+              ],
               "reason": "[放量突破] 成交量放大"
             },
             {
@@ -7622,5 +8869,5 @@
     }
   },
   "config": {},
-  "last_update": "2026-05-25 18:38:16"
+  "last_update": "2026-05-26 08:31:52"
 }
