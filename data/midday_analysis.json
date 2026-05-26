@@ -1,5 +1,5 @@
 {
-  "update_time": "2026-05-25 18:34:55",
+  "update_time": "2026-05-26 12:00:42",
   "us_indices": {},
   "commodities": {},
   "fx": {},
@@ -8,37 +8,37 @@
     "000001": {
       "name": "上证指数",
       "code": "000001",
-      "price": 4152.57,
-      "prev_close": 4112.9,
-      "change_pct": 0.96
+      "price": 4117.85,
+      "prev_close": 4152.57,
+      "change_pct": -0.84
     },
     "399001": {
       "name": "深证成指",
       "code": "399001",
-      "price": 15856.61,
-      "prev_close": 15597.3,
-      "change_pct": 1.66
+      "price": 15718.98,
+      "prev_close": 15856.61,
+      "change_pct": -0.87
     },
     "399006": {
       "name": "创业板指",
       "code": "399006",
-      "price": 4021.16,
-      "prev_close": 3938.5,
-      "change_pct": 2.1
+      "price": 4000.5,
+      "prev_close": 4021.16,
+      "change_pct": -0.51
     },
     "000688": {
       "name": "科创50",
       "code": "000688",
-      "price": 1896.04,
-      "prev_close": 1790.77,
-      "change_pct": 5.88
+      "price": 1841.35,
+      "prev_close": 1896.04,
+      "change_pct": -2.88
     },
     "000300": {
       "name": "沪深300",
       "code": "000300",
-      "price": 4921.6,
-      "prev_close": 4845.1,
-      "change_pct": 1.58
+      "price": 4907.69,
+      "prev_close": 4921.6,
+      "change_pct": -0.28
     }
   },
   "us_impact": {
@@ -70,75 +70,76 @@
   },
   "impact_summary": "🇺🇸 美股数据未获取",
   "strategy": {
-    "risk_score": 50,
-    "strategy_text": "➡️ 外围中性影响，上证+0.96%按自身节奏运行\n➡️ 上证指数午盘+0.96%，走势平稳\n📈 科创50(+5.88%)远强于主板，资金向科技方向集中\n\n🟢 【午后策略】中性环境\n  可择机低吸优质标的，但控制单票仓位\n  优先关注回调到支撑位的强势股\n\n  🚫 午后操作规则：\n  • 上午已涨超5%的不追（获利盘压力）\n  • 上午大幅下跌的股票不盲目抄底（等企稳信号）\n  • 临近尾盘（14:30后）谨慎操作",
+    "risk_score": 58,
+    "strategy_text": "➡️ 外围中性影响，上证-0.84%按自身节奏运行\n➡️ 上证指数午盘-0.84%，走势平稳\n📉 科创50(-2.88%)弱于主板，科技股回调\n🟡 赚钱效应偏差（39%上涨），午后以观望为主\n\n🟡 【午后策略】中高风险环境\n  不开新仓，持仓股可择机做T或持有观望\n  关注午后1:30-2:00是否有企稳信号\n\n  🚫 午后操作规则：\n  • 上午已涨超5%的不追（获利盘压力）\n  • 上午大幅下跌的股票不盲目抄底（等企稳信号）\n  • 临近尾盘（14:30后）谨慎操作",
     "position_advice": {
-      "max": 0.4,
+      "max": 0.2,
       "single_max": 0.3
     }
   },
   "top_buys": [
     {
-      "code": "600237",
-      "name": "铜峰电子",
-      "score": 95,
-      "price": 9.91,
-      "change_pct": 4.43,
-      "buy_point": 9.48,
-      "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 9.01,
-      "target_price": 10.26,
+      "code": "603289",
+      "name": "泰瑞机器",
+      "score": 97,
+      "price": 12.39,
+      "change_pct": 2.14,
+      "buy_point": 11.72,
+      "buy_time": "午间买入 (12:00-13:00)",
+      "stop_loss": 11.13,
+      "target_price": 13.13,
       "signals": [
         "温和上涨",
-        "大振幅",
         "放量",
-        "均线多头排列",
         "MA金叉",
-        "红柱放大",
-        "触布林上轨"
+        "MACD金叉",
+        "红柱放大"
       ],
       "next_day_estimate": {
-        "estimate": 1.2,
+        "estimate": 3.0,
         "factors": [
           "技术面偏强",
-          "MACD多头",
-          "触及布林上轨"
+          "连续上涨",
+          "MACD多头"
         ]
-      }
+      },
+      "entry_score": 23
     },
     {
-      "code": "002617",
-      "name": "露笑科技",
+      "code": "600992",
+      "name": "贵绳股份",
       "score": 78,
-      "price": 9.15,
-      "change_pct": 2.92,
-      "buy_point": 9.06,
-      "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 8.61,
-      "target_price": 10.44,
+      "price": 12.4,
+      "change_pct": 1.14,
+      "buy_point": 12.38,
+      "buy_time": "午间买入 (12:00-13:00)",
+      "stop_loss": 11.76,
+      "target_price": 13.5,
       "signals": [
         "温和上涨",
         "放量",
         "短期多头"
       ],
       "next_day_estimate": {
-        "estimate": 2.0,
+        "estimate": 3.0,
         "factors": [
           "技术面偏强",
+          "连续上涨",
           "MACD多头"
         ]
-      }
+      },
+      "entry_score": 27
     },
     {
-      "code": "002031",
-      "name": "巨轮智能",
+      "code": "000809",
+      "name": "和展能源",
       "score": 78,
-      "price": 7.5,
-      "change_pct": 3.31,
-      "buy_point": 6.83,
-      "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 6.49,
-      "target_price": 8.98,
+      "price": 3.99,
+      "change_pct": 1.53,
+      "buy_point": 3.98,
+      "buy_time": "午间买入 (12:00-13:00)",
+      "stop_loss": 3.78,
+      "target_price": 4.84,
       "signals": [
         "温和上涨",
         "高换手",
@@ -152,9 +153,10 @@
           "技术面偏强",
           "MACD多头"
         ]
-      }
+      },
+      "entry_score": 32
     }
   ],
-  "market_summary": "全市场3065只：上涨1822只(59.4%)，下跌983只(32.1%) | 涨停60只，跌停4只，平均涨幅+1.03% | 赚钱效应一般",
+  "market_summary": "全市场3066只：上涨1209只(39.4%)，下跌1613只(52.6%) | 涨停91只，跌停14只，平均涨幅+0.01% | 赚钱效应较差",
   "morning_risk": 50
 }
