@@ -63,8 +63,8 @@
           "icon": "✗",
           "hit_dir": false
         },
-        "latest_price": 6.38,
-        "latest_change_pct": 2.08
+        "latest_price": 6.39,
+        "latest_change_pct": 0.16
       },
       {
         "code": "002568",
@@ -124,8 +124,8 @@
           "icon": "✗",
           "hit_dir": false
         },
-        "latest_price": 18.22,
-        "latest_change_pct": 3.82
+        "latest_price": 18.19,
+        "latest_change_pct": -0.16
       },
       {
         "code": "600360",
@@ -186,8 +186,8 @@
           "icon": "↓",
           "hit_dir": true
         },
-        "latest_price": 11.49,
-        "latest_change_pct": -3.61
+        "latest_price": 10.58,
+        "latest_change_pct": -7.92
       },
       {
         "code": "600938",
@@ -246,8 +246,8 @@
           "icon": "✗",
           "hit_dir": false
         },
-        "latest_price": 34.62,
-        "latest_change_pct": -3.38
+        "latest_price": 35.17,
+        "latest_change_pct": 1.59
       },
       {
         "code": "002741",
@@ -303,8 +303,8 @@
           "icon": "✗",
           "hit_dir": false
         },
-        "latest_price": 27.9,
-        "latest_change_pct": 10.02
+        "latest_price": 28.13,
+        "latest_change_pct": 0.82
       }
     ],
     "buy": [
@@ -362,8 +362,8 @@
           "icon": "✗",
           "hit_dir": false
         },
-        "latest_price": 6.92,
-        "latest_change_pct": -2.4
+        "latest_price": 6.79,
+        "latest_change_pct": -1.88
       },
       {
         "code": "002119",
@@ -421,8 +421,8 @@
           "icon": "✗",
           "hit_dir": false
         },
-        "latest_price": 25.16,
-        "latest_change_pct": 6.93
+        "latest_price": 25.31,
+        "latest_change_pct": 0.6
       },
       {
         "code": "002127",
@@ -479,8 +479,8 @@
           "icon": "✗",
           "hit_dir": false
         },
-        "latest_price": 3.15,
-        "latest_change_pct": 1.29
+        "latest_price": 3.12,
+        "latest_change_pct": -0.95
       },
       {
         "code": "002457",
@@ -526,18 +526,18 @@
         "boll_lower": 10.61,
         "snapshot_price": 12.77,
         "next_day_actual": {
-          "actual_pct": 3.92,
-          "actual_close": 13.27,
+          "actual_pct": 2.98,
+          "actual_close": 13.151,
           "next_date": "2026-05-21",
-          "vs_estimate": 3.42
+          "vs_estimate": 2.48
         },
         "prediction_result": {
           "label": "超预期+3.4%",
           "icon": "🔥",
           "hit_dir": true
         },
-        "latest_price": 13.25,
-        "latest_change_pct": -1.12
+        "latest_price": 11.86,
+        "latest_change_pct": -9.67
       },
       {
         "code": "603186",
@@ -597,8 +597,8 @@
           "icon": "🔥",
           "hit_dir": true
         },
-        "latest_price": 131.25,
-        "latest_change_pct": 5.98
+        "latest_price": 132.6,
+        "latest_change_pct": 1.03
       },
       {
         "code": "603629",
@@ -656,8 +656,8 @@
           "icon": "✓",
           "hit_dir": true
         },
-        "latest_price": 202.0,
-        "latest_change_pct": 3.25
+        "latest_price": 211.94,
+        "latest_change_pct": 4.92
       },
       {
         "code": "600076",
@@ -713,8 +713,8 @@
           "icon": "↓",
           "hit_dir": false
         },
-        "latest_price": 3.94,
-        "latest_change_pct": -0.51
+        "latest_price": 3.7,
+        "latest_change_pct": -6.09
       },
       {
         "code": "600088",
@@ -769,8 +769,8 @@
           "icon": "✗",
           "hit_dir": false
         },
-        "latest_price": 15.2,
-        "latest_change_pct": -3.06
+        "latest_price": 15.24,
+        "latest_change_pct": 0.26
       },
       {
         "code": "002254",
@@ -827,8 +827,8 @@
           "icon": "≈",
           "hit_dir": false
         },
-        "latest_price": 15.55,
-        "latest_change_pct": -2.39
+        "latest_price": 15.09,
+        "latest_change_pct": -2.96
       },
       {
         "code": "002281",
@@ -888,8 +888,8 @@
           "icon": "✗",
           "hit_dir": true
         },
-        "latest_price": 223.98,
-        "latest_change_pct": 3.76
+        "latest_price": 206.72,
+        "latest_change_pct": -7.71
       }
     ],
     "watch": [],
