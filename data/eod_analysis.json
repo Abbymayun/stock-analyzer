@@ -1,94 +1,223 @@
 {
-  "update_time": "2026-05-26 14:20:01",
+  "update_time": "2026-05-27 14:20:01",
   "cn_indices": {
     "000001": {
       "name": "上证指数",
       "code": "000001",
-      "price": 4118.97,
-      "prev_close": 4152.57,
-      "change_pct": -0.81
+      "price": 4094.78,
+      "prev_close": 4145.37,
+      "change_pct": -1.22
     },
     "399001": {
       "name": "深证成指",
       "code": "399001",
-      "price": 15729.2,
-      "prev_close": 15856.61,
-      "change_pct": -0.8
+      "price": 15775.47,
+      "prev_close": 15876.16,
+      "change_pct": -0.63
     },
     "399006": {
       "name": "创业板指",
       "code": "399006",
-      "price": 4006.2,
-      "prev_close": 4021.16,
-      "change_pct": -0.37
+      "price": 4063.26,
+      "prev_close": 4043.07,
+      "change_pct": 0.5
     },
     "000688": {
       "name": "科创50",
       "code": "000688",
-      "price": 1842.07,
-      "prev_close": 1896.04,
-      "change_pct": -2.85
+      "price": 1833.45,
+      "prev_close": 1867.71,
+      "change_pct": -1.83
     },
     "000300": {
       "name": "沪深300",
       "code": "000300",
-      "price": 4912.63,
-      "prev_close": 4921.6,
-      "change_pct": -0.18
+      "price": 4917.34,
+      "prev_close": 4947.85,
+      "change_pct": -0.62
     },
     "399005": {
       "name": "中小100",
       "code": "399005",
-      "price": 9619.82,
-      "prev_close": 9731.81,
-      "change_pct": -1.15
+      "price": 9613.89,
+      "prev_close": 9718.17,
+      "change_pct": -1.07
     }
   },
   "recommended_stocks": [
     {
-      "code": "600171",
-      "name": "上海贝岭",
-      "status": "下跌",
-      "current_price": 29.39,
-      "change_pct": -3.89,
-      "high": 30.27,
-      "low": 29.1,
-      "turnover_rate": 3.22,
-      "amplitude": 3.83,
-      "pnl_pct": -1.14,
-      "action": "⚠️ 跌幅较大，关注止损位",
-      "action_type": "关注止损"
-    },
-    {
-      "code": "002334",
-      "name": "英威腾",
-      "status": "下跌",
-      "current_price": 8.95,
-      "change_pct": -4.18,
-      "high": 9.25,
-      "low": 8.91,
-      "turnover_rate": 5.19,
-      "amplitude": 3.64,
-      "pnl_pct": -1.97,
-      "action": "⚠️ 跌幅较大，关注止损位",
-      "action_type": "关注止损"
-    },
-    {
-      "code": "000582",
-      "name": "北部湾港",
+      "code": "600310",
+      "name": "广西能源",
       "status": "正常",
-      "current_price": 13.2,
-      "change_pct": 2.4,
-      "high": 13.44,
-      "low": 12.81,
-      "turnover_rate": 2.94,
-      "amplitude": 4.89,
-      "pnl_pct": 4.35,
+      "current_price": 5.75,
+      "change_pct": 3.98,
+      "high": 5.9,
+      "low": 5.47,
+      "turnover_rate": 13.37,
+      "amplitude": 7.78,
+      "pnl_pct": 7.88,
       "action": "🟢 持有，走势正常",
       "action_type": "持有"
+    },
+    {
+      "code": "000600",
+      "name": "建投能源",
+      "status": "正常",
+      "current_price": 10.84,
+      "change_pct": 3.44,
+      "high": 10.99,
+      "low": 10.31,
+      "turnover_rate": 7.04,
+      "amplitude": 6.49,
+      "pnl_pct": 5.65,
+      "action": "🟢 持有，走势正常",
+      "action_type": "持有"
+    },
+    {
+      "code": "605006",
+      "name": "山东玻纤",
+      "status": "下跌",
+      "current_price": 17.7,
+      "change_pct": -1.23,
+      "high": 18.91,
+      "low": 16.7,
+      "turnover_rate": 12.32,
+      "amplitude": 12.33,
+      "pnl_pct": 14.12,
+      "action": "🟡 小幅波动，继续观察",
+      "action_type": "观察"
     }
   ],
   "top_buys": [
+    {
+      "code": "600452",
+      "name": "涪陵电力",
+      "score": 100,
+      "price": 13.33,
+      "change_pct": 1.06,
+      "buy_point": 12.98,
+      "buy_time": "尾盘买入 (14:20-14:50)",
+      "stop_loss": 12.33,
+      "target_price": 14.06,
+      "signals": [
+        "温和上涨",
+        "放量",
+        "均线多头排列",
+        "MA金叉",
+        "红柱放大"
+      ],
+      "next_day_estimate": {
+        "estimate": 2.0,
+        "factors": [
+          "技术面偏强",
+          "MACD多头"
+        ]
+      },
+      "entry_score": 24
+    },
+    {
+      "code": "002870",
+      "name": "香山股份",
+      "score": 100,
+      "price": 42.72,
+      "change_pct": 3.64,
+      "buy_point": 41.68,
+      "buy_time": "尾盘买入 (14:20-14:50)",
+      "stop_loss": 39.6,
+      "target_price": 45.69,
+      "signals": [
+        "温和上涨",
+        "大振幅",
+        "放量",
+        "均线多头排列",
+        "MA金叉",
+        "MACD金叉",
+        "红柱放大"
+      ],
+      "next_day_estimate": {
+        "estimate": 2.0,
+        "factors": [
+          "技术面偏强",
+          "MACD多头"
+        ]
+      },
+      "entry_score": 20
+    },
+    {
+      "code": "002380",
+      "name": "科远智慧",
+      "score": 78,
+      "price": 45.61,
+      "change_pct": 2.1,
+      "buy_point": 44.73,
+      "buy_time": "尾盘买入 (14:20-14:50)",
+      "stop_loss": 42.49,
+      "target_price": 52.08,
+      "signals": [
+        "温和上涨",
+        "大振幅",
+        "放量",
+        "短期多头"
+      ],
+      "next_day_estimate": {
+        "estimate": 2.0,
+        "factors": [
+          "技术面偏强",
+          "MACD多头"
+        ]
+      },
+      "entry_score": 24
+    }
+  ],
+  "market_stats": {
+    "total": 3066,
+    "up": 388,
+    "down": 2486,
+    "flat": 192,
+    "limit_up": 32,
+    "limit_down": 9,
+    "up_ratio": 12.7,
+    "avg_change": -1.81
+  },
+  "sentiment": {
+    "000001": {
+      "level": "弱势",
+      "score": 20,
+      "emoji": "📉"
+    },
+    "399001": {
+      "level": "偏弱",
+      "score": 40,
+      "emoji": "↘️"
+    },
+    "399006": {
+      "level": "偏强",
+      "score": 60,
+      "emoji": "↗️"
+    },
+    "000688": {
+      "level": "弱势",
+      "score": 20,
+      "emoji": "📉"
+    },
+    "000300": {
+      "level": "偏弱",
+      "score": 40,
+      "emoji": "↘️"
+    },
+    "399005": {
+      "level": "弱势",
+      "score": 20,
+      "emoji": "📉"
+    }
+  },
+  "advices": [
+    "📉 大盘偏弱（上证-1.22%），注意风险，尾盘考虑减仓",
+    "🟢 推荐股平均浮盈 +9.2%，走势良好，继续持有",
+    "⚠️ 赚钱效应较差（12.7%上涨），操作需谨慎",
+    "⏰ 距收盘约40分钟，避免尾盘追涨杀跌"
+  ],
+  "source_recommendations": [
     {
       "code": "600310",
       "name": "广西能源",
@@ -96,7 +225,7 @@
       "price": 5.68,
       "change_pct": 1.25,
       "buy_point": 5.33,
-      "buy_time": "尾盘买入 (14:20-14:50)",
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
       "stop_loss": 5.07,
       "target_price": 6.09,
       "signals": [
@@ -116,7 +245,36 @@
           "MACD多头"
         ]
       },
-      "entry_score": 23
+      "entry_score": 17
+    },
+    {
+      "code": "000600",
+      "name": "建投能源",
+      "score": 98,
+      "price": 10.6,
+      "change_pct": 3.11,
+      "buy_point": 10.26,
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
+      "stop_loss": 9.75,
+      "target_price": 11.37,
+      "signals": [
+        "温和上涨",
+        "收在高位",
+        "大振幅",
+        "低PE",
+        "放量",
+        "均线多头排列",
+        "红柱放大"
+      ],
+      "next_day_estimate": {
+        "estimate": 3.0,
+        "factors": [
+          "技术面偏强",
+          "连续上涨",
+          "MACD多头"
+        ]
+      },
+      "entry_score": 14
     },
     {
       "code": "605006",
@@ -125,7 +283,7 @@
       "price": 16.84,
       "change_pct": 3.38,
       "buy_point": 15.51,
-      "buy_time": "尾盘买入 (14:20-14:50)",
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
       "stop_loss": 14.73,
       "target_price": 18.05,
       "signals": [
@@ -146,174 +304,7 @@
           "MACD多头"
         ]
       },
-      "entry_score": 18
-    },
-    {
-      "code": "000600",
-      "name": "建投能源",
-      "score": 98,
-      "price": 10.6,
-      "change_pct": 3.11,
-      "buy_point": 10.26,
-      "buy_time": "尾盘买入 (14:20-14:50)",
-      "stop_loss": 9.75,
-      "target_price": 11.37,
-      "signals": [
-        "温和上涨",
-        "收在高位",
-        "大振幅",
-        "低PE",
-        "放量",
-        "均线多头排列",
-        "红柱放大"
-      ],
-      "next_day_estimate": {
-        "estimate": 3.0,
-        "factors": [
-          "技术面偏强",
-          "连续上涨",
-          "MACD多头"
-        ]
-      },
       "entry_score": 16
-    }
-  ],
-  "market_stats": {
-    "total": 3066,
-    "up": 604,
-    "down": 2242,
-    "flat": 220,
-    "limit_up": 29,
-    "limit_down": 14,
-    "up_ratio": 19.7,
-    "avg_change": -1.38
-  },
-  "sentiment": {
-    "000001": {
-      "level": "偏弱",
-      "score": 40,
-      "emoji": "↘️"
-    },
-    "399001": {
-      "level": "偏弱",
-      "score": 40,
-      "emoji": "↘️"
-    },
-    "399006": {
-      "level": "偏弱",
-      "score": 40,
-      "emoji": "↘️"
-    },
-    "000688": {
-      "level": "弱势",
-      "score": 20,
-      "emoji": "📉"
-    },
-    "000300": {
-      "level": "震荡",
-      "score": 50,
-      "emoji": "➡️"
-    },
-    "399005": {
-      "level": "弱势",
-      "score": 20,
-      "emoji": "📉"
-    }
-  },
-  "advices": [
-    "📉 大盘偏弱（上证-0.81%），注意风险，尾盘考虑减仓",
-    "🟢 推荐股平均浮盈 +4.3%，走势良好，继续持有",
-    "🟡 推荐股平均浮亏 -1.6%，关注关键支撑位",
-    "⚠️ 赚钱效应较差（19.7%上涨），操作需谨慎",
-    "⏰ 距收盘约40分钟，避免尾盘追涨杀跌"
-  ],
-  "source_recommendations": [
-    {
-      "code": "600171",
-      "name": "上海贝岭",
-      "score": 100,
-      "price": 30.58,
-      "change_pct": 3.49,
-      "buy_point": 29.73,
-      "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 28.24,
-      "target_price": 31.41,
-      "signals": [
-        "温和上涨",
-        "收在高位",
-        "大振幅",
-        "放量",
-        "均线多头排列",
-        "MA金叉",
-        "MACD金叉",
-        "红柱放大"
-      ],
-      "next_day_estimate": {
-        "estimate": 3.0,
-        "factors": [
-          "技术面偏强",
-          "连续上涨",
-          "MACD多头"
-        ]
-      },
-      "entry_score": 18
-    },
-    {
-      "code": "002334",
-      "name": "英威腾",
-      "score": 95,
-      "price": 9.4,
-      "change_pct": 3.75,
-      "buy_point": 9.13,
-      "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 8.68,
-      "target_price": 9.76,
-      "signals": [
-        "温和上涨",
-        "高换手",
-        "大振幅",
-        "放量",
-        "均线多头排列",
-        "红柱放大",
-        "放量上涨"
-      ],
-      "next_day_estimate": {
-        "estimate": 4.0,
-        "factors": [
-          "技术面偏强",
-          "连续上涨",
-          "MACD多头",
-          "放量上攻"
-        ]
-      },
-      "entry_score": 15
-    },
-    {
-      "code": "000582",
-      "name": "北部湾港",
-      "score": 100,
-      "price": 12.89,
-      "change_pct": 4.12,
-      "buy_point": 12.65,
-      "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 12.01,
-      "target_price": 13.97,
-      "signals": [
-        "温和上涨",
-        "大振幅",
-        "放量",
-        "均线多头排列",
-        "MACD金叉",
-        "红柱放大"
-      ],
-      "next_day_estimate": {
-        "estimate": 2.0,
-        "factors": [
-          "技术面偏强",
-          "MACD多头"
-        ]
-      },
-      "entry_score": 21
     }
   ]
 }
