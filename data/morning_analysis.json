@@ -1,5 +1,5 @@
 {
-  "update_time": "2026-05-26 08:31:02",
+  "update_time": "2026-05-27 08:31:03",
   "us_indices": {},
   "bond_yield": {},
   "commodities": {},
@@ -9,37 +9,37 @@
     "000001": {
       "name": "上证指数",
       "code": "000001",
-      "price": 4152.57,
-      "prev_close": 4112.9,
-      "change_pct": 0.96
+      "price": 4145.37,
+      "prev_close": 4152.57,
+      "change_pct": -0.17
     },
     "399001": {
       "name": "深证成指",
       "code": "399001",
-      "price": 15856.61,
-      "prev_close": 15597.3,
-      "change_pct": 1.66
+      "price": 15876.16,
+      "prev_close": 15856.61,
+      "change_pct": 0.12
     },
     "399006": {
       "name": "创业板指",
       "code": "399006",
-      "price": 4021.16,
-      "prev_close": 3938.5,
-      "change_pct": 2.1
+      "price": 4043.07,
+      "prev_close": 4021.16,
+      "change_pct": 0.54
     },
     "000688": {
       "name": "科创50",
       "code": "000688",
-      "price": 1896.04,
-      "prev_close": 1790.77,
-      "change_pct": 5.88
+      "price": 1867.71,
+      "prev_close": 1896.04,
+      "change_pct": -1.49
     },
     "000300": {
       "name": "沪深300",
       "code": "000300",
-      "price": 4921.6,
-      "prev_close": 4845.1,
-      "change_pct": 1.58
+      "price": 4947.85,
+      "prev_close": 4921.6,
+      "change_pct": 0.53
     }
   },
   "us_impact": {
@@ -80,22 +80,21 @@
   },
   "top_buys": [
     {
-      "code": "600171",
-      "name": "上海贝岭",
+      "code": "600310",
+      "name": "广西能源",
       "score": 100,
-      "price": 30.58,
-      "change_pct": 3.49,
-      "buy_point": 29.73,
+      "price": 5.68,
+      "change_pct": 1.25,
+      "buy_point": 5.33,
       "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 28.24,
-      "target_price": 31.41,
+      "stop_loss": 5.07,
+      "target_price": 6.09,
       "signals": [
         "温和上涨",
-        "收在高位",
+        "高换手",
         "大振幅",
         "放量",
         "均线多头排列",
-        "MA金叉",
         "MACD金叉",
         "红柱放大"
       ],
@@ -107,66 +106,68 @@
           "MACD多头"
         ]
       },
-      "entry_score": 18
+      "entry_score": 17
     },
     {
-      "code": "002334",
-      "name": "英威腾",
-      "score": 95,
-      "price": 9.4,
-      "change_pct": 3.75,
-      "buy_point": 9.13,
+      "code": "000600",
+      "name": "建投能源",
+      "score": 98,
+      "price": 10.6,
+      "change_pct": 3.11,
+      "buy_point": 10.26,
       "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 8.68,
-      "target_price": 9.76,
+      "stop_loss": 9.75,
+      "target_price": 11.37,
+      "signals": [
+        "温和上涨",
+        "收在高位",
+        "大振幅",
+        "低PE",
+        "放量",
+        "均线多头排列",
+        "红柱放大"
+      ],
+      "next_day_estimate": {
+        "estimate": 3.0,
+        "factors": [
+          "技术面偏强",
+          "连续上涨",
+          "MACD多头"
+        ]
+      },
+      "entry_score": 14
+    },
+    {
+      "code": "605006",
+      "name": "山东玻纤",
+      "score": 95,
+      "price": 16.84,
+      "change_pct": 3.38,
+      "buy_point": 15.51,
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
+      "stop_loss": 14.73,
+      "target_price": 18.05,
       "signals": [
         "温和上涨",
         "高换手",
         "大振幅",
         "放量",
         "均线多头排列",
+        "MA金叉",
         "红柱放大",
-        "放量上涨"
+        "RSI偏高"
       ],
       "next_day_estimate": {
-        "estimate": 4.0,
+        "estimate": 3.0,
         "factors": [
           "技术面偏强",
           "连续上涨",
-          "MACD多头",
-          "放量上攻"
-        ]
-      },
-      "entry_score": 15
-    },
-    {
-      "code": "000582",
-      "name": "北部湾港",
-      "score": 100,
-      "price": 12.89,
-      "change_pct": 4.12,
-      "buy_point": 12.65,
-      "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 12.01,
-      "target_price": 13.97,
-      "signals": [
-        "温和上涨",
-        "大振幅",
-        "放量",
-        "均线多头排列",
-        "MACD金叉",
-        "红柱放大"
-      ],
-      "next_day_estimate": {
-        "estimate": 2.0,
-        "factors": [
-          "技术面偏强",
           "MACD多头"
         ]
       },
-      "entry_score": 21
+      "entry_score": 16
     }
   ],
   "yesterday_sentiment": "中性",
-  "yesterday_score": 51.7
+  "yesterday_score": 46.6
 }
