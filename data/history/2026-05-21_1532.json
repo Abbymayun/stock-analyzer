@@ -65,8 +65,8 @@
           "icon": "↓",
           "hit_dir": false
         },
-        "latest_price": 5.41,
-        "latest_change_pct": 1.12
+        "latest_price": 5.22,
+        "latest_change_pct": -3.51
       },
       {
         "code": "002917",
@@ -125,8 +125,8 @@
           "icon": "✓",
           "hit_dir": true
         },
-        "latest_price": 14.75,
-        "latest_change_pct": 0.2
+        "latest_price": 14.29,
+        "latest_change_pct": -3.12
       },
       {
         "code": "601177",
@@ -186,8 +186,8 @@
           "icon": "✗",
           "hit_dir": false
         },
-        "latest_price": 17.3,
-        "latest_change_pct": 2.73
+        "latest_price": 17.6,
+        "latest_change_pct": 1.73
       },
       {
         "code": "603197",
@@ -247,8 +247,8 @@
           "icon": "✗",
           "hit_dir": false
         },
-        "latest_price": 33.96,
-        "latest_change_pct": -1.39
+        "latest_price": 33.05,
+        "latest_change_pct": -2.68
       },
       {
         "code": "605488",
@@ -309,8 +309,8 @@
           "icon": "🔥",
           "hit_dir": true
         },
-        "latest_price": 40.96,
-        "latest_change_pct": 2.35
+        "latest_price": 37.68,
+        "latest_change_pct": -8.01
       }
     ],
     "buy": [
@@ -368,8 +368,8 @@
           "icon": "↓",
           "hit_dir": false
         },
-        "latest_price": 28.11,
-        "latest_change_pct": -0.74
+        "latest_price": 26.59,
+        "latest_change_pct": -5.41
       },
       {
         "code": "603267",
@@ -425,8 +425,8 @@
           "icon": "🔥",
           "hit_dir": false
         },
-        "latest_price": 64.99,
-        "latest_change_pct": -4.13
+        "latest_price": 63.69,
+        "latest_change_pct": -2.0
       },
       {
         "code": "603305",
@@ -480,8 +480,8 @@
           "icon": "↓",
           "hit_dir": false
         },
-        "latest_price": 16.7,
-        "latest_change_pct": -2.22
+        "latest_price": 16.4,
+        "latest_change_pct": -1.8
       },
       {
         "code": "605399",
@@ -539,8 +539,8 @@
           "icon": "✓",
           "hit_dir": true
         },
-        "latest_price": 15.67,
-        "latest_change_pct": -1.14
+        "latest_price": 15.23,
+        "latest_change_pct": -2.81
       },
       {
         "code": "000591",
@@ -596,8 +596,8 @@
           "icon": "↓",
           "hit_dir": false
         },
-        "latest_price": 5.9,
-        "latest_change_pct": -2.32
+        "latest_price": 6.01,
+        "latest_change_pct": 1.86
       },
       {
         "code": "600984",
@@ -653,8 +653,8 @@
           "icon": "↓",
           "hit_dir": false
         },
-        "latest_price": 4.99,
-        "latest_change_pct": -1.58
+        "latest_price": 4.79,
+        "latest_change_pct": -4.01
       },
       {
         "code": "603266",
@@ -709,8 +709,8 @@
           "icon": "↓",
           "hit_dir": true
         },
-        "latest_price": 20.08,
-        "latest_change_pct": -2.29
+        "latest_price": 19.3,
+        "latest_change_pct": -3.88
       },
       {
         "code": "603097",
@@ -769,8 +769,8 @@
           "icon": "≈",
           "hit_dir": true
         },
-        "latest_price": 29.83,
-        "latest_change_pct": -1.58
+        "latest_price": 29.33,
+        "latest_change_pct": -1.68
       },
       {
         "code": "000543",
@@ -826,8 +826,8 @@
           "icon": "✓",
           "hit_dir": true
         },
-        "latest_price": 9.04,
-        "latest_change_pct": 0.67
+        "latest_price": 9.11,
+        "latest_change_pct": 0.77
       },
       {
         "code": "000600",
@@ -886,8 +886,8 @@
           "icon": "≈",
           "hit_dir": false
         },
-        "latest_price": 10.48,
-        "latest_change_pct": 1.95
+        "latest_price": 11.0,
+        "latest_change_pct": 4.96
       }
     ],
     "watch": [],
