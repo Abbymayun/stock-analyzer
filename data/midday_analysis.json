@@ -1,5 +1,5 @@
 {
-  "update_time": "2026-05-26 12:00:42",
+  "update_time": "2026-05-27 12:00:42",
   "us_indices": {},
   "commodities": {},
   "fx": {},
@@ -8,37 +8,37 @@
     "000001": {
       "name": "上证指数",
       "code": "000001",
-      "price": 4117.85,
-      "prev_close": 4152.57,
-      "change_pct": -0.84
+      "price": 4099.23,
+      "prev_close": 4145.37,
+      "change_pct": -1.11
     },
     "399001": {
       "name": "深证成指",
       "code": "399001",
-      "price": 15718.98,
-      "prev_close": 15856.61,
-      "change_pct": -0.87
+      "price": 15809.79,
+      "prev_close": 15876.16,
+      "change_pct": -0.42
     },
     "399006": {
       "name": "创业板指",
       "code": "399006",
-      "price": 4000.5,
-      "prev_close": 4021.16,
-      "change_pct": -0.51
+      "price": 4071.41,
+      "prev_close": 4043.07,
+      "change_pct": 0.7
     },
     "000688": {
       "name": "科创50",
       "code": "000688",
-      "price": 1841.35,
-      "prev_close": 1896.04,
-      "change_pct": -2.88
+      "price": 1851.68,
+      "prev_close": 1867.71,
+      "change_pct": -0.86
     },
     "000300": {
       "name": "沪深300",
       "code": "000300",
-      "price": 4907.69,
-      "prev_close": 4921.6,
-      "change_pct": -0.28
+      "price": 4912.07,
+      "prev_close": 4947.85,
+      "change_pct": -0.72
     }
   },
   "us_impact": {
@@ -70,8 +70,8 @@
   },
   "impact_summary": "🇺🇸 美股数据未获取",
   "strategy": {
-    "risk_score": 58,
-    "strategy_text": "➡️ 外围中性影响，上证-0.84%按自身节奏运行\n➡️ 上证指数午盘-0.84%，走势平稳\n📉 科创50(-2.88%)弱于主板，科技股回调\n🟡 赚钱效应偏差（39%上涨），午后以观望为主\n\n🟡 【午后策略】中高风险环境\n  不开新仓，持仓股可择机做T或持有观望\n  关注午后1:30-2:00是否有企稳信号\n\n  🚫 午后操作规则：\n  • 上午已涨超5%的不追（获利盘压力）\n  • 上午大幅下跌的股票不盲目抄底（等企稳信号）\n  • 临近尾盘（14:30后）谨慎操作",
+    "risk_score": 75,
+    "strategy_text": "➡️ 外围中性影响，上证-1.11%按自身节奏运行\n⚠️ 上证指数午盘跌1.11%，上午承压明显\n🔴 赚钱效应极差（仅28%上涨），多数个股下跌，午后不宜追高\n\n🔴 【午后策略】高风险环境\n  不加仓、不追高，持仓股若继续走弱可考虑减仓\n  若大盘午后继续下跌，优先保护本金\n\n  🚫 午后操作规则：\n  • 上午已涨超5%的不追（获利盘压力）\n  • 上午大幅下跌的股票不盲目抄底（等企稳信号）\n  • 临近尾盘（14:30后）谨慎操作",
     "position_advice": {
       "max": 0.2,
       "single_max": 0.3
@@ -79,20 +79,51 @@
   },
   "top_buys": [
     {
-      "code": "603289",
-      "name": "泰瑞机器",
-      "score": 97,
-      "price": 12.39,
-      "change_pct": 2.14,
-      "buy_point": 11.72,
+      "code": "002578",
+      "name": "闽发铝业",
+      "score": 99,
+      "price": 4.15,
+      "change_pct": 2.22,
+      "buy_point": 4.03,
       "buy_time": "午间买入 (12:00-13:00)",
-      "stop_loss": 11.13,
-      "target_price": 13.13,
+      "stop_loss": 3.83,
+      "target_price": 4.36,
       "signals": [
         "温和上涨",
+        "收在高位",
+        "大振幅",
         "放量",
         "MA金叉",
         "MACD金叉",
+        "红柱放大",
+        "放量上涨"
+      ],
+      "next_day_estimate": {
+        "estimate": 4.0,
+        "factors": [
+          "技术面偏强",
+          "连续上涨",
+          "MACD多头",
+          "放量上攻"
+        ]
+      },
+      "entry_score": 24
+    },
+    {
+      "code": "603099",
+      "name": "长白山",
+      "score": 100,
+      "price": 38.19,
+      "change_pct": 2.0,
+      "buy_point": 37.62,
+      "buy_time": "午间买入 (12:00-13:00)",
+      "stop_loss": 35.74,
+      "target_price": 40.17,
+      "signals": [
+        "温和上涨",
+        "放量",
+        "均线多头排列",
+        "MA金叉",
         "红柱放大"
       ],
       "next_day_estimate": {
@@ -103,22 +134,28 @@
           "MACD多头"
         ]
       },
-      "entry_score": 23
+      "entry_score": 24
     },
     {
-      "code": "600992",
-      "name": "贵绳股份",
-      "score": 78,
-      "price": 12.4,
-      "change_pct": 1.14,
-      "buy_point": 12.38,
+      "code": "000960",
+      "name": "锡业股份",
+      "score": 100,
+      "price": 41.74,
+      "change_pct": 4.77,
+      "buy_point": 38.47,
       "buy_time": "午间买入 (12:00-13:00)",
-      "stop_loss": 11.76,
-      "target_price": 13.5,
+      "stop_loss": 36.54,
+      "target_price": 43.23,
       "signals": [
         "温和上涨",
+        "收在高位",
+        "大振幅",
         "放量",
-        "短期多头"
+        "均线多头排列",
+        "MA金叉",
+        "MACD金叉",
+        "红柱放大",
+        "RSI偏高"
       ],
       "next_day_estimate": {
         "estimate": 3.0,
@@ -128,35 +165,9 @@
           "MACD多头"
         ]
       },
-      "entry_score": 27
-    },
-    {
-      "code": "000809",
-      "name": "和展能源",
-      "score": 78,
-      "price": 3.99,
-      "change_pct": 1.53,
-      "buy_point": 3.98,
-      "buy_time": "午间买入 (12:00-13:00)",
-      "stop_loss": 3.78,
-      "target_price": 4.84,
-      "signals": [
-        "温和上涨",
-        "高换手",
-        "大振幅",
-        "放量",
-        "短期多头"
-      ],
-      "next_day_estimate": {
-        "estimate": 2.0,
-        "factors": [
-          "技术面偏强",
-          "MACD多头"
-        ]
-      },
-      "entry_score": 32
+      "entry_score": 19
     }
   ],
-  "market_summary": "全市场3066只：上涨1209只(39.4%)，下跌1613只(52.6%) | 涨停91只，跌停14只，平均涨幅+0.01% | 赚钱效应较差",
+  "market_summary": "全市场3066只：上涨863只(28.1%)，下跌1978只(64.5%) | 涨停41只，跌停20只，平均涨幅-0.83% | 赚钱效应较差",
   "morning_risk": 50
 }
