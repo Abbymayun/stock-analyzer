@@ -1,143 +1,77 @@
 {
-  "update_time": "2026-05-28 13:03:45",
-  "us_indices": {
-    "int_dji": {
-      "name": "道琼斯",
-      "price": 46247.29,
-      "prev_close": 45948.62,
-      "change_pct": 0.65
-    },
-    "int_nasdaq": {
-      "name": "纳斯达克",
-      "price": 22484.07,
-      "prev_close": 22385.57,
-      "change_pct": 0.44
-    },
-    "int_sp500": {
-      "name": "标普500",
-      "price": 6643.7,
-      "prev_close": 6604.73,
-      "change_pct": 0.59
-    }
-  },
-  "commodities": {
-    "hf_GC": {
-      "name": "COMEX黄金",
-      "unit": "美元/盎司",
-      "price": 4399.65,
-      "prev_close": 4481.5,
-      "change_pct": -1.83
-    },
-    "hf_CL": {
-      "name": "WTI原油",
-      "unit": "美元/桶",
-      "price": 92.18,
-      "prev_close": 88.68,
-      "change_pct": 3.94
-    },
-    "hf_SI": {
-      "name": "COMEX白银",
-      "unit": "美元/盎司",
-      "price": 72.09,
-      "prev_close": 74.89,
-      "change_pct": -3.75
-    }
-  },
-  "fx": {
-    "usdcnh": {
-      "name": "美元/离岸人民币",
-      "price": 6.7856,
-      "prev_close": 6.7742,
-      "change_pct": 0.17
-    }
-  },
-  "global_indices": {
-    "hkHSI": {
-      "name": "恒生指数",
-      "price": 25230.58,
-      "prev_close": 25328.23,
-      "change_pct": -0.39
-    }
-  },
+  "update_time": "2026-05-28 12:00:42",
+  "us_indices": {},
+  "commodities": {},
+  "fx": {},
+  "global_indices": {},
   "cn_indices": {
     "000001": {
       "name": "上证指数",
       "code": "000001",
-      "price": 4064.08,
+      "price": 4087.86,
       "prev_close": 4093.73,
-      "change_pct": -0.72
+      "change_pct": -0.14
     },
     "399001": {
       "name": "深证成指",
       "code": "399001",
-      "price": 15566.89,
+      "price": 15695.48,
       "prev_close": 15736.47,
-      "change_pct": -1.08
+      "change_pct": -0.26
     },
     "399006": {
       "name": "创业板指",
       "code": "399006",
-      "price": 4021.36,
+      "price": 4054.21,
       "prev_close": 4045.77,
-      "change_pct": -0.6
+      "change_pct": 0.21
     },
     "000688": {
       "name": "科创50",
       "code": "000688",
-      "price": 1810.4,
+      "price": 1838.84,
       "prev_close": 1815.45,
-      "change_pct": -0.28
+      "change_pct": 1.29
     },
     "000300": {
       "name": "沪深300",
       "code": "000300",
-      "price": 4850.01,
+      "price": 4881.17,
       "prev_close": 4908.17,
-      "change_pct": -1.18
+      "change_pct": -0.55
     }
   },
   "us_impact": {
-    "direction": "小幅利好",
-    "level": "medium",
-    "avg_pct": 0.56,
-    "summary": "美股全线上涨，三大指数平均+0.56%。对A股：小幅利好",
-    "detail": "📈 道琼斯 46247.29 (+0.65%)\n📈 纳斯达克 22484.07 (+0.44%)\n📈 标普500 6643.70 (+0.59%)",
+    "direction": "中性",
+    "level": "low",
+    "summary": "美股数据未获取",
+    "detail": "",
     "affect_sectors": [],
-    "open_forecast": "A股可能平开或小幅高开，开盘后走势取决于自身技术面",
-    "coping": [
-      "• 外围偏暖但力度一般，维持正常操作节奏",
-      "• 科技方向可适度关注，但不必重仓追"
-    ]
+    "open_forecast": "",
+    "coping": []
   },
   "commodity_impact": {
-    "summary": "金价大跌1.8%，利空黄金板块；油价飙升3.9%，利好油气/利空航空",
-    "detail": "📉 COMEX黄金 4399.65 美元/盎司 (-1.83%)\n📉 COMEX白银 72.09 美元/盎司 (-3.75%)\n📈 WTI原油 92.18 美元/桶 (+3.94%)",
-    "affect_sectors": [
-      "🔴 白银大跌→有色板块承压",
-      "🟢 油价飙升→利好油气板块（中国石油/中国海油），但增加输入性通胀压力"
-    ],
-    "coping": [
-      "• 油价大涨利好油气开采，但下游制造/航空成本承压，注意分化"
-    ]
+    "summary": "大宗商品数据未获取",
+    "detail": "",
+    "affect_sectors": [],
+    "coping": []
   },
   "fx_impact": {
-    "summary": "汇率相对稳定",
-    "detail": "💵 美元/离岸人民币 6.7856 (+0.17%)",
-    "affect_sectors": [
-      "🟡 人民币小幅走弱，影响有限"
-    ],
+    "summary": "汇率数据未获取",
+    "detail": "",
+    "affect_sectors": [],
     "coping": []
   },
   "global_impact": {
-    "summary": "外围市场整体平稳",
-    "detail": "📉 恒生指数 25230.58 (-0.39%)",
+    "summary": "全球指数数据未获取",
+    "detail": "",
     "affect_sectors": [],
     "coping": []
   },
-  "impact_summary": "🇺🇸 美股全线上涨，三大指数平均+0.56%。对A股：小幅利好\n📊 预计A股可能平开或小幅高开，开盘后走势取决于自身技术面\n\n🎯 受影响板块：\n  🔴 白银大跌→有色板块承压\n  🟢 油价飙升→利好油气板块（中国石油/中国海油），但增加输入性通胀压力\n  🟡 人民币小幅走弱，影响有限\n\n💡 应对方法：\n  • 外围偏暖但力度一般，维持正常操作节奏\n  • 科技方向可适度关注，但不必重仓追\n  • 油价大涨利好油气开采，但下游制造/航空成本承压，注意分化",
+  "impact_summary": "🇺🇸 美股数据未获取",
   "strategy": {
     "risk_score": 75,
-    "strategy_text": "➡️ 外围中性影响，上证-0.72%按自身节奏运行\n➡️ 上证指数午盘-0.72%，走势平稳\n🔴 赚钱效应极差（仅24%上涨），多数个股下跌，午后不宜追高\n\n🌐 午间外围最新动态：\n  • 油价大涨利好油气开采，但下游制造/航空成本承压，注意分化\n\n🔴 【午后策略】高风险环境\n  不加仓、不追高，持仓股若继续走弱可考虑减仓\n  若大盘午后继续下跌，优先保护本金\n\n  🚫 午后操作规则：\n  • 上午已涨超5%的不追（获利盘压力）\n  • 上午大幅下跌的股票不盲目抄底（等企稳信号）\n  • 临近尾盘（14:30后）谨慎操作",
+    "strategy_text": "➡️ 外围中性影响，上证-0.14%按自身节奏运行\n➡️ 上证指数午盘-0.14%，走势平稳\n🔴 赚钱效应极差（仅17%上涨），多数个股下跌，午后不宜追高\n\n🔴 【午后策略】高风险环境\n  不加仓、不追高，持仓股若继续走弱可考虑减仓\n  若大盘午后继续下跌，优先保护本金\n\n  🚫 午后操作规则：\n  • 上午已涨超5%的不追（获利盘压力）\n  • 上午大幅下跌的股票不盲目抄底（等企稳信号）\n  • 临近尾盘（14:30后）谨慎操作",
     "position_advice": {
       "max": 0.2,
       "single_max": 0.3
@@ -145,52 +79,19 @@
   },
   "top_buys": [
     {
-      "code": "002129",
-      "name": "TCL中环",
+      "code": "002039",
+      "name": "黔源电力",
       "score": 100,
-      "price": 10.29,
-      "change_pct": 3.63,
-      "buy_point": 9.57,
+      "price": 21.3,
+      "change_pct": 2.01,
+      "buy_point": 20.54,
       "buy_time": "午间买入 (12:00-13:00)",
-      "stop_loss": 9.09,
-      "target_price": 10.82,
+      "stop_loss": 19.51,
+      "target_price": 22.44,
       "signals": [
         "温和上涨",
-        "高换手",
-        "大振幅",
-        "放量",
-        "均线多头排列",
-        "MA金叉",
-        "红柱放大",
-        "放量上涨"
-      ],
-      "next_day_estimate": {
-        "estimate": 4.0,
-        "factors": [
-          "技术面偏强",
-          "连续上涨",
-          "MACD多头",
-          "放量上攻"
-        ]
-      },
-      "entry_score": 23
-    },
-    {
-      "code": "600780",
-      "name": "通宝能源",
-      "score": 100,
-      "price": 7.46,
-      "change_pct": 2.9,
-      "buy_point": 7.22,
-      "buy_time": "午间买入 (12:00-13:00)",
-      "stop_loss": 6.86,
-      "target_price": 8.08,
-      "signals": [
-        "温和上涨",
-        "大振幅",
         "低PE",
         "放量",
-        "均线多头排列",
         "MA金叉",
         "MACD金叉",
         "红柱放大"
@@ -203,35 +104,65 @@
           "MACD多头"
         ]
       },
-      "entry_score": 25
+      "entry_score": 20
     },
     {
-      "code": "600992",
-      "name": "贵绳股份",
+      "code": "601231",
+      "name": "环旭电子",
       "score": 100,
-      "price": 12.96,
-      "change_pct": 3.1,
-      "buy_point": 12.6,
+      "price": 43.43,
+      "change_pct": 4.83,
+      "buy_point": 40.76,
       "buy_time": "午间买入 (12:00-13:00)",
-      "stop_loss": 11.97,
-      "target_price": 13.5,
+      "stop_loss": 38.72,
+      "target_price": 46.61,
       "signals": [
         "温和上涨",
+        "大振幅",
         "放量",
-        "均线多头排列",
         "MA金叉",
-        "红柱放大"
+        "MACD金叉",
+        "红柱放大",
+        "放量上涨"
       ],
       "next_day_estimate": {
-        "estimate": 2.0,
+        "estimate": 3.0,
         "factors": [
           "技术面偏强",
+          "MACD多头",
+          "放量上攻"
+        ]
+      },
+      "entry_score": 19
+    },
+    {
+      "code": "603311",
+      "name": "金海高科",
+      "score": 77,
+      "price": 30.21,
+      "change_pct": 3.35,
+      "buy_point": 30.17,
+      "buy_time": "午间买入 (12:00-13:00)",
+      "stop_loss": 28.66,
+      "target_price": 33.65,
+      "signals": [
+        "温和上涨",
+        "大振幅",
+        "高PE",
+        "放量",
+        "均线多头排列",
+        "RSI偏高"
+      ],
+      "next_day_estimate": {
+        "estimate": 1.5,
+        "factors": [
+          "连续上涨",
           "MACD多头"
         ]
       },
-      "entry_score": 23
+      "entry_score": 29
     }
   ],
-  "market_summary": "全市场3066只：上涨721只(23.5%)，下跌2099只(68.5%) | 涨停63只，跌停6只，平均涨幅-0.81% | 赚钱效应很差，控制风险",
+  "market_summary": "全市场3066只：上涨506只(16.5%)，下跌2360只(77.0%) | 涨停43只，跌停22只，平均涨幅-1.68% | 赚钱效应很差，控制风险",
   "morning_risk": 60
 }

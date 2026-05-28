@@ -138,8 +138,6 @@ class Handler(SimpleHTTPRequestHandler):
                 self._json({'ok': True, 'ts': time.time()})
             elif path == '/api/buy_plan':
                 self._handle_buy_plan()
-            elif path == '/api/unified_buys':
-                self._handle_unified_buys()
             elif path == '/api/latest_trades':
                 self._handle_latest_trades()
             elif path == '/api/morning_analysis':
@@ -150,8 +148,6 @@ class Handler(SimpleHTTPRequestHandler):
                 self._handle_closing_analysis()
             elif path == '/api/eod_analysis':
                 self._handle_eod_analysis()
-            elif path == '/api/comprehensive_strategy':
-                self._handle_comprehensive_strategy()
             else:
                 super().do_GET()
         except Exception as e:
@@ -457,92 +453,6 @@ class Handler(SimpleHTTPRequestHandler):
             return
         self._json(strategy)
 
-    def _handle_unified_buys(self):
-        """返回统一的今日推荐买入股票（以晨间/午间/收盘分析的top_buys为准）"""
-        now = time.strftime('%H:%M', time.localtime())
-
-        # 收集各时段分析的 top_buys，按时间优先级取最新
-        # 收盘 > 午间 > 晨间
-        unified = []
-        seen_codes = set()
-        sources = []
-
-        # 收盘分析 (tomorrow_buys 或 top_buys)
-        closing = load_json(os.path.join(DATA_DIR, 'closing_analysis.json'))
-        if closing:
-            buys = closing.get('tomorrow_buys', []) or closing.get('top_buys', [])
-            for s in buys:
-                if s.get('code') not in seen_codes:
-                    seen_codes.add(s['code'])
-                    s['_source'] = '收盘分析'
-                    unified.append(s)
-                    sources.append({'code': s['code'], 'source': '收盘分析', 'name': s.get('name', '')})
-
-        # 午间分析
-        midday = load_json(os.path.join(DATA_DIR, 'midday_analysis.json'))
-        if midday:
-            buys = midday.get('top_buys', [])
-            for s in buys:
-                if s.get('code') not in seen_codes:
-                    seen_codes.add(s['code'])
-                    s['_source'] = '午间分析'
-                    unified.append(s)
-                    sources.append({'code': s['code'], 'source': '午间分析', 'name': s.get('name', '')})
-
-        # 晨间分析
-        morning = load_json(os.path.join(DATA_DIR, 'morning_analysis.json'))
-        if morning:
-            buys = morning.get('top_buys', [])
-            for s in buys:
-                if s.get('code') not in seen_codes:
-                    seen_codes.add(s['code'])
-                    s['_source'] = '晨间分析'
-                    unified.append(s)
-                    sources.append({'code': s['code'], 'source': '晨间分析', 'name': s.get('name', '')})
-
-        # 获取实时价格
-        codes = [s['code'] for s in unified]
-        rt = get_cached_realtime(codes) if codes else {}
-
-        # 构建结果
-        items = []
-        for s in unified:
-            r = rt.get(s['code'], {})
-            items.append({
-                'code': s.get('code', ''),
-                'name': s.get('name', ''),
-                'score': s.get('score', 0),
-                'price': s.get('price', 0),
-                'change_pct': s.get('change_pct', 0),
-                'buy_point': s.get('buy_point'),
-                'target_price': s.get('target_price'),
-                'stop_loss': s.get('stop_loss'),
-                'buy_time': s.get('buy_time', ''),
-                'signals': s.get('signals', []),
-                'next_day_estimate': s.get('next_day_estimate', {}),
-                'entry_score': s.get('entry_score', 0),
-                'source': s.get('_source', ''),
-                'current_price': r.get('price', s.get('price', 0)),
-                'current_change_pct': r.get('change_pct', s.get('change_pct', 0)),
-            })
-
-        # 确定当前时段描述
-        hour = int(now.split(':')[0])
-        if hour < 12:
-            period = '晨间'
-        elif hour < 14:
-            period = '午间'
-        else:
-            period = '收盘'
-
-        self._json({
-            'items': items,
-            'sources': sources,
-            'period': period,
-            'total': len(items),
-            'update_time': time.strftime('%Y-%m-%d %H:%M:%S'),
-        })
-
     def _handle_buy_plan(self):
         """返回当前买入观察计划（含实时价格）"""
         plan = load_json(os.path.join(DATA_DIR, 'buy_plan.json'), {})
@@ -647,14 +557,6 @@ class Handler(SimpleHTTPRequestHandler):
             self._json(data)
         else:
             self._json({'error': '尾盘分析数据暂无', 'update_time': None})
-
-    def _handle_comprehensive_strategy(self):
-        """综合买入策略数据"""
-        data = load_json(os.path.join(DATA_DIR, 'comprehensive_strategy.json'))
-        if data:
-            self._json(data)
-        else:
-            self._json({'error': '综合策略数据暂无', 'update_time': None})
 
     def _handle_manual_buy(self, params):
         """手动买入：用户点击推荐股票的买入按钮"""

@@ -1,104 +1,104 @@
 {
-  "update_time": "2026-05-27 14:20:01",
+  "update_time": "2026-05-28 14:20:01",
   "cn_indices": {
     "000001": {
       "name": "上证指数",
       "code": "000001",
-      "price": 4094.78,
-      "prev_close": 4145.37,
-      "change_pct": -1.22
+      "price": 4100.98,
+      "prev_close": 4093.73,
+      "change_pct": 0.18
     },
     "399001": {
       "name": "深证成指",
       "code": "399001",
-      "price": 15775.47,
-      "prev_close": 15876.16,
-      "change_pct": -0.63
+      "price": 15871.39,
+      "prev_close": 15736.47,
+      "change_pct": 0.86
     },
     "399006": {
       "name": "创业板指",
       "code": "399006",
-      "price": 4063.26,
-      "prev_close": 4043.07,
-      "change_pct": 0.5
+      "price": 4126.04,
+      "prev_close": 4045.77,
+      "change_pct": 1.98
     },
     "000688": {
       "name": "科创50",
       "code": "000688",
-      "price": 1833.45,
-      "prev_close": 1867.71,
-      "change_pct": -1.83
+      "price": 1848.54,
+      "prev_close": 1815.45,
+      "change_pct": 1.82
     },
     "000300": {
       "name": "沪深300",
       "code": "000300",
-      "price": 4917.34,
-      "prev_close": 4947.85,
-      "change_pct": -0.62
+      "price": 4916.24,
+      "prev_close": 4908.17,
+      "change_pct": 0.16
     },
     "399005": {
       "name": "中小100",
       "code": "399005",
-      "price": 9613.89,
-      "prev_close": 9718.17,
-      "change_pct": -1.07
+      "price": 9616.58,
+      "prev_close": 9594.26,
+      "change_pct": 0.23
     }
   },
   "recommended_stocks": [
     {
-      "code": "600310",
-      "name": "广西能源",
+      "code": "002870",
+      "name": "香山股份",
       "status": "正常",
-      "current_price": 5.75,
-      "change_pct": 3.98,
-      "high": 5.9,
-      "low": 5.47,
-      "turnover_rate": 13.37,
-      "amplitude": 7.78,
-      "pnl_pct": 7.88,
+      "current_price": 43.18,
+      "change_pct": 0.54,
+      "high": 43.75,
+      "low": 42.1,
+      "turnover_rate": 3.28,
+      "amplitude": 3.84,
+      "pnl_pct": 3.6,
       "action": "🟢 持有，走势正常",
       "action_type": "持有"
     },
     {
-      "code": "000600",
-      "name": "建投能源",
+      "code": "600452",
+      "name": "涪陵电力",
       "status": "正常",
-      "current_price": 10.84,
-      "change_pct": 3.44,
-      "high": 10.99,
-      "low": 10.31,
-      "turnover_rate": 7.04,
-      "amplitude": 6.49,
-      "pnl_pct": 5.65,
+      "current_price": 13.65,
+      "change_pct": 1.49,
+      "high": 14.08,
+      "low": 13.38,
+      "turnover_rate": 5.39,
+      "amplitude": 5.2,
+      "pnl_pct": 5.16,
       "action": "🟢 持有，走势正常",
       "action_type": "持有"
     },
     {
-      "code": "605006",
-      "name": "山东玻纤",
-      "status": "下跌",
-      "current_price": 17.7,
-      "change_pct": -1.23,
-      "high": 18.91,
-      "low": 16.7,
-      "turnover_rate": 12.32,
-      "amplitude": 12.33,
-      "pnl_pct": 14.12,
-      "action": "🟡 小幅波动，继续观察",
-      "action_type": "观察"
+      "code": "002273",
+      "name": "水晶光电",
+      "status": "正常",
+      "current_price": 43.82,
+      "change_pct": 4.21,
+      "high": 44.3,
+      "low": 41.69,
+      "turnover_rate": 6.16,
+      "amplitude": 6.21,
+      "pnl_pct": 10.99,
+      "action": "🟢 到达目标价，建议止盈",
+      "action_type": "止盈"
     }
   ],
   "top_buys": [
     {
-      "code": "600452",
-      "name": "涪陵电力",
+      "code": "002922",
+      "name": "伊戈尔",
       "score": 100,
-      "price": 13.33,
-      "change_pct": 1.06,
-      "buy_point": 12.98,
+      "price": 46.2,
+      "change_pct": 1.32,
+      "buy_point": 43.82,
       "buy_time": "尾盘买入 (14:20-14:50)",
-      "stop_loss": 12.33,
-      "target_price": 14.06,
+      "stop_loss": 41.63,
+      "target_price": 48.14,
       "signals": [
         "温和上涨",
         "放量",
@@ -107,14 +107,124 @@
         "红柱放大"
       ],
       "next_day_estimate": {
-        "estimate": 2.0,
+        "estimate": 3.0,
         "factors": [
           "技术面偏强",
+          "连续上涨",
           "MACD多头"
         ]
       },
-      "entry_score": 24
+      "entry_score": 20
     },
+    {
+      "code": "600780",
+      "name": "通宝能源",
+      "score": 100,
+      "price": 7.5,
+      "change_pct": 3.45,
+      "buy_point": 7.23,
+      "buy_time": "尾盘买入 (14:20-14:50)",
+      "stop_loss": 6.87,
+      "target_price": 8.08,
+      "signals": [
+        "温和上涨",
+        "大振幅",
+        "低PE",
+        "放量",
+        "均线多头排列",
+        "MA金叉",
+        "MACD金叉",
+        "红柱放大"
+      ],
+      "next_day_estimate": {
+        "estimate": 3.0,
+        "factors": [
+          "技术面偏强",
+          "连续上涨",
+          "MACD多头"
+        ]
+      },
+      "entry_score": 19
+    },
+    {
+      "code": "002171",
+      "name": "楚江新材",
+      "score": 100,
+      "price": 12.14,
+      "change_pct": 3.94,
+      "buy_point": 11.73,
+      "buy_time": "尾盘买入 (14:20-14:50)",
+      "stop_loss": 11.14,
+      "target_price": 12.95,
+      "signals": [
+        "温和上涨",
+        "收在高位",
+        "大振幅",
+        "放量",
+        "MA金叉",
+        "MACD金叉",
+        "红柱放大"
+      ],
+      "next_day_estimate": {
+        "estimate": 3.0,
+        "factors": [
+          "技术面偏强",
+          "连续上涨",
+          "MACD多头"
+        ]
+      },
+      "entry_score": 19
+    }
+  ],
+  "market_stats": {
+    "total": 3066,
+    "up": 998,
+    "down": 1806,
+    "flat": 262,
+    "limit_up": 65,
+    "limit_down": 6,
+    "up_ratio": 32.6,
+    "avg_change": -0.26
+  },
+  "sentiment": {
+    "000001": {
+      "level": "震荡",
+      "score": 50,
+      "emoji": "➡️"
+    },
+    "399001": {
+      "level": "偏强",
+      "score": 60,
+      "emoji": "↗️"
+    },
+    "399006": {
+      "level": "强势",
+      "score": 80,
+      "emoji": "📈"
+    },
+    "000688": {
+      "level": "强势",
+      "score": 80,
+      "emoji": "📈"
+    },
+    "000300": {
+      "level": "震荡",
+      "score": 50,
+      "emoji": "➡️"
+    },
+    "399005": {
+      "level": "震荡",
+      "score": 50,
+      "emoji": "➡️"
+    }
+  },
+  "advices": [
+    "↗️ 大盘偏强（上证+0.18%），走势稳健，维持现有仓位",
+    "🟢 止盈提醒: 水晶光电(+4.2%)，可考虑部分获利了结",
+    "⚠️ 赚钱效应较差（32.6%上涨），操作需谨慎",
+    "⏰ 距收盘约40分钟，避免尾盘追涨杀跌"
+  ],
+  "source_recommendations": [
     {
       "code": "002870",
       "name": "香山股份",
@@ -122,7 +232,7 @@
       "price": 42.72,
       "change_pct": 3.64,
       "buy_point": 41.68,
-      "buy_time": "尾盘买入 (14:20-14:50)",
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
       "stop_loss": 39.6,
       "target_price": 45.69,
       "signals": [
@@ -141,23 +251,24 @@
           "MACD多头"
         ]
       },
-      "entry_score": 20
+      "entry_score": 18
     },
     {
-      "code": "002380",
-      "name": "科远智慧",
-      "score": 78,
-      "price": 45.61,
-      "change_pct": 2.1,
-      "buy_point": 44.73,
-      "buy_time": "尾盘买入 (14:20-14:50)",
-      "stop_loss": 42.49,
-      "target_price": 52.08,
+      "code": "600452",
+      "name": "涪陵电力",
+      "score": 100,
+      "price": 13.33,
+      "change_pct": 1.06,
+      "buy_point": 12.98,
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
+      "stop_loss": 12.33,
+      "target_price": 14.06,
       "signals": [
         "温和上涨",
-        "大振幅",
         "放量",
-        "短期多头"
+        "均线多头排列",
+        "MA金叉",
+        "红柱放大"
       ],
       "next_day_estimate": {
         "estimate": 2.0,
@@ -166,71 +277,20 @@
           "MACD多头"
         ]
       },
-      "entry_score": 24
-    }
-  ],
-  "market_stats": {
-    "total": 3066,
-    "up": 388,
-    "down": 2486,
-    "flat": 192,
-    "limit_up": 32,
-    "limit_down": 9,
-    "up_ratio": 12.7,
-    "avg_change": -1.81
-  },
-  "sentiment": {
-    "000001": {
-      "level": "弱势",
-      "score": 20,
-      "emoji": "📉"
+      "entry_score": 18
     },
-    "399001": {
-      "level": "偏弱",
-      "score": 40,
-      "emoji": "↘️"
-    },
-    "399006": {
-      "level": "偏强",
-      "score": 60,
-      "emoji": "↗️"
-    },
-    "000688": {
-      "level": "弱势",
-      "score": 20,
-      "emoji": "📉"
-    },
-    "000300": {
-      "level": "偏弱",
-      "score": 40,
-      "emoji": "↘️"
-    },
-    "399005": {
-      "level": "弱势",
-      "score": 20,
-      "emoji": "📉"
-    }
-  },
-  "advices": [
-    "📉 大盘偏弱（上证-1.22%），注意风险，尾盘考虑减仓",
-    "🟢 推荐股平均浮盈 +9.2%，走势良好，继续持有",
-    "⚠️ 赚钱效应较差（12.7%上涨），操作需谨慎",
-    "⏰ 距收盘约40分钟，避免尾盘追涨杀跌"
-  ],
-  "source_recommendations": [
     {
-      "code": "600310",
-      "name": "广西能源",
+      "code": "002273",
+      "name": "水晶光电",
       "score": 100,
-      "price": 5.68,
-      "change_pct": 1.25,
-      "buy_point": 5.33,
+      "price": 40.94,
+      "change_pct": 4.17,
+      "buy_point": 39.48,
       "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 5.07,
-      "target_price": 6.09,
+      "stop_loss": 37.5,
+      "target_price": 43.04,
       "signals": [
         "温和上涨",
-        "高换手",
         "大振幅",
         "放量",
         "均线多头排列",
@@ -238,73 +298,13 @@
         "红柱放大"
       ],
       "next_day_estimate": {
-        "estimate": 3.0,
+        "estimate": 2.0,
         "factors": [
           "技术面偏强",
-          "连续上涨",
-          "MACD多头"
-        ]
-      },
-      "entry_score": 17
-    },
-    {
-      "code": "000600",
-      "name": "建投能源",
-      "score": 98,
-      "price": 10.6,
-      "change_pct": 3.11,
-      "buy_point": 10.26,
-      "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 9.75,
-      "target_price": 11.37,
-      "signals": [
-        "温和上涨",
-        "收在高位",
-        "大振幅",
-        "低PE",
-        "放量",
-        "均线多头排列",
-        "红柱放大"
-      ],
-      "next_day_estimate": {
-        "estimate": 3.0,
-        "factors": [
-          "技术面偏强",
-          "连续上涨",
           "MACD多头"
         ]
       },
       "entry_score": 14
-    },
-    {
-      "code": "605006",
-      "name": "山东玻纤",
-      "score": 95,
-      "price": 16.84,
-      "change_pct": 3.38,
-      "buy_point": 15.51,
-      "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 14.73,
-      "target_price": 18.05,
-      "signals": [
-        "温和上涨",
-        "高换手",
-        "大振幅",
-        "放量",
-        "均线多头排列",
-        "MA金叉",
-        "红柱放大",
-        "RSI偏高"
-      ],
-      "next_day_estimate": {
-        "estimate": 3.0,
-        "factors": [
-          "技术面偏强",
-          "连续上涨",
-          "MACD多头"
-        ]
-      },
-      "entry_score": 16
     }
   ]
 }
