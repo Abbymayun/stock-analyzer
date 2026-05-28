@@ -1,158 +1,111 @@
 {
-  "update_time": "2026-05-26 15:30:17",
-  "open_forecast": {
-    "direction": "平开",
-    "score": 0.0,
-    "amplitude": 0,
-    "us_score": 0.0,
-    "com_score": 0,
-    "fx_score": 0,
-    "global_score": 0,
-    "description": "综合外围评分+0.00，预计平开（±0.1%）"
-  },
-  "operation_mode": {
-    "name": "正常买入",
-    "description": "外围中性+低风险，按原计划正常买入推荐股票",
-    "buy_timing": "开盘30分钟内 (9:30-10:00)",
-    "position": 0.4,
-    "key_action": "按计划在买点附近买入，分批建仓",
-    "scenarios": {
-      "开盘走强": "正常买入，买点附近即可",
-      "开盘微跌": "是更好的买入机会，可适当加仓",
-      "开盘大幅波动": "等稳定后再操作"
-    }
-  },
-  "risk_score": 50,
-  "buy_strategies": [
-    {
-      "code": "600310",
-      "name": "广西能源",
-      "score": 100,
-      "yesterday_close": 5.68,
-      "yesterday_change": 1.25,
-      "original_buy_point": 5.33,
-      "original_stop_loss": 5.07,
-      "original_target": 6.09,
-      "signals": [
-        "温和上涨",
-        "高换手",
-        "大振幅",
-        "放量",
-        "均线多头排列"
-      ],
-      "mode": "正常买入",
-      "scenario": "平开正常买入策略",
-      "open_est": 5.68,
-      "buy_points": [
-        {
-          "label": "开盘买入",
-          "price": 5.33,
-          "timing": "9:30-10:00",
-          "condition": "开盘价接近买入价",
-          "confidence": "high"
-        },
-        {
-          "label": "回调加仓",
-          "price": 5.59,
-          "timing": "10:00-10:30 回调时",
-          "condition": "小幅回调后在支撑位加仓",
-          "confidence": "medium"
-        }
-      ],
-      "stop_loss": 5.07,
-      "target": 6.09,
-      "position_pct": 0.3,
-      "key_note": "正常买入，在5.33元附近建仓",
-      "risk_reward_ratio": 2.92
+  "morning_strategy": {
+    "open_forecast": null,
+    "operation_mode": {
+      "risk_score": 60,
+      "strategy_text": "⚠️ 昨日A股偏弱，市场情绪低迷，短期可能延续调整\n\n🟡 【当日总体策略】中高风险环境\n  建议：低仓位运行（2-4成），严格执行止损\n  操作：只做确定性高的低吸机会，避免追高\n  禁止：不追当天涨幅超3%的股票\n\n  📊 建议仓位：≤2成 | 风险评分：60/100\n\n  🚫 当日买入过滤规则：\n  • 今天涨幅 > 5% 的股票不买（追高风险）\n  • 昨天涨停的股票今天不追（获利盘抛压）\n  • 评分 < 50 的股票不考虑买入\n  • 买入价格必须低于MA5（回调买入，不追高）\n  • 单票仓位不超过总资金的30%",
+      "position_advice": {
+        "max": 0.2,
+        "single_max": 0.3
+      }
     },
-    {
-      "code": "000600",
-      "name": "建投能源",
-      "score": 98,
-      "yesterday_close": 10.6,
-      "yesterday_change": 3.11,
-      "original_buy_point": 10.26,
-      "original_stop_loss": 9.75,
-      "original_target": 11.37,
-      "signals": [
-        "温和上涨",
-        "收在高位",
-        "大振幅",
-        "低PE",
-        "放量"
-      ],
-      "mode": "正常买入",
-      "scenario": "平开正常买入策略",
-      "open_est": 10.6,
-      "buy_points": [
-        {
-          "label": "开盘买入",
-          "price": 10.26,
-          "timing": "9:30-10:00",
-          "condition": "开盘价接近买入价",
-          "confidence": "high"
+    "buy_strategies": [
+      {
+        "code": "002870",
+        "name": "香山股份",
+        "score": 100,
+        "price": 42.72,
+        "change_pct": 3.64,
+        "buy_point": 41.68,
+        "buy_time": "开盘30分钟内 (9:30-10:00)",
+        "stop_loss": 39.6,
+        "target_price": 45.69,
+        "signals": [
+          "温和上涨",
+          "大振幅",
+          "放量",
+          "均线多头排列",
+          "MA金叉",
+          "MACD金叉",
+          "红柱放大"
+        ],
+        "next_day_estimate": {
+          "estimate": 2.0,
+          "factors": [
+            "技术面偏强",
+            "MACD多头"
+          ]
         },
-        {
-          "label": "回调加仓",
-          "price": 10.44,
-          "timing": "10:00-10:30 回调时",
-          "condition": "小幅回调后在支撑位加仓",
-          "confidence": "medium"
-        }
-      ],
-      "stop_loss": 9.75,
-      "target": 11.37,
-      "position_pct": 0.3,
-      "key_note": "正常买入，在10.26元附近建仓",
-      "risk_reward_ratio": 2.18
-    },
-    {
-      "code": "605006",
-      "name": "山东玻纤",
-      "score": 95,
-      "yesterday_close": 16.84,
-      "yesterday_change": 3.38,
-      "original_buy_point": 15.51,
-      "original_stop_loss": 14.73,
-      "original_target": 18.05,
-      "signals": [
-        "温和上涨",
-        "高换手",
-        "大振幅",
-        "放量",
-        "均线多头排列"
-      ],
-      "mode": "正常买入",
-      "scenario": "平开正常买入策略",
-      "open_est": 16.84,
-      "buy_points": [
-        {
-          "label": "开盘买入",
-          "price": 15.51,
-          "timing": "9:30-10:00",
-          "condition": "开盘价接近买入价",
-          "confidence": "high"
+        "entry_score": 18
+      },
+      {
+        "code": "600452",
+        "name": "涪陵电力",
+        "score": 100,
+        "price": 13.33,
+        "change_pct": 1.06,
+        "buy_point": 12.98,
+        "buy_time": "开盘30分钟内 (9:30-10:00)",
+        "stop_loss": 12.33,
+        "target_price": 14.06,
+        "signals": [
+          "温和上涨",
+          "放量",
+          "均线多头排列",
+          "MA金叉",
+          "红柱放大"
+        ],
+        "next_day_estimate": {
+          "estimate": 2.0,
+          "factors": [
+            "技术面偏强",
+            "MACD多头"
+          ]
         },
-        {
-          "label": "回调加仓",
-          "price": 16.59,
-          "timing": "10:00-10:30 回调时",
-          "condition": "小幅回调后在支撑位加仓",
-          "confidence": "medium"
-        }
-      ],
-      "stop_loss": 14.73,
-      "target": 18.05,
-      "position_pct": 0.3,
-      "key_note": "正常买入，在15.51元附近建仓",
-      "risk_reward_ratio": 3.26
-    }
-  ],
-  "advice_text": "📊 开盘预测：综合外围评分+0.00，预计平开（±0.1%）\n🎯 操作模式：正常买入 — 外围中性+低风险，按原计划正常买入推荐股票\n⏰ 买入时机：开盘30分钟内 (9:30-10:00)\n💰 建议仓位：40%\n🔑 关键操作：按计划在买点附近买入，分批建仓\n\n📋 盘中场景应对：\n  • 开盘走强 → 正常买入，买点附近即可\n  • 开盘微跌 → 是更好的买入机会，可适当加仓\n  • 开盘大幅波动 → 等稳定后再操作\n\n🎯 推荐股票买入策略（3只）：\n\n  1. 广西能源(600310) | 评分100 | 模式: 正常买入\n     昨收: 5.68 (+1.25%)\n     ✅ 开盘买入: 5.33元 (9:30-10:00)\n        条件: 开盘价接近买入价\n     🟡 回调加仓: 5.59元 (10:00-10:30 回调时)\n        条件: 小幅回调后在支撑位加仓\n     🛑 止损: 5.07元\n     🎯 目标: 6.09元\n     🟡 风险/收益比: 1:2.92\n     💡 正常买入，在5.33元附近建仓\n\n  2. 建投能源(000600) | 评分98 | 模式: 正常买入\n     昨收: 10.6 (+3.11%)\n     ✅ 开盘买入: 10.26元 (9:30-10:00)\n        条件: 开盘价接近买入价\n     🟡 回调加仓: 10.44元 (10:00-10:30 回调时)\n        条件: 小幅回调后在支撑位加仓\n     🛑 止损: 9.75元\n     🎯 目标: 11.37元\n     🟡 风险/收益比: 1:2.18\n     💡 正常买入，在10.26元附近建仓\n\n  3. 山东玻纤(605006) | 评分95 | 模式: 正常买入\n     昨收: 16.84 (+3.38%)\n     ✅ 开盘买入: 15.51元 (9:30-10:00)\n        条件: 开盘价接近买入价\n     🟡 回调加仓: 16.59元 (10:00-10:30 回调时)\n        条件: 小幅回调后在支撑位加仓\n     🛑 止损: 14.73元\n     🎯 目标: 18.05元\n     🟢 风险/收益比: 1:3.26\n     💡 正常买入，在15.51元附近建仓\n\n⚠️ 风险提醒：\n  • 以上建议基于技术分析和外围数据，不构成投资建议\n  • 买入时严格执行止损，触发止损立即卖出\n  • 单票仓位不超过总资金30%\n  • 若大盘走势与预期严重不符，暂停操作",
-  "us_direction": "中性",
-  "us_level": "low",
-  "commodity_summary": "大宗商品数据未获取",
-  "fx_summary": "汇率数据未获取",
-  "source": "closing_preview",
-  "source_desc": "基于收盘后外围数据预生成的明日策略"
+        "entry_score": 18
+      },
+      {
+        "code": "002273",
+        "name": "水晶光电",
+        "score": 100,
+        "price": 40.94,
+        "change_pct": 4.17,
+        "buy_point": 39.48,
+        "buy_time": "开盘30分钟内 (9:30-10:00)",
+        "stop_loss": 37.5,
+        "target_price": 43.04,
+        "signals": [
+          "温和上涨",
+          "大振幅",
+          "放量",
+          "均线多头排列",
+          "MACD金叉",
+          "红柱放大"
+        ],
+        "next_day_estimate": {
+          "estimate": 2.0,
+          "factors": [
+            "技术面偏强",
+            "MACD多头"
+          ]
+        },
+        "entry_score": 14
+      }
+    ]
+  },
+  "midday_adjustment": {
+    "update_time": "2026-05-28 13:03:45",
+    "actual_sh_change": -0.72,
+    "morning_risk": 60,
+    "midday_risk": 75,
+    "risk_change": 15,
+    "adjustments": [
+      "↘️ 上证实际跌0.72%，走势偏弱，控制仓位",
+      "⚠️ 风险评分从60升至75，风险显著增加，建议减仓或空仓",
+      "",
+      "🔴 午后操作：不加仓、不追高，持仓股弱势则减仓"
+    ],
+    "advice_text": "↘️ 上证实际跌0.72%，走势偏弱，控制仓位\n⚠️ 风险评分从60升至75，风险显著增加，建议减仓或空仓\n\n🔴 午后操作：不加仓、不追高，持仓股弱势则减仓"
+  },
+  "update_time": "2026-05-28 13:03:45"
 }
