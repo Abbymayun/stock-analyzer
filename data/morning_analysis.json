@@ -1,5 +1,5 @@
 {
-  "update_time": "2026-05-27 08:31:03",
+  "update_time": "2026-05-28 08:31:03",
   "us_indices": {},
   "bond_yield": {},
   "commodities": {},
@@ -9,37 +9,37 @@
     "000001": {
       "name": "上证指数",
       "code": "000001",
-      "price": 4145.37,
-      "prev_close": 4152.57,
-      "change_pct": -0.17
+      "price": 4093.73,
+      "prev_close": 4145.37,
+      "change_pct": -1.25
     },
     "399001": {
       "name": "深证成指",
       "code": "399001",
-      "price": 15876.16,
-      "prev_close": 15856.61,
-      "change_pct": 0.12
+      "price": 15736.47,
+      "prev_close": 15876.16,
+      "change_pct": -0.88
     },
     "399006": {
       "name": "创业板指",
       "code": "399006",
-      "price": 4043.07,
-      "prev_close": 4021.16,
-      "change_pct": 0.54
+      "price": 4045.77,
+      "prev_close": 4043.07,
+      "change_pct": 0.07
     },
     "000688": {
       "name": "科创50",
       "code": "000688",
-      "price": 1867.71,
-      "prev_close": 1896.04,
-      "change_pct": -1.49
+      "price": 1815.45,
+      "prev_close": 1867.71,
+      "change_pct": -2.8
     },
     "000300": {
       "name": "沪深300",
       "code": "000300",
-      "price": 4947.85,
-      "prev_close": 4921.6,
-      "change_pct": 0.53
+      "price": 4908.17,
+      "prev_close": 4947.85,
+      "change_pct": -0.8
     }
   },
   "us_impact": {
@@ -71,27 +71,80 @@
   },
   "impact_summary": "🇺🇸 美股数据未获取",
   "strategy": {
-    "risk_score": 50,
-    "strategy_text": "\n🟢 【当日总体策略】中性环境\n  建议：中等仓位（4-6成），精选个股\n  操作：关注技术面信号明确的标的，分批建仓\n  策略：回调低吸为主，突破追涨为辅\n\n  📊 建议仓位：4-6成 | 风险评分：50/100\n\n  🚫 当日买入过滤规则：\n  • 今天涨幅 > 5% 的股票不买（追高风险）\n  • 昨天涨停的股票今天不追（获利盘抛压）\n  • 评分 < 50 的股票不考虑买入\n  • 买入价格必须低于MA5（回调买入，不追高）\n  • 单票仓位不超过总资金的30%",
+    "risk_score": 60,
+    "strategy_text": "⚠️ 昨日A股偏弱，市场情绪低迷，短期可能延续调整\n\n🟡 【当日总体策略】中高风险环境\n  建议：低仓位运行（2-4成），严格执行止损\n  操作：只做确定性高的低吸机会，避免追高\n  禁止：不追当天涨幅超3%的股票\n\n  📊 建议仓位：≤2成 | 风险评分：60/100\n\n  🚫 当日买入过滤规则：\n  • 今天涨幅 > 5% 的股票不买（追高风险）\n  • 昨天涨停的股票今天不追（获利盘抛压）\n  • 评分 < 50 的股票不考虑买入\n  • 买入价格必须低于MA5（回调买入，不追高）\n  • 单票仓位不超过总资金的30%",
     "position_advice": {
-      "max": 0.4,
+      "max": 0.2,
       "single_max": 0.3
     }
   },
   "top_buys": [
     {
-      "code": "600310",
-      "name": "广西能源",
+      "code": "002870",
+      "name": "香山股份",
       "score": 100,
-      "price": 5.68,
-      "change_pct": 1.25,
-      "buy_point": 5.33,
+      "price": 42.72,
+      "change_pct": 3.64,
+      "buy_point": 41.68,
       "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 5.07,
-      "target_price": 6.09,
+      "stop_loss": 39.6,
+      "target_price": 45.69,
       "signals": [
         "温和上涨",
-        "高换手",
+        "大振幅",
+        "放量",
+        "均线多头排列",
+        "MA金叉",
+        "MACD金叉",
+        "红柱放大"
+      ],
+      "next_day_estimate": {
+        "estimate": 2.0,
+        "factors": [
+          "技术面偏强",
+          "MACD多头"
+        ]
+      },
+      "entry_score": 18
+    },
+    {
+      "code": "600452",
+      "name": "涪陵电力",
+      "score": 100,
+      "price": 13.33,
+      "change_pct": 1.06,
+      "buy_point": 12.98,
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
+      "stop_loss": 12.33,
+      "target_price": 14.06,
+      "signals": [
+        "温和上涨",
+        "放量",
+        "均线多头排列",
+        "MA金叉",
+        "红柱放大"
+      ],
+      "next_day_estimate": {
+        "estimate": 2.0,
+        "factors": [
+          "技术面偏强",
+          "MACD多头"
+        ]
+      },
+      "entry_score": 18
+    },
+    {
+      "code": "002273",
+      "name": "水晶光电",
+      "score": 100,
+      "price": 40.94,
+      "change_pct": 4.17,
+      "buy_point": 39.48,
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
+      "stop_loss": 37.5,
+      "target_price": 43.04,
+      "signals": [
+        "温和上涨",
         "大振幅",
         "放量",
         "均线多头排列",
@@ -99,75 +152,15 @@
         "红柱放大"
       ],
       "next_day_estimate": {
-        "estimate": 3.0,
+        "estimate": 2.0,
         "factors": [
           "技术面偏强",
-          "连续上涨",
-          "MACD多头"
-        ]
-      },
-      "entry_score": 17
-    },
-    {
-      "code": "000600",
-      "name": "建投能源",
-      "score": 98,
-      "price": 10.6,
-      "change_pct": 3.11,
-      "buy_point": 10.26,
-      "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 9.75,
-      "target_price": 11.37,
-      "signals": [
-        "温和上涨",
-        "收在高位",
-        "大振幅",
-        "低PE",
-        "放量",
-        "均线多头排列",
-        "红柱放大"
-      ],
-      "next_day_estimate": {
-        "estimate": 3.0,
-        "factors": [
-          "技术面偏强",
-          "连续上涨",
           "MACD多头"
         ]
       },
       "entry_score": 14
-    },
-    {
-      "code": "605006",
-      "name": "山东玻纤",
-      "score": 95,
-      "price": 16.84,
-      "change_pct": 3.38,
-      "buy_point": 15.51,
-      "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 14.73,
-      "target_price": 18.05,
-      "signals": [
-        "温和上涨",
-        "高换手",
-        "大振幅",
-        "放量",
-        "均线多头排列",
-        "MA金叉",
-        "红柱放大",
-        "RSI偏高"
-      ],
-      "next_day_estimate": {
-        "estimate": 3.0,
-        "factors": [
-          "技术面偏强",
-          "连续上涨",
-          "MACD多头"
-        ]
-      },
-      "entry_score": 16
     }
   ],
-  "yesterday_sentiment": "中性",
-  "yesterday_score": 46.6
+  "yesterday_sentiment": "偏空",
+  "yesterday_score": 44.3
 }
