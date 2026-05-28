@@ -414,10 +414,12 @@ def load_top_buys():
     """晨间推荐：选出适合开盘立即买入并持有的股票
     策略：入口点买入，不追涨。选趋势强但尚未过度拉升的标的。
     核心逻辑：
-      1. 趋势信号强（均线多头/MACD金叉/放量）= 多日上涨潜力
+      1. 趋势信号强（均线多头/MACD金叉/放量）= 多日上涨潜力，要求>=2个信号
       2. 现价在买点附近或买点之下 = 还没拉升，有入场空间
       3. 昨日涨幅不过大 = 不是追高，有持股空间
       4. 明日预估为正 = 短期趋势延续
+      5. RSI未超买 = 还没到顶部
+      6. 风险收益比合理 = 值得入场
     """
     rec_path = os.path.join(DATA_DIR, 'recommendations.json')
     rec_data = _load_json(rec_path)
@@ -428,7 +430,7 @@ def load_top_buys():
     buy_list = rec_data.get('buy', [])
     all_candidates = strong_buy + buy_list
 
-    # 趋势信号评分（多日持股的依据）
+    # 趋势信号评分（多日持股的依据）- 要求至少2个
     TREND_SIGNALS = {'均线多头排列', 'MA金叉', 'MACD金叉', '红柱放大', '放量'}
     # 追高风险信号
     CHASE_SIGNALS = {'涨停', '强势上涨', '触布林上轨', 'RSI偏高'}
@@ -442,18 +444,27 @@ def load_top_buys():
         price = s.get('price', 0)
         buy_point = s.get('buy_point', 0)
         ma5 = s.get('ma5', 0)
+        rsi6 = s.get('rsi6', 0)
+        rsi12 = s.get('rsi12', 0)
 
-        # 至少有1个趋势信号（这是多日持股的基础）
-        if not (signals & TREND_SIGNALS):
+        # 至少2个趋势信号（更强的趋势确认）
+        trend_count = len(signals & TREND_SIGNALS)
+        if trend_count < 2:
             continue
-        # 昨日涨幅不超过6%（超过的追高风险大）
-        if chg > 6:
+        # 昨日涨幅不超过5%（超过的追高风险大）
+        if chg > 5:
             continue
         # 明日预估为正
         if est is None or est <= 0:
             continue
-        # 评分 >= 70
-        if score < 70:
+        # 评分 >= 75（提高门槛）
+        if score < 75:
+            continue
+        # RSI不能过高（>75说明已经超买区域）
+        if rsi6 > 75 or rsi12 > 75:
+            continue
+        # 趋势必须是上升
+        if s.get('trend', '') == '下降':
             continue
 
         # 计算入口质量分
@@ -476,48 +487,62 @@ def load_top_buys():
                 entry_score += 8  # 还在买点之下，入场空间大
             elif price <= buy_point * 1.03:
                 entry_score += 4  # 略高于买点，可接受
-            # 远高于买点不加分
 
-        # 风险/收益比
+        # 风险/收益比（要求>=2才加分）
         target = s.get('target_price', 0)
         stop = s.get('stop_loss', 0)
         if buy_point > 0 and stop > 0 and target > 0:
             rr = (target - buy_point) / (buy_point - stop)
             if rr >= 3:
-                entry_score += 5
+                entry_score += 6
             elif rr >= 2:
-                entry_score += 3
+                entry_score += 4
+            elif rr >= 1.5:
+                entry_score += 2
+            # rr < 1.5 不加分（风险收益比不好）
 
         # 趋势信号越多越好
-        trend_count = len(signals & TREND_SIGNALS)
         entry_score += min(trend_count * 3, 12)
 
         # 追高风险扣分
         chase_count = len(signals & CHASE_SIGNALS)
-        entry_score -= chase_count * 3
+        entry_score -= chase_count * 4  # 加重扣分
+
+        # RSI在40-65区间加分（健康的多头区间）
+        if 40 <= rsi6 <= 65:
+            entry_score += 3
+        elif 65 < rsi6 <= 75:
+            entry_score += 1  # 偏高但没超买
+
+        # 成交额加分（流动性好）
+        amount = s.get('amount', 0)
+        if amount >= 50000:  # 5万以上
+            entry_score += 2
 
         s['_entry_score'] = entry_score
         filtered.append(s)
 
-    # 综合排序：入口质量分 * 0.4 + 评分 * 0.3 + 明日预估 * 8 * 0.3
+    # 综合排序：入口质量分 * 0.45 + 评分 * 0.25 + 明日预估 * 8 * 0.3
     def rank_key(s):
         entry = s.get('_entry_score', 0)
         score = s.get('score', 0)
         est = (s.get('next_day_estimate') or {}).get('estimate', 0)
-        return entry * 0.4 + score * 0.3 + est * 8 * 0.3
+        return entry * 0.45 + score * 0.25 + est * 8 * 0.3
 
     filtered.sort(key=rank_key, reverse=True)
     selected = filtered[:3]
 
-    # 不够3只时放宽：只要评分>=60且明日预估>0
+    # 不够3只时放宽：评分>=65且明日预估>0且至少1个趋势信号
     if len(selected) < 3:
         selected_codes = {s.get('code', '') for s in selected}
         for s in all_candidates:
             if s.get('code', '') in selected_codes:
                 continue
             est = (s.get('next_day_estimate') or {}).get('estimate', None)
-            if est and est > 0 and s.get('score', 0) >= 60 and s.get('change_pct', 0) <= 6:
-                selected.append(s)
+            signals = set(s.get('signals', []))
+            if est and est > 0 and s.get('score', 0) >= 65 and s.get('change_pct', 0) <= 5:
+                if signals & TREND_SIGNALS:
+                    selected.append(s)
             if len(selected) >= 3:
                 break
 
@@ -607,6 +632,17 @@ def main():
 
     # 保存
     _save_json(os.path.join(DATA_DIR, 'morning_analysis.json'), analysis)
+
+    # 7.5 生成综合买入策略（基于外围影响的精准买入建议）
+    print("  [7.5] 生成综合买入策略...")
+    try:
+        from comprehensive_strategy import generate_comprehensive_buy_strategy
+        comprehensive = generate_comprehensive_buy_strategy(analysis)
+        _save_json(os.path.join(DATA_DIR, 'comprehensive_strategy.json'), comprehensive)
+        print(f"  📊 操作模式: {comprehensive['operation_mode']['name']}")
+        print(f"  📊 开盘预测: {comprehensive['open_forecast']['description']}")
+    except Exception as e:
+        print(f"  ⚠️ 综合策略生成失败: {e}")
 
     # 打印摘要
     print(f"\n  📊 风险评分: {strategy['risk_score']}/100")

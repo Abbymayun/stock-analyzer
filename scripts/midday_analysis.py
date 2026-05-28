@@ -215,9 +215,10 @@ def load_top_buys():
     策略：上午震荡/温和上涨、趋势信号强、午后有拉升空间的标的
     核心逻辑：
       1. 上午涨幅适中（0-5%），午后还有空间
-      2. 趋势信号强（均线多头/MACD金叉/放量）= 后续延续力强
+      2. 趋势信号强（均线多头/MACD金叉/放量），要求>=2个
       3. 现价在买点附近 = 还未过度拉升
       4. 排除晨间已推荐的（分散持仓）
+      5. RSI未超买
     """
     rec_path = os.path.join(DATA_DIR, 'recommendations.json')
     rec_data = _load_json(rec_path)
@@ -246,18 +247,26 @@ def load_top_buys():
         price = s.get('price', 0)
         buy_point = s.get('buy_point', 0)
         ma5 = s.get('ma5', 0)
+        rsi6 = s.get('rsi6', 0)
+        rsi12 = s.get('rsi12', 0)
 
         if code in morning_codes:
             continue
-        # 至少1个趋势信号
-        if not (signals & TREND_SIGNALS):
+        # 至少2个趋势信号
+        trend_count = len(signals & TREND_SIGNALS)
+        if trend_count < 2:
             continue
-        # 上午涨幅不超过5%（过大的午后追高风险大）
+        # 上午涨幅不超过5%
         if chg > 5:
             continue
         if est is None or est <= 0:
             continue
-        if score < 70:
+        if score < 75:
+            continue
+        # RSI不能过高
+        if rsi6 > 75 or rsi12 > 75:
+            continue
+        if s.get('trend', '') == '下降':
             continue
 
         # 入口质量分
@@ -285,29 +294,41 @@ def load_top_buys():
         elif 3 < chg <= 5:
             entry_score += 2
         elif chg < 0:
-            entry_score += 1  # 微跌但趋势在，可能是低吸机会
+            entry_score += 1
 
         target = s.get('target_price', 0)
         stop = s.get('stop_loss', 0)
         if buy_point > 0 and stop > 0 and target > 0:
             rr = (target - buy_point) / (buy_point - stop)
             if rr >= 3:
-                entry_score += 5
+                entry_score += 6
             elif rr >= 2:
-                entry_score += 3
+                entry_score += 4
+            elif rr >= 1.5:
+                entry_score += 2
 
-        trend_count = len(signals & TREND_SIGNALS)
         entry_score += min(trend_count * 3, 12)
+
+        # RSI加分
+        if 40 <= rsi6 <= 65:
+            entry_score += 3
+        elif 65 < rsi6 <= 75:
+            entry_score += 1
+
+        # 成交额
+        amount = s.get('amount', 0)
+        if amount >= 50000:
+            entry_score += 2
 
         s['_entry_score'] = entry_score
         filtered.append(s)
 
-    # 排序：入口质量 * 0.4 + 明日预估 * 8 * 0.35 + 评分 * 0.25
+    # 排序：入口质量 * 0.45 + 明日预估 * 8 * 0.3 + 评分 * 0.25
     def rank_key(s):
         entry = s.get('_entry_score', 0)
         score = s.get('score', 0)
         est = (s.get('next_day_estimate') or {}).get('estimate', 0)
-        return entry * 0.4 + est * 8 * 0.35 + score * 0.25
+        return entry * 0.45 + est * 8 * 0.3 + score * 0.25
 
     filtered.sort(key=rank_key, reverse=True)
     selected = filtered[:3]
@@ -318,8 +339,10 @@ def load_top_buys():
             if s.get('code', '') in selected_codes or s.get('code', '') in morning_codes:
                 continue
             est = (s.get('next_day_estimate') or {}).get('estimate', None)
-            if est and est > 0 and s.get('score', 0) >= 60 and s.get('change_pct', 0) <= 5:
-                selected.append(s)
+            signals = set(s.get('signals', []))
+            if est and est > 0 and s.get('score', 0) >= 65 and s.get('change_pct', 0) <= 5:
+                if signals & TREND_SIGNALS:
+                    selected.append(s)
             if len(selected) >= 3:
                 break
 
@@ -550,6 +573,26 @@ def main():
     }
 
     _save_json(os.path.join(DATA_DIR, 'midday_analysis.json'), analysis)
+
+    # 6.5 更新综合买入策略（午盘调整）
+    print("  [6.5] 更新综合买入策略（午盘调整）...")
+    try:
+        from comprehensive_strategy import generate_midday_buy_adjustment
+        morning_data = load_morning_analysis()
+        if morning_data:
+            adjustment = generate_midday_buy_adjustment(morning_data, analysis)
+            if adjustment:
+                _save_json(os.path.join(DATA_DIR, 'comprehensive_strategy.json'), {
+                    'morning_strategy': {
+                        'open_forecast': morning_data.get('open_forecast'),
+                        'operation_mode': morning_data.get('strategy', {}),
+                        'buy_strategies': morning_data.get('top_buys', []),
+                    },
+                    'midday_adjustment': adjustment,
+                    'update_time': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                })
+    except Exception as e:
+        print(f"  ⚠️ 午盘策略调整失败: {e}")
 
     print(f"\n  📊 午后风险评分: {strategy['risk_score']}/100")
     print(f"  🇨🇳 上证指数: {cn_indices.get('000001', {}).get('price', '-')} ({cn_indices.get('000001', {}).get('change_pct', 0):+.2f}%)")

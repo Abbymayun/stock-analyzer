@@ -52,14 +52,138 @@ const App = {
     }
   },
 
-  // === 观察中股票刷新 ===
+  // === 统一推荐买入加载 ===
+  async loadUnifiedBuys() {
+    try {
+      const r = this._apiAvailable
+        ? await fetch(`${this.API_BASE}/api/unified_buys`)
+        : null;
+      if (r && r.ok) {
+        const data = await r.json();
+        this.renderUnifiedBuys(data);
+        return;
+      }
+    } catch {}
+
+    // fallback: 从本地JSON文件加载
+    try {
+      const files = [
+        { name: '收盘分析', url: 'data/closing_analysis.json', key: 'tomorrow_buys' },
+        { name: '午间分析', url: 'data/midday_analysis.json', key: 'top_buys' },
+        { name: '晨间分析', url: 'data/morning_analysis.json', key: 'top_buys' },
+      ];
+      const items = [];
+      const seen = new Set();
+      for (const f of files) {
+        const res = await fetch(f.url);
+        if (!res.ok) continue;
+        const data = await res.json();
+        const buys = data[f.key] || [];
+        for (const s of buys) {
+          if (!seen.has(s.code)) {
+            seen.add(s.code);
+            items.push({ ...s, _source: f.name });
+          }
+        }
+      }
+      this.renderUnifiedBuys({ items, period: '本地', total: items.length });
+    } catch {}
+  },
+
+  renderUnifiedBuys(data) {
+    const el = document.getElementById('unified-buys-list');
+    const labelEl = document.getElementById('unified-source-label');
+    const items = data.items || [];
+
+    if (!items.length) {
+      el.innerHTML = '<div class="empty">暂无推荐，等待分析更新...</div>';
+      labelEl.textContent = '';
+      return;
+    }
+
+    // 构建来源标签
+    const sources = data.sources || items.map(s => ({ code: s.code, source: s.source, name: s.name }));
+    const sourceMap = {};
+    for (const src of sources) {
+      sourceMap[src.code] = src.source;
+    }
+
+    labelEl.textContent = `以分析推荐为准 · 共${items.length}只 · ${data.update_time || ''}`;
+
+    let html = '<div style="display:flex;flex-direction:column;gap:8px">';
+
+    items.forEach((item, idx) => {
+      const chgCls = item.change_pct >= 0 ? 'text-rise' : 'text-fall';
+      const chgSign = item.change_pct >= 0 ? '+' : '';
+      const curChgCls = item.current_change_pct >= 0 ? 'text-rise' : 'text-fall';
+      const curChgSign = item.current_change_pct >= 0 ? '+' : '';
+      const est = item.next_day_estimate;
+      const estVal = est ? est.estimate : null;
+      const estStr = estVal != null ? (estVal >= 0 ? '+' : '') + estVal.toFixed(1) + '%' : '-';
+      const estCls = estVal != null ? (estVal >= 0 ? 'text-rise' : 'text-fall') : '';
+      const source = item.source || sourceMap[item.code] || '';
+      const sourceTag = source
+        ? `<span style="font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(59,130,246,0.15);color:#60a5fa">${this.esc(source)}</span>`
+        : '';
+
+      // 信号标签（只显示关键买入信号）
+      const signals = item.signals || [];
+      const buySignals = signals.filter(s => ['均线多头排列','MA金叉','MACD金叉','红柱放大','放量','主力资金流入'].some(k => s.includes(k)));
+
+      html += `<div style="background:var(--bg2);border-radius:10px;padding:12px 14px;cursor:pointer;border-left:3px solid ${idx === 0 ? '#ef4444' : idx === 1 ? '#f87171' : '#fbbf24'}" onclick="App.openStock('${item.code}')">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <div style="display:flex;align-items:center;gap:6px">
+            <span style="font-weight:700;font-size:15px">${this.esc(item.name)}</span>
+            <span style="color:var(--text3);font-size:11px">${item.code}</span>
+            <span class="stock-rec-tag 强烈买入" style="font-size:11px">${item.score}分</span>
+            ${sourceTag}
+          </div>
+          <div style="text-align:right">
+            <div style="font-weight:700;font-size:18px" class="${curChgCls}">${(item.current_price || item.price).toFixed(2)}</div>
+            <div style="font-size:11px" class="${curChgCls}">${curChgSign}${(item.current_change_pct || item.change_pct).toFixed(2)}%</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:14px;font-size:11px;color:var(--text3);margin-bottom:6px">
+          <span>🎯 买入价: <span style="color:var(--rise);font-weight:600">${item.buy_point?.toFixed(2) || '-'}</span></span>
+          <span>📐 目标: <span style="color:var(--rise)">${item.target_price?.toFixed(2) || '-'}</span></span>
+          <span>🛑 止损: <span style="color:var(--fall)">${item.stop_loss?.toFixed(2) || '-'}</span></span>
+          <span>📊 预估: <span class="${estCls}" style="font-weight:600">${estStr}</span></span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px">
+          ${buySignals.slice(0, 5).map(s => `<span style="font-size:10px;background:rgba(239,68,68,0.12);color:#ef4444;padding:2px 6px;border-radius:4px">${this.esc(s)}</span>`).join('')}
+        </div>
+        <div style="margin-top:6px;display:flex;justify-content:flex-end">
+          <button onclick="event.stopPropagation();App.manualBuy('${item.code}','${this.esc(item.name)}',${item.buy_point || 0},${item.score || 0})" style="padding:4px 14px;background:rgba(239,68,68,0.15);color:#ef4444;border:1px solid rgba(239,68,68,0.3);border-radius:6px;cursor:pointer;font-size:12px;font-weight:600">买入</button>
+        </div>
+      </div>`;
+    });
+
+    html += '</div>';
+    html += '<div style="text-align:center;padding:8px;font-size:10px;color:var(--text3)">推荐来源于晨间/午间/收盘综合分析 · 入口质量分+趋势信号+风险收益比三维筛选</div>';
+
+    el.innerHTML = html;
+  },
+
+  toggleRecDetail() {
+    const section = document.getElementById('rec-detail-section');
+    const icon = document.getElementById('rec-toggle-icon');
+    if (section.style.display === 'none') {
+      section.style.display = '';
+      icon.textContent = '▲ 收起';
+    } else {
+      section.style.display = 'none';
+      icon.textContent = '▼ 展开';
+    }
+  },
+
+  // === 观察中股票刷新（已替换为统一推荐） ===
   startWatchRefresh() {
     const refresh = async () => {
       try {
-        const res = await fetch(this.API_BASE + '/api/buy_plan');
+        const res = await fetch(this.API_BASE + '/api/unified_buys');
         if (!res.ok) return;
         const data = await res.json();
-        this.renderWatchList(data);
+        this.renderUnifiedBuys(data);
       } catch {}
     };
     refresh();
@@ -278,7 +402,7 @@ const App = {
     const codes = new Set();
     // 持仓
     (this.allData?.stocks || []).filter(s => s._holding).forEach(s => codes.add(s.code));
-    // 推荐
+    // 推荐（从各分析文件获取）
     const rec = this.recData || {};
     [...(rec.strong_buy || []), ...(rec.buy || []), ...(rec.watch || [])].forEach(s => codes.add(s.code));
     return [...codes];
@@ -383,25 +507,24 @@ const App = {
     sentEl.textContent = r.market_sentiment + ' · ' + r.avg_score + '分';
     sentEl.className = 'sentiment ' + r.market_sentiment;
 
+    // 统计数字（放在技术评分详情里）
     document.getElementById('stat-strong').textContent = (r.strong_buy || []).length;
     document.getElementById('stat-buy').textContent = (r.buy || []).length;
     document.getElementById('stat-watch').textContent = (r.watch || []).length;
 
+    // 技术评分详情（默认收起）
     this.renderRecList('strong-buy-list', r.strong_buy || []);
     this.renderRecList('buy-list', r.buy || []);
     this.renderRecList('watch-buy-list', r.watch || []);
 
-    // 更新左侧推荐列表时间
-    const updateTime = this.allData.update_time || '';
-    const _setTs = (id, t) => { const el = document.getElementById(id); if (el && t) el.textContent = t; };
-    _setTs('sb-update-time', updateTime);
-    _setTs('buy-update-time', updateTime);
-    _setTs('watch-update-time2', updateTime);
+    // 统一推荐买入（重点展示）
+    this.loadUnifiedBuys();
 
     this.loadMorningAnalysis();
     this.loadMiddayAnalysis();
     this.loadEodAnalysis();
     this.loadClosingAnalysis();
+    this.loadComprehensiveStrategy();
     this.renderStrategies(r);
     this.renderAccuracy();
     this.renderPortfolio();
@@ -532,6 +655,127 @@ const App = {
     `;
 
     el.innerHTML = html;
+  },
+
+  // === 综合买入策略 ===
+  async loadComprehensiveStrategy() {
+    try {
+      const r = this._apiAvailable
+        ? await fetch(`${this.API_BASE}/api/comprehensive_strategy`)
+        : await fetch('data/comprehensive_strategy.json');
+      if (r.ok) {
+        const data = await r.json();
+        this.renderComprehensiveStrategy(data);
+      }
+    } catch {}
+  },
+
+  renderComprehensiveStrategy(data) {
+    if (!data || data.error) return;
+
+    const el = document.getElementById('comprehensive-strategy-section');
+    if (!el) return;
+
+    const ts = document.getElementById('comprehensive-strategy-time');
+    if (ts && data.update_time) ts.textContent = data.update_time;
+
+    const forecast = data.open_forecast || {};
+    const mode = data.operation_mode || {};
+    const buyStrategies = data.buy_strategies || [];
+
+    const dirEmoji = forecast.direction?.includes('低开') ? '📉' : forecast.direction?.includes('高开') ? '📈' : '➡️';
+    const dirColor = forecast.direction?.includes('低开') ? '#ef4444' : forecast.direction?.includes('高开') ? '#22c55e' : '#94a3b8';
+    const amplitude = forecast.amplitude || 0;
+
+    const modeLabel = mode.name || '-';
+    const modeColor = modeLabel.includes('防御') || modeLabel.includes('回避') ? '#ef4444' : modeLabel.includes('观望') ? '#f59e0b' : '#22c55e';
+
+    const scenarios = mode.scenarios || {};
+    const scenariosHtml = Object.keys(scenarios).length ? `<div style="font-size:11px;color:var(--text2);margin-top:6px;line-height:1.8">
+      ${Object.entries(scenarios).map(([k, v]) => `<div style="padding-left:4px">• <span style="color:var(--text1)">${this.esc(k)}</span> → ${this.esc(v)}</div>`).join('')}
+    </div>` : '';
+
+    let stocksHtml = '';
+    const validStocks = buyStrategies.filter(s => !s.error && s.buy_points?.length > 0);
+    if (validStocks.length > 0) {
+      stocksHtml = `<div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:8px;margin-top:8px">
+        <div style="font-size:12px;font-weight:600;margin-bottom:6px">🎯 个股精准买入策略（${validStocks.length}只）</div>
+        ${validStocks.map((s, i) => {
+          const bps = s.buy_points || [];
+          const sMode = s.mode || '-';
+          const sModeBg = sMode.includes('低吸') ? 'rgba(34,197,94,0.1)' : sMode.includes('防御') || sMode.includes('回避') ? 'rgba(239,68,68,0.1)' : 'rgba(245,158,11,0.1)';
+          const sModeFg = sMode.includes('低吸') ? '#22c55e' : sMode.includes('防御') || sMode.includes('回避') ? '#ef4444' : '#f59e0b';
+          const rr = s.risk_reward_ratio || 0;
+          const rrCls = rr >= 3 ? 'text-rise' : rr >= 2 ? '' : 'text-fall';
+          return `<div style="border:1px solid rgba(255,255,255,0.06);border-radius:6px;padding:6px 8px;margin-bottom:${i < validStocks.length - 1 ? '4' : '0'}px">
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;flex-wrap:wrap">
+              <span style="font-weight:600;color:var(--text1);font-size:12px;cursor:pointer" onclick="App.openStock('${s.code}')">${this.esc(s.name)}</span>
+              <span style="font-size:10px;color:var(--text3)">${s.code}</span>
+              <span style="font-size:10px;color:var(--text3)">昨收${s.yesterday_close}</span>
+              <span style="font-size:10px" class="${s.yesterday_change >= 0 ? 'text-rise' : 'text-fall'}">${s.yesterday_change >= 0 ? '+' : ''}${s.yesterday_change.toFixed(2)}%</span>
+              <span style="font-size:9px;padding:1px 6px;border-radius:4px;background:${sModeBg};color:${sModeFg}">${this.esc(sMode)}</span>
+              ${s.open_est && Math.abs(s.open_est - s.yesterday_close) > 0.001 ? `<span style="font-size:10px;color:var(--text3)">开盘≈${s.open_est}</span>` : ''}
+            </div>
+            ${bps.map(bp => {
+              const confIcon = bp.confidence === 'high' ? '✅' : bp.confidence === 'medium' ? '🟡' : '🔴';
+              return `<div style="display:flex;align-items:flex-start;gap:6px;margin-top:3px;font-size:11px;line-height:1.5">
+                <span>${confIcon}</span>
+                <div style="flex:1">
+                  <span style="color:var(--rise);font-weight:600">${bp.price}元</span>
+                  <span style="color:var(--text3)"> ${this.esc(bp.label)}</span>
+                  <span style="color:var(--text3)"> · ${this.esc(bp.timing)}</span>
+                  <div style="font-size:10px;color:var(--text3)">条件: ${this.esc(bp.condition)}</div>
+                </div>
+              </div>`;
+            }).join('')}
+            <div style="display:flex;gap:12px;margin-top:4px;font-size:10px">
+              ${s.stop_loss ? `<span>🛑 止损 <span class="text-fall">${s.stop_loss}</span></span>` : ''}
+              ${s.target ? `<span>🎯 目标 <span class="text-rise">${s.target}</span></span>` : ''}
+              ${rr > 0 ? `<span>📊 风险/收益 <span class="${rrCls}">1:${rr}</span></span>` : ''}
+            </div>
+            ${s.key_note ? `<div style="font-size:10px;color:var(--text3);margin-top:3px;opacity:0.8">💡 ${this.esc(s.key_note)}</div>` : ''}
+          </div>`;
+        }).join('')}
+      </div>`;
+    }
+
+    let adjHtml = '';
+    const adj = data.midday_adjustment || data.midday_strategy;
+    if (adj && adj.adjustments) {
+      adjHtml = `<div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:6px;margin-top:6px">
+        <div style="font-size:11px;font-weight:600;color:var(--text1)">🔄 午间策略调整</div>
+        <div style="font-size:11px;line-height:1.6;color:var(--text2);margin-top:3px;white-space:pre-line">${this.esc(adj.adjustments.join('\n'))}</div>
+      </div>`;
+    }
+
+    el.innerHTML = `
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:8px 12px;margin-bottom:6px">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:3px;min-width:80px">
+          <span style="font-size:10px;font-weight:600;color:var(--text2)">开盘预测</span>
+          <div style="display:flex;align-items:center;gap:4px">
+            <span style="font-size:16px">${dirEmoji}</span>
+            <span style="font-size:14px;font-weight:700;color:${dirColor}">${this.esc(forecast.direction || '未知')}</span>
+          </div>
+          ${amplitude > 0.05 ? `<span style="font-size:10px;color:var(--text3)">约${amplitude.toFixed(1)}%</span>` : ''}
+          <span style="font-size:9px;color:var(--text3)">综合评分 ${forecast.score >= 0 ? '+' : ''}${(forecast.score || 0).toFixed(2)}</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:3px">
+          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+            <span style="font-size:11px;font-weight:600;color:var(--text2)">操作模式</span>
+            <span style="font-size:11px;padding:1px 8px;border-radius:4px;background:${modeColor}15;color:${modeColor};font-weight:600">${this.esc(modeLabel)}</span>
+          </div>
+          <div style="font-size:11px;color:var(--text2);line-height:1.4">${this.esc(mode.description || '')}</div>
+          <div style="display:flex;gap:12px;font-size:10px;color:var(--text3);margin-top:2px;flex-wrap:wrap">
+            ${mode.buy_timing ? `<span>⏰ ${this.esc(mode.buy_timing)}</span>` : ''}
+            ${mode.position > 0 ? `<span>💰 建议仓位${Math.round(mode.position * 100)}%</span>` : '<span>💰 空仓观望</span>'}
+            ${mode.key_action ? `<span>🔑 ${this.esc(mode.key_action)}</span>` : ''}
+          </div>
+        </div>
+      </div>
+      ${scenariosHtml}
+      ${stocksHtml}
+      ${adjHtml}
+    `;
   },
 
   // === 午间综合分析 ===

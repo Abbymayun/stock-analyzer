@@ -402,12 +402,14 @@ def analyze_stock_performance(stock, realtime):
 
 def load_top_buys_for_tomorrow():
     """收盘后筛选明日建议买入的3只股票
-    策略：入口点买入，排除今天已推荐的9只（晨间+午间+尾盘）
+    策略：入口点买入，排除今天已推荐的（晨间+午间+尾盘）
     核心逻辑：
-      1. 趋势信号强（均线多头/MACD金叉/放量）= 多日上涨潜力
+      1. 趋势信号强（均线多头/MACD金叉/放量）= 多日上涨潜力，要求>=2个
       2. 现价在买点附近或之下 = 还没拉升，有入场空间
       3. 今日涨幅不过大 = 不是追高，有持股空间
       4. 明日预估为正 = 短期趋势延续
+      5. RSI未超买
+      6. 风险收益比合理
     """
     rec_path = os.path.join(DATA_DIR, 'recommendations.json')
     rec_data = _load_json(rec_path)
@@ -438,16 +440,25 @@ def load_top_buys_for_tomorrow():
         price = s.get('price', 0)
         buy_point = s.get('buy_point', 0)
         ma5 = s.get('ma5', 0)
+        rsi6 = s.get('rsi6', 0)
+        rsi12 = s.get('rsi12', 0)
 
         if code in excluded:
             continue
-        if not (signals & TREND_SIGNALS):
+        # 至少2个趋势信号
+        trend_count = len(signals & TREND_SIGNALS)
+        if trend_count < 2:
             continue
-        if chg > 6:
+        if chg > 5:
             continue
         if est is None or est <= 0:
             continue
-        if score < 70:
+        if score < 75:
+            continue
+        # RSI不能过高
+        if rsi6 > 75 or rsi12 > 75:
+            continue
+        if s.get('trend', '') == '下降':
             continue
 
         # 入口质量分
@@ -474,15 +485,27 @@ def load_top_buys_for_tomorrow():
         if buy_point > 0 and stop > 0 and target > 0:
             rr = (target - buy_point) / (buy_point - stop)
             if rr >= 3:
-                entry_score += 5
+                entry_score += 6
             elif rr >= 2:
-                entry_score += 3
+                entry_score += 4
+            elif rr >= 1.5:
+                entry_score += 2
 
-        trend_count = len(signals & TREND_SIGNALS)
         entry_score += min(trend_count * 3, 12)
 
         chase_count = len(signals & CHASE_SIGNALS)
-        entry_score -= chase_count * 3
+        entry_score -= chase_count * 4
+
+        # RSI加分
+        if 40 <= rsi6 <= 65:
+            entry_score += 3
+        elif 65 < rsi6 <= 75:
+            entry_score += 1
+
+        # 成交额
+        amount = s.get('amount', 0)
+        if amount >= 50000:
+            entry_score += 2
 
         s['_entry_score'] = entry_score
         filtered.append(s)
@@ -503,8 +526,10 @@ def load_top_buys_for_tomorrow():
             if s.get('code', '') in selected_codes or s.get('code', '') in excluded:
                 continue
             est = (s.get('next_day_estimate') or {}).get('estimate', None)
-            if est and est > 0 and s.get('score', 0) >= 60 and s.get('change_pct', 0) <= 6:
-                selected.append(s)
+            signals = set(s.get('signals', []))
+            if est and est > 0 and s.get('score', 0) >= 65 and s.get('change_pct', 0) <= 5:
+                if signals & TREND_SIGNALS:
+                    selected.append(s)
             if len(selected) >= 3:
                 break
 
@@ -755,6 +780,29 @@ def main():
     if impact_summary:
         for line in impact_summary.split('\n')[:6]:
             print(f"  {line}")
+
+    # 6.5 生成明日综合买入策略（基于收盘后的外围数据）
+    print("  [6.5] 生成明日综合买入策略...")
+    try:
+        from comprehensive_strategy import generate_comprehensive_buy_strategy
+        tomorrow_morning_data = {
+            'us_impact': us_impact,
+            'commodity_impact': commodity_impact,
+            'fx_impact': fx_impact,
+            'global_impact': global_impact,
+            'strategy': {'risk_score': tomorrow_risk['risk_score']},
+            'top_buys': tomorrow_buys,
+            'impact_summary': impact_summary,
+        }
+        comprehensive = generate_comprehensive_buy_strategy(tomorrow_morning_data)
+        comprehensive['source'] = 'closing_preview'
+        comprehensive['source_desc'] = '基于收盘后外围数据预生成的明日策略'
+        _save_json(os.path.join(DATA_DIR, 'comprehensive_strategy.json'), comprehensive)
+        print(f"  📊 明日操作模式: {comprehensive['operation_mode']['name']}")
+        print(f"  📊 明日开盘预测: {comprehensive['open_forecast']['description']}")
+    except Exception as e:
+        print(f"  ⚠️ 明日综合策略生成失败: {e}")
+
     print(f"\n  ✅ 收盘分析完成！")
 
 
