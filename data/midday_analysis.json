@@ -1,5 +1,5 @@
 {
-  "update_time": "2026-05-28 12:00:42",
+  "update_time": "2026-05-29 12:00:42",
   "us_indices": {},
   "commodities": {},
   "fx": {},
@@ -8,37 +8,37 @@
     "000001": {
       "name": "上证指数",
       "code": "000001",
-      "price": 4087.86,
-      "prev_close": 4093.73,
-      "change_pct": -0.14
+      "price": 4083.62,
+      "prev_close": 4098.64,
+      "change_pct": -0.37
     },
     "399001": {
       "name": "深证成指",
       "code": "399001",
-      "price": 15695.48,
-      "prev_close": 15736.47,
-      "change_pct": -0.26
+      "price": 15704.04,
+      "prev_close": 15861.89,
+      "change_pct": -1.0
     },
     "399006": {
       "name": "创业板指",
       "code": "399006",
-      "price": 4054.21,
-      "prev_close": 4045.77,
-      "change_pct": 0.21
+      "price": 4077.94,
+      "prev_close": 4125.07,
+      "change_pct": -1.14
     },
     "000688": {
       "name": "科创50",
       "code": "000688",
-      "price": 1838.84,
-      "prev_close": 1815.45,
-      "change_pct": 1.29
+      "price": 1777.24,
+      "prev_close": 1844.25,
+      "change_pct": -3.63
     },
     "000300": {
       "name": "沪深300",
       "code": "000300",
-      "price": 4881.17,
-      "prev_close": 4908.17,
-      "change_pct": -0.55
+      "price": 4917.02,
+      "prev_close": 4914.21,
+      "change_pct": 0.06
     }
   },
   "us_impact": {
@@ -70,30 +70,33 @@
   },
   "impact_summary": "🇺🇸 美股数据未获取",
   "strategy": {
-    "risk_score": 75,
-    "strategy_text": "➡️ 外围中性影响，上证-0.14%按自身节奏运行\n➡️ 上证指数午盘-0.14%，走势平稳\n🔴 赚钱效应极差（仅17%上涨），多数个股下跌，午后不宜追高\n\n🔴 【午后策略】高风险环境\n  不加仓、不追高，持仓股若继续走弱可考虑减仓\n  若大盘午后继续下跌，优先保护本金\n\n  🚫 午后操作规则：\n  • 上午已涨超5%的不追（获利盘压力）\n  • 上午大幅下跌的股票不盲目抄底（等企稳信号）\n  • 临近尾盘（14:30后）谨慎操作",
+    "risk_score": 50,
+    "strategy_text": "➡️ 外围中性影响，上证-0.37%按自身节奏运行\n➡️ 上证指数午盘-0.37%，走势平稳\n📉 科创50(-3.63%)弱于主板，科技股回调\n\n🟢 【午后策略】中性环境\n  可择机低吸优质标的，但控制单票仓位\n  优先关注回调到支撑位的强势股\n\n  🚫 午后操作规则：\n  • 上午已涨超5%的不追（获利盘压力）\n  • 上午大幅下跌的股票不盲目抄底（等企稳信号）\n  • 临近尾盘（14:30后）谨慎操作",
     "position_advice": {
-      "max": 0.2,
+      "max": 0.4,
       "single_max": 0.3
     }
   },
   "top_buys": [
     {
-      "code": "002039",
-      "name": "黔源电力",
+      "code": "000993",
+      "name": "闽东电力",
       "score": 100,
-      "price": 21.3,
-      "change_pct": 2.01,
-      "buy_point": 20.54,
+      "price": 14.38,
+      "change_pct": 2.42,
+      "buy_point": 13.75,
       "buy_time": "午间买入 (12:00-13:00)",
-      "stop_loss": 19.51,
-      "target_price": 22.44,
+      "stop_loss": 13.07,
+      "target_price": 14.9,
       "signals": [
         "温和上涨",
-        "低PE",
+        "高换手",
+        "收在高位",
+        "大振幅",
+        "高PE",
         "放量",
+        "均线多头排列",
         "MA金叉",
-        "MACD金叉",
         "红柱放大"
       ],
       "next_day_estimate": {
@@ -107,62 +110,61 @@
       "entry_score": 20
     },
     {
-      "code": "601231",
-      "name": "环旭电子",
+      "code": "002351",
+      "name": "漫步者",
       "score": 100,
-      "price": 43.43,
-      "change_pct": 4.83,
-      "buy_point": 40.76,
+      "price": 11.32,
+      "change_pct": 1.34,
+      "buy_point": 11.14,
       "buy_time": "午间买入 (12:00-13:00)",
-      "stop_loss": 38.72,
-      "target_price": 46.61,
+      "stop_loss": 10.58,
+      "target_price": 11.78,
       "signals": [
         "温和上涨",
-        "大振幅",
-        "放量",
-        "MA金叉",
-        "MACD金叉",
-        "红柱放大",
-        "放量上涨"
-      ],
-      "next_day_estimate": {
-        "estimate": 3.0,
-        "factors": [
-          "技术面偏强",
-          "MACD多头",
-          "放量上攻"
-        ]
-      },
-      "entry_score": 19
-    },
-    {
-      "code": "603311",
-      "name": "金海高科",
-      "score": 77,
-      "price": 30.21,
-      "change_pct": 3.35,
-      "buy_point": 30.17,
-      "buy_time": "午间买入 (12:00-13:00)",
-      "stop_loss": 28.66,
-      "target_price": 33.65,
-      "signals": [
-        "温和上涨",
-        "大振幅",
-        "高PE",
+        "收在高位",
         "放量",
         "均线多头排列",
-        "RSI偏高"
+        "MA金叉",
+        "红柱放大"
       ],
       "next_day_estimate": {
-        "estimate": 1.5,
+        "estimate": 2.0,
         "factors": [
-          "连续上涨",
+          "技术面偏强",
           "MACD多头"
         ]
       },
-      "entry_score": 29
+      "entry_score": 24
+    },
+    {
+      "code": "605258",
+      "name": "协和电子",
+      "score": 100,
+      "price": 38.56,
+      "change_pct": 2.83,
+      "buy_point": 37.82,
+      "buy_time": "午间买入 (12:00-13:00)",
+      "stop_loss": 35.93,
+      "target_price": 40.34,
+      "signals": [
+        "温和上涨",
+        "收在高位",
+        "大振幅",
+        "放量",
+        "均线多头排列",
+        "MACD金叉",
+        "红柱放大"
+      ],
+      "next_day_estimate": {
+        "estimate": 2.0,
+        "factors": [
+          "技术面偏强",
+          "MACD多头"
+        ]
+      },
+      "entry_score": 24
     }
   ],
-  "market_summary": "全市场3066只：上涨506只(16.5%)，下跌2360只(77.0%) | 涨停43只，跌停22只，平均涨幅-1.68% | 赚钱效应很差，控制风险",
-  "morning_risk": 60
+  "market_summary": "全市场3066只：上涨1381只(45.0%)，下跌1424只(46.4%) | 涨停93只，跌停8只，平均涨幅+0.29% | 赚钱效应一般",
+  "morning_risk": 50
 }
