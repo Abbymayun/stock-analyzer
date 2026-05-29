@@ -136,6 +136,8 @@ class Handler(SimpleHTTPRequestHandler):
                 self._handle_strategy_results()
             elif path == '/api/health':
                 self._json({'ok': True, 'ts': time.time()})
+            elif path == '/api/stock_advice':
+                self._handle_stock_advice(parsed)
             elif path == '/api/buy_plan':
                 self._handle_buy_plan()
             elif path == '/api/unified_buys':
@@ -522,6 +524,147 @@ class Handler(SimpleHTTPRequestHandler):
             'sources': sources,
             'total': len(items),
             'update_time': time.strftime('%Y-%m-%d %H:%M:%S'),
+        })
+
+    def _handle_stock_advice(self, parsed):
+        """个股操作建议：输入股票代码+买入价格，返回持有/卖出建议"""
+        params = parse_qs(parsed.query)
+        code_raw = params.get('code', [''])[0].strip()
+        buy_price = float(params.get('buy_price', ['0'])[0] or 0)
+        
+        if not code_raw or buy_price <= 0:
+            self._json({'error': '请提供股票代码/名称和买入价格'})
+            return
+        
+        # 查找股票
+        all_data = load_json(os.path.join(DATA_DIR, 'all_stocks.json'), {})
+        stocks = all_data.get('stocks', [])
+        
+        stock = None
+        code_lower = code_raw.lower()
+        for s in stocks:
+            if s.get('code', '') == code_raw or s.get('name', '') == code_raw:
+                stock = s
+                break
+            if code_raw in s.get('name', '') or (code_lower.startswith('sz') and s.get('code','') == code_raw[2:]) or (code_lower.startswith('sh') and s.get('code','') == code_raw[2:]):
+                stock = s
+                break
+        
+        if not stock:
+            self._json({'error': f'未找到股票: {code_raw}'})
+            return
+        
+        # 获取实时价格
+        rt = get_cached_realtime([stock['code']])
+        rt_data = rt.get(stock['code'], {})
+        current_price = rt_data.get('price', stock.get('price', 0))
+        
+        # 计算盈亏
+        pnl_pct = round((current_price - buy_price) / buy_price * 100, 2) if buy_price > 0 else 0
+        
+        # 获取推荐数据
+        rec_data = load_json(os.path.join(DATA_DIR, 'recommendations.json'), {})
+        rec_stock = None
+        for k in ['strong_buy', 'buy', 'watch', 'avoid']:
+            for s in rec_data.get(k, []):
+                if s.get('code') == stock['code']:
+                    rec_stock = s
+                    break
+            if rec_stock:
+                break
+        
+        score = rec_stock.get('score', stock.get('score', 0)) if rec_stock else stock.get('score', 0)
+        trend = rec_stock.get('trend', stock.get('trend', '')) if rec_stock else stock.get('trend', '')
+        rec = rec_stock.get('recommendation', stock.get('recommendation', '')) if rec_stock else stock.get('recommendation', '')
+        signals = (rec_stock or stock).get('signals', [])
+        target_price = (rec_stock or stock).get('target_price')
+        stop_loss = (rec_stock or stock).get('stop_loss')
+        buy_point = (rec_stock or stock).get('buy_point')
+        rsi6 = (rec_stock or stock).get('rsi6', 0)
+        ma5 = (rec_stock or stock).get('ma5', 0)
+        
+        # 生成建议
+        advice = ''
+        action = ''
+        action_color = ''
+        reasons = []
+        
+        if pnl_pct <= -8:
+            action = '🛑 建议止损卖出'
+            action_color = '#ef4444'
+            reasons.append(f'亏损已达{pnl_pct}%，触及-8%止损线')
+            reasons.append('纪律性止损，避免更大亏损')
+        elif pnl_pct >= 15:
+            action = '💰 建议分批止盈'
+            action_color = '#22c55e'
+            reasons.append(f'盈利{pnl_pct}%，建议先卖出一半锁定利润')
+            reasons.append('剩余仓位设移动止盈保护')
+        elif rec and ('卖出' in rec):
+            action = '🔴 建议卖出'
+            action_color = '#ef4444'
+            reasons.append(f'系统推荐: {rec}，评分{score}分')
+            reasons.append('技术面转弱，趋势可能逆转')
+        elif target_price and current_price >= target_price:
+            action = '✅ 建议止盈卖出'
+            action_color = '#22c55e'
+            reasons.append(f'已达到目标价{target_price}元，当前{current_price}元')
+            reasons.append(f'浮盈{pnl_pct}%，纪律性止盈')
+        elif score >= 75 and ('上升' in str(trend)):
+            action = '🟢 建议继续持有'
+            action_color = '#22c55e'
+            reasons.append(f'评分{score}分，趋势{trend}，技术面健康')
+            if target_price:
+                reasons.append(f'目标价{target_price}元，还有上行空间')
+            if pnl_pct < 0:
+                reasons.append(f'当前浮亏{pnl_pct}%，但趋势未坏，可观察')
+        elif score >= 50:
+            action = '🟡 建议持有观望'
+            action_color = '#f59e0b'
+            reasons.append(f'评分{score}分，趋势{trend or "震荡"}，方向不明确')
+            if pnl_pct > 0:
+                reasons.append(f'浮盈{pnl_pct}%，可设保本止损继续观察')
+            else:
+                reasons.append(f'浮亏{abs(pnl_pct)}%，关注是否跌破支撑位')
+        else:
+            action = '🔴 建议卖出'
+            action_color = '#ef4444'
+            reasons.append(f'评分{score}分偏低，技术面走弱')
+            if pnl_pct > 0:
+                reasons.append(f'仍有浮盈{pnl_pct}%，趁盈利离场')
+            else:
+                reasons.append(f'浮亏{abs(pnl_pct)}%，及时止损避免扩大')
+        
+        # 额外信号分析
+        if rsi6 and rsi6 > 75:
+            reasons.append('RSI超买(>75)，短期回调风险高')
+        if rsi6 and rsi6 < 30:
+            reasons.append('RSI超卖(<30)，可能触底反弹，不建议割肉')
+        if signals:
+            key_neg = [s for s in signals if '下跌' in s or '空头' in s]
+            if key_neg:
+                reasons.append(f'危险信号: {"、".join(key_neg[:2])}')
+        
+        advice = '\n'.join([f'{i+1}. {r}' for i, r in enumerate(reasons)])
+        
+        self._json({
+            'code': stock['code'],
+            'name': stock['name'],
+            'buy_price': buy_price,
+            'current_price': current_price,
+            'change_pct': rt_data.get('change_pct', stock.get('change_pct', 0)),
+            'pnl_pct': pnl_pct,
+            'score': score,
+            'trend': trend,
+            'recommendation': rec,
+            'signals': signals,
+            'target_price': target_price,
+            'stop_loss': stop_loss,
+            'buy_point': buy_point,
+            'rsi6': rsi6,
+            'ma5': ma5,
+            'action': action,
+            'action_color': action_color,
+            'advice': advice,
         })
 
     def _handle_buy_plan(self):

@@ -174,52 +174,31 @@
 
       <!-- ====== 右栏 ====== -->
       <div class="col-right">
-        <!-- 准确率统计 -->
-        <div class="card" style="margin-bottom:16px">
+        <!-- 个股操作建议 -->
+        <div class="card" style="margin-bottom:16px;border-left:3px solid #f59e0b">
           <div class="card-head">
-            <h3>🎯 预测准确率</h3>
-            <span style="font-size:11px;color:var(--text3)" id="accuracy-update-time">昨日强烈买入</span>
+            <h3>🔍 个股操作建议</h3>
+            <span style="font-size:10px;color:var(--text3)">输入持仓股票获取即时建议</span>
           </div>
-          <div class="card-body" id="accuracy-section">
-            <div class="empty">等待数据积累...</div>
-          </div>
-        </div>
-
-        <!-- 持仓记录 -->
-        <div class="card">
-          <div class="card-head">
-            <h3>💼 我的持仓</h3>
-            <div style="display:flex;gap:6px">
-              <button class="btn-tiny" onclick="App.showAddPortfolio()">+ 添加</button>
-              <button class="btn-tiny" onclick="Portfolio.clear()">清空</button>
+          <div class="card-body">
+            <div style="margin-bottom:10px">
+              <label style="font-size:11px;color:var(--text2);display:block;margin-bottom:4px">股票代码或名称</label>
+              <input id="advice-code" type="text" placeholder="如：002039 或 黔源电力" style="width:100%;padding:8px 10px;background:var(--bg2);border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:var(--text1);font-size:14px;box-sizing:border-box" onkeydown="if(event.key==='Enter')App.getStockAdvice()">
             </div>
-          </div>
-          <div class="card-body" id="portfolio-section">
-            <div class="portfolio-empty">暂无持仓，点击上方"添加"录入</div>
+            <div style="margin-bottom:10px">
+              <label style="font-size:11px;color:var(--text2);display:block;margin-bottom:4px">你的买入价格（元）</label>
+              <input id="advice-price" type="number" step="0.01" placeholder="如：21.40" style="width:100%;padding:8px 10px;background:var(--bg2);border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:var(--text1);font-size:14px;box-sizing:border-box" onkeydown="if(event.key==='Enter')App.getStockAdvice()">
+            </div>
+            <button onclick="App.getStockAdvice()" style="width:100%;padding:10px;background:linear-gradient(135deg,#f59e0b,#d97706);border:none;border-radius:8px;color:#fff;font-size:14px;font-weight:700;cursor:pointer">⚡ 获取操作建议</button>
           </div>
         </div>
 
-        <!-- 持仓操作建议 -->
-        <div class="card" id="portfolio-advice-card" style="margin-top:16px;display:none">
-          <div class="card-head"><h3>📝 持仓操作建议</h3></div>
-          <div class="card-body" id="portfolio-advice"></div>
-        </div>
-
-        <!-- 虚拟交易持仓 -->
-        <div class="card" style="margin-top:16px">
+        <!-- 建议结果 -->
+        <div class="card" id="advice-result-card" style="display:none;border-left:3px solid #3b82f6">
           <div class="card-head">
-            <h3>🎰 虚拟交易持仓</h3>
-            <a class="view-more" onclick="App.showPage('trading')">查看交易页 →</a>
+            <h3 id="advice-result-title">📋 分析结果</h3>
           </div>
-          <div class="card-body" id="virtual-holdings-section">
-            <div class="portfolio-empty">等待交易数据...</div>
-          </div>
-        </div>
-
-        <!-- 明日操作建议（从中间栏移过来） -->
-        <div class="card" id="next-day-card" style="margin-top:16px;display:none">
-          <div class="card-head"><h3>📅 明日操作建议</h3></div>
-          <div class="card-body"><div class="advice-box" id="next-day-advice"></div></div>
+          <div class="card-body" id="advice-result-body"></div>
         </div>
       </div>
     </div>

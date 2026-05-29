@@ -160,6 +160,130 @@ const App = {
     else { s.style.display = 'none'; i.textContent = '▼ 展开'; }
   },
 
+  // === 个股操作建议 ===
+  async getStockAdvice() {
+    const code = document.getElementById('advice-code').value.trim();
+    const price = parseFloat(document.getElementById('advice-price').value);
+    if (!code || !price || price <= 0) {
+      this.showToast('请输入股票代码/名称和买入价格');
+      return;
+    }
+    const card = document.getElementById('advice-result-card');
+    const body = document.getElementById('advice-result-body');
+    const title = document.getElementById('advice-result-title');
+    
+    // 先查本地数据
+    let stock = null;
+    const stocks = this.allData?.stocks || [];
+    for (const s of stocks) {
+      if (s.code === code || s.name === code || s.name?.includes(code) || s.code?.includes(code)) {
+        stock = s; break;
+      }
+    }
+    // 也查recData
+    if (!stock) {
+      const rec = this.recData || {};
+      for (const k of ['strong_buy','buy','watch','avoid']) {
+        const found = (rec[k]||[]).find(s => s.code === code || s.name === code);
+        if (found) { stock = found; break; }
+      }
+    }
+    
+    if (!stock) {
+      card.style.display = '';
+      title.textContent = '❌ 未找到';
+      body.innerHTML = `<div style="color:var(--text2);font-size:13px">未找到股票 "${this.esc(code)}"，请检查代码或名称</div>`;
+      return;
+    }
+    
+    // 尝试从API获取
+    let data = null;
+    if (this._apiAvailable) {
+      try {
+        const r = await fetch(`${this.API_BASE}/api/stock_advice?code=${encodeURIComponent(stock.code)}&buy_price=${price}`);
+        if (r.ok) data = await r.json();
+      } catch {}
+    }
+    
+    if (!data || data.error) {
+      // fallback: 本地计算
+      const curPrice = stock.price || 0;
+      const pnl = ((curPrice - price) / price * 100);
+      const score = stock.score || 0;
+      const trend = stock.trend || '';
+      const rec = stock.recommendation || '';
+      const signals = stock.signals || [];
+      const targetPrice = stock.target_price;
+      const stopLoss = stock.stop_loss;
+      let action, color, reasons = [];
+      
+      if (pnl <= -8) {
+        action = '🛑 建议止损卖出'; color = '#ef4444';
+        reasons = [`亏损${pnl.toFixed(1)}%，触及-8%止损线`, '纪律止损，避免更大亏损'];
+      } else if (pnl >= 15) {
+        action = '💰 建议分批止盈'; color = '#22c55e';
+        reasons = [`盈利${pnl.toFixed(1)}%，建议卖出半仓`, '剩余仓位设移动止盈'];
+      } else if (rec && rec.includes('卖出')) {
+        action = '🔴 建议卖出'; color = '#ef4444';
+        reasons = [`系统推荐: ${rec}，评分${score}分`, '技术面转弱'];
+      } else if (targetPrice && curPrice >= targetPrice) {
+        action = '✅ 建议止盈卖出'; color = '#22c55e';
+        reasons = [`已超目标价${targetPrice}`, `浮盈${pnl.toFixed(1)}%，纪律止盈`];
+      } else if (score >= 75 && trend && trend.includes('上升')) {
+        action = '🟢 建议继续持有'; color = '#22c55e';
+        reasons = [`评分${score}分，趋势上升`, targetPrice ? `目标价${targetPrice}` : '技术面健康'];
+        if (pnl < 0) reasons.push(`浮亏${Math.abs(pnl).toFixed(1)}%，趋势未坏可观察`);
+      } else if (score >= 50) {
+        action = '🟡 建议持有观望'; color = '#f59e0b';
+        reasons = [`评分${score}分，趋势震荡`, pnl > 0 ? `浮盈${pnl.toFixed(1)}%` : `浮亏${Math.abs(pnl).toFixed(1)}%`];
+      } else {
+        action = '🔴 建议卖出'; color = '#ef4444';
+        reasons = [`评分${score}分偏低`, pnl > 0 ? `还有浮盈${pnl.toFixed(1)}%` : `浮亏${Math.abs(pnl).toFixed(1)}%，及时止损`];
+      }
+      data = {
+        code: stock.code, name: stock.name, buy_price: price, current_price: curPrice,
+        change_pct: stock.change_pct || 0, pnl_pct: pnl, score, trend, recommendation: rec,
+        signals, target_price: targetPrice, stop_loss: stopLoss, buy_point: stock.buy_point,
+        rsi6: stock.rsi6, ma5: stock.ma5, action, action_color: color,
+        advice: reasons.map((r,i) => `${i+1}. ${r}`).join('\n'),
+      };
+    }
+    
+    // 渲染结果
+    const pnlCls = data.pnl_pct >= 0 ? 'text-rise' : 'text-fall';
+    const pnlSign = data.pnl_pct >= 0 ? '+' : '';
+    const signals = data.signals || [];
+    
+    card.style.display = '';
+    title.innerHTML = `📋 ${this.esc(data.name)} <span style="font-size:12px;color:var(--text3)">${data.code}</span>`;
+    
+    body.innerHTML = `
+      <div style="margin-bottom:10px;display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-size:22px;font-weight:700" class="${pnlCls}">${data.current_price.toFixed(2)}</div>
+          <div style="font-size:12px" class="${pnlCls}">${data.change_pct >= 0 ? '+' : ''}${data.change_pct.toFixed(2)}%</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:12px;color:var(--text3)">买入价 ${data.buy_price.toFixed(2)}</div>
+          <div style="font-size:18px;font-weight:700" class="${pnlCls}">${pnlSign}${data.pnl_pct.toFixed(1)}%</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:11px;color:var(--text2);margin-bottom:10px;padding:8px;background:var(--bg2);border-radius:6px">
+        <div>📊 评分: <span style="color:${data.score >= 75 ? '#22c55e' : data.score >= 50 ? '#f59e0b' : '#ef4444'};font-weight:700">${data.score}分</span></div>
+        <div>📈 趋势: <span style="font-weight:600">${this.esc(data.trend || '未知')}</span></div>
+        <div>🎯 目标价: <span style="color:var(--rise)">${data.target_price?.toFixed(2) || '-'}</span></div>
+        <div>🛑 止损价: <span style="color:var(--fall)">${data.stop_loss?.toFixed(2) || '-'}</span></div>
+        ${data.buy_point ? `<div>📍 买点: <span>${data.buy_point.toFixed(2)}</span></div>` : ''}
+        ${data.rsi6 ? `<div>📉 RSI6: <span style="color:${data.rsi6 > 70 ? '#ef4444' : '#22c55e'}">${data.rsi6.toFixed(1)}</span></div>` : ''}
+      </div>
+      <div style="background:${data.action_color}15;border:1px solid ${data.action_color}33;border-radius:8px;padding:12px;margin-bottom:8px">
+        <div style="font-weight:700;font-size:16px;color:${data.action_color};margin-bottom:6px">${data.action}</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.8;white-space:pre-line">${this.esc(data.advice)}</div>
+      </div>
+      ${signals.length ? `<div style="display:flex;flex-wrap:wrap;gap:4px">${signals.slice(0,6).map(s => `<span style="font-size:10px;background:rgba(100,116,139,0.15);color:#94a3b8;padding:2px 6px;border-radius:4px">${this.esc(s)}</span>`).join('')}</div>` : ''}
+    `;
+  },
+
   // === 统一推荐定时刷新 ===
   startWatchRefresh() {
     const refresh = async () => {
@@ -507,9 +631,6 @@ const App = {
     this.loadEodAnalysis();
     this.loadClosingAnalysis();
     this.renderStrategies(r);
-    this.renderAccuracy();
-    this.renderPortfolio();
-    this.renderVirtualHoldings();
   },
 
   // === 晨间综合分析 ===
