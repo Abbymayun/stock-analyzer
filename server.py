@@ -138,6 +138,8 @@ class Handler(SimpleHTTPRequestHandler):
                 self._json({'ok': True, 'ts': time.time()})
             elif path == '/api/buy_plan':
                 self._handle_buy_plan()
+            elif path == '/api/unified_buys':
+                self._handle_unified_buys()
             elif path == '/api/latest_trades':
                 self._handle_latest_trades()
             elif path == '/api/morning_analysis':
@@ -452,6 +454,75 @@ class Handler(SimpleHTTPRequestHandler):
             self._json({})
             return
         self._json(strategy)
+
+    def _handle_unified_buys(self):
+        """返回统一的今日推荐买入（以晨间/午间/收盘分析的top_buys为准）"""
+        seen_codes = set()
+        unified = []
+        sources = []
+        
+        # 收盘分析 (tomorrow_buys 或 top_buys)
+        closing = load_json(os.path.join(DATA_DIR, 'closing_analysis.json'))
+        if closing:
+            buys = closing.get('tomorrow_buys', []) or closing.get('top_buys', [])
+            for s in buys:
+                if s.get('code') not in seen_codes:
+                    seen_codes.add(s['code'])
+                    s['_source'] = '收盘'
+                    unified.append(s)
+                    sources.append({'code': s['code'], 'source': '收盘分析', 'name': s.get('name', '')})
+        
+        # 午间分析
+        midday = load_json(os.path.join(DATA_DIR, 'midday_analysis.json'))
+        if midday:
+            for s in midday.get('top_buys', []):
+                if s.get('code') not in seen_codes:
+                    seen_codes.add(s['code'])
+                    s['_source'] = '午间'
+                    unified.append(s)
+                    sources.append({'code': s['code'], 'source': '午间分析', 'name': s.get('name', '')})
+        
+        # 晨间分析
+        morning = load_json(os.path.join(DATA_DIR, 'morning_analysis.json'))
+        if morning:
+            for s in morning.get('top_buys', []):
+                if s.get('code') not in seen_codes:
+                    seen_codes.add(s['code'])
+                    s['_source'] = '晨间'
+                    unified.append(s)
+                    sources.append({'code': s['code'], 'source': '晨间分析', 'name': s.get('name', '')})
+        
+        codes = [s['code'] for s in unified]
+        rt = get_cached_realtime(codes) if codes else {}
+        
+        items = []
+        for s in unified:
+            r = rt.get(s['code'], {})
+            items.append({
+                'code': s.get('code', ''),
+                'name': s.get('name', ''),
+                'score': s.get('score', 0),
+                'price': s.get('price', 0),
+                'change_pct': s.get('change_pct', 0),
+                'buy_point': s.get('buy_point'),
+                'target_price': s.get('target_price'),
+                'stop_loss': s.get('stop_loss'),
+                'buy_time': s.get('buy_time', ''),
+                'signals': s.get('signals', []),
+                'next_day_estimate': s.get('next_day_estimate', {}),
+                'entry_score': s.get('entry_score', 0),
+                'reason': s.get('reason', ''),
+                'source': s.get('_source', ''),
+                'current_price': r.get('price', s.get('price', 0)),
+                'current_change_pct': r.get('change_pct', s.get('change_pct', 0)),
+            })
+        
+        self._json({
+            'items': items,
+            'sources': sources,
+            'total': len(items),
+            'update_time': time.strftime('%Y-%m-%d %H:%M:%S'),
+        })
 
     def _handle_buy_plan(self):
         """返回当前买入观察计划（含实时价格）"""

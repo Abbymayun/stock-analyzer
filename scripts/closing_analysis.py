@@ -535,6 +535,18 @@ def load_top_buys_for_tomorrow():
 
     result = []
     for s in selected:
+        signals = s.get('signals', [])
+        reasons = []
+        if s.get('score', 0) >= 95:
+            reasons.append('收盘强劲')
+        else:
+            reasons.append('收盘稳健')
+        trend_sigs = [x for x in signals if x in TREND_SIGNALS]
+        if trend_sigs:
+            reasons.append('、'.join(trend_sigs[:3]))
+        est_val = (s.get('next_day_estimate') or {}).get('estimate', 0)
+        if est_val >= 3:
+            reasons.append('明日高预期')
         result.append({
             'code': s.get('code', ''), 'name': s.get('name', ''),
             'score': s.get('score', 0), 'price': s.get('price', 0),
@@ -542,9 +554,10 @@ def load_top_buys_for_tomorrow():
             'buy_point': s.get('buy_point'),
             'buy_time': '明日开盘买入 (9:30-10:00)',
             'stop_loss': s.get('stop_loss'), 'target_price': s.get('target_price'),
-            'signals': s.get('signals', []),
+            'signals': signals,
             'next_day_estimate': s.get('next_day_estimate', {}),
             'entry_score': s.get('_entry_score', 0),
+            'reason': '，'.join(reasons) if reasons else '趋势信号确认',
         })
     return result
 

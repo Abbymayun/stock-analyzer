@@ -80,62 +80,45 @@
     <div class="dashboard">
       <!-- ====== 左栏 ====== -->
       <div class="col-left">
-        <!-- 统计入口（去掉建议回避） -->
+        <!-- 今日推荐买入（统一数据源：晨间/午间/收盘分析） -->
         <div class="card" style="margin-bottom:16px">
           <div class="card-head">
-            <h3>📊 今日推荐统计</h3>
-            <a class="view-more" onclick="App.showPage('history')">查看全部更新 →</a>
+            <h3>🔥 今日推荐买入</h3>
+            <span style="font-size:11px;color:var(--text3)" id="unified-source-label">加载中...</span>
           </div>
-          <div class="card-body">
-            <div class="stat-grid" style="grid-template-columns:1fr 1fr 1fr">
+          <div class="card-body" id="unified-buys-list"><div class="empty">加载中...</div></div>
+        </div>
+
+        <!-- 技术评分排行（默认收起） -->
+        <div class="card" style="margin-bottom:16px">
+          <div class="card-head" style="cursor:pointer" onclick="App.toggleRecDetail()">
+            <h3>📊 技术评分排行</h3>
+            <span style="font-size:11px;color:var(--text3)" id="rec-toggle-icon">▼ 展开</span>
+          </div>
+          <div class="card-body" id="rec-detail-section" style="display:none">
+            <div class="stat-grid" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:12px">
               <div class="stat-item" onclick="App.filterByRec('强烈买入')">
-                <div class="stat-num rise" id="stat-strong" style="font-size:28px">-</div>
-                <div class="stat-label">🔥 强烈买入</div>
+                <div class="stat-num rise" id="stat-strong" style="font-size:20px">-</div>
+                <div class="stat-label">强烈买入</div>
               </div>
               <div class="stat-item" onclick="App.filterByRec('买入')">
-                <div class="stat-num" style="color:#f87171;font-size:28px" id="stat-buy">-</div>
-                <div class="stat-label">📈 建议买入</div>
+                <div class="stat-num" style="color:#f87171;font-size:20px" id="stat-buy">-</div>
+                <div class="stat-label">建议买入</div>
               </div>
               <div class="stat-item" onclick="App.filterByRec('关注')">
-                <div class="stat-num gold" style="font-size:28px" id="stat-watch">-</div>
-                <div class="stat-label">👀 值得关注</div>
+                <div class="stat-num gold" style="font-size:20px" id="stat-watch">-</div>
+                <div class="stat-label">值得关注</div>
               </div>
             </div>
+            <div id="strong-buy-list"></div>
+            <div style="margin-top:12px" id="buy-list"></div>
+            <div style="margin-top:12px" id="watch-buy-list"></div>
           </div>
-        </div>
-
-        <!-- 强烈买入列表 -->
-        <div class="card">
-          <div class="card-head"><h3>🔥 强烈买入</h3><span style="font-size:11px;color:var(--text3)" id="sb-update-time"></span></div>
-          <div class="card-body" id="strong-buy-list"><div class="empty">加载中...</div></div>
-        </div>
-
-        <!-- 建议买入 -->
-        <div class="card" style="margin-top:16px">
-          <div class="card-head"><h3>📈 建议买入</h3><span style="font-size:11px;color:var(--text3)" id="buy-update-time"></span></div>
-          <div class="card-body" id="buy-list"><div class="empty">加载中...</div></div>
-        </div>
-
-        <!-- 值得关注 -->
-        <div class="card" style="margin-top:16px">
-          <div class="card-head"><h3>👀 值得关注</h3><span style="font-size:11px;color:var(--text3)" id="watch-update-time2"></span></div>
-          <div class="card-body" id="watch-buy-list"><div class="empty">加载中...</div></div>
         </div>
       </div>
 
       <!-- ====== 中栏 ====== -->
       <div class="col-center">
-        <!-- 待买入观察中 -->
-        <div class="card" id="watch-card" style="margin-bottom:16px;display:none">
-          <div class="card-head">
-            <h3>🔍 待买入观察中</h3>
-            <span style="font-size:11px;color:var(--text3)" id="watch-update-time">实时分析中</span>
-          </div>
-          <div class="card-body" id="watch-plan-list">
-            <div class="empty">暂无观察股票</div>
-          </div>
-        </div>
-
         <!-- 晨间综合分析 -->
         <div class="card" style="margin-bottom:16px;border-left:3px solid #f59e0b">
           <div class="card-head">

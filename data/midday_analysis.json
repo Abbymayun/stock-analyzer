@@ -1,9 +1,64 @@
 {
-  "update_time": "2026-05-29 12:00:42",
-  "us_indices": {},
-  "commodities": {},
-  "fx": {},
-  "global_indices": {},
+  "update_time": "2026-05-29 12:47:08",
+  "us_indices": {
+    "int_dji": {
+      "name": "道琼斯",
+      "price": 46247.29,
+      "prev_close": 45948.62,
+      "change_pct": 0.65
+    },
+    "int_nasdaq": {
+      "name": "纳斯达克",
+      "price": 22484.07,
+      "prev_close": 22385.57,
+      "change_pct": 0.44
+    },
+    "int_sp500": {
+      "name": "标普500",
+      "price": 6643.7,
+      "prev_close": 6604.73,
+      "change_pct": 0.59
+    }
+  },
+  "commodities": {
+    "hf_GC": {
+      "name": "COMEX黄金",
+      "unit": "美元/盎司",
+      "price": 4540.71,
+      "prev_close": 4532.4,
+      "change_pct": 0.18
+    },
+    "hf_CL": {
+      "name": "WTI原油",
+      "unit": "美元/桶",
+      "price": 87.72,
+      "prev_close": 88.9,
+      "change_pct": -1.33
+    },
+    "hf_SI": {
+      "name": "COMEX白银",
+      "unit": "美元/盎司",
+      "price": 75.99,
+      "prev_close": 75.91,
+      "change_pct": 0.11
+    }
+  },
+  "fx": {
+    "usdcnh": {
+      "name": "美元/离岸人民币",
+      "price": 6.7682,
+      "prev_close": 6.7661,
+      "change_pct": 0.03
+    }
+  },
+  "global_indices": {
+    "hkHSI": {
+      "name": "恒生指数",
+      "price": 25161.52,
+      "prev_close": 25006.16,
+      "change_pct": 0.62
+    }
+  },
   "cn_indices": {
     "000001": {
       "name": "上证指数",
@@ -42,33 +97,39 @@
     }
   },
   "us_impact": {
-    "direction": "中性",
-    "level": "low",
-    "summary": "美股数据未获取",
-    "detail": "",
+    "direction": "小幅利好",
+    "level": "medium",
+    "avg_pct": 0.56,
+    "summary": "美股全线上涨，三大指数平均+0.56%。对A股：小幅利好",
+    "detail": "📈 道琼斯 46247.29 (+0.65%)\n📈 纳斯达克 22484.07 (+0.44%)\n📈 标普500 6643.70 (+0.59%)",
     "affect_sectors": [],
-    "open_forecast": "",
-    "coping": []
+    "open_forecast": "A股可能平开或小幅高开，开盘后走势取决于自身技术面",
+    "coping": [
+      "• 外围偏暖但力度一般，维持正常操作节奏",
+      "• 科技方向可适度关注，但不必重仓追"
+    ]
   },
   "commodity_impact": {
-    "summary": "大宗商品数据未获取",
-    "detail": "",
+    "summary": "大宗商品波动平稳，对A股直接影响有限",
+    "detail": "📈 COMEX黄金 4540.71 美元/盎司 (+0.18%)\n📈 COMEX白银 75.99 美元/盎司 (+0.11%)\n📉 WTI原油 87.72 美元/桶 (-1.33%)",
     "affect_sectors": [],
     "coping": []
   },
   "fx_impact": {
-    "summary": "汇率数据未获取",
-    "detail": "",
+    "summary": "汇率相对稳定",
+    "detail": "💵 美元/离岸人民币 6.7682 (+0.03%)",
     "affect_sectors": [],
     "coping": []
   },
   "global_impact": {
-    "summary": "全球指数数据未获取",
-    "detail": "",
-    "affect_sectors": [],
+    "summary": "外围市场整体平稳",
+    "detail": "📈 恒生指数 25161.52 (+0.62%)",
+    "affect_sectors": [
+      "🟢 恒指小幅上涨，港股情绪偏暖，对A股有正面带动"
+    ],
     "coping": []
   },
-  "impact_summary": "🇺🇸 美股数据未获取",
+  "impact_summary": "🇺🇸 美股全线上涨，三大指数平均+0.56%。对A股：小幅利好\n📊 预计A股可能平开或小幅高开，开盘后走势取决于自身技术面\n\n🎯 受影响板块：\n  🟢 恒指小幅上涨，港股情绪偏暖，对A股有正面带动\n\n💡 应对方法：\n  • 外围偏暖但力度一般，维持正常操作节奏\n  • 科技方向可适度关注，但不必重仓追",
   "strategy": {
     "risk_score": 50,
     "strategy_text": "➡️ 外围中性影响，上证-0.37%按自身节奏运行\n➡️ 上证指数午盘-0.37%，走势平稳\n📉 科创50(-3.63%)弱于主板，科技股回调\n\n🟢 【午后策略】中性环境\n  可择机低吸优质标的，但控制单票仓位\n  优先关注回调到支撑位的强势股\n\n  🚫 午后操作规则：\n  • 上午已涨超5%的不追（获利盘压力）\n  • 上午大幅下跌的股票不盲目抄底（等企稳信号）\n  • 临近尾盘（14:30后）谨慎操作",
@@ -79,21 +140,82 @@
   },
   "top_buys": [
     {
-      "code": "000993",
-      "name": "闽东电力",
+      "code": "002951",
+      "name": "金时科技",
       "score": 100,
-      "price": 14.38,
-      "change_pct": 2.42,
-      "buy_point": 13.75,
+      "price": 17.96,
+      "change_pct": 2.69,
+      "buy_point": 17.13,
       "buy_time": "午间买入 (12:00-13:00)",
-      "stop_loss": 13.07,
-      "target_price": 14.9,
+      "stop_loss": 16.27,
+      "target_price": 19.26,
       "signals": [
         "温和上涨",
-        "高换手",
-        "收在高位",
         "大振幅",
-        "高PE",
+        "放量",
+        "均线多头排列",
+        "MACD金叉",
+        "红柱放大",
+        "放量上涨"
+      ],
+      "next_day_estimate": {
+        "estimate": 4.0,
+        "factors": [
+          "技术面偏强",
+          "连续上涨",
+          "MACD多头",
+          "放量上攻"
+        ]
+      },
+      "entry_score": 27,
+      "reason": "午后空间充足，午间极强信号，放量、均线多头排列"
+    },
+    {
+      "code": "603050",
+      "name": "科林电气",
+      "score": 100,
+      "price": 25.74,
+      "change_pct": 3.42,
+      "buy_point": 23.77,
+      "buy_time": "午间买入 (12:00-13:00)",
+      "stop_loss": 22.58,
+      "target_price": 27.93,
+      "signals": [
+        "温和上涨",
+        "大振幅",
+        "放量",
+        "均线多头排列",
+        "MA金叉",
+        "MACD金叉",
+        "红柱放大",
+        "RSI偏高",
+        "放量上涨"
+      ],
+      "next_day_estimate": {
+        "estimate": 4.0,
+        "factors": [
+          "技术面偏强",
+          "连续上涨",
+          "MACD多头",
+          "放量上攻"
+        ]
+      },
+      "entry_score": 25,
+      "reason": "温和上涨延续，午间极强信号，放量、均线多头排列"
+    },
+    {
+      "code": "000899",
+      "name": "赣能股份",
+      "score": 100,
+      "price": 14.23,
+      "change_pct": 1.35,
+      "buy_point": 13.42,
+      "buy_time": "午间买入 (12:00-13:00)",
+      "stop_loss": 12.75,
+      "target_price": 15.06,
+      "signals": [
+        "温和上涨",
+        "低PE",
         "放量",
         "均线多头排列",
         "MA金叉",
@@ -107,64 +229,10 @@
           "MACD多头"
         ]
       },
-      "entry_score": 20
-    },
-    {
-      "code": "002351",
-      "name": "漫步者",
-      "score": 100,
-      "price": 11.32,
-      "change_pct": 1.34,
-      "buy_point": 11.14,
-      "buy_time": "午间买入 (12:00-13:00)",
-      "stop_loss": 10.58,
-      "target_price": 11.78,
-      "signals": [
-        "温和上涨",
-        "收在高位",
-        "放量",
-        "均线多头排列",
-        "MA金叉",
-        "红柱放大"
-      ],
-      "next_day_estimate": {
-        "estimate": 2.0,
-        "factors": [
-          "技术面偏强",
-          "MACD多头"
-        ]
-      },
-      "entry_score": 24
-    },
-    {
-      "code": "605258",
-      "name": "协和电子",
-      "score": 100,
-      "price": 38.56,
-      "change_pct": 2.83,
-      "buy_point": 37.82,
-      "buy_time": "午间买入 (12:00-13:00)",
-      "stop_loss": 35.93,
-      "target_price": 40.34,
-      "signals": [
-        "温和上涨",
-        "收在高位",
-        "大振幅",
-        "放量",
-        "均线多头排列",
-        "MACD金叉",
-        "红柱放大"
-      ],
-      "next_day_estimate": {
-        "estimate": 2.0,
-        "factors": [
-          "技术面偏强",
-          "MACD多头"
-        ]
-      },
-      "entry_score": 24
+      "entry_score": 27,
+      "reason": "午后空间充足，午间极强信号，放量、均线多头排列"
     }
   ],
-  "market_summary": "全市场3066只：上涨1381只(45.0%)，下跌1424只(46.4%) | 涨停93只，跌停8只，平均涨幅+0.29% | 赚钱效应一般",
+  "market_summary": "全市场3066只：上涨1292只(42.1%)，下跌1540只(50.2%) | 涨停48只，跌停8只，平均涨幅-0.41% | 赚钱效应一般",
   "morning_risk": 50
 }

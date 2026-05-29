@@ -52,18 +52,126 @@ const App = {
     }
   },
 
-  // === 观察中股票刷新 ===
+  // === 统一推荐买入加载 ===
+  async loadUnifiedBuys() {
+    try {
+      const r = this._apiAvailable
+        ? await fetch(`${this.API_BASE}/api/unified_buys`)
+        : null;
+      if (r && r.ok) {
+        const data = await r.json();
+        this.renderUnifiedBuys(data);
+        return;
+      }
+    } catch {}
+    // fallback: 从本地JSON加载
+    try {
+      const files = [
+        { url: 'data/closing_analysis.json', key: 'tomorrow_buys' },
+        { url: 'data/midday_analysis.json', key: 'top_buys' },
+        { url: 'data/morning_analysis.json', key: 'top_buys' },
+      ];
+      const items = [];
+      const seen = new Set();
+      for (const f of files) {
+        const res = await fetch(f.url);
+        if (!res.ok) continue;
+        const data = await res.json();
+        const buys = data[f.key] || [];
+        for (const s of buys) {
+          if (!seen.has(s.code)) {
+            seen.add(s.code);
+            items.push(s);
+          }
+        }
+      }
+      this.renderUnifiedBuys({ items, total: items.length });
+    } catch {}
+  },
+
+  renderUnifiedBuys(data) {
+    const el = document.getElementById('unified-buys-list');
+    const labelEl = document.getElementById('unified-source-label');
+    const items = data.items || [];
+    if (!items.length) {
+      el.innerHTML = '<div class="empty">暂无推荐，等待分析更新...</div>';
+      if (labelEl) labelEl.textContent = '';
+      return;
+    }
+    const sources = data.sources || [];
+    const sourceMap = {};
+    for (const src of sources) sourceMap[src.code] = src.source;
+    if (labelEl) labelEl.textContent = `以分析推荐为准 · ${items.length}只 · ${data.update_time || ''}`;
+
+    let html = '<div style="display:flex;flex-direction:column;gap:8px">';
+    items.forEach((item, idx) => {
+      const curPrice = item.current_price || item.price || 0;
+      const curChg = item.current_change_pct || item.change_pct || 0;
+      const chgCls = curChg >= 0 ? 'text-rise' : 'text-fall';
+      const chgSign = curChg >= 0 ? '+' : '';
+      const est = item.next_day_estimate;
+      const estVal = est ? est.estimate : null;
+      const estStr = estVal != null ? (estVal >= 0 ? '+' : '') + estVal.toFixed(1) + '%' : '-';
+      const estCls = estVal != null ? (estVal >= 0 ? 'text-rise' : 'text-fall') : '';
+      const src = item.source || sourceMap[item.code] || '';
+      const srcTag = src ? `<span style="font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(59,130,246,0.15);color:#60a5fa">${this.esc(src)}</span>` : '';
+      const signals = item.signals || [];
+      const keySignals = signals.filter(s => ['均线多头排列','MA金叉','MACD金叉','红柱放大','放量','主力资金流入'].some(k => s.includes(k)));
+      const reason = item.reason || signals.slice(0, 3).join('、') || '';
+      const borderColors = ['#ef4444', '#f87171', '#fbbf24', '#fbbf24', '#fbbf24', '#fbbf24'];
+
+      html += `<div style="background:var(--bg2);border-radius:10px;padding:12px 14px;cursor:pointer;border-left:3px solid ${borderColors[idx] || '#fbbf24'}" onclick="App.openStock('${item.code}')">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <div style="display:flex;align-items:center;gap:6px">
+            <span style="font-weight:700;font-size:15px">${this.esc(item.name)}</span>
+            <span style="color:var(--text3);font-size:11px">${item.code}</span>
+            <span class="stock-rec-tag 强烈买入" style="font-size:11px">${item.score}分</span>
+            ${srcTag}
+          </div>
+          <div style="text-align:right">
+            <div style="font-weight:700;font-size:18px" class="${chgCls}">${curPrice.toFixed(2)}</div>
+            <div style="font-size:11px" class="${chgCls}">${chgSign}${curChg.toFixed(2)}%</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:14px;font-size:11px;color:var(--text3);margin-bottom:6px;flex-wrap:wrap">
+          <span>🎯 买入: <span style="color:var(--rise);font-weight:600">${item.buy_point?.toFixed(2) || '-'}</span></span>
+          <span>📐 目标: <span style="color:var(--rise)">${item.target_price?.toFixed(2) || '-'}</span></span>
+          <span>🛑 止损: <span style="color:var(--fall)">${item.stop_loss?.toFixed(2) || '-'}</span></span>
+          <span>📊 预估: <span class="${estCls}" style="font-weight:600">${estStr}</span></span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:4px">
+          ${keySignals.slice(0, 5).map(s => `<span style="font-size:10px;background:rgba(239,68,68,0.12);color:#ef4444;padding:2px 6px;border-radius:4px">${this.esc(s)}</span>`).join('')}
+        </div>
+        <div style="font-size:11px;color:var(--text2)">💡 ${this.esc(reason)}</div>
+        <div style="margin-top:6px;display:flex;justify-content:flex-end">
+          <button onclick="event.stopPropagation();App.manualBuy('${item.code}','${this.esc(item.name)}',${item.buy_point || 0},${item.score || 0})" style="padding:4px 14px;background:rgba(239,68,68,0.15);color:#ef4444;border:1px solid rgba(239,68,68,0.3);border-radius:6px;cursor:pointer;font-size:12px;font-weight:600">买入</button>
+        </div>
+      </div>`;
+    });
+    html += '</div>';
+    html += '<div style="text-align:center;padding:8px;font-size:10px;color:var(--text3)">来源于晨间/午间/收盘综合分析 · 趋势≥2信号 · 评分≥75 · RSI过滤 · 风险收益比加权</div>';
+    el.innerHTML = html;
+  },
+
+  toggleRecDetail() {
+    const s = document.getElementById('rec-detail-section');
+    const i = document.getElementById('rec-toggle-icon');
+    if (s.style.display === 'none') { s.style.display = ''; i.textContent = '▲ 收起'; }
+    else { s.style.display = 'none'; i.textContent = '▼ 展开'; }
+  },
+
+  // === 统一推荐定时刷新 ===
   startWatchRefresh() {
     const refresh = async () => {
       try {
-        const res = await fetch(this.API_BASE + '/api/buy_plan');
+        const res = await fetch(this.API_BASE + '/api/unified_buys');
         if (!res.ok) return;
         const data = await res.json();
-        this.renderWatchList(data);
+        this.renderUnifiedBuys(data);
       } catch {}
     };
     refresh();
-    this.watchTimer = setInterval(refresh, 10000); // 10秒刷新
+    this.watchTimer = setInterval(refresh, 10000);
   },
 
   // === 交易通知检测 ===
@@ -391,12 +499,8 @@ const App = {
     this.renderRecList('buy-list', r.buy || []);
     this.renderRecList('watch-buy-list', r.watch || []);
 
-    // 更新左侧推荐列表时间
-    const updateTime = this.allData.update_time || '';
-    const _setTs = (id, t) => { const el = document.getElementById(id); if (el && t) el.textContent = t; };
-    _setTs('sb-update-time', updateTime);
-    _setTs('buy-update-time', updateTime);
-    _setTs('watch-update-time2', updateTime);
+    // 统一推荐买入（主力数据源）
+    this.loadUnifiedBuys();
 
     this.loadMorningAnalysis();
     this.loadMiddayAnalysis();
@@ -493,6 +597,7 @@ const App = {
           <span style="min-width:46px;text-align:right;font-size:11px;color:var(--fall)">${s.stop_loss?.toFixed(2) || '-'}</span>
           <span style="min-width:34px;text-align:right;color:var(--text2);font-size:11px">${s.score}</span>
           </div>
+          <div style="font-size:10px;color:var(--text2);margin-top:2px;padding-left:106px">💡 ${this.esc(s.reason || s.signals?.slice(0,2).join('、') || '')}</div>
           <button onclick="event.stopPropagation();App.manualBuy('${s.code}','${this.esc(s.name)}',${s.buy_point || 0},${s.score || 0})" style="padding:2px 8px;background:#22c55e22;color:#22c55e;border:1px solid #22c55e44;border-radius:4px;cursor:pointer;font-size:11px;white-space:nowrap">买入</button>
         </div>`;
       }).join('');
@@ -509,7 +614,7 @@ const App = {
           <div style="font-size:11px;line-height:1.5">${_fmtSection(Object.entries(usIdx)) || '<span style="color:var(--text3)">暂无数据</span>'}</div>
         </div>
         <div>
-          <span style="font-size:12px;font-weight:600">🌏 亚太/欧洲</span>
+          <span style="font-size:12px;font-weight:600">🌏 全球市场</span>
           <div style="font-size:11px;line-height:1.5;margin-top:3px">${_fmtSection(Object.entries(globalIdx)) || '<span style="color:var(--text3)">-</span>'}</div>
         </div>
       </div>
@@ -612,7 +717,7 @@ const App = {
         const estVal = est ? est.estimate : null;
         const estStr = estVal != null ? (estVal >= 0 ? '+' : '') + estVal.toFixed(1) + '%' : '-';
         const estCls = estVal != null ? (estVal >= 0 ? 'text-rise' : 'text-fall') : '';
-        return `<div style="display:flex;align-items:center;gap:6px;padding:4px 0;${i > 0 ? 'border-top:1px solid rgba(255,255,255,0.04)' : ''}">
+        return `<div style="display:flex;align-items:center;gap:6px;padding:4px 0;${i > 0 ? 'border-top:1px solid rgba(255,255,255,0.04)' : ''};flex-wrap:wrap">
           <div style="flex:1;cursor:pointer;display:flex;align-items:center;gap:6px" onclick="App.openStock('${s.code}')">
           <span style="font-weight:600;color:var(--text1);min-width:52px;font-size:12px">${this.esc(s.name)}</span>
           <span style="font-size:10px;color:var(--text3);min-width:48px">${s.code}</span>
@@ -623,6 +728,7 @@ const App = {
           <span style="min-width:46px;text-align:right;font-size:11px;color:var(--fall)">${s.stop_loss?.toFixed(2) || '-'}</span>
           <span style="min-width:34px;text-align:right;color:var(--text2);font-size:11px">${s.score}</span>
           </div>
+          <div style="width:100%;font-size:10px;color:var(--text2);padding-left:106px">💡 ${this.esc(s.reason || s.signals?.slice(0,2).join('、') || '')}</div>
           <button onclick="event.stopPropagation();App.manualBuy('${s.code}','${this.esc(s.name)}',${s.buy_point || 0},${s.score || 0})" style="padding:2px 8px;background:#22c55e22;color:#22c55e;border:1px solid #22c55e44;border-radius:4px;cursor:pointer;font-size:11px;white-space:nowrap">买入</button>
         </div>`;
       }).join('');
@@ -975,7 +1081,7 @@ const App = {
           const estVal = est ? est.estimate : null;
           const estStr = estVal != null ? (estVal >= 0 ? '+' : '') + estVal.toFixed(1) + '%' : '-';
           const estCls = estVal != null ? (estVal >= 0 ? 'text-rise' : 'text-fall') : '';
-          return `<div style="display:flex;align-items:center;gap:6px;padding:4px 0;${i > 0 ? 'border-top:1px solid rgba(255,255,255,0.04)' : ''}">
+          return `<div style="display:flex;align-items:center;gap:6px;padding:4px 0;${i > 0 ? 'border-top:1px solid rgba(255,255,255,0.04)' : ''};flex-wrap:wrap">
             <div style="flex:1;cursor:pointer;display:flex;align-items:center;gap:6px" onclick="App.openStock('${s.code}')">
             <span style="font-weight:600;color:var(--text1);min-width:52px;font-size:12px">${this.esc(s.name)}</span>
             <span style="font-size:10px;color:var(--text3);min-width:48px">${s.code}</span>
@@ -986,6 +1092,7 @@ const App = {
             <span style="min-width:46px;text-align:right;font-size:11px;color:var(--fall)">${s.stop_loss?.toFixed(2) || '-'}</span>
             <span style="min-width:34px;text-align:right;color:var(--text2);font-size:11px">${s.score}</span>
             </div>
+            <div style="width:100%;font-size:10px;color:var(--text2);padding-left:106px">💡 ${this.esc(s.reason || s.signals?.slice(0,2).join('、') || '')}</div>
             <button onclick="event.stopPropagation();App.manualBuy('${s.code}','${this.esc(s.name)}',${s.buy_point || 0},${s.score || 0})" style="padding:2px 8px;background:#22c55e22;color:#22c55e;border:1px solid #22c55e44;border-radius:4px;cursor:pointer;font-size:11px;white-space:nowrap">买入</button>
           </div>`;
         }).join('')}</div>

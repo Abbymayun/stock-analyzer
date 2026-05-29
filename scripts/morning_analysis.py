@@ -549,6 +549,27 @@ def load_top_buys():
     result = []
     for s in selected:
         entry = s.get('_entry_score', 0)
+        signals = s.get('signals', [])
+        # 生成买入原因
+        reasons = []
+        if s.get('score', 0) >= 95:
+            reasons.append('技术面极强')
+        elif s.get('score', 0) >= 85:
+            reasons.append('技术面强势')
+        trend_sigs = [x for x in signals if x in TREND_SIGNALS]
+        if trend_sigs:
+            reasons.append('、'.join(trend_sigs[:3]))
+        rsi6 = s.get('rsi6', 0)
+        if 40 <= rsi6 <= 65:
+            reasons.append('RSI健康多头')
+        amount = s.get('amount', 0)
+        if amount >= 50000:
+            reasons.append('资金活跃')
+        rr = 0
+        if s.get('buy_point', 0) > 0 and s.get('stop_loss', 0) > 0 and s.get('target_price', 0) > 0:
+            rr = (s.get('target_price', 0) - s.get('buy_point', 0)) / (s.get('buy_point', 0) - s.get('stop_loss', 0))
+        if rr >= 3:
+            reasons.append('高盈亏比')
         result.append({
             'code': s.get('code', ''),
             'name': s.get('name', ''),
@@ -559,9 +580,10 @@ def load_top_buys():
             'buy_time': s.get('buy_time', '开盘30分钟内 (9:30-10:00)'),
             'stop_loss': s.get('stop_loss'),
             'target_price': s.get('target_price'),
-            'signals': s.get('signals', []),
+            'signals': signals,
             'next_day_estimate': s.get('next_day_estimate', {}),
             'entry_score': entry,
+            'reason': '，'.join(reasons) if reasons else '趋势多头信号确认',
         })
     return result
 

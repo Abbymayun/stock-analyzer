@@ -348,6 +348,20 @@ def load_top_buys():
 
     result = []
     for s in selected:
+        signals = s.get('signals', [])
+        reasons = []
+        chg = s.get('change_pct', 0)
+        if 1 <= chg <= 3:
+            reasons.append('午后空间充足')
+        elif 3 < chg <= 5:
+            reasons.append('温和上涨延续')
+        elif chg < 0:
+            reasons.append('回调低吸机会')
+        if s.get('score', 0) >= 95:
+            reasons.append('午间极强信号')
+        trend_sigs = [x for x in signals if x in TREND_SIGNALS]
+        if trend_sigs:
+            reasons.append('、'.join(trend_sigs[:2]))
         result.append({
             'code': s.get('code', ''), 'name': s.get('name', ''),
             'score': s.get('score', 0), 'price': s.get('price', 0),
@@ -355,9 +369,10 @@ def load_top_buys():
             'buy_point': s.get('buy_point'),
             'buy_time': '午间买入 (12:00-13:00)',
             'stop_loss': s.get('stop_loss'), 'target_price': s.get('target_price'),
-            'signals': s.get('signals', []),
+            'signals': signals,
             'next_day_estimate': s.get('next_day_estimate', {}),
             'entry_score': s.get('_entry_score', 0),
+            'reason': '，'.join(reasons) if reasons else '趋势多头延续',
         })
     return result
 
