@@ -126,7 +126,7 @@ const App = {
           <div style="display:flex;align-items:center;gap:6px">
             <span style="font-weight:700;font-size:15px">${this.esc(item.name)}</span>
             <span style="color:var(--text3);font-size:11px">${item.code}</span>
-            <span onclick="event.stopPropagation();navigator.clipboard.writeText('${item.code}');App.showToast('已复制 ${item.code}')" style="cursor:pointer;font-size:10px;opacity:0.5;margin-left:-2px" title="复制代码">📋</span>
+            <span onclick="event.stopPropagation();App.copyText('${item.code}')" style="cursor:pointer;font-size:11px;padding:0 3px" title="复制代码">📋</span>
             <span class="stock-rec-tag 强烈买入" style="font-size:11px">${item.score}分</span>
             ${srcTag}
           </div>
@@ -2416,7 +2416,20 @@ const App = {
     t.classList.remove('hidden');
     clearTimeout(this._tt);
     this._tt = setTimeout(() => t.classList.add('hidden'), 2000);
-  }
+  },
+
+  copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => this.showToast('已复制 ' + text));
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      this.showToast('已复制 ' + text);
+    }
+  },
 };
 
 // === 持仓管理 (localStorage) ===
