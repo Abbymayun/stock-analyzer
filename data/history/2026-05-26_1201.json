@@ -298,10 +298,10 @@
         "latest_price": 27.45,
         "latest_change_pct": -3.72,
         "next_day_actual": {
-          "actual_pct": -5.63,
-          "actual_close": 28.51,
+          "actual_pct": -6.48,
+          "actual_close": 28.253,
           "next_date": "2026-05-27",
-          "vs_estimate": -7.13
+          "vs_estimate": -7.98
         },
         "prediction_result": {
           "label": "远低预期-7.1%",
@@ -473,10 +473,10 @@
         "latest_price": 17.96,
         "latest_change_pct": -4.72,
         "next_day_actual": {
-          "actual_pct": -0.11,
-          "actual_close": 18.85,
+          "actual_pct": -2.61,
+          "actual_close": 18.378,
           "next_date": "2026-05-27",
-          "vs_estimate": -0.61
+          "vs_estimate": -3.11
         },
         "prediction_result": {
           "label": "基本符合",

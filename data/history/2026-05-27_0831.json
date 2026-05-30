@@ -768,10 +768,10 @@
         "latest_price": 21.61,
         "latest_change_pct": 1.46,
         "next_day_actual": {
-          "actual_pct": 3.5,
-          "actual_close": 21.61,
+          "actual_pct": 1.63,
+          "actual_close": 21.22,
           "next_date": "2026-05-28",
-          "vs_estimate": 1.5
+          "vs_estimate": -0.37
         },
         "prediction_result": {
           "label": "超预期",
