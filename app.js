@@ -44,6 +44,7 @@ const App = {
         this.startRealtimeRefresh();
         this.startWatchRefresh();
         this.startTradeNotification();
+        this.renderVirtualHoldings();
       }
     } catch (e) {
       document.getElementById('update-time').textContent = '暂无数据';
@@ -125,6 +126,7 @@ const App = {
           <div style="display:flex;align-items:center;gap:6px">
             <span style="font-weight:700;font-size:15px">${this.esc(item.name)}</span>
             <span style="color:var(--text3);font-size:11px">${item.code}</span>
+            <span onclick="event.stopPropagation();navigator.clipboard.writeText('${item.code}');App.showToast('已复制 ${item.code}')" style="cursor:pointer;font-size:10px;opacity:0.5;margin-left:-2px" title="复制代码">📋</span>
             <span class="stock-rec-tag 强烈买入" style="font-size:11px">${item.score}分</span>
             ${srcTag}
           </div>
@@ -1549,7 +1551,9 @@ const App = {
 
   // === 右栏 - 虚拟交易持仓（需求2） ===
   async renderVirtualHoldings() {
-    const el = document.getElementById('virtual-holdings-section');
+    const el = document.getElementById('virtual-portfolio-section');
+    if (!el) return;
+    const cashEl = document.getElementById('vp-cash');
     if (!this._apiAvailable) {
       el.innerHTML = '<div class="portfolio-empty">需要启动API服务器</div>';
       return;
@@ -1573,10 +1577,12 @@ const App = {
       const cls = totalPnl >= 0 ? 'text-rise' : 'text-fall';
       const sign = totalPnl >= 0 ? '+' : '';
 
+      const cash = data.cash || 0;
+      if (cashEl) cashEl.textContent = `资金: ${(data.total_assets || 0).toLocaleString()} · 可用 ${cash.toLocaleString()}`;
       let html = `<div style="text-align:center;padding:6px 0 10px;border-bottom:1px solid var(--border);margin-bottom:8px">
-        <div style="font-size:11px;color:var(--text3)">虚拟交易盈亏</div>
+        <div style="font-size:11px;color:var(--text3)">总盈亏</div>
         <div style="font-size:18px;font-weight:800" class="${cls}">${sign}${totalPnl.toFixed(0)}元 (${sign}${totalPnlPct.toFixed(2)}%)</div>
-        <div style="font-size:11px;color:var(--text3)">可用资金 ${(data.cash || 0).toLocaleString('zh-CN', {minimumFractionDigits:0, maximumFractionDigits:0})}元</div>
+        <div style="font-size:11px;color:var(--text3)">总资产 ${(data.total_assets || 0).toLocaleString()}元 · 可用 ${cash.toLocaleString()}元</div>
       </div>`;
 
       holdings.forEach(h => {
@@ -1602,7 +1608,8 @@ const App = {
             </div>
             <div class="vh-pct ${hCls}" style="font-size:12px">${hSign}${(h.pnl_pct || 0).toFixed(2)}%</div>
           </div>
-          <div style="margin-top:4px">
+          <div style="margin-top:4px;display:flex;gap:4px">
+            <button onclick="event.stopPropagation();App._quickAdvice('${h.code}','${this.esc(h.name)}',${h.avg_cost})" style="padding:2px 8px;background:#3b82f622;color:#3b82f6;border:1px solid #3b82f644;border-radius:4px;cursor:pointer;font-size:11px">获取建议</button>
             <button onclick="event.stopPropagation();App.manualSell('${h.code}','${this.esc(h.name)}',${h.qty})" style="padding:2px 8px;background:#ef444422;color:#ef4444;border:1px solid #ef444444;border-radius:4px;cursor:pointer;font-size:11px">卖出</button>
           </div>`;
 
@@ -2899,12 +2906,19 @@ App._confirmTrade = async function(mode, code, name, score) {
     var data = await res.json();
     if (data.error) { errDiv.textContent = data.error; errDiv.style.display = 'block'; btn.disabled = false; btn.textContent = '确认' + (mode === 'buy' ? '买入' : '卖出'); return; }
     this._closeTradeModal();
-    this.showToast(data.message || (mode === 'buy' ? '买入成功' : '卖出成功'));
+    this.showToast(data.message || (mode === 'buy' ? '✅ 买入成功' : '✅ 卖出成功'));
     this.renderVirtualHoldings();
     this.loadPortfolio();
   } catch (e) {
-    errDiv.textContent = '请求失败'; errDiv.style.display = 'block'; btn.disabled = false;
+    errDiv.textContent = '请求失败: ' + (e.message || '网络错误'); errDiv.style.display = 'block'; btn.disabled = false; btn.textContent = '确认' + (mode === 'buy' ? '买入' : '卖出');
   }
+};
+
+// 快速获取持仓建议
+App._quickAdvice = function(code, name, cost) {
+  document.getElementById('advice-code').value = code;
+  document.getElementById('advice-price').value = cost;
+  this.getStockAdvice();
 };
 
 App.manualBuy = function(code, name, buyPoint, score) {

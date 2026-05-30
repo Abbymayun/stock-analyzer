@@ -205,8 +205,8 @@ class Handler(SimpleHTTPRequestHandler):
         # 返回基本信息，即使没有持仓
         if not holdings:
             self._json({
-                'total_assets': pf.get('initial_capital', 100000),
-                'cash': pf.get('cash', 100000),
+                'total_assets': pf.get('initial_capital', 200000),
+                'cash': pf.get('cash', 200000),
                 'total_return': 0,
                 'holdings': [],
             })
@@ -793,8 +793,8 @@ class Handler(SimpleHTTPRequestHandler):
         pf_path = os.path.join(DATA_DIR, 'portfolio.json')
         pf = load_json(pf_path)
         if not pf:
-            pf = {'cash': 100000, 'initial_capital': 100000, 'holdings': {},
-                  'total_assets': 100000, 'total_return': 0,
+            pf = {'cash': 200000, 'initial_capital': 200000, 'holdings': {},
+                  'total_assets': 200000, 'total_return': 0,
                   'trading_stats': {'total_trades': 0, 'win_trades': 0, 'lose_trades': 0, 'total_pnl': 0, 'total_commission': 0, 'max_drawdown': 0}}
 
         if pf['cash'] < amount + commission:
@@ -947,8 +947,8 @@ class Handler(SimpleHTTPRequestHandler):
         pf_path = os.path.join(DATA_DIR, 'portfolio.json')
         tl_path = os.path.join(DATA_DIR, 'trade_log.json')
         portfolio = {
-            'cash': 100000, 'initial_capital': 100000, 'holdings': {},
-            'total_assets': 100000, 'total_return': 0,
+            'cash': 200000, 'initial_capital': 200000, 'holdings': {},
+            'total_assets': 200000, 'total_return': 0,
             'trading_stats': {'total_trades': 0, 'win_trades': 0, 'lose_trades': 0, 'total_pnl': 0, 'total_commission': 0, 'max_drawdown': 0}
         }
         trade_log = {'trades': [], 'next_id': 1}
