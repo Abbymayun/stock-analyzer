@@ -1,0 +1,269 @@
+{
+  "daily": [
+    {
+      "date": "2026-05-30",
+      "created_at": "17:43",
+      "total_assets": 204313.0,
+      "cash": 115424.0,
+      "market_value": 88889.0,
+      "initial_capital": 200000,
+      "total_return": 2.16,
+      "total_pnl": 4368.0,
+      "buy_count": 11,
+      "sell_count": 0,
+      "hold_count": 8,
+      "buys": [
+        {
+          "name": "TCL中环",
+          "code": "002129",
+          "qty": 1000,
+          "cost": 0,
+          "total_cost": 9980.0,
+          "trades": [
+            {
+              "price": 9.98,
+              "qty": 1000
+            }
+          ],
+          "avg_cost": 9.98,
+          "current_price": 9.75,
+          "pnl": -230.00000000000043,
+          "pnl_pct": -2.3046092184368776
+        },
+        {
+          "name": "通宝能源",
+          "code": "600780",
+          "qty": 1500,
+          "cost": 0,
+          "total_cost": 10515.0,
+          "trades": [
+            {
+              "price": 7.01,
+              "qty": 1500
+            }
+          ],
+          "avg_cost": 7.01,
+          "current_price": 7.72,
+          "pnl": 1065.0,
+          "pnl_pct": 10.128388017118402
+        },
+        {
+          "name": "楚江新材",
+          "code": "002171",
+          "qty": 1000,
+          "cost": 0,
+          "total_cost": 11230.0,
+          "trades": [
+            {
+              "price": 11.23,
+              "qty": 1000
+            }
+          ],
+          "avg_cost": 11.23,
+          "current_price": 11.92,
+          "pnl": 689.9999999999995,
+          "pnl_pct": 6.144256455921634
+        },
+        {
+          "name": "甘肃能源",
+          "code": "000791",
+          "qty": 4000,
+          "cost": 0,
+          "total_cost": 37360.0,
+          "trades": [
+            {
+              "price": 9.68,
+              "qty": 1000
+            },
+            {
+              "price": 9.2,
+              "qty": 1000
+            },
+            {
+              "price": 9.24,
+              "qty": 1000
+            },
+            {
+              "price": 9.24,
+              "qty": 1000
+            }
+          ],
+          "avg_cost": 9.34,
+          "current_price": 9.84,
+          "pnl": 2000.0,
+          "pnl_pct": 5.353319057815846
+        },
+        {
+          "name": "韶能股份",
+          "code": "000601",
+          "qty": 1100,
+          "cost": 0,
+          "total_cost": 8657.0,
+          "trades": [
+            {
+              "price": 7.87,
+              "qty": 1100
+            }
+          ],
+          "avg_cost": 7.87,
+          "current_price": 8.46,
+          "pnl": 649.0000000000008,
+          "pnl_pct": 7.49682337992377
+        },
+        {
+          "name": "漫步者",
+          "code": "002351",
+          "qty": 100,
+          "cost": 0,
+          "total_cost": 1114.0,
+          "trades": [
+            {
+              "price": 11.14,
+              "qty": 100
+            }
+          ],
+          "avg_cost": 11.14,
+          "current_price": 11.15,
+          "pnl": 0.9999999999999787,
+          "pnl_pct": 0.0897666068222602
+        },
+        {
+          "name": "欢瑞世纪",
+          "code": "000892",
+          "qty": 1000,
+          "cost": 0,
+          "total_cost": 4290.0,
+          "trades": [
+            {
+              "price": 4.29,
+              "qty": 1000
+            }
+          ],
+          "avg_cost": 4.29,
+          "current_price": 4.37,
+          "pnl": 80.00000000000007,
+          "pnl_pct": 1.8648018648018665
+        },
+        {
+          "name": "闽东电力",
+          "code": "000993",
+          "qty": 100,
+          "cost": 0,
+          "total_cost": 1375.0,
+          "trades": [
+            {
+              "price": 13.75,
+              "qty": 100
+            }
+          ],
+          "avg_cost": 13.75,
+          "current_price": 14.88,
+          "pnl": 113.00000000000009,
+          "pnl_pct": 8.218181818181824
+        }
+      ],
+      "sells": [],
+      "sell_total_pnl": 0,
+      "holdings": [
+        {
+          "code": "000791",
+          "name": "甘肃能源",
+          "qty": 4000,
+          "cost": 9.34,
+          "price": 9.84,
+          "high": 10.16,
+          "low": 9.45,
+          "change_pct": 1.65,
+          "pnl": 2000.0,
+          "pnl_pct": 5.35
+        },
+        {
+          "code": "600780",
+          "name": "通宝能源",
+          "qty": 1500,
+          "cost": 7.01,
+          "price": 7.72,
+          "high": 7.87,
+          "low": 7.42,
+          "change_pct": 0.78,
+          "pnl": 1065.0,
+          "pnl_pct": 10.13
+        },
+        {
+          "code": "002171",
+          "name": "楚江新材",
+          "qty": 1000,
+          "cost": 11.23,
+          "price": 11.92,
+          "high": 12.58,
+          "low": 11.86,
+          "change_pct": -2.69,
+          "pnl": 690.0,
+          "pnl_pct": 6.14
+        },
+        {
+          "code": "000601",
+          "name": "韶能股份",
+          "qty": 1100,
+          "cost": 7.87,
+          "price": 8.46,
+          "high": 8.63,
+          "low": 7.86,
+          "change_pct": 5.49,
+          "pnl": 649.0,
+          "pnl_pct": 7.5
+        },
+        {
+          "code": "000993",
+          "name": "闽东电力",
+          "qty": 100,
+          "cost": 13.75,
+          "price": 14.88,
+          "high": 14.98,
+          "low": 14.1,
+          "change_pct": 3.48,
+          "pnl": 113.0,
+          "pnl_pct": 8.22
+        },
+        {
+          "code": "000892",
+          "name": "欢瑞世纪",
+          "qty": 1000,
+          "cost": 4.29,
+          "price": 4.37,
+          "high": 4.71,
+          "low": 4.19,
+          "change_pct": 2.1,
+          "pnl": 80.0,
+          "pnl_pct": 1.86
+        },
+        {
+          "code": "002351",
+          "name": "漫步者",
+          "qty": 100,
+          "cost": 11.14,
+          "price": 11.15,
+          "high": 11.39,
+          "low": 11.0,
+          "change_pct": -1.5,
+          "pnl": 1.0,
+          "pnl_pct": 0.09
+        },
+        {
+          "code": "002129",
+          "name": "TCL中环",
+          "qty": 1000,
+          "cost": 9.98,
+          "price": 9.75,
+          "high": 10.43,
+          "low": 9.55,
+          "change_pct": -6.61,
+          "pnl": -230.0,
+          "pnl_pct": -2.3
+        }
+      ]
+    }
+  ],
+  "weekly": [],
+  "monthly": []
+}

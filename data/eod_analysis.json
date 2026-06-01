@@ -1,106 +1,169 @@
 {
-  "update_time": "2026-05-28 14:20:01",
+  "update_time": "2026-05-29 14:20:01",
   "cn_indices": {
     "000001": {
       "name": "上证指数",
       "code": "000001",
-      "price": 4100.98,
-      "prev_close": 4093.73,
-      "change_pct": 0.18
+      "price": 4058.89,
+      "prev_close": 4098.64,
+      "change_pct": -0.97
     },
     "399001": {
       "name": "深证成指",
       "code": "399001",
-      "price": 15871.39,
-      "prev_close": 15736.47,
-      "change_pct": 0.86
+      "price": 15538.14,
+      "prev_close": 15861.89,
+      "change_pct": -2.04
     },
     "399006": {
       "name": "创业板指",
       "code": "399006",
-      "price": 4126.04,
-      "prev_close": 4045.77,
-      "change_pct": 1.98
+      "price": 4024.68,
+      "prev_close": 4125.07,
+      "change_pct": -2.43
     },
     "000688": {
       "name": "科创50",
       "code": "000688",
-      "price": 1848.54,
-      "prev_close": 1815.45,
-      "change_pct": 1.82
+      "price": 1736.73,
+      "prev_close": 1844.25,
+      "change_pct": -5.83
     },
     "000300": {
       "name": "沪深300",
       "code": "000300",
-      "price": 4916.24,
-      "prev_close": 4908.17,
-      "change_pct": 0.16
+      "price": 4886.36,
+      "prev_close": 4914.21,
+      "change_pct": -0.57
     },
     "399005": {
       "name": "中小100",
       "code": "399005",
-      "price": 9616.58,
-      "prev_close": 9594.26,
-      "change_pct": 0.23
+      "price": 9409.21,
+      "prev_close": 9609.02,
+      "change_pct": -2.08
     }
   },
   "recommended_stocks": [
     {
-      "code": "002870",
-      "name": "香山股份",
+      "code": "002129",
+      "name": "TCL中环",
+      "status": "下跌",
+      "current_price": 9.63,
+      "change_pct": -7.76,
+      "high": 10.43,
+      "low": 9.61,
+      "turnover_rate": 6.32,
+      "amplitude": 7.85,
+      "pnl_pct": 0.42,
+      "action": "⚠️ 跌幅较大，关注止损位",
+      "action_type": "关注止损"
+    },
+    {
+      "code": "600780",
+      "name": "通宝能源",
       "status": "正常",
-      "current_price": 43.18,
-      "change_pct": 0.54,
-      "high": 43.75,
-      "low": 42.1,
-      "turnover_rate": 3.28,
-      "amplitude": 3.84,
-      "pnl_pct": 3.6,
+      "current_price": 7.67,
+      "change_pct": 0.13,
+      "high": 7.87,
+      "low": 7.42,
+      "turnover_rate": 5.75,
+      "amplitude": 5.87,
+      "pnl_pct": 6.09,
       "action": "🟢 持有，走势正常",
       "action_type": "持有"
     },
     {
-      "code": "600452",
-      "name": "涪陵电力",
-      "status": "正常",
-      "current_price": 13.65,
-      "change_pct": 1.49,
-      "high": 14.08,
-      "low": 13.38,
-      "turnover_rate": 5.39,
-      "amplitude": 5.2,
-      "pnl_pct": 5.16,
-      "action": "🟢 持有，走势正常",
-      "action_type": "持有"
-    },
-    {
-      "code": "002273",
-      "name": "水晶光电",
-      "status": "正常",
-      "current_price": 43.82,
-      "change_pct": 4.21,
-      "high": 44.3,
-      "low": 41.69,
-      "turnover_rate": 6.16,
-      "amplitude": 6.21,
-      "pnl_pct": 10.99,
-      "action": "🟢 到达目标价，建议止盈",
-      "action_type": "止盈"
+      "code": "002171",
+      "name": "楚江新材",
+      "status": "下跌",
+      "current_price": 11.99,
+      "change_pct": -2.12,
+      "high": 12.58,
+      "low": 11.86,
+      "turnover_rate": 5.35,
+      "amplitude": 5.88,
+      "pnl_pct": 2.22,
+      "action": "🟡 小幅波动，继续观察",
+      "action_type": "观察"
     }
   ],
   "top_buys": [
     {
-      "code": "002922",
-      "name": "伊戈尔",
+      "code": "002951",
+      "name": "金时科技",
       "score": 100,
-      "price": 46.2,
-      "change_pct": 1.32,
-      "buy_point": 43.82,
+      "price": 17.96,
+      "change_pct": 2.69,
+      "buy_point": 17.13,
       "buy_time": "尾盘买入 (14:20-14:50)",
-      "stop_loss": 41.63,
-      "target_price": 48.14,
+      "stop_loss": 16.27,
+      "target_price": 19.26,
       "signals": [
         "温和上涨",
+        "大振幅",
+        "放量",
+        "均线多头排列",
+        "MACD金叉",
+        "红柱放大",
+        "放量上涨"
+      ],
+      "next_day_estimate": {
+        "estimate": 4.0,
+        "factors": [
+          "技术面偏强",
+          "连续上涨",
+          "MACD多头",
+          "放量上攻"
+        ]
+      },
+      "entry_score": 23
+    },
+    {
+      "code": "603050",
+      "name": "科林电气",
+      "score": 100,
+      "price": 25.74,
+      "change_pct": 3.42,
+      "buy_point": 23.77,
+      "buy_time": "尾盘买入 (14:20-14:50)",
+      "stop_loss": 22.58,
+      "target_price": 27.93,
+      "signals": [
+        "温和上涨",
+        "大振幅",
+        "放量",
+        "均线多头排列",
+        "MA金叉",
+        "MACD金叉",
+        "红柱放大",
+        "RSI偏高",
+        "放量上涨"
+      ],
+      "next_day_estimate": {
+        "estimate": 4.0,
+        "factors": [
+          "技术面偏强",
+          "连续上涨",
+          "MACD多头",
+          "放量上攻"
+        ]
+      },
+      "entry_score": 18
+    },
+    {
+      "code": "000899",
+      "name": "赣能股份",
+      "score": 100,
+      "price": 14.23,
+      "change_pct": 1.35,
+      "buy_point": 13.42,
+      "buy_time": "尾盘买入 (14:20-14:50)",
+      "stop_loss": 12.75,
+      "target_price": 15.06,
+      "signals": [
+        "温和上涨",
+        "低PE",
         "放量",
         "均线多头排列",
         "MA金叉",
@@ -114,7 +177,89 @@
           "MACD多头"
         ]
       },
-      "entry_score": 20
+      "entry_score": 23
+    }
+  ],
+  "market_stats": {
+    "total": 3066,
+    "up": 1292,
+    "down": 1540,
+    "flat": 234,
+    "limit_up": 48,
+    "limit_down": 8,
+    "up_ratio": 42.1,
+    "avg_change": -0.41
+  },
+  "sentiment": {
+    "000001": {
+      "level": "偏弱",
+      "score": 40,
+      "emoji": "↘️"
+    },
+    "399001": {
+      "level": "弱势",
+      "score": 20,
+      "emoji": "📉"
+    },
+    "399006": {
+      "level": "弱势",
+      "score": 20,
+      "emoji": "📉"
+    },
+    "000688": {
+      "level": "弱势",
+      "score": 20,
+      "emoji": "📉"
+    },
+    "000300": {
+      "level": "偏弱",
+      "score": 40,
+      "emoji": "↘️"
+    },
+    "399005": {
+      "level": "弱势",
+      "score": 20,
+      "emoji": "📉"
+    }
+  },
+  "advices": [
+    "📉 大盘偏弱（上证-0.97%），注意风险，尾盘考虑减仓",
+    "🟢 推荐股平均浮盈 +2.9%，走势良好，继续持有",
+    "🟡 赚钱效应一般（42.1%上涨），板块分化明显",
+    "⏰ 距收盘约40分钟，避免尾盘追涨杀跌"
+  ],
+  "source_recommendations": [
+    {
+      "code": "002129",
+      "name": "TCL中环",
+      "score": 100,
+      "price": 10.4,
+      "change_pct": 4.73,
+      "buy_point": 9.59,
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
+      "stop_loss": 9.11,
+      "target_price": 10.82,
+      "signals": [
+        "温和上涨",
+        "高换手",
+        "大振幅",
+        "放量",
+        "均线多头排列",
+        "MA金叉",
+        "红柱放大",
+        "RSI偏高",
+        "放量上涨"
+      ],
+      "next_day_estimate": {
+        "estimate": 4.0,
+        "factors": [
+          "技术面偏强",
+          "连续上涨",
+          "MACD多头",
+          "放量上攻"
+        ]
+      },
+      "entry_score": 14
     },
     {
       "code": "600780",
@@ -123,7 +268,7 @@
       "price": 7.5,
       "change_pct": 3.45,
       "buy_point": 7.23,
-      "buy_time": "尾盘买入 (14:20-14:50)",
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
       "stop_loss": 6.87,
       "target_price": 8.08,
       "signals": [
@@ -144,7 +289,7 @@
           "MACD多头"
         ]
       },
-      "entry_score": 19
+      "entry_score": 17
     },
     {
       "code": "002171",
@@ -153,7 +298,7 @@
       "price": 12.14,
       "change_pct": 3.94,
       "buy_point": 11.73,
-      "buy_time": "尾盘买入 (14:20-14:50)",
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
       "stop_loss": 11.14,
       "target_price": 12.95,
       "signals": [
@@ -173,138 +318,7 @@
           "MACD多头"
         ]
       },
-      "entry_score": 19
-    }
-  ],
-  "market_stats": {
-    "total": 3066,
-    "up": 998,
-    "down": 1806,
-    "flat": 262,
-    "limit_up": 65,
-    "limit_down": 6,
-    "up_ratio": 32.6,
-    "avg_change": -0.26
-  },
-  "sentiment": {
-    "000001": {
-      "level": "震荡",
-      "score": 50,
-      "emoji": "➡️"
-    },
-    "399001": {
-      "level": "偏强",
-      "score": 60,
-      "emoji": "↗️"
-    },
-    "399006": {
-      "level": "强势",
-      "score": 80,
-      "emoji": "📈"
-    },
-    "000688": {
-      "level": "强势",
-      "score": 80,
-      "emoji": "📈"
-    },
-    "000300": {
-      "level": "震荡",
-      "score": 50,
-      "emoji": "➡️"
-    },
-    "399005": {
-      "level": "震荡",
-      "score": 50,
-      "emoji": "➡️"
-    }
-  },
-  "advices": [
-    "↗️ 大盘偏强（上证+0.18%），走势稳健，维持现有仓位",
-    "🟢 止盈提醒: 水晶光电(+4.2%)，可考虑部分获利了结",
-    "⚠️ 赚钱效应较差（32.6%上涨），操作需谨慎",
-    "⏰ 距收盘约40分钟，避免尾盘追涨杀跌"
-  ],
-  "source_recommendations": [
-    {
-      "code": "002870",
-      "name": "香山股份",
-      "score": 100,
-      "price": 42.72,
-      "change_pct": 3.64,
-      "buy_point": 41.68,
-      "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 39.6,
-      "target_price": 45.69,
-      "signals": [
-        "温和上涨",
-        "大振幅",
-        "放量",
-        "均线多头排列",
-        "MA金叉",
-        "MACD金叉",
-        "红柱放大"
-      ],
-      "next_day_estimate": {
-        "estimate": 2.0,
-        "factors": [
-          "技术面偏强",
-          "MACD多头"
-        ]
-      },
-      "entry_score": 18
-    },
-    {
-      "code": "600452",
-      "name": "涪陵电力",
-      "score": 100,
-      "price": 13.33,
-      "change_pct": 1.06,
-      "buy_point": 12.98,
-      "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 12.33,
-      "target_price": 14.06,
-      "signals": [
-        "温和上涨",
-        "放量",
-        "均线多头排列",
-        "MA金叉",
-        "红柱放大"
-      ],
-      "next_day_estimate": {
-        "estimate": 2.0,
-        "factors": [
-          "技术面偏强",
-          "MACD多头"
-        ]
-      },
-      "entry_score": 18
-    },
-    {
-      "code": "002273",
-      "name": "水晶光电",
-      "score": 100,
-      "price": 40.94,
-      "change_pct": 4.17,
-      "buy_point": 39.48,
-      "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 37.5,
-      "target_price": 43.04,
-      "signals": [
-        "温和上涨",
-        "大振幅",
-        "放量",
-        "均线多头排列",
-        "MACD金叉",
-        "红柱放大"
-      ],
-      "next_day_estimate": {
-        "estimate": 2.0,
-        "factors": [
-          "技术面偏强",
-          "MACD多头"
-        ]
-      },
-      "entry_score": 14
+      "entry_score": 17
     }
   ]
 }

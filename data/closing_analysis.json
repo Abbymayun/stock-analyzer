@@ -163,9 +163,87 @@
       "hold_conditions": null
     },
     {
+      "code": "000993",
+      "name": "闽东电力",
+      "source": "midday",
+      "morning_chg": 2.42,
+      "close_price": 14.88,
+      "day_chg": 3.48,
+      "high": 14.98,
+      "low": 14.1,
+      "volume": 497763.0,
+      "amount": 73175.0,
+      "buy_point": 13.75,
+      "target_price": 14.9,
+      "stop_loss": 13.07,
+      "next_day_est": 3.0,
+      "buy_triggered": false,
+      "buy_profit": null,
+      "stop_triggered": false,
+      "held": false,
+      "verdict": "🟢 预测正确",
+      "icon": "✓",
+      "position_status": "未建仓",
+      "position_advice": "今日未触及买入点，未建仓。明日可继续关注买入机会",
+      "sell_strategy": null,
+      "hold_conditions": null
+    },
+    {
+      "code": "002351",
+      "name": "漫步者",
+      "source": "midday",
+      "morning_chg": 1.34,
+      "close_price": 11.15,
+      "day_chg": -1.5,
+      "high": 11.39,
+      "low": 11.0,
+      "volume": 170354.0,
+      "amount": 19003.0,
+      "buy_point": 11.14,
+      "target_price": 11.78,
+      "stop_loss": 10.58,
+      "next_day_est": 2.0,
+      "buy_triggered": true,
+      "buy_profit": 0.09,
+      "stop_triggered": false,
+      "held": true,
+      "verdict": "🟡 预测偏差",
+      "icon": "≈",
+      "position_status": "🟢 微盈 +0.1%",
+      "position_advice": "今日建仓，小幅浮盈0.1%，走势尚可",
+      "sell_strategy": "📌 卖出策略：\n  • 短期目标：11.78元\n  • 明日冲高到11.37元可考虑止盈\n  • 若跌破买入点11.14元，观察是否企稳，不企稳则止损",
+      "hold_conditions": "✅ 继续持有条件：\n  • 明日不跌破买入点11.14元\n  • 量能维持或放大"
+    },
+    {
+      "code": "605258",
+      "name": "协和电子",
+      "source": "midday",
+      "morning_chg": 2.83,
+      "close_price": 35.85,
+      "day_chg": -7.03,
+      "high": 38.77,
+      "low": 35.5,
+      "volume": 63149.0,
+      "amount": 23482.0,
+      "buy_point": 37.82,
+      "target_price": 40.34,
+      "stop_loss": 35.93,
+      "next_day_est": 2.0,
+      "buy_triggered": true,
+      "buy_profit": -5.21,
+      "stop_triggered": true,
+      "held": true,
+      "verdict": "🟡 预测偏差",
+      "icon": "≈",
+      "position_status": "🔴 触发止损",
+      "position_advice": "今日最低价触及止损位35.93元，亏损约6.1%。应在触发时立即卖出止损，不抱幻想",
+      "sell_strategy": "📌 止损卖出策略：\n  • 如果今天盘中未卖出，明日开盘立即卖出（不犹豫）\n  • 卖出条件：明日开盘任何价格都卖出，不等待反弹\n  • 如果明日继续大跌超过-5%，说明止损是正确的\n  • 止损后该股暂时拉黑，至少3个交易日内不再考虑买入",
+      "hold_conditions": "❌ 不建议继续持有，严格执行止损"
+    },
+    {
       "code": "002951",
       "name": "金时科技",
-      "source": "midday",
+      "source": "eod",
       "morning_chg": 2.69,
       "close_price": 17.64,
       "day_chg": 0.86,
@@ -191,7 +269,7 @@
     {
       "code": "603050",
       "name": "科林电气",
-      "source": "midday",
+      "source": "eod",
       "morning_chg": 3.42,
       "close_price": 24.97,
       "day_chg": 0.32,
@@ -217,7 +295,7 @@
     {
       "code": "000899",
       "name": "赣能股份",
-      "source": "midday",
+      "source": "eod",
       "morning_chg": 1.35,
       "close_price": 14.04,
       "day_chg": 0.0,
@@ -241,7 +319,7 @@
       "hold_conditions": null
     }
   ],
-  "summary": "➡️ 大盘小幅收跌0.73%，震荡整理\n全市场3066只，上涨1292只(42%)，涨停48只，跌停8只\n📊 今日推荐6只，1只触及买入点已建仓\n💼 建仓1只：1只盈利/0只亏损，合计浮盈+1.7%",
+  "summary": "➡️ 大盘小幅收跌0.73%，震荡整理\n全市场3066只，上涨1292只(42%)，涨停48只，跌停8只\n📊 今日推荐9只，3只触及买入点已建仓\n💼 建仓3只：2只盈利/1只亏损，合计浮盈-3.5%",
   "tomorrow_risk": {
     "risk_score": 50,
     "risk_level": "中低",
@@ -276,8 +354,7 @@
           "MACD多头"
         ]
       },
-      "entry_score": 17,
-      "reason": "收盘强劲，放量、均线多头排列、MA金叉，明日高预期"
+      "entry_score": 14
     },
     {
       "code": "000601",
@@ -306,8 +383,7 @@
           "MACD多头"
         ]
       },
-      "entry_score": 19,
-      "reason": "收盘强劲，放量、均线多头排列、MACD金叉"
+      "entry_score": 16
     },
     {
       "code": "000892",
@@ -334,8 +410,7 @@
           "MACD多头"
         ]
       },
-      "entry_score": 20,
-      "reason": "收盘稳健，放量、MA金叉、红柱放大"
+      "entry_score": 16
     }
   ]
 }

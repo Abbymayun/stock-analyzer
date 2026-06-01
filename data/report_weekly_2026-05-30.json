@@ -1,0 +1,17 @@
+{
+  "date": "2026-05-30",
+  "created_at": "17:50",
+  "type": "weekly",
+  "week": "2026-05-25 ~ 2026-05-30",
+  "trading_days": 1,
+  "total_pnl": 4368.0,
+  "total_buys": 11,
+  "total_sells": 0,
+  "daily_summary": [
+    {
+      "date": "2026-05-30",
+      "pnl": 4368.0,
+      "return": 2.16
+    }
+  ]
+}

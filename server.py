@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """轻量级API服务器 - 提供实时股票数据 (v2)"""
-import json, time, os, sys, threading
+import json, time, os, sys, threading, subprocess
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 import requests
@@ -8,37 +8,59 @@ import requests
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
 PORT = 8765
 
-_session = requests.Session()
-_session.headers.update({'User-Agent': 'Mozilla/5.0'})
+# 延迟初始化session以避免ESMTP干扰http.client
+_session = None
+
+def _get_session():
+    global _session
+    if _session is None:
+        _session = requests.Session()
+        _session.headers.update({'User-Agent': 'Mozilla/5.0'})
+    return _session
 
 
 def fetch_realtime(codes):
-    """通过腾讯API批量获取实时行情"""
+    """通过腾讯API批量获取实时行情（subprocess+curl，独立进程不受限）"""
     if not codes:
         return {}
-    url = 'https://qt.gtimg.cn/q=' + ','.join(codes)
+    # 给上海股票加sh前缀，深圳加sz前缀
+    prefixed = []
+    for c in codes:
+        if c.startswith('6'):
+            prefixed.append('sh' + c)
+        else:
+            prefixed.append('sz' + c)
+    url = 'https://qt.gtimg.cn/q=' + ','.join(prefixed)
     try:
-        r = _session.get(url, timeout=10)
-        result = {}
-        for line in r.text.strip().split(';'):
-            if '~' not in line or '=' not in line:
-                continue
-            parts = line.split('~')
-            if len(parts) < 45:
-                continue
-            code = parts[2]
-            prev = float(parts[4]) if parts[4] else 0
-            price = float(parts[3]) if parts[3] else 0
-            result[code] = {
-                'name': parts[1],
-                'code': code,
-                'price': price,
-                'prev_close': prev,
-                'change_pct': round((price - prev) / prev * 100, 2) if prev > 0 else 0,
-            }
-        return result
-    except Exception as e:
-        return {}
+        r = subprocess.run(['curl', '-s', '--max-time', '5', '-H', 'User-Agent: Mozilla/5.0', url],
+                          capture_output=True, timeout=8)
+        text = r.stdout.decode('gbk', errors='ignore')
+    except Exception:
+        try:
+            r = subprocess.run(['wget', '-qO-', '-T', '5', '-U', 'Mozilla/5.0', url],
+                              capture_output=True, timeout=8)
+            text = r.stdout.decode('gbk', errors='ignore')
+        except Exception:
+            return {}
+    
+    result = {}
+    for line in text.strip().split(';'):
+        if '~' not in line or '=' not in line:
+            continue
+        parts = line.split('~')
+        if len(parts) < 45:
+            continue
+        code = parts[2]
+        prev = float(parts[4]) if parts[4] else 0
+        price = float(parts[3]) if parts[3] else 0
+        result[code] = {
+            'name': parts[1],
+            'code': code,
+            'price': price,
+            'prev_close': prev,
+            'change_pct': round((price - prev) / prev * 100, 2) if prev > 0 else 0,
+        }
+    return result
 
 
 def get_holding_codes():
@@ -76,13 +98,14 @@ def get_cached_realtime(codes):
                 return result
 
     # 获取请求的代码的实时数据
+    time.sleep(0.5)  # 防止腾讯API限流
     result = {}
     for i in range(0, len(codes), 50):
         batch = codes[i:i + 50]
         batch_data = fetch_realtime(batch)
         result.update(batch_data)
         if i + 50 < len(codes):
-            time.sleep(0.1)
+            time.sleep(0.5)
 
     with _cache['lock']:
         if not _cache['data']:
@@ -106,10 +129,9 @@ class Handler(SimpleHTTPRequestHandler):
         super().__init__(*args, directory=os.path.dirname(os.path.abspath(__file__)), **kwargs)
 
     def end_headers(self):
-        # JSON数据文件不缓存
-        if self.path.startswith('/data/') and self.path.endswith('.json'):
-            self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
-            self.send_header('Pragma', 'no-cache')
+        # 所有文件不缓存
+        self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
+        self.send_header('Pragma', 'no-cache')
         super().end_headers()
 
     def do_GET(self):
@@ -119,7 +141,9 @@ class Handler(SimpleHTTPRequestHandler):
             if path == '/api/realtime':
                 self._handle_realtime(parsed)
             elif path == '/api/portfolio':
-                self._handle_portfolio()
+                params = parse_qs(parsed.query)
+                force = params.get('force', [''])[0] == '1'
+                self._handle_portfolio(force_realtime=force)
             elif path == '/api/trade_log':
                 self._handle_trade_log()
             elif path == '/api/history_list':
@@ -150,8 +174,14 @@ class Handler(SimpleHTTPRequestHandler):
                 self._handle_midday_analysis()
             elif path == '/api/closing_analysis':
                 self._handle_closing_analysis()
+            elif path == '/api/strategy_tracks':
+                self._handle_strategy_tracks()
             elif path == '/api/eod_analysis':
                 self._handle_eod_analysis()
+            elif path == '/api/trading_reports':
+                self._handle_trading_reports()
+            elif path.startswith('/api/trading_reports/generate'):
+                self._handle_generate_report()
             else:
                 super().do_GET()
         except Exception as e:
@@ -198,22 +228,34 @@ class Handler(SimpleHTTPRequestHandler):
         data = get_cached_realtime(codes)
         self._json({'ts': time.time(), 'data': data})
 
-    def _handle_portfolio(self):
+    def _handle_portfolio(self, force_realtime=False):
         pf = load_json(os.path.join(DATA_DIR, 'portfolio.json'), {})
         holdings = pf.get('holdings', {})
 
+        initial = pf.get('initial_capital', 200000)
         # 返回基本信息，即使没有持仓
         if not holdings:
             self._json({
-                'total_assets': pf.get('initial_capital', 200000),
-                'cash': pf.get('cash', 200000),
+                'total_assets': pf.get('total_assets', initial),
+                'cash': pf.get('cash', initial),
+                'initial_capital': initial,
                 'total_return': 0,
+                'position_value': 0,
+                'position_ratio': 0,
+                'trading_stats': pf.get('trading_stats', {}),
                 'holdings': [],
             })
             return
 
         codes = list(holdings.keys())
-        rt = get_cached_realtime(codes) if codes else {}
+        # 支持强制刷新行情
+        if force_realtime:
+            rt = fetch_realtime(codes)
+        else:
+            rt = get_cached_realtime(codes) if codes else {}
+        # 如果缓存没数据，直接拉取
+        if not rt:
+            rt = fetch_realtime(codes)
 
         trade_log = load_json(os.path.join(DATA_DIR, 'trade_log.json'), {}).get('trades', [])
 
@@ -222,9 +264,15 @@ class Handler(SimpleHTTPRequestHandler):
             r = rt.get(code, {})
             buys = [t for t in trade_log if t.get('code') == code and t.get('type') == 'buy']
             sells = [t for t in trade_log if t.get('code') == code and t.get('type') == 'sell']
-            cp = r.get('price', h.get('current_price', 0))
             ac = h.get('avg_cost', 0)
+            cp = r.get('price', 0)
+            # 实时价无效时保留上次价格（不归零）
+            if cp <= 0:
+                cp = h.get('last_price', ac)
             qty = h.get('qty', 0)
+            # 保存最新价格到持仓（供下次查询用）
+            if cp > 0 and r.get('price', 0) > 0:
+                h['last_price'] = cp
             result.append({
                 'code': code,
                 'name': h.get('name', ''),
@@ -238,10 +286,21 @@ class Handler(SimpleHTTPRequestHandler):
                 'sells': sells,
             })
 
+        initial = pf.get('initial_capital', 200000)
+        market_value = 0
+        for code, h in holdings.items():
+            cp = rt.get(code, {}).get('price', h.get('last_price', h.get('avg_cost', 0)))
+            if cp <= 0: cp = h.get('avg_cost', 0)
+            market_value += cp * h.get('qty', 0)
+        total_assets = pf.get('cash', 0) + market_value
         self._json({
-            'total_assets': pf.get('total_assets', 0),
+            'total_assets': round(total_assets, 2),
             'cash': pf.get('cash', 0),
-            'total_return': pf.get('total_return', 0),
+            'initial_capital': initial,
+            'total_return': round((total_assets - initial) / initial * 100, 2),
+            'position_value': round(market_value, 2),
+            'position_ratio': round(market_value / total_assets * 100, 1) if total_assets > 0 else 0,
+            'trading_stats': pf.get('trading_stats', {}),
             'holdings': result,
         })
 
@@ -302,7 +361,7 @@ class Handler(SimpleHTTPRequestHandler):
         market = '1' if code.startswith('sh') else '0'
         secid = market + '.' + code[2:]
         try:
-            resp = _session.get('https://push2his.eastmoney.com/api/qt/stock/kline/get', params={
+            resp = _get_session().get('https://push2his.eastmoney.com/api/qt/stock/kline/get', params={
                 'secid': secid,
                 'fields1': 'f1,f2,f3,f4,f5,f6',
                 'fields2': 'f51,f52,f53,f54,f55,f56,f57',
@@ -764,6 +823,37 @@ class Handler(SimpleHTTPRequestHandler):
         else:
             self._json({'error': '收盘分析数据暂无', 'update_time': None})
 
+    def _handle_trading_reports(self):
+        """返回交易报告（日报/周报/月报）"""
+        reports = load_json(os.path.join(DATA_DIR, 'trading_reports.json'), {'daily': [], 'weekly': [], 'monthly': []})
+        self._json(reports)
+
+    def _handle_generate_report(self):
+        """手动触发生成报告"""
+        parsed = urlparse(self.path)
+        params = parse_qs(parsed.query)
+        rtype = params.get('type', ['daily'])[0]
+        try:
+            # 用subprocess调用generate_report.py
+            script = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'scripts', 'generate_report.py')
+            r = subprocess.run(['python3', script, '--type', rtype],
+                              capture_output=True, timeout=30, cwd=os.path.dirname(script))
+            self._json({'ok': True, 'message': f'{rtype}报告已生成', 'output': r.stdout.decode()})
+        except Exception as e:
+            self._json({'error': str(e)})
+
+    def _handle_strategy_tracks(self):
+        """返回策略追踪数据"""
+        summary = load_json(os.path.join(DATA_DIR, 'strategy_tracks_summary.json'), {})
+        tracks = []
+        track_dir = os.path.join(DATA_DIR, 'strategy_tracks')
+        if os.path.isdir(track_dir):
+            for f in sorted(os.listdir(track_dir), reverse=True)[:30]:
+                if f.endswith('.json'):
+                    t = load_json(os.path.join(track_dir, f))
+                    if t: tracks.append(t)
+        self._json({'summary': summary, 'tracks': tracks})
+
     def _handle_eod_analysis(self):
         """尾盘综合分析数据"""
         data = load_json(os.path.join(DATA_DIR, 'eod_analysis.json'))
@@ -960,10 +1050,10 @@ class Handler(SimpleHTTPRequestHandler):
 
 
 if __name__ == '__main__':
-    server = HTTPServer(('127.0.0.1', PORT), Handler)
+    server = HTTPServer(('0.0.0.0', PORT), Handler)
     server.daemon_threads = True
     server.allow_reuse_address = True
-    print(f'Stock API server running on http://127.0.0.1:{PORT}', flush=True)
+    print(f'Stock API server running on http://0.0.0.0:{PORT}', flush=True)
     try:
         server.serve_forever()
     except KeyboardInterrupt:

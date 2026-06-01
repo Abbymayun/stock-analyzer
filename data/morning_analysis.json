@@ -1,5 +1,5 @@
 {
-  "update_time": "2026-05-29 08:31:02",
+  "update_time": "2026-06-01 08:31:02",
   "us_indices": {},
   "bond_yield": {},
   "commodities": {},
@@ -9,37 +9,37 @@
     "000001": {
       "name": "上证指数",
       "code": "000001",
-      "price": 4098.64,
-      "prev_close": 4093.73,
-      "change_pct": 0.12
+      "price": 4068.57,
+      "prev_close": 4098.64,
+      "change_pct": -0.73
     },
     "399001": {
       "name": "深证成指",
       "code": "399001",
-      "price": 15861.89,
-      "prev_close": 15736.47,
-      "change_pct": 0.8
+      "price": 15575.13,
+      "prev_close": 15861.89,
+      "change_pct": -1.81
     },
     "399006": {
       "name": "创业板指",
       "code": "399006",
-      "price": 4125.07,
-      "prev_close": 4045.77,
-      "change_pct": 1.96
+      "price": 4037.95,
+      "prev_close": 4125.07,
+      "change_pct": -2.11
     },
     "000688": {
       "name": "科创50",
       "code": "000688",
-      "price": 1844.25,
-      "prev_close": 1815.45,
-      "change_pct": 1.59
+      "price": 1751.32,
+      "prev_close": 1844.25,
+      "change_pct": -5.04
     },
     "000300": {
       "name": "沪深300",
       "code": "000300",
-      "price": 4914.21,
-      "prev_close": 4908.17,
-      "change_pct": 0.12
+      "price": 4892.12,
+      "prev_close": 4914.21,
+      "change_pct": -0.45
     }
   },
   "us_impact": {
@@ -80,22 +80,53 @@
   },
   "top_buys": [
     {
-      "code": "002129",
-      "name": "TCL中环",
+      "code": "002951",
+      "name": "金时科技",
       "score": 100,
-      "price": 10.4,
-      "change_pct": 4.73,
-      "buy_point": 9.59,
+      "price": 17.96,
+      "change_pct": 2.69,
+      "buy_point": 17.13,
       "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 9.11,
-      "target_price": 10.82,
+      "stop_loss": 16.27,
+      "target_price": 19.26,
       "signals": [
         "温和上涨",
-        "高换手",
+        "大振幅",
+        "放量",
+        "均线多头排列",
+        "MACD金叉",
+        "红柱放大",
+        "放量上涨"
+      ],
+      "next_day_estimate": {
+        "estimate": 4.0,
+        "factors": [
+          "技术面偏强",
+          "连续上涨",
+          "MACD多头",
+          "放量上攻"
+        ]
+      },
+      "entry_score": 21,
+      "reason": "技术面极强，放量、均线多头排列、MACD金叉，RSI健康多头"
+    },
+    {
+      "code": "603050",
+      "name": "科林电气",
+      "score": 100,
+      "price": 25.74,
+      "change_pct": 3.42,
+      "buy_point": 23.77,
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
+      "stop_loss": 22.58,
+      "target_price": 27.93,
+      "signals": [
+        "温和上涨",
         "大振幅",
         "放量",
         "均线多头排列",
         "MA金叉",
+        "MACD金叉",
         "红柱放大",
         "RSI偏高",
         "放量上涨"
@@ -109,26 +140,25 @@
           "放量上攻"
         ]
       },
-      "entry_score": 14
+      "entry_score": 19,
+      "reason": "技术面极强，放量、均线多头排列、MA金叉，资金活跃，高盈亏比"
     },
     {
-      "code": "600780",
-      "name": "通宝能源",
+      "code": "000899",
+      "name": "赣能股份",
       "score": 100,
-      "price": 7.5,
-      "change_pct": 3.45,
-      "buy_point": 7.23,
+      "price": 14.23,
+      "change_pct": 1.35,
+      "buy_point": 13.42,
       "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 6.87,
-      "target_price": 8.08,
+      "stop_loss": 12.75,
+      "target_price": 15.06,
       "signals": [
         "温和上涨",
-        "大振幅",
         "低PE",
         "放量",
         "均线多头排列",
         "MA金叉",
-        "MACD金叉",
         "红柱放大"
       ],
       "next_day_estimate": {
@@ -139,38 +169,10 @@
           "MACD多头"
         ]
       },
-      "entry_score": 17
-    },
-    {
-      "code": "002171",
-      "name": "楚江新材",
-      "score": 100,
-      "price": 12.14,
-      "change_pct": 3.94,
-      "buy_point": 11.73,
-      "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 11.14,
-      "target_price": 12.95,
-      "signals": [
-        "温和上涨",
-        "收在高位",
-        "大振幅",
-        "放量",
-        "MA金叉",
-        "MACD金叉",
-        "红柱放大"
-      ],
-      "next_day_estimate": {
-        "estimate": 3.0,
-        "factors": [
-          "技术面偏强",
-          "连续上涨",
-          "MACD多头"
-        ]
-      },
-      "entry_score": 17
+      "entry_score": 21,
+      "reason": "技术面极强，放量、均线多头排列、MA金叉，资金活跃"
     }
   ],
-  "yesterday_sentiment": "中性",
-  "yesterday_score": 48.9
+  "yesterday_sentiment": null,
+  "yesterday_score": null
 }
