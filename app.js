@@ -170,7 +170,7 @@ const App = {
       this.showToast('请输入股票代码/名称和买入价格');
       return;
     }
-    const card = document.getElementById('advice-result-card');
+    const card = document.getElementById('advice-result-area');
     const body = document.getElementById('advice-result-body');
     const title = document.getElementById('advice-result-title');
     
@@ -1570,8 +1570,8 @@ const App = {
         return;
       }
 
-      // 计算总盈亏
-      const totalPnl = holdings.reduce((s, h) => s + (h.pnl || 0), 0);
+      // 计算总盈亏（浮动+已实现）
+      const totalPnl = holdings.reduce((s, h) => s + (h.pnl || 0), 0) + (data.realized_pnl || 0);
       const totalCost = holdings.reduce((s, h) => s + h.avg_cost * h.qty, 0);
       const totalPnlPct = totalCost > 0 ? totalPnl / totalCost * 100 : 0;
       const cls = totalPnl >= 0 ? 'text-rise' : 'text-fall';
@@ -1580,8 +1580,9 @@ const App = {
       const cash = data.cash || 0;
       if (cashEl) cashEl.textContent = `资金: ${(data.total_assets || 0).toLocaleString()} · 可用 ${cash.toLocaleString()}`;
       let html = `<div style="text-align:center;padding:6px 0 10px;border-bottom:1px solid var(--border);margin-bottom:8px">
-        <div style="font-size:11px;color:var(--text3)">总盈亏</div>
+        <div style="font-size:11px;color:var(--text3)">总盈亏（浮动+已实现）</div>
         <div style="font-size:18px;font-weight:800" class="${cls}">${sign}${totalPnl.toFixed(0)}元 (${sign}${totalPnlPct.toFixed(2)}%)</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:2px">浮动 ${holdings.reduce((s,h)=>s+(h.pnl||0),0) >= 0 ? '+' : ''}${holdings.reduce((s,h)=>s+(h.pnl||0),0).toFixed(0)} · 已实现 ${(data.realized_pnl||0) >= 0 ? '+' : ''}${(data.realized_pnl||0).toFixed(0)}</div>
         <div style="font-size:11px;color:var(--text3)">总资产 ${(data.total_assets || 0).toLocaleString()}元 · 可用 ${cash.toLocaleString()}元</div>
       </div>`;
 
@@ -1611,6 +1612,7 @@ const App = {
           <div style="margin-top:4px;display:flex;gap:4px">
             <button onclick="event.stopPropagation();App._quickAdvice('${h.code}','${this.esc(h.name)}',${h.avg_cost})" style="padding:2px 8px;background:#3b82f622;color:#3b82f6;border:1px solid #3b82f644;border-radius:4px;cursor:pointer;font-size:11px">获取建议</button>
             <button onclick="event.stopPropagation();App.manualSell('${h.code}','${this.esc(h.name)}',${h.qty})" style="padding:2px 8px;background:#ef444422;color:#ef4444;border:1px solid #ef444444;border-radius:4px;cursor:pointer;font-size:11px">卖出</button>
+            <button onclick="event.stopPropagation();if(confirm('确定删除 ${this.esc(h.name)} ？资金会退回但不计入盈亏。'))App._deleteHolding('${h.code}')" style="padding:2px 8px;background:rgba(255,255,255,0.05);color:var(--text3);border:1px solid rgba(255,255,255,0.1);border-radius:4px;cursor:pointer;font-size:10px">删除</button>
           </div>`;
 
         // 交易明细（折叠）
@@ -2415,7 +2417,7 @@ const App = {
     t.textContent = msg;
     t.classList.remove('hidden');
     clearTimeout(this._tt);
-    this._tt = setTimeout(() => t.classList.add('hidden'), 2000);
+    this._tt = setTimeout(() => t.classList.add('hidden'), 3000);
   },
 
   copyText(text) {
@@ -2449,15 +2451,18 @@ const Portfolio = {
 };
 
 // ========== 虚拟交易页面 ==========
-App.renderTrading = function() {
-  const r = App.recData;
-  const trading = r?.trading;
-  if (!trading) {
-    document.getElementById('trading-overview').innerHTML = '<div class="empty">等待首次交易分析...</div>';
-    return;
-  }
-  this.renderTradingOverview(trading);
-  this.renderTradingReport(trading);
+App.renderTrading = async function() {
+  const el = document.getElementById('trading-overview');
+  el.innerHTML = '<div class="empty">加载中...</div>';
+  try {
+    const pfRes = await fetch(this.API_BASE + '/api/portfolio');
+    if (!pfRes.ok) throw new Error();
+    const p = await pfRes.json();
+    const s = p.trading_stats || {};
+    const t = { portfolio: p, stats: { total_trades: s.total_trades||0, win_trades: s.win_trades||0, lose_trades: s.lose_trades||0, total_pnl: (p.unrealized_pnl||0)+(p.realized_pnl||0), max_drawdown: s.max_drawdown||0 }, latest_report: null };
+    this.renderTradingOverview(t);
+    this.renderTradingReport(t);
+  } catch(e) { el.innerHTML = '<div class="empty">API未连接</div>'; }
 };
 
 App.showTradingTab = function(tab) {
@@ -2677,6 +2682,11 @@ App.renderPurchasedStocks = function() {
       const pnlCls = (s.total_pnl || 0) >= 0 ? 'text-rise' : 'text-fall';
       const pnlSign = (s.total_pnl || 0) >= 0 ? '+' : '';
 
+      const holdPnl = s.status !== '已卖出' ? (s.current_price - s.buy_price) * s.buy_qty : 0;
+      const showPnl = s.status === '已卖出' ? (s.total_pnl || 0) : holdPnl;
+      const spc = showPnl >= 0 ? 'text-rise' : 'text-fall';
+      const sps = showPnl >= 0 ? '+' : '';
+
       html += `<div class="ps-card" id="ps-${s.code}">
         <div class="ps-header" onclick="App.togglePsDetail('${s.code}')">
           <div class="ps-left">
@@ -2684,9 +2694,10 @@ App.renderPurchasedStocks = function() {
             <span style="color:var(--text3);font-size:11px;margin-left:6px">${s.code}</span>
             <span class="ps-status" style="color:${statusColor};margin-left:8px">${statusEmoji} ${s.status}</span>
           </div>
-          <div class="ps-right">
-            <span style="font-size:14px;font-weight:600" class="${chgCls}">${s.current_price.toFixed(2)}</span>
-            <span style="font-size:12px" class="${chgCls}">${chgSign}${s.change_pct.toFixed(2)}%</span>
+          <div class="ps-right" style="gap:10px">
+            <span style="font-size:12px;font-weight:600" class="${spc}">${sps}${showPnl.toFixed(0)}元</span>
+            <span style="font-size:13px;font-weight:600" class="${chgCls}">${s.current_price.toFixed(2)}</span>
+            <span style="font-size:11px" class="${chgCls}">${chgSign}${s.change_pct.toFixed(2)}%</span>
             <span class="ps-arrow" id="arrow-${s.code}">▼</span>
           </div>
         </div>
@@ -2841,12 +2852,11 @@ App._showTradeModal = function(opts) {
 
   modal.innerHTML = '<div style="background:var(--bg1);border:1px solid var(--border);border-radius:12px;padding:20px;width:340px;box-shadow:0 8px 32px rgba(0,0,0,0.3)">' +
     '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">' +
-    '<span style="font-size:16px;font-weight:700">' + (isBuy ? '🟢' : '🔴') + ' ' + title + (opts.name ? ' ' + App.esc(opts.name) + ' (' + (opts.code||'') + ')' : '') + '</span>' +
-    (opts.code ? '' : '<div style="margin-bottom:12px"><label style="font-size:12px;color:var(--text2);display:block;margin-bottom:4px">股票代码或名称</label><input id="trade-code" type="text" placeholder="如：002039 或 黔源电力" style="width:100%;padding:8px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text1);font-size:14px;outline:none;box-sizing:border-box" /></div>') +
+    '<span style="font-size:16px;font-weight:700">' + (isBuy ? '🟢' : '🔴') + ' ' + title + ' ' + this.esc(opts.name) + ' (' + opts.code + ')</span>' +
     '<span style="cursor:pointer;font-size:18px;color:var(--text3)" onclick="App._closeTradeModal()">&#10005;</span>' +
     '</div>' +
     '<div style="margin-bottom:12px;font-size:12px;color:var(--text3)">' + priceHint + (opts.maxQty ? ' · 持有' + opts.maxQty + '股' : '') + '</div>' +
-    (!opts.code ? '<div style="margin-bottom:12px"><label style="font-size:12px;color:var(--text2);display:block;margin-bottom:4px">股票代码或名称</label><input id="trade-code" type="text" placeholder="如：002039 或 黔源电力" style="width:100%;padding:8px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text1);font-size:14px;outline:none;box-sizing:border-box" /></div>' : '') +
+    (!opts.code && isBuy ? '<div style="margin-bottom:12px"><label style="font-size:12px;color:var(--text2);display:block;margin-bottom:4px">股票代码或名称</label><input id="trade-code" type="text" placeholder="如：002039 或 黔源电力" style="width:100%;padding:8px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text1);font-size:14px;outline:none;box-sizing:border-box" /></div>' : '') +
     '<div style="margin-bottom:12px">' +
     '<label style="font-size:12px;color:var(--text2);display:block;margin-bottom:4px">' + title + '价格（元）</label>' +
     '<input id="trade-price" type="text" inputmode="decimal" value="' + (opts.price || '') + '" placeholder="输入价格" ' +
@@ -2904,9 +2914,10 @@ App._closeTradeModal = function() {
 App._confirmTrade = async function(mode, code, name, score) {
   var errDiv = document.getElementById('trade-error');
   var btn = document.getElementById('trade-confirm-btn');
-  if (!code || code === '0') { var ci = document.getElementById('trade-code'); if (ci && ci.value.trim()) { code = ci.value.trim(); name = code; } if (!code) { errDiv.textContent = '请输入股票代码'; errDiv.style.display = 'block'; return; } }
+  if (!code || code === '0') { var ci = document.getElementById('trade-code'); if (ci && ci.value.trim()) { code = ci.value.trim(); var stk = App.findStock(code); name = stk ? stk.name : code; } if (!code) { errDiv.textContent = '请输入股票代码'; errDiv.style.display = 'block'; return; } }
   var price = parseFloat(document.getElementById('trade-price').value);
   var qty = parseInt(document.getElementById('trade-qty').value);
+  var errDiv = document.getElementById('trade-error');
 
   if (!price || price <= 0) { errDiv.textContent = '请输入有效的价格'; errDiv.style.display = 'block'; return; }
   if (!qty || qty <= 0) { errDiv.textContent = '请输入有效的数量'; errDiv.style.display = 'block'; return; }
@@ -2932,10 +2943,30 @@ App._confirmTrade = async function(mode, code, name, score) {
 };
 
 // 快速获取持仓建议
-App._quickAdvice = function(code, name, cost) {
-  document.getElementById('advice-code').value = code;
-  document.getElementById('advice-price').value = cost;
-  this.getStockAdvice();
+App._quickAdvice = async function(code, name, cost) {
+  var card = document.querySelector('.vh-card[data-code="' + code + '"]');
+  if (!card) return;
+  var old = card.nextElementSibling;
+  if (old && old.classList.contains('vh-advice')) old.remove();
+  var panel = document.createElement('div');
+  panel.className = 'vh-advice';
+  panel.innerHTML = '<div style="background:var(--bg2);border-radius:8px;padding:10px;margin:4px 0 8px;font-size:12px"><span style="color:var(--text3)">加载建议中...</span></div>';
+  card.after(panel);
+  try {
+    var r = await fetch(App.API_BASE + '/api/stock_advice?code=' + code + '&buy_price=' + cost);
+    if (!r.ok) throw new Error();
+    var a = await r.json();
+    if (a.error) throw new Error(a.error);
+    var pc = a.pnl_pct >= 0 ? 'text-rise' : 'text-fall';
+    var ps = a.pnl_pct >= 0 ? '+' : '';
+    panel.innerHTML = '<div style="background:var(--bg2);border-radius:8px;padding:10px;margin:4px 0 8px;font-size:12px;border-left:3px solid ' + a.action_color + '">' +
+      '<div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-weight:600">📋 ' + App.esc(name) + ' 操作建议</span><span onclick="this.closest(\'.vh-advice\').remove()" style="cursor:pointer;color:var(--text3);font-size:16px">×</span></div>' +
+      '<div style="display:flex;gap:12px;margin-bottom:6px;font-size:11px;color:var(--text3)"><span>评分: <b style="color:' + (a.score>=75?'#22c55e':a.score>=50?'#f59e0b':'#ef4444') + '">' + a.score + '</b></span><span>趋势: ' + App.esc(a.trend||'--') + '</span><span class="' + pc + '">' + ps + a.pnl_pct.toFixed(1) + '%</span></div>' +
+      '<div style="background:' + a.action_color + '15;border:1px solid ' + a.action_color + '33;border-radius:6px;padding:8px"><div style="font-weight:700;font-size:13px;color:' + a.action_color + ';margin-bottom:4px">' + a.action + '</div><div style="font-size:11px;color:var(--text2);line-height:1.7;white-space:pre-line">' + App.esc(a.advice) + '</div></div>' +
+      (a.signals&&a.signals.length?'<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:6px">'+a.signals.slice(0,4).map(function(s){return'<span style="font-size:10px;background:rgba(100,116,139,0.15);color:#94a3b8;padding:1px 5px;border-radius:3px">'+App.esc(s)+'</span>'}).join('')+'</div>':'')+'</div>';
+  } catch(e) {
+    panel.innerHTML = '<div style="background:var(--bg2);border-radius:8px;padding:10px;margin:4px 0 8px;font-size:12px;border-left:3px solid #f59e0b"><div style="display:flex;justify-content:space-between"><span>📋 建议</span><span onclick="this.closest(\'.vh-advice\').remove()" style="cursor:pointer;color:var(--text3)">×</span></div><div style="color:var(--text2);margin-top:4px">无法获取建议</div></div>';
+  }
 };
 
 App.manualBuy = function(code, name, buyPoint, score) {
@@ -2944,6 +2975,15 @@ App.manualBuy = function(code, name, buyPoint, score) {
 
 App.manualSell = function(code, name, maxQty) {
   this._showTradeModal({ mode: 'sell', code: code, name: name, price: '', maxQty: maxQty });
+};
+
+App._deleteHolding = async function(code) {
+  try {
+    const r = await fetch(this.API_BASE + '/api/delete_holding', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({code}) });
+    const d = await r.json();
+    if (d.ok) { this.showToast('已删除，资金已退回'); this.renderVirtualHoldings(); }
+    else { this.showToast(d.error || '删除失败'); }
+  } catch(e) { this.showToast('删除失败'); }
 };
 
 document.addEventListener('DOMContentLoaded', () => App.init());

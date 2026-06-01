@@ -200,6 +200,8 @@ class Handler(SimpleHTTPRequestHandler):
 
             if path == '/api/manual_buy':
                 self._handle_manual_buy(params)
+            elif path == '/api/delete_holding':
+                self._handle_delete_holding(params)
             elif path == '/api/manual_sell':
                 self._handle_manual_sell(params)
             elif path == '/api/reset_portfolio':
@@ -288,16 +290,22 @@ class Handler(SimpleHTTPRequestHandler):
 
         initial = pf.get('initial_capital', 200000)
         market_value = 0
+        unrealized_pnl = 0
         for code, h in holdings.items():
             cp = rt.get(code, {}).get('price', h.get('last_price', h.get('avg_cost', 0)))
             if cp <= 0: cp = h.get('avg_cost', 0)
             market_value += cp * h.get('qty', 0)
+            unrealized_pnl += (cp - h.get('avg_cost', 0)) * h.get('qty', 0)
         total_assets = pf.get('cash', 0) + market_value
+        stats = pf.get('trading_stats', {})
+        realized_pnl = stats.get('total_pnl', 0)
         self._json({
             'total_assets': round(total_assets, 2),
             'cash': pf.get('cash', 0),
             'initial_capital': initial,
             'total_return': round((total_assets - initial) / initial * 100, 2),
+            'unrealized_pnl': round(unrealized_pnl, 2),
+            'realized_pnl': round(realized_pnl, 2),
             'position_value': round(market_value, 2),
             'position_ratio': round(market_value / total_assets * 100, 1) if total_assets > 0 else 0,
             'trading_stats': pf.get('trading_stats', {}),
@@ -945,8 +953,30 @@ class Handler(SimpleHTTPRequestHandler):
 
         self._json({'ok': True, 'message': f'买入 {name} {qty}股 × {price}元，手续费{commission}元', 'trade': trade, 'cash': pf['cash']})
 
+    def _handle_delete_holding(self, params):
+        """删除持仓股票，退回资金，不计入盈亏"""
+        code = params.get('code', '').strip()
+        pf_path = os.path.join(DATA_DIR, 'portfolio.json')
+        pf = load_json(pf_path)
+        if not pf or code not in pf.get('holdings', {}):
+            self._json({'error': '未找到该持仓'})
+            return
+        h = pf['holdings'][code]
+        cost = h['avg_cost'] * h['qty']
+        del pf['holdings'][code]
+        pf['cash'] = round(pf['cash'] + cost, 2)
+        total_position = sum(x['avg_cost'] * x['qty'] for x in pf['holdings'].values())
+        pf['total_assets'] = round(pf['cash'] + total_position, 2)
+        # 删除相关交易记录
+        tl_path = os.path.join(DATA_DIR, 'trade_log.json')
+        tl = load_json(tl_path, {'trades': [], 'next_id': 1})
+        tl['trades'] = [t for t in tl.get('trades', []) if t.get('code') != code]
+        with open(pf_path, 'w') as f: json.dump(pf, f, ensure_ascii=False, indent=2)
+        with open(tl_path, 'w') as f: json.dump(tl, f, ensure_ascii=False, indent=2)
+        self._json({'ok': True, 'message': f'已删除 {h["name"]}，退回 {cost:.2f} 元'})
+
     def _handle_manual_sell(self, params):
-        """手动卖出：用户对持仓股票执行卖出"""
+        """手动卖出"""
         code = params.get('code', '').strip()
         price = float(params.get('price', 0))
         qty = int(params.get('qty', 0))
