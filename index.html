@@ -207,7 +207,7 @@
         <div class="card" style="margin-bottom:16px">
           <div class="card-head">
             <h3>💼 虚拟持仓</h3>
-            <span style="font-size:10px;color:var(--text3)" id="vp-cash">资金: 200,000</span>
+            <div style="display:flex;gap:6px;align-items:center"><span style="font-size:10px;color:var(--text3)" id="vp-cash">资金: 200,000</span><button onclick="App.manualBuy('','',0,0)" style="padding:2px 8px;background:#22c55e22;color:#22c55e;border:1px solid #22c55e44;border-radius:4px;cursor:pointer;font-size:10px;white-space:nowrap">+ 手动买入</button></div>
           </div>
           <div class="card-body" id="virtual-portfolio-section">
             <div class="portfolio-empty">暂无持仓</div>
@@ -300,6 +300,6 @@
 <!-- Toast -->
 <div id="toast" class="toast hidden"><span id="toast-msg"></span><span onclick="document.getElementById('toast').classList.add('hidden')" style="cursor:pointer;margin-left:12px;font-size:16px;line-height:1">×</span></div>
 
-<script src="app.js?t=1780227780"></script>
+<script src="app.js?t=1780281636"></script>
 </body>
 </html>

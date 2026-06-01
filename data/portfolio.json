@@ -1,15 +1,61 @@
 {
-  "cash": 200000,
+  "cash": 145415.8,
   "initial_capital": 200000,
-  "holdings": {},
-  "total_assets": 200000,
-  "total_return": 0,
+  "holdings": {
+    "605258": {
+      "name": "协和电子",
+      "code": "605258",
+      "qty": 300,
+      "avg_cost": 36.727,
+      "buy_date": "2026-06-01",
+      "buy_score": 100,
+      "signals": []
+    },
+    "603050": {
+      "name": "科林电气",
+      "code": "603050",
+      "qty": 500,
+      "avg_cost": 25.4,
+      "buy_date": "2026-06-01",
+      "buy_score": 100,
+      "signals": []
+    },
+    "000899": {
+      "name": "赣能股份",
+      "code": "000899",
+      "qty": 700,
+      "avg_cost": 14.267,
+      "buy_date": "2026-06-01",
+      "buy_score": 100,
+      "signals": []
+    },
+    "002351": {
+      "name": "漫步者",
+      "code": "002351",
+      "qty": 900,
+      "avg_cost": 11.246,
+      "buy_date": "2026-06-01",
+      "buy_score": 100,
+      "signals": []
+    },
+    "002951": {
+      "name": "金时科技",
+      "code": "002951",
+      "qty": 600,
+      "avg_cost": 17.888,
+      "buy_date": "2026-06-01",
+      "buy_score": 100,
+      "signals": []
+    }
+  },
+  "total_assets": 199975.0,
+  "total_return": -0.01,
   "trading_stats": {
-    "total_trades": 0,
+    "total_trades": 5,
     "win_trades": 0,
     "lose_trades": 0,
     "total_pnl": 0,
-    "total_commission": 0,
+    "total_commission": 25,
     "max_drawdown": 0
   }
 }

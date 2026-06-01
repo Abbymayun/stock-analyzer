@@ -2086,7 +2086,7 @@ const App = {
       <div style="text-align:center;margin-bottom:16px">
         <div style="font-size:36px;font-weight:800" class="${chgCls}">${displayPrice.toFixed(2)}</div>
         <div style="font-size:16px;font-weight:600" class="${chgCls}">${chgSign}${displayChgPct.toFixed(2)}%</div>
-        ${this._apiAvailable ? '<div style="font-size:10px;color:var(--text3)">实时行情 · 每30秒刷新</div>' : '<div style="font-size:10px;color:var(--text3)">数据更新于 ' + (this.allData?.update_time || '未知') + '</div>'}
+        ${this._apiAvailable ? '<div style="font-size:10px;color:var(--text3)">实时数据 · 每30秒刷新</div>' : ''}
         <div style="font-size:24px;font-weight:800;margin-top:8px;color:${this.recColor(s.recommendation)}">${s.recommendation} · ${s.score}分</div>`;
 
     if (s.next_day_estimate) {
@@ -2178,7 +2178,7 @@ const App = {
       ${s.sell_time ? `<div class="op-row"><span class="op-label">建议卖出时间</span><span class="op-value">${s.sell_time}</span></div>` : ''}
       ${s.support ? `<div class="op-row"><span class="op-label">关键支撑</span><span class="op-value">${s.support} 元</span></div>` : ''}
       ${s.resistance ? `<div class="op-row"><span class="op-label">关键压力</span><span class="op-value">${s.resistance} 元</span></div>` : ''}
-      ${!isHolding ? `<div style="padding:12px 16px"><button class="btn btn-primary" style="width:100%" onclick="App.manualBuy('${s.code}','${this.esc(s.name)}',${s.buy_point||s.price||''},${s.score||0})">💰 买入此股票</button></div>` : ''}
+      ${!isHolding ? `<div style="padding:12px 16px"><button class="btn btn-primary" style="width:100%" onclick="App.addToPortfolio('${s.code}')">➕ 添加到我的持仓</button></div>` : ''}
     </div>`;
 
     if (s.analysis_text) {
@@ -2264,10 +2264,11 @@ const App = {
   back() { this.showPage('home'); },
 
   // === 策略分析页 ===
-async renderStrategy() {
+  async renderStrategy() {
     const el = document.getElementById('strategy-content');
     if (!el) return;
     el.innerHTML = '<div style="padding:40px;text-align:center;color:var(--text3)">加载策略数据...</div>';
+
     try {
       let data = null;
       if (this._apiAvailable) {
@@ -2275,129 +2276,107 @@ async renderStrategy() {
         if (res.ok) data = await res.json();
       }
       if (!data) {
-        try { const res = await fetch('data/recommendations.json'); if (res.ok) { const rec = await res.json(); data = rec.strategy_results || null; } } catch {}
+        // 从 recommendations.json 加载
+        try {
+          const res = await fetch('data/recommendations.json');
+          if (res.ok) {
+            const rec = await res.json();
+            data = rec.strategy_results || null;
+          }
+        } catch {}
       }
-      if (!data) { el.innerHTML = '<div style="padding:40px;text-align:center;color:var(--text3)">暂无策略数据</div>'; return; }
-      const stats = data.stats || {}, results = data.results || {}, date = data.date || '';
+      if (!data) {
+        el.innerHTML = '<div style="padding:40px;text-align:center;color:var(--text3)">暂无策略数据，等待下次分析更新</div>';
+        return;
+      }
+
+      const stats = data.stats || {};
+      const results = data.results || {};
+      const date = data.date || '';
       document.getElementById('strategy-update-time').textContent = date ? date + ' 筛选' : '';
-      this._sd = { stats, results };
 
-      let left = '<div style="font-size:14px;font-weight:700;margin-bottom:8px">📊 策略排行榜</div>';
-      left += '<div style="font-size:10px;color:var(--text3);margin-bottom:10px">点击策略查看对应股票</div>';
-      let total = 0; Object.values(results).forEach(a => total += a.length);
-      left += '<div class="si on" data-sid="ALL" onclick="App._sf(\'ALL\')" style="padding:10px 12px;background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);border-radius:8px;cursor:pointer;margin-bottom:6px"><div style="display:flex;justify-content:space-between"><span style="font-weight:700;font-size:13px;color:#60a5fa">🎯 全部策略</span><span style="font-size:11px;color:var(--text3)">' + total + '只</span></div></div>';
-      Object.entries(stats).sort((a,b) => (b[1].win_rate||0) - (a[1].win_rate||0)).forEach(([sid, st]) => {
-        const cnt = (results[sid]||[]).length; if (!cnt) return;
+      // 策略统计排行
+      let html = `<div style="margin-bottom:16px">
+        <div style="font-size:15px;font-weight:700;margin-bottom:12px">📊 策略表现排行</div>
+        <div style="font-size:11px;color:var(--text3);margin-bottom:8px">按胜率排序 · 追踪中 · 30天验证期</div>
+        <div style="overflow-x:auto"><table style="width:100%;font-size:12px;border-collapse:collapse">
+          <thead><tr style="border-bottom:1px solid var(--border)">
+            <th style="padding:6px 8px;text-align:left">策略</th>
+            <th style="padding:6px 4px">类别</th>
+            <th style="padding:6px 4px">胜率</th>
+            <th style="padding:6px 4px">平均收益</th>
+            <th style="padding:6px 4px">样本数</th>
+            <th style="padding:6px 4px">活跃天数</th>
+          </tr></thead><tbody>`;
+
+      const statEntries = Object.entries(stats);
+      statEntries.sort((a, b) => (b[1].win_rate || 0) - (a[1].win_rate || 0));
+
+      statEntries.forEach(([sid, st]) => {
         const wr = st.win_rate || 0;
-        left += '<div class="si" data-sid="' + sid + '" onclick="App._sf(\'' + sid + '\')" style="padding:10px 12px;background:var(--bg2);border:1px solid transparent;border-radius:8px;cursor:pointer;margin-bottom:4px;transition:0.2s">';
-        left += '<div style="display:flex;justify-content:space-between;margin-bottom:2px"><span style="font-weight:600;font-size:12px">' + this.esc(st.name) + '</span><span style="font-size:10px;color:' + (wr>=50?'#ef4444':'#22c55e') + ';font-weight:600">' + wr + '%</span></div>';
-        left += '<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3)"><span>' + (st.category||'') + '</span><span>' + (st.total_trades||0) + '笔 · ' + (st.avg_pnl>=0?'+':'') + st.avg_pnl + '%</span></div>';
-        left += '<div style="font-size:10px;color:var(--text3);margin-top:2px">📌 ' + cnt + '只匹配</div></div>';
+        const wrCls = wr >= 50 ? 'text-rise' : 'text-fall';
+        const wrBar = `<div style="height:4px;border-radius:2px;background:${wr >= 50 ? 'var(--rise)' : 'var(--fall)'};width:${Math.min(wr, 100)}%;margin-top:2px"></div>`;
+        const avgCls = (st.avg_pnl || 0) >= 0 ? 'text-rise' : 'text-fall';
+        html += `<tr style="border-bottom:1px solid var(--border)">
+          <td style="padding:6px 8px;font-weight:600">${this.esc(st.name)}</td>
+          <td style="padding:6px 4px;color:var(--text3)">${st.category || ''}</td>
+          <td style="padding:6px 4px"><span class="${wrCls}">${wr}%</span>${wrBar}</td>
+          <td style="padding:6px 4px" class="${avgCls}">${st.avg_pnl >= 0 ? '+' : ''}${st.avg_pnl}%</td>
+          <td style="padding:6px 4px">${st.total_trades || 0}</td>
+          <td style="padding:6px 4px;color:var(--text3)">${st.days_active || 0}</td>
+        </tr>`;
       });
 
-      let html = '<div style="margin-bottom:12px;display:flex;gap:8px;align-items:center">';
-      html += '<button onclick="App._showTrackHistory()" style="padding:6px 14px;background:#3b82f6;border:none;border-radius:6px;color:#fff;cursor:pointer;font-size:12px;font-weight:600">📊 每日追踪详情</button>';
-      html += '<span style="font-size:11px;color:var(--text3)">查看每天策略选股表现</span></div>';
-      html += '<div id="strat-track" style="margin-bottom:16px;padding:10px 14px;background:var(--bg2);border-radius:10px"><span style="color:var(--text3);font-size:11px">加载追踪数据...</span></div>';
-      html += '<div style="display:grid;grid-template-columns:280px 1fr;gap:20px;max-width:1100px;margin:0 auto">';
-      html += '<div style="position:sticky;top:0;max-height:calc(100vh-180px);overflow-y:auto;padding-right:8px">' + left + '</div>';
-      html += '<div id="sr"><div style="font-size:14px;font-weight:700;margin-bottom:8px" id="stitle">🎯 今日筛选结果（全部）</div><div id="slist"></div></div>';
-      html += '</div>';
+      html += '</tbody></table></div></div>';
+
+      // 今日筛选结果
+      html += '<div style="margin-top:16px"><div style="font-size:15px;font-weight:700;margin-bottom:12px">🎯 今日筛选结果</div>';
+
+      const resultEntries = Object.entries(results);
+      if (resultEntries.length === 0) {
+        html += '<div style="padding:20px;text-align:center;color:var(--text3)">今日无匹配策略</div>';
+      } else {
+        resultEntries.forEach(([sid, stocks]) => {
+          const stName = (stats[sid] || {}).name || sid;
+          html += `<div style="margin-bottom:12px">
+            <div style="font-size:13px;font-weight:600;margin-bottom:6px">📌 ${this.esc(stName)}（${stocks.length}只）</div>`;
+
+          stocks.forEach((s, i) => {
+            const chgCls = (s.change_pct || 0) >= 0 ? 'text-rise' : 'text-fall';
+            const chgSign = (s.change_pct || 0) >= 0 ? '+' : '';
+            html += `<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 10px;background:var(--bg2);border-radius:6px;margin-bottom:4px;font-size:12px">
+              <div>
+                <span style="font-weight:600">${this.esc(s.name)}</span>
+                <span style="color:var(--text3);margin-left:6px">${s.code}</span>
+                <span style="color:var(--text3);margin-left:4px">评分${s.score || '-'}</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px">
+                <span class="${chgCls}">${s.price?.toFixed(2) || '-'}元 ${chgSign}${(s.change_pct || 0).toFixed(2)}%</span>
+                <span style="color:var(--text3);font-size:11px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${this.esc(s.reason || '')}</span>
+              </div>
+            </div>`;
+          });
+
+          html += '</div>';
+        });
+      }
+
+      // 策略说明
+      html += `<div style="margin-top:20px;padding:12px;background:var(--bg2);border-radius:8px">
+        <div style="font-size:12px;color:var(--text3);line-height:1.6">
+          🧪 <strong>策略实验室说明</strong><br>
+          • 定义了20个短线策略，覆盖趋势、技术、形态、资金、庄家5大类别<br>
+          • 每次分析自动筛选符合条件的股票（每策略最多5只）<br>
+          • 追踪30天表现，统计各策略胜率和平均收益<br>
+          • 不断优化策略权重，目标是筛选出高收益强稳定性的策略<br>
+          • 策略基于技术指标和庄家行为分析，捕捉拉升前埋伏和回调吃利机会
+        </div>
+      </div>`;
+
       el.innerHTML = html;
-      this._sf('ALL');
-      this._loadTrackSummary();
-    } catch (e) { el.innerHTML = '<div style="padding:40px;text-align:center;color:var(--text3)">加载失败</div>'; }
-  },
-
-  _loadTrackSummary() {
-    fetch((this._apiAvailable ? this.API_BASE + '/api/strategy_tracks' : 'data/strategy_tracks_summary.json')).then(r => r.json()).then(d => {
-      const tr = document.getElementById('strat-track');
-      if (!tr || !d.summary || !Object.keys(d.summary).length) { tr.innerHTML = '<span style="color:var(--text3);font-size:11px">暂无追踪数据，明天开盘后自动生成</span>'; return; }
-      let th = '<div style="font-size:13px;font-weight:700;margin-bottom:6px">📈 累计准确率</div>';
-      const entries = Object.entries(d.summary).sort((a,b) => b[1].total_win_rate - a[1].total_win_rate);
-      entries.slice(0,8).forEach(([sid, s]) => {
-        const wr = s.total_win_rate || 0;
-        const name = (this._sd?.stats||{})[sid]?.name || sid;
-        th += '<div style="display:inline-block;margin-right:16px;margin-bottom:4px;font-size:11px"><span style="font-weight:600">' + App.esc(name) + '</span> <span style="color:' + (wr>=50?'#ef4444':'#22c55e') + ';font-weight:700">' + wr.toFixed(0) + '%</span> <span style="font-size:9px;color:var(--text3)">(' + s.total_stocks + '只)</span></div>';
-      });
-      this._trackData = d;
-      tr.innerHTML = th;
-    }).catch(() => {});
-  },
-
-  _showTrackHistory() {
-    const el = document.getElementById('strategy-content');
-    const tracks = this._trackData?.tracks || [];
-    if (!tracks.length) { this.showToast('暂无追踪数据'); return; }
-    let h = '<div style="max-width:900px;margin:0 auto">';
-    h += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><span style="font-size:16px;font-weight:700">📊 每日追踪详情</span><button onclick="App.renderStrategy()" style="padding:6px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text2);cursor:pointer;font-size:12px">← 返回策略页</button></div>';
-    let hasData = false;
-    tracks.forEach(t => {
-      if (!t.verified) return; hasData = true;
-      let up = 0, down = 0, totalPicks = t.total_stocks || 0;
-      Object.values(t.results||{}).forEach(r => { up += r.up||0; down += r.down||0; });
-      const wr = (up+down) > 0 ? (up/(up+down)*100) : 0;
-      h += '<div onclick="App._showTrackDay(\'' + t.date + '\')" style="background:var(--bg2);border-radius:10px;padding:14px;margin-bottom:10px;cursor:pointer;border-left:3px solid ' + (wr>=50?'#ef4444':'#22c55e') + '">';
-      h += '<div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:700;font-size:14px">' + t.date + '</span><span style="font-size:12px;color:' + (wr>=50?'#ef4444':'#22c55e') + ';font-weight:700">' + wr.toFixed(0) + '% 准确率</span></div>';
-      h += '<div style="font-size:11px;color:var(--text3);margin-top:4px">' + totalPicks + '只推荐 · ' + Object.keys(t.results||{}).length + '个策略 · ' + up + '涨 ' + down + '跌</div>';
-      h += '</div>';
-    });
-    if (!hasData) h += '<div style="text-align:center;color:var(--text3);padding:40px">暂无验证数据，明天开盘后自动生成</div>';
-    h += '</div>';
-    el.innerHTML = h;
-  },
-
-  _showTrackDay(date) {
-    const el = document.getElementById('strategy-content');
-    const tracks = this._trackData?.tracks || [];
-    const t = tracks.find(x => x.date === date);
-    if (!t) return;
-    let h = '<div style="max-width:900px;margin:0 auto">';
-    h += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><span style="font-size:16px;font-weight:700">📊 ' + date + ' 策略详情</span><button onclick="App._showTrackHistory()" style="padding:6px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text2);cursor:pointer;font-size:12px">← 返回列表</button></div>';
-    let up = 0, down = 0;
-    Object.values(t.results||{}).forEach(r => { up += r.up||0; down += r.down||0; });
-    const wr = (up+down) > 0 ? (up/(up+down)*100) : 0;
-    h += '<div style="background:var(--bg2);border-radius:10px;padding:16px;margin-bottom:16px;text-align:center">';
-    h += '<div style="font-size:12px;color:var(--text3)">总推荐 ' + (t.total_stocks||0) + '只 · 准确率</div>';
-    h += '<div style="font-size:28px;font-weight:800;color:' + (wr>=50?'#ef4444':'#22c55e') + '">' + wr.toFixed(0) + '%</div>';
-    h += '<div style="font-size:12px;color:var(--text3)">' + up + '涨 ' + down + '跌</div></div>';
-    Object.entries(t.results||{}).forEach(([sid, r]) => {
-      const name = (this._sd?.stats||{})[sid]?.name || sid;
-      const swr = (r.up+r.down) > 0 ? (r.up/(r.up+r.down)*100) : 0;
-      h += '<div style="background:var(--bg2);border-radius:8px;padding:12px;margin-bottom:8px">';
-      h += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><span style="font-weight:600;font-size:13px">' + App.esc(name) + '</span><span style="font-size:12px;color:' + (swr>=50?'#ef4444':'#22c55e') + ';font-weight:700">' + swr.toFixed(0) + '%</span></div>';
-      h += '<div style="font-size:10px;color:var(--text3);margin-bottom:6px">' + r.up + '涨 ' + r.down + '跌 ' + (r.flat||0) + '平</div>';
-      (r.stocks||[]).forEach(s => {
-        const sc = (s.chg_pct||0)>=0?'text-rise':'text-fall', ss = (s.chg_pct||0)>=0?'+':'';
-        h += '<div style="display:flex;justify-content:space-between;font-size:11px;padding:3px 0;border-bottom:1px solid rgba(255,255,255,0.03)"><span><span style="font-weight:600">' + App.esc(s.name) + '</span> ' + s.code + '</span><span>选' + s.pick_price.toFixed(2) + ' <span class="' + sc + '">→' + s.today_price.toFixed(2) + ' ' + ss + s.chg_pct.toFixed(1) + '%</span></span></div>';
-      });
-      h += '</div>';
-    });
-    h += '</div>';
-    el.innerHTML = h;
-  },
-
-  _sf(sid) {
-    const d = this._sd; if (!d) return;
-    document.querySelectorAll('.si').forEach(e => {
-      e.style.background = e.dataset.sid === sid ? 'rgba(59,130,246,0.1)' : 'var(--bg2)';
-      e.style.borderColor = e.dataset.sid === sid ? 'rgba(59,130,246,0.3)' : 'transparent';
-    });
-    document.getElementById('stitle').textContent = '🎯 今日筛选结果（' + (sid==='ALL'?'全部':((d.stats[sid]||{}).name||sid)) + '）';
-    const ls = document.getElementById('slist'); if (!ls) return;
-    let h = '';
-    (sid === 'ALL' ? Object.entries(d.results) : [[sid, d.results[sid]||[]]]).forEach(([s,stocks]) => {
-      if (!stocks.length) { if (sid!=='ALL') h = '<div style="padding:20px;text-align:center;color:var(--text3)">无匹配</div>'; return; }
-      if (sid==='ALL') h += '<div style="margin-bottom:12px"><div style="font-size:12px;font-weight:600;color:#94a3b8;margin-bottom:4px">📌 ' + this.esc((d.stats[s]||{}).name||s) + ' · ' + stocks.length + '只</div>';
-      stocks.forEach(x => {
-        const stk = this.findStock(x.code);
-        const chg = stk ? (stk.change_pct || 0) : 0;
-        const cc = chg>=0?'text-rise':'text-fall', cs = chg>=0?'+':'';
-        h += '<div style="display:flex;justify-content:space-between;padding:8px 12px;background:var(--bg2);border-radius:8px;margin-bottom:4px;font-size:12px;cursor:pointer" onclick="App.openStock(\'' + x.code + '\')"><div style="display:flex;align-items:center;gap:8px"><span style="font-weight:600">' + App.esc(x.name) + '</span><span style="color:var(--text3);font-size:10px">' + x.code + '</span><span style="font-size:10px;background:rgba(239,68,68,0.1);color:#ef4444;padding:1px 6px;border-radius:4px">' + (x.score||'?') + '分</span></div><div style="display:flex;gap:12px"><span class="' + cc + '" style="font-weight:600">' + (x.price?.toFixed(2)||(stk?.price?.toFixed(2)||'-')) + '</span><span class="' + cc + '" style="font-size:10px">' + cs + chg.toFixed(2) + '%</span></div></div>';
-      });
-      if (sid==='ALL') h += '</div>';
-    });
-    ls.innerHTML = h;
+    } catch (e) {
+      el.innerHTML = '<div style="padding:40px;text-align:center;color:var(--text3)">加载失败: ' + e.message + '</div>';
+    }
   },
 
   // === 工具 ===
@@ -2470,18 +2449,15 @@ const Portfolio = {
 };
 
 // ========== 虚拟交易页面 ==========
-App.renderTrading = async function() {
-  const el = document.getElementById('trading-overview');
-  el.innerHTML = '<div class="empty">加载中...</div>';
-  try {
-    const pfRes = await fetch(this.API_BASE + '/api/portfolio');
-    if (!pfRes.ok) throw new Error('err');
-    const p = await pfRes.json();
-    const ts = p.trading_stats || {};
-    const t = { portfolio: p, stats: { total_trades: ts.total_trades||0, win_trades: ts.win_trades||0, lose_trades: ts.lose_trades||0, total_pnl: ts.total_pnl||0, max_drawdown: ts.max_drawdown||0 }, latest_report: null };
-    this.renderTradingOverview(t);
-    this.renderTradingReport(t);
-  } catch(e) { el.innerHTML = '<div class="empty">API未连接</div>'; }
+App.renderTrading = function() {
+  const r = App.recData;
+  const trading = r?.trading;
+  if (!trading) {
+    document.getElementById('trading-overview').innerHTML = '<div class="empty">等待首次交易分析...</div>';
+    return;
+  }
+  this.renderTradingOverview(trading);
+  this.renderTradingReport(trading);
 };
 
 App.showTradingTab = function(tab) {
@@ -2865,10 +2841,12 @@ App._showTradeModal = function(opts) {
 
   modal.innerHTML = '<div style="background:var(--bg1);border:1px solid var(--border);border-radius:12px;padding:20px;width:340px;box-shadow:0 8px 32px rgba(0,0,0,0.3)">' +
     '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">' +
-    '<span style="font-size:16px;font-weight:700">' + (isBuy ? '🟢' : '🔴') + ' ' + title + ' ' + this.esc(opts.name) + ' (' + opts.code + ')</span>' +
+    '<span style="font-size:16px;font-weight:700">' + (isBuy ? '🟢' : '🔴') + ' ' + title + (opts.name ? ' ' + App.esc(opts.name) + ' (' + (opts.code||'') + ')' : '') + '</span>' +
+    (opts.code ? '' : '<div style="margin-bottom:12px"><label style="font-size:12px;color:var(--text2);display:block;margin-bottom:4px">股票代码或名称</label><input id="trade-code" type="text" placeholder="如：002039 或 黔源电力" style="width:100%;padding:8px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text1);font-size:14px;outline:none;box-sizing:border-box" /></div>') +
     '<span style="cursor:pointer;font-size:18px;color:var(--text3)" onclick="App._closeTradeModal()">&#10005;</span>' +
     '</div>' +
     '<div style="margin-bottom:12px;font-size:12px;color:var(--text3)">' + priceHint + (opts.maxQty ? ' · 持有' + opts.maxQty + '股' : '') + '</div>' +
+    (!opts.code ? '<div style="margin-bottom:12px"><label style="font-size:12px;color:var(--text2);display:block;margin-bottom:4px">股票代码或名称</label><input id="trade-code" type="text" placeholder="如：002039 或 黔源电力" style="width:100%;padding:8px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text1);font-size:14px;outline:none;box-sizing:border-box" /></div>' : '') +
     '<div style="margin-bottom:12px">' +
     '<label style="font-size:12px;color:var(--text2);display:block;margin-bottom:4px">' + title + '价格（元）</label>' +
     '<input id="trade-price" type="text" inputmode="decimal" value="' + (opts.price || '') + '" placeholder="输入价格" ' +
@@ -2924,9 +2902,11 @@ App._closeTradeModal = function() {
 };
 
 App._confirmTrade = async function(mode, code, name, score) {
+  var errDiv = document.getElementById('trade-error');
+  var btn = document.getElementById('trade-confirm-btn');
+  if (!code || code === '0') { var ci = document.getElementById('trade-code'); if (ci && ci.value.trim()) { code = ci.value.trim(); name = code; } if (!code) { errDiv.textContent = '请输入股票代码'; errDiv.style.display = 'block'; return; } }
   var price = parseFloat(document.getElementById('trade-price').value);
   var qty = parseInt(document.getElementById('trade-qty').value);
-  var errDiv = document.getElementById('trade-error');
 
   if (!price || price <= 0) { errDiv.textContent = '请输入有效的价格'; errDiv.style.display = 'block'; return; }
   if (!qty || qty <= 0) { errDiv.textContent = '请输入有效的数量'; errDiv.style.display = 'block'; return; }

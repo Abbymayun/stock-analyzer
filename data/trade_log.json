@@ -1,4 +1,65 @@
 {
-  "trades": [],
-  "next_id": 1
+  "trades": [
+    {
+      "id": 1,
+      "type": "buy",
+      "code": "605258",
+      "name": "协和电子",
+      "price": 36.727,
+      "qty": 300,
+      "amount": 11018.1,
+      "commission": 5,
+      "reason": "推荐买入",
+      "timestamp": "2026-06-01 09:01:56"
+    },
+    {
+      "id": 2,
+      "type": "buy",
+      "code": "603050",
+      "name": "科林电气",
+      "price": 25.4,
+      "qty": 500,
+      "amount": 12700.0,
+      "commission": 5,
+      "reason": "推荐买入",
+      "timestamp": "2026-06-01 09:02:16"
+    },
+    {
+      "id": 3,
+      "type": "buy",
+      "code": "000899",
+      "name": "赣能股份",
+      "price": 14.267,
+      "qty": 700,
+      "amount": 9986.9,
+      "commission": 5,
+      "reason": "推荐买入",
+      "timestamp": "2026-06-01 09:02:43"
+    },
+    {
+      "id": 4,
+      "type": "buy",
+      "code": "002351",
+      "name": "漫步者",
+      "price": 11.246,
+      "qty": 900,
+      "amount": 10121.4,
+      "commission": 5,
+      "reason": "推荐买入",
+      "timestamp": "2026-06-01 09:04:39"
+    },
+    {
+      "id": 5,
+      "type": "buy",
+      "code": "002951",
+      "name": "金时科技",
+      "price": 17.888,
+      "qty": 600,
+      "amount": 10732.8,
+      "commission": 5,
+      "reason": "推荐买入",
+      "timestamp": "2026-06-01 09:05:30"
+    }
+  ],
+  "next_id": 6
 }
