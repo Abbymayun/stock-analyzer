@@ -1,106 +1,244 @@
 {
-  "update_time": "2026-06-01 14:20:01",
+  "update_time": "2026-06-02 14:20:01",
   "cn_indices": {
     "000001": {
       "name": "上证指数",
       "code": "000001",
-      "price": 4054.75,
-      "prev_close": 4068.57,
-      "change_pct": -0.34
+      "price": 4071.98,
+      "prev_close": 4057.74,
+      "change_pct": 0.35
     },
     "399001": {
       "name": "深证成指",
       "code": "399001",
-      "price": 15354.74,
-      "prev_close": 15575.13,
-      "change_pct": -1.42
+      "price": 15593.94,
+      "prev_close": 15340.36,
+      "change_pct": 1.65
     },
     "399006": {
       "name": "创业板指",
       "code": "399006",
-      "price": 3959.33,
-      "prev_close": 4037.95,
-      "change_pct": -1.95
+      "price": 4061.6,
+      "prev_close": 3950.94,
+      "change_pct": 2.8
     },
     "000688": {
       "name": "科创50",
       "code": "000688",
-      "price": 1671.68,
-      "prev_close": 1751.32,
-      "change_pct": -4.55
+      "price": 1691.42,
+      "prev_close": 1663.69,
+      "change_pct": 1.67
     },
     "000300": {
       "name": "沪深300",
       "code": "000300",
-      "price": 4843.22,
-      "prev_close": 4892.12,
-      "change_pct": -1.0
+      "price": 4913.26,
+      "prev_close": 4844.26,
+      "change_pct": 1.42
     },
     "399005": {
       "name": "中小100",
       "code": "399005",
-      "price": 9262.28,
-      "prev_close": 9418.04,
-      "change_pct": -1.65
+      "price": 9382.39,
+      "prev_close": 9251.52,
+      "change_pct": 1.41
     }
   },
   "recommended_stocks": [
     {
+      "code": "000722",
+      "name": "湖南发展",
+      "status": "正常",
+      "current_price": 16.5,
+      "change_pct": 1.48,
+      "high": 17.81,
+      "low": 15.93,
+      "turnover_rate": 16.15,
+      "amplitude": 11.56,
+      "pnl_pct": 15.55,
+      "action": "🟢 到达目标价，建议止盈",
+      "action_type": "止盈"
+    },
+    {
       "code": "002951",
       "name": "金时科技",
       "status": "正常",
-      "current_price": 17.95,
-      "change_pct": 1.76,
-      "high": 18.05,
-      "low": 17.01,
-      "turnover_rate": 4.64,
-      "amplitude": 5.9,
-      "pnl_pct": 4.79,
-      "action": "🟢 持有，走势正常",
-      "action_type": "持有"
+      "current_price": 21.28,
+      "change_pct": 9.69,
+      "high": 21.34,
+      "low": 18.01,
+      "turnover_rate": 8.28,
+      "amplitude": 17.16,
+      "pnl_pct": 24.3,
+      "action": "🟢 到达目标价，建议止盈",
+      "action_type": "止盈"
     },
     {
-      "code": "603050",
-      "name": "科林电气",
+      "code": "000809",
+      "name": "和展能源",
       "status": "下跌",
-      "current_price": 23.33,
-      "change_pct": -6.57,
-      "high": 25.2,
-      "low": 23.3,
-      "turnover_rate": 3.77,
-      "amplitude": 7.61,
-      "pnl_pct": -1.85,
-      "action": "⚠️ 跌幅较大，关注止损位",
-      "action_type": "关注止损"
-    },
-    {
-      "code": "000899",
-      "name": "赣能股份",
-      "status": "正常",
-      "current_price": 14.28,
-      "change_pct": 1.71,
-      "high": 14.44,
-      "low": 13.4,
-      "turnover_rate": 5.06,
-      "amplitude": 7.41,
-      "pnl_pct": 6.41,
-      "action": "🟢 持有，走势正常",
-      "action_type": "持有"
+      "current_price": 4.12,
+      "change_pct": -2.6,
+      "high": 4.22,
+      "low": 4.07,
+      "turnover_rate": 4.13,
+      "amplitude": 3.55,
+      "pnl_pct": -1.2,
+      "action": "🟡 小幅波动，继续观察",
+      "action_type": "观察"
     }
   ],
   "top_buys": [
     {
-      "code": "000692",
-      "name": "惠天热电",
-      "score": 92,
-      "price": 5.37,
-      "change_pct": 1.9,
-      "buy_point": 5.05,
+      "code": "603386",
+      "name": "骏亚科技",
+      "score": 100,
+      "price": 16.87,
+      "change_pct": 1.08,
+      "buy_point": 16.2,
       "buy_time": "尾盘买入 (14:20-14:50)",
-      "stop_loss": 4.8,
-      "target_price": 5.62,
+      "stop_loss": 15.39,
+      "target_price": 18.03,
       "signals": [
         "温和上涨",
+        "大振幅",
+        "放量",
+        "均线多头排列",
+        "MA金叉",
+        "MACD金叉",
+        "红柱放大"
+      ],
+      "next_day_estimate": {
+        "estimate": 3.0,
+        "factors": [
+          "技术面偏强",
+          "连续上涨",
+          "MACD多头"
+        ]
+      },
+      "entry_score": 23
+    },
+    {
+      "code": "601677",
+      "name": "明泰铝业",
+      "score": 89,
+      "price": 19.34,
+      "change_pct": 1.42,
+      "buy_point": 19.09,
+      "buy_time": "尾盘买入 (14:20-14:50)",
+      "stop_loss": 18.13,
+      "target_price": 20.31,
+      "signals": [
+        "温和上涨",
+        "低PE",
+        "放量",
+        "均线多头排列",
+        "红柱放大"
+      ],
+      "next_day_estimate": {
+        "estimate": 3.0,
+        "factors": [
+          "技术面偏强",
+          "连续上涨",
+          "MACD多头"
+        ]
+      },
+      "entry_score": 21
+    },
+    {
+      "code": "601015",
+      "name": "陕西黑猫",
+      "score": 79,
+      "price": 3.91,
+      "change_pct": 2.89,
+      "buy_point": 3.68,
+      "buy_time": "尾盘买入 (14:20-14:50)",
+      "stop_loss": 3.49,
+      "target_price": 4.18,
+      "signals": [
+        "温和上涨",
+        "大振幅",
+        "放量",
+        "MA金叉",
+        "红柱放大",
+        "RSI偏高",
+        "放量上涨"
+      ],
+      "next_day_estimate": {
+        "estimate": 4.0,
+        "factors": [
+          "技术面偏强",
+          "连续上涨",
+          "MACD多头",
+          "放量上攻"
+        ]
+      },
+      "entry_score": 17
+    }
+  ],
+  "market_stats": {
+    "total": 3073,
+    "up": 517,
+    "down": 2351,
+    "flat": 205,
+    "limit_up": 37,
+    "limit_down": 14,
+    "up_ratio": 16.8,
+    "avg_change": -1.38
+  },
+  "sentiment": {
+    "000001": {
+      "level": "偏强",
+      "score": 60,
+      "emoji": "↗️"
+    },
+    "399001": {
+      "level": "强势",
+      "score": 80,
+      "emoji": "📈"
+    },
+    "399006": {
+      "level": "强势",
+      "score": 80,
+      "emoji": "📈"
+    },
+    "000688": {
+      "level": "强势",
+      "score": 80,
+      "emoji": "📈"
+    },
+    "000300": {
+      "level": "强势",
+      "score": 80,
+      "emoji": "📈"
+    },
+    "399005": {
+      "level": "强势",
+      "score": 80,
+      "emoji": "📈"
+    }
+  },
+  "advices": [
+    "↗️ 大盘偏强（上证+0.35%），走势稳健，维持现有仓位",
+    "🟢 止盈提醒: 湖南发展(+1.5%), 金时科技(+9.7%)，可考虑部分获利了结",
+    "🟡 推荐股平均浮亏 -1.2%，关注关键支撑位",
+    "⚠️ 赚钱效应较差（16.8%上涨），操作需谨慎",
+    "⏰ 距收盘约40分钟，避免尾盘追涨杀跌"
+  ],
+  "source_recommendations": [
+    {
+      "code": "000722",
+      "name": "湖南发展",
+      "score": 95,
+      "price": 15.38,
+      "change_pct": 4.06,
+      "buy_point": 14.28,
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
+      "stop_loss": 13.57,
+      "target_price": 16.33,
+      "signals": [
+        "温和上涨",
+        "收在高位",
         "大振幅",
         "放量",
         "MA金叉",
@@ -116,7 +254,37 @@
           "MACD多头"
         ]
       },
-      "entry_score": 20
+      "entry_score": 17,
+      "reason": "技术面极强，放量、MA金叉、MACD金叉，资金活跃"
+    },
+    {
+      "code": "002951",
+      "name": "金时科技",
+      "score": 93,
+      "price": 17.91,
+      "change_pct": 1.53,
+      "buy_point": 17.12,
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
+      "stop_loss": 16.26,
+      "target_price": 19.26,
+      "signals": [
+        "温和上涨",
+        "收在高位",
+        "大振幅",
+        "放量",
+        "均线多头排列",
+        "红柱放大"
+      ],
+      "next_day_estimate": {
+        "estimate": 3.0,
+        "factors": [
+          "技术面偏强",
+          "连续上涨",
+          "MACD多头"
+        ]
+      },
+      "entry_score": 18,
+      "reason": "技术面强势，放量、均线多头排列、红柱放大，RSI健康多头"
     },
     {
       "code": "000809",
@@ -125,7 +293,7 @@
       "price": 4.26,
       "change_pct": 1.91,
       "buy_point": 4.17,
-      "buy_time": "尾盘买入 (14:20-14:50)",
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
       "stop_loss": 3.97,
       "target_price": 4.84,
       "signals": [
@@ -142,176 +310,8 @@
           "MACD多头"
         ]
       },
-      "entry_score": 26
-    },
-    {
-      "code": "002881",
-      "name": "美格智能",
-      "score": 78,
-      "price": 46.79,
-      "change_pct": 2.97,
-      "buy_point": 46.75,
-      "buy_time": "尾盘买入 (14:20-14:50)",
-      "stop_loss": 44.41,
-      "target_price": 50.99,
-      "signals": [
-        "温和上涨",
-        "大振幅",
-        "放量",
-        "短期多头"
-      ],
-      "next_day_estimate": {
-        "estimate": 2.0,
-        "factors": [
-          "技术面偏强",
-          "MACD多头"
-        ]
-      },
-      "entry_score": 27
-    }
-  ],
-  "market_stats": {
-    "total": 3071,
-    "up": 2098,
-    "down": 756,
-    "flat": 217,
-    "limit_up": 81,
-    "limit_down": 18,
-    "up_ratio": 68.3,
-    "avg_change": 1.19
-  },
-  "sentiment": {
-    "000001": {
-      "level": "偏弱",
-      "score": 40,
-      "emoji": "↘️"
-    },
-    "399001": {
-      "level": "弱势",
-      "score": 20,
-      "emoji": "📉"
-    },
-    "399006": {
-      "level": "弱势",
-      "score": 20,
-      "emoji": "📉"
-    },
-    "000688": {
-      "level": "弱势",
-      "score": 20,
-      "emoji": "📉"
-    },
-    "000300": {
-      "level": "弱势",
-      "score": 20,
-      "emoji": "📉"
-    },
-    "399005": {
-      "level": "弱势",
-      "score": 20,
-      "emoji": "📉"
-    }
-  },
-  "advices": [
-    "➡️ 大盘震荡（上证-0.34%），控制仓位，尾盘不建议追涨",
-    "🟢 推荐股平均浮盈 +5.6%，走势良好，继续持有",
-    "🟡 推荐股平均浮亏 -1.9%，关注关键支撑位",
-    "💰 赚钱效应较好（68.3%上涨），市场情绪积极",
-    "⏰ 距收盘约40分钟，避免尾盘追涨杀跌"
-  ],
-  "source_recommendations": [
-    {
-      "code": "002951",
-      "name": "金时科技",
-      "score": 100,
-      "price": 17.96,
-      "change_pct": 2.69,
-      "buy_point": 17.13,
-      "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 16.27,
-      "target_price": 19.26,
-      "signals": [
-        "温和上涨",
-        "大振幅",
-        "放量",
-        "均线多头排列",
-        "MACD金叉",
-        "红柱放大",
-        "放量上涨"
-      ],
-      "next_day_estimate": {
-        "estimate": 4.0,
-        "factors": [
-          "技术面偏强",
-          "连续上涨",
-          "MACD多头",
-          "放量上攻"
-        ]
-      },
-      "entry_score": 21,
-      "reason": "技术面极强，放量、均线多头排列、MACD金叉，RSI健康多头"
-    },
-    {
-      "code": "603050",
-      "name": "科林电气",
-      "score": 100,
-      "price": 25.74,
-      "change_pct": 3.42,
-      "buy_point": 23.77,
-      "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 22.58,
-      "target_price": 27.93,
-      "signals": [
-        "温和上涨",
-        "大振幅",
-        "放量",
-        "均线多头排列",
-        "MA金叉",
-        "MACD金叉",
-        "红柱放大",
-        "RSI偏高",
-        "放量上涨"
-      ],
-      "next_day_estimate": {
-        "estimate": 4.0,
-        "factors": [
-          "技术面偏强",
-          "连续上涨",
-          "MACD多头",
-          "放量上攻"
-        ]
-      },
-      "entry_score": 19,
-      "reason": "技术面极强，放量、均线多头排列、MA金叉，资金活跃，高盈亏比"
-    },
-    {
-      "code": "000899",
-      "name": "赣能股份",
-      "score": 100,
-      "price": 14.23,
-      "change_pct": 1.35,
-      "buy_point": 13.42,
-      "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 12.75,
-      "target_price": 15.06,
-      "signals": [
-        "温和上涨",
-        "低PE",
-        "放量",
-        "均线多头排列",
-        "MA金叉",
-        "红柱放大"
-      ],
-      "next_day_estimate": {
-        "estimate": 3.0,
-        "factors": [
-          "技术面偏强",
-          "连续上涨",
-          "MACD多头"
-        ]
-      },
-      "entry_score": 21,
-      "reason": "技术面极强，放量、均线多头排列、MA金叉，资金活跃"
+      "entry_score": 22,
+      "reason": "技术面强势，放量、均线多头排列、红柱放大，高盈亏比"
     }
   ]
 }

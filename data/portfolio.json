@@ -1,5 +1,5 @@
 {
-  "cash": 19821.82,
+  "cash": 22556.82,
   "initial_capital": 200000,
   "holdings": {
     "605258": {
@@ -23,17 +23,8 @@
     "000899": {
       "name": "赣能股份",
       "code": "000899",
-      "qty": 700,
-      "avg_cost": 14.267,
-      "buy_date": "2026-06-01",
-      "buy_score": 100,
-      "signals": []
-    },
-    "002951": {
-      "name": "金时科技",
-      "code": "002951",
-      "qty": 600,
-      "avg_cost": 17.888,
+      "qty": 1400,
+      "avg_cost": 14.169,
       "buy_date": "2026-06-01",
       "buy_score": 100,
       "signals": []
@@ -93,14 +84,14 @@
       "signals": []
     }
   },
-  "total_assets": 200381.62,
-  "total_return": 0.19,
+  "total_assets": 202233.52,
+  "total_return": 1.12,
   "trading_stats": {
-    "total_trades": 19,
-    "win_trades": 2,
+    "total_trades": 21,
+    "win_trades": 3,
     "lose_trades": 0,
-    "total_pnl": 473.6,
-    "total_commission": 101.98,
+    "total_pnl": 2329.8,
+    "total_commission": 111.98,
     "max_drawdown": 0
   }
 }

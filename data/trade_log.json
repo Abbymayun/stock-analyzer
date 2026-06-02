@@ -219,7 +219,33 @@
       "commission": 5,
       "reason": "推荐买入",
       "timestamp": "2026-06-01 13:24:56"
+    },
+    {
+      "id": 20,
+      "type": "buy",
+      "code": "000899",
+      "name": "赣能股份",
+      "price": 14.07,
+      "qty": 700,
+      "amount": 9849.0,
+      "commission": 5,
+      "reason": "推荐买入",
+      "timestamp": "2026-06-02 12:18:49"
+    },
+    {
+      "id": 21,
+      "type": "sell",
+      "code": "002951",
+      "name": "金时科技",
+      "price": 20.99,
+      "qty": 600,
+      "amount": 12594.0,
+      "commission": 5,
+      "pnl": 1856.2,
+      "pnl_pct": 17.34,
+      "reason": "手动卖出",
+      "timestamp": "2026-06-02 13:09:06"
     }
   ],
-  "next_id": 20
+  "next_id": 22
 }
