@@ -1,0 +1,153 @@
+{
+  "date": "2026-06-02",
+  "created_at": "15:00",
+  "total_assets": 194396.82,
+  "cash": 22556.82,
+  "market_value": 171840.0,
+  "initial_capital": 200000,
+  "total_return": -2.8,
+  "total_pnl": -7836.7,
+  "buy_count": 1,
+  "sell_count": 1,
+  "hold_count": 9,
+  "buys": [
+    {
+      "name": "赣能股份",
+      "code": "000899",
+      "qty": 700,
+      "cost": 0,
+      "total_cost": 9849.0,
+      "trades": [
+        {
+          "price": 14.07,
+          "qty": 700
+        }
+      ],
+      "avg_cost": 14.07,
+      "current_price": 14.35,
+      "pnl": 195.99999999999955,
+      "pnl_pct": 1.9900497512437765
+    }
+  ],
+  "sells": [
+    {
+      "name": "金时科技",
+      "code": "002951",
+      "qty": 600,
+      "price": 20.99,
+      "pnl": 1856.2,
+      "pnl_pct": 17.34
+    }
+  ],
+  "sell_total_pnl": 1856.2,
+  "holdings": [
+    {
+      "code": "000899",
+      "name": "赣能股份",
+      "qty": 1400,
+      "cost": 14.169,
+      "price": 14.35,
+      "high": 14.44,
+      "low": 13.7,
+      "change_pct": -1.17,
+      "pnl": 253.4,
+      "pnl_pct": 1.28
+    },
+    {
+      "code": "600780",
+      "name": "通宝能源",
+      "qty": 1400,
+      "cost": 7.43,
+      "price": 7.49,
+      "high": 7.73,
+      "low": 7.47,
+      "change_pct": -4.71,
+      "pnl": 84.0,
+      "pnl_pct": 0.81
+    },
+    {
+      "code": "605258",
+      "name": "协和电子",
+      "qty": 300,
+      "cost": 36.727,
+      "price": 35.81,
+      "high": 37.77,
+      "low": 35.53,
+      "change_pct": -1.67,
+      "pnl": -275.1,
+      "pnl_pct": -2.5
+    },
+    {
+      "code": "600992",
+      "name": "贵绳股份",
+      "qty": 800,
+      "cost": 12.86,
+      "price": 12.48,
+      "high": 13.12,
+      "low": 12.45,
+      "change_pct": -5.31,
+      "pnl": -304.0,
+      "pnl_pct": -2.95
+    },
+    {
+      "code": "002171",
+      "name": "楚江新材",
+      "qty": 800,
+      "cost": 12.4,
+      "price": 11.95,
+      "high": 12.04,
+      "low": 11.59,
+      "change_pct": 1.7,
+      "pnl": -360.0,
+      "pnl_pct": -3.63
+    },
+    {
+      "code": "002870",
+      "name": "香山股份",
+      "qty": 300,
+      "cost": 42.96,
+      "price": 40.65,
+      "high": 41.25,
+      "low": 38.42,
+      "change_pct": 1.09,
+      "pnl": -693.0,
+      "pnl_pct": -5.38
+    },
+    {
+      "code": "002273",
+      "name": "水晶光电",
+      "qty": 800,
+      "cost": 38.69,
+      "price": 37.25,
+      "high": 38.06,
+      "low": 35.5,
+      "change_pct": 1.97,
+      "pnl": -1152.0,
+      "pnl_pct": -3.72
+    },
+    {
+      "code": "002380",
+      "name": "科远智慧",
+      "qty": 600,
+      "cost": 42.92,
+      "price": 39.37,
+      "high": 40.12,
+      "low": 37.89,
+      "change_pct": -0.91,
+      "pnl": -2130.0,
+      "pnl_pct": -8.27
+    },
+    {
+      "code": "603050",
+      "name": "科林电气",
+      "qty": 2000,
+      "cost": 24.31,
+      "price": 22.68,
+      "high": 23.47,
+      "low": 22.12,
+      "change_pct": -2.91,
+      "pnl": -3260.0,
+      "pnl_pct": -6.71
+    }
+  ]
+}
