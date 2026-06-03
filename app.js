@@ -94,6 +94,8 @@ const App = {
     const el = document.getElementById('unified-buys-list');
     const labelEl = document.getElementById('unified-source-label');
     const items = data.items || [];
+    // 按分数从高到低排序
+    items.sort((a, b) => (b.score || 0) - (a.score || 0));
     if (!items.length) {
       el.innerHTML = '<div class="empty">暂无推荐，等待分析更新...</div>';
       if (labelEl) labelEl.textContent = '';
@@ -1590,6 +1592,13 @@ const App = {
         const hCls = (h.pnl || 0) >= 0 ? 'text-rise' : 'text-fall';
         const hSign = (h.pnl || 0) >= 0 ? '+' : '';
         const emoji = (h.pnl || 0) >= 0 ? '🟢' : '🔴';
+        // 从推荐数据查找止盈止损
+        let target = null, stop = null;
+        const rec = this.recData || {};
+        for (const k of ['strong_buy','buy','watch']) {
+          const f = (rec[k]||[]).find(s => s.code === h.code);
+          if (f) { target = f.target_price; stop = f.stop_loss; break; }
+        }
 
         html += `<div class="vh-card" data-code="${h.code}" data-cost="${h.avg_cost}" data-qty="${h.qty}" onclick="App.openStock('${h.code}')" style="cursor:pointer;padding:10px 0;border-bottom:1px solid rgba(42,58,80,0.15)">
           <div style="display:flex;justify-content:space-between;align-items:center">
@@ -1597,6 +1606,7 @@ const App = {
               <span style="font-weight:600;font-size:14px">${this.esc(h.name)}</span>
               <span style="color:var(--text3);font-size:11px;margin-left:4px">${h.code}</span>
               <span style="font-size:11px;color:var(--text3);margin-left:6px">${h.qty}股 × ${h.avg_cost.toFixed(2)}</span>
+            <span style="font-size:10px;color:var(--text3);margin-left:8px">${target ? '🎯'+target.toFixed(2) : ''} ${stop ? '🛑'+stop.toFixed(2) : ''}</span>
             </div>
             <div style="text-align:right">
               <div class="vh-price" style="font-weight:600;font-size:14px">${h.current_price.toFixed(2)}</div>

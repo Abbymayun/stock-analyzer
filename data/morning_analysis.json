@@ -1,5 +1,5 @@
 {
-  "update_time": "2026-06-02 08:31:03",
+  "update_time": "2026-06-03 08:31:02",
   "us_indices": {},
   "bond_yield": {},
   "commodities": {},
@@ -9,37 +9,37 @@
     "000001": {
       "name": "上证指数",
       "code": "000001",
-      "price": 4057.74,
-      "prev_close": 4068.57,
-      "change_pct": -0.27
+      "price": 4075.1,
+      "prev_close": 4057.74,
+      "change_pct": 0.43
     },
     "399001": {
       "name": "深证成指",
       "code": "399001",
-      "price": 15340.36,
-      "prev_close": 15575.13,
-      "change_pct": -1.51
+      "price": 15591.13,
+      "prev_close": 15340.36,
+      "change_pct": 1.63
     },
     "399006": {
       "name": "创业板指",
       "code": "399006",
-      "price": 3950.94,
-      "prev_close": 4037.95,
-      "change_pct": -2.15
+      "price": 4055.87,
+      "prev_close": 3950.94,
+      "change_pct": 2.66
     },
     "000688": {
       "name": "科创50",
       "code": "000688",
-      "price": 1663.69,
-      "prev_close": 1751.32,
-      "change_pct": -5.0
+      "price": 1690.56,
+      "prev_close": 1663.69,
+      "change_pct": 1.62
     },
     "000300": {
       "name": "沪深300",
       "code": "000300",
-      "price": 4844.26,
-      "prev_close": 4892.12,
-      "change_pct": -0.98
+      "price": 4914.56,
+      "prev_close": 4844.26,
+      "change_pct": 1.45
     }
   },
   "us_impact": {
@@ -80,24 +80,23 @@
   },
   "top_buys": [
     {
-      "code": "000722",
-      "name": "湖南发展",
-      "score": 95,
-      "price": 15.38,
-      "change_pct": 4.06,
-      "buy_point": 14.28,
+      "code": "603386",
+      "name": "骏亚科技",
+      "score": 100,
+      "price": 16.87,
+      "change_pct": 1.08,
+      "buy_point": 16.2,
       "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 13.57,
-      "target_price": 16.33,
+      "stop_loss": 15.39,
+      "target_price": 18.03,
       "signals": [
         "温和上涨",
-        "收在高位",
         "大振幅",
         "放量",
+        "均线多头排列",
         "MA金叉",
         "MACD金叉",
-        "红柱放大",
-        "RSI偏高"
+        "红柱放大"
       ],
       "next_day_estimate": {
         "estimate": 3.0,
@@ -107,23 +106,22 @@
           "MACD多头"
         ]
       },
-      "entry_score": 17,
-      "reason": "技术面极强，放量、MA金叉、MACD金叉，资金活跃"
+      "entry_score": 19,
+      "reason": "技术面极强，放量、均线多头排列、MA金叉"
     },
     {
-      "code": "002951",
-      "name": "金时科技",
-      "score": 93,
-      "price": 17.91,
-      "change_pct": 1.53,
-      "buy_point": 17.12,
+      "code": "601677",
+      "name": "明泰铝业",
+      "score": 89,
+      "price": 19.34,
+      "change_pct": 1.42,
+      "buy_point": 19.09,
       "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 16.26,
-      "target_price": 19.26,
+      "stop_loss": 18.13,
+      "target_price": 20.31,
       "signals": [
         "温和上涨",
-        "收在高位",
-        "大振幅",
+        "低PE",
         "放量",
         "均线多头排列",
         "红柱放大"
@@ -136,37 +134,35 @@
           "MACD多头"
         ]
       },
-      "entry_score": 18,
-      "reason": "技术面强势，放量、均线多头排列、红柱放大，RSI健康多头"
+      "entry_score": 20,
+      "reason": "技术面强势，放量、均线多头排列、红柱放大，RSI健康多头，资金活跃"
     },
     {
-      "code": "000809",
-      "name": "和展能源",
-      "score": 93,
-      "price": 4.26,
-      "change_pct": 1.91,
-      "buy_point": 4.17,
+      "code": "002106",
+      "name": "莱宝高科",
+      "score": 79,
+      "price": 12.2,
+      "change_pct": 2.52,
+      "buy_point": 12.08,
       "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 3.97,
-      "target_price": 4.84,
+      "stop_loss": 11.48,
+      "target_price": 13.04,
       "signals": [
         "温和上涨",
-        "收在高位",
         "放量",
-        "均线多头排列",
-        "红柱放大"
+        "均线多头排列"
       ],
       "next_day_estimate": {
-        "estimate": 2.0,
+        "estimate": 1.5,
         "factors": [
-          "技术面偏强",
+          "连续上涨",
           "MACD多头"
         ]
       },
-      "entry_score": 22,
-      "reason": "技术面强势，放量、均线多头排列、红柱放大，高盈亏比"
+      "entry_score": 29,
+      "reason": "放量、均线多头排列，RSI健康多头"
     }
   ],
   "yesterday_sentiment": "中性",
-  "yesterday_score": 54.3
+  "yesterday_score": 45.9
 }

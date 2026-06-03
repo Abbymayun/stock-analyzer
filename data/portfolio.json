@@ -1,41 +1,14 @@
 {
-  "cash": 22556.82,
+  "cash": 50503.37,
   "initial_capital": 200000,
   "holdings": {
-    "605258": {
-      "name": "协和电子",
-      "code": "605258",
-      "qty": 300,
-      "avg_cost": 36.727,
-      "buy_date": "2026-06-01",
-      "buy_score": 100,
-      "signals": []
-    },
     "603050": {
       "name": "科林电气",
       "code": "603050",
-      "qty": 2000,
-      "avg_cost": 24.31,
+      "qty": 3300,
+      "avg_cost": 22.569,
       "buy_date": "2026-06-01",
       "buy_score": 100,
-      "signals": []
-    },
-    "000899": {
-      "name": "赣能股份",
-      "code": "000899",
-      "qty": 1400,
-      "avg_cost": 14.169,
-      "buy_date": "2026-06-01",
-      "buy_score": 100,
-      "signals": []
-    },
-    "002171": {
-      "name": "楚江新材",
-      "code": "002171",
-      "qty": 800,
-      "avg_cost": 12.4,
-      "buy_date": "2026-06-01",
-      "buy_score": 0,
       "signals": []
     },
     "002273": {
@@ -43,15 +16,6 @@
       "code": "002273",
       "qty": 800,
       "avg_cost": 38.69,
-      "buy_date": "2026-06-01",
-      "buy_score": 0,
-      "signals": []
-    },
-    "002380": {
-      "name": "科远智慧",
-      "code": "002380",
-      "qty": 600,
-      "avg_cost": 42.92,
       "buy_date": "2026-06-01",
       "buy_score": 0,
       "signals": []
@@ -65,15 +29,6 @@
       "buy_score": 0,
       "signals": []
     },
-    "600780": {
-      "name": "通宝能源",
-      "code": "600780",
-      "qty": 1400,
-      "avg_cost": 7.43,
-      "buy_date": "2026-06-01",
-      "buy_score": 0,
-      "signals": []
-    },
     "600992": {
       "name": "贵绳股份",
       "code": "600992",
@@ -82,16 +37,25 @@
       "buy_date": "2026-06-01",
       "buy_score": 0,
       "signals": []
+    },
+    "603386": {
+      "name": "骏亚科技",
+      "code": "603386",
+      "qty": 1200,
+      "avg_cost": 16.884,
+      "buy_date": "2026-06-03",
+      "buy_score": 100,
+      "signals": []
     }
   },
-  "total_assets": 202233.52,
-  "total_return": 1.12,
+  "total_assets": 199369.87,
+  "total_return": -0.32,
   "trading_stats": {
-    "total_trades": 21,
-    "win_trades": 3,
-    "lose_trades": 0,
-    "total_pnl": 2329.8,
-    "total_commission": 111.98,
+    "total_trades": 33,
+    "win_trades": 7,
+    "lose_trades": 4,
+    "total_pnl": -506.45,
+    "total_commission": 181.63,
     "max_drawdown": 0
   }
 }
