@@ -1,5 +1,5 @@
 {
-  "update_time": "2026-06-03 08:31:02",
+  "update_time": "2026-06-04 13:12:15",
   "us_indices": {},
   "bond_yield": {},
   "commodities": {},
@@ -9,37 +9,37 @@
     "000001": {
       "name": "上证指数",
       "code": "000001",
-      "price": 4075.1,
-      "prev_close": 4057.74,
-      "change_pct": 0.43
+      "price": 4063.03,
+      "prev_close": 4083.97,
+      "change_pct": -0.51
     },
     "399001": {
       "name": "深证成指",
       "code": "399001",
-      "price": 15591.13,
-      "prev_close": 15340.36,
-      "change_pct": 1.63
+      "price": 15633.37,
+      "prev_close": 15704.71,
+      "change_pct": -0.45
     },
     "399006": {
       "name": "创业板指",
       "code": "399006",
-      "price": 4055.87,
-      "prev_close": 3950.94,
-      "change_pct": 2.66
+      "price": 4075.29,
+      "prev_close": 4122.99,
+      "change_pct": -1.16
     },
     "000688": {
       "name": "科创50",
       "code": "000688",
-      "price": 1690.56,
-      "prev_close": 1663.69,
-      "change_pct": 1.62
+      "price": 1745.48,
+      "prev_close": 1726.18,
+      "change_pct": 1.12
     },
     "000300": {
       "name": "沪深300",
       "code": "000300",
-      "price": 4914.56,
-      "prev_close": 4844.26,
-      "change_pct": 1.45
+      "price": 4906.44,
+      "prev_close": 4938.81,
+      "change_pct": -0.66
     }
   },
   "us_impact": {
@@ -80,20 +80,49 @@
   },
   "top_buys": [
     {
-      "code": "603386",
-      "name": "骏亚科技",
+      "code": "002068",
+      "name": "黑猫股份",
       "score": 100,
-      "price": 16.87,
-      "change_pct": 1.08,
-      "buy_point": 16.2,
+      "price": 10.55,
+      "change_pct": 0.57,
+      "buy_point": 10.16,
       "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 15.39,
-      "target_price": 18.03,
+      "stop_loss": 9.65,
+      "target_price": 11.18,
       "signals": [
-        "温和上涨",
+        "横盘整理",
         "大振幅",
         "放量",
         "均线多头排列",
+        "MA金叉",
+        "MACD金叉",
+        "红柱放大"
+      ],
+      "next_day_estimate": {
+        "estimate": 1.5,
+        "factors": [
+          "连续上涨",
+          "MACD多头"
+        ]
+      },
+      "entry_score": 31.0,
+      "reason": "趋势启动信号（均线多头+金叉+放量）"
+    },
+    {
+      "code": "600821",
+      "name": "金开新能",
+      "score": 91,
+      "price": 8.63,
+      "change_pct": 4.61,
+      "buy_point": 8.23,
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
+      "stop_loss": 7.82,
+      "target_price": 10.18,
+      "signals": [
+        "温和上涨",
+        "高换手",
+        "大振幅",
+        "放量",
         "MA金叉",
         "MACD金叉",
         "红柱放大"
@@ -106,22 +135,22 @@
           "MACD多头"
         ]
       },
-      "entry_score": 19,
-      "reason": "技术面极强，放量、均线多头排列、MA金叉"
+      "entry_score": 0,
+      "reason": "金叉信号，短期看涨，资金活跃度高，⚠RSI偏高，注意追高风险，高胜率策略: s02_volume_breakout(胜率60%)、s15_high_turnover_start(胜率77%)"
     },
     {
-      "code": "601677",
-      "name": "明泰铝业",
-      "score": 89,
-      "price": 19.34,
-      "change_pct": 1.42,
-      "buy_point": 19.09,
+      "code": "600578",
+      "name": "京能电力",
+      "score": 90,
+      "price": 9.76,
+      "change_pct": 4.5,
+      "buy_point": 9.08,
       "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 18.13,
-      "target_price": 20.31,
+      "stop_loss": 8.62,
+      "target_price": 10.25,
       "signals": [
         "温和上涨",
-        "低PE",
+        "大振幅",
         "放量",
         "均线多头排列",
         "红柱放大"
@@ -134,35 +163,10 @@
           "MACD多头"
         ]
       },
-      "entry_score": 20,
-      "reason": "技术面强势，放量、均线多头排列、红柱放大，RSI健康多头，资金活跃"
-    },
-    {
-      "code": "002106",
-      "name": "莱宝高科",
-      "score": 79,
-      "price": 12.2,
-      "change_pct": 2.52,
-      "buy_point": 12.08,
-      "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 11.48,
-      "target_price": 13.04,
-      "signals": [
-        "温和上涨",
-        "放量",
-        "均线多头排列"
-      ],
-      "next_day_estimate": {
-        "estimate": 1.5,
-        "factors": [
-          "连续上涨",
-          "MACD多头"
-        ]
-      },
-      "entry_score": 29,
-      "reason": "放量、均线多头排列，RSI健康多头"
+      "entry_score": 0,
+      "reason": "均线多头排列，趋势确立，资金活跃度高，⚠RSI偏高，注意追高风险"
     }
   ],
   "yesterday_sentiment": "中性",
-  "yesterday_score": 45.9
+  "yesterday_score": 47.8
 }

@@ -405,7 +405,69 @@
       "pnl_pct": 1.62,
       "reason": "手动卖出",
       "timestamp": "2026-06-03 13:25:57"
+    },
+    {
+      "id": 34,
+      "type": "buy",
+      "code": "002241",
+      "name": "歌尔股份",
+      "price": 26.883,
+      "qty": 400,
+      "amount": 10753.2,
+      "commission": 5,
+      "reason": "推荐买入",
+      "timestamp": "2026-06-04 09:38:59"
+    },
+    {
+      "id": 35,
+      "type": "buy",
+      "code": "002241",
+      "name": "歌尔股份",
+      "price": 25.91,
+      "qty": 400,
+      "amount": 10364.0,
+      "commission": 5,
+      "reason": "推荐买入",
+      "timestamp": "2026-06-04 09:41:28"
+    },
+    {
+      "id": 36,
+      "type": "sell",
+      "code": "603050",
+      "name": "科林电气",
+      "price": 22.32,
+      "qty": 1100,
+      "amount": 24552.0,
+      "commission": 7.37,
+      "pnl": -281.27,
+      "pnl_pct": -1.1,
+      "reason": "手动卖出",
+      "timestamp": "2026-06-04 09:48:27"
+    },
+    {
+      "id": 37,
+      "type": "buy",
+      "code": "603050",
+      "name": "科林电气",
+      "price": 20.72,
+      "qty": 1100,
+      "amount": 22792.0,
+      "commission": 6.84,
+      "reason": "推荐买入",
+      "timestamp": "2026-06-04 10:41:56"
+    },
+    {
+      "id": 38,
+      "type": "buy",
+      "code": "600679",
+      "name": "上海凤凰",
+      "price": 10.91,
+      "qty": 1000,
+      "amount": 10910.0,
+      "commission": 5,
+      "reason": "推荐买入",
+      "timestamp": "2026-06-04 13:58:27"
     }
   ],
-  "next_id": 34
+  "next_id": 39
 }

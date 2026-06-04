@@ -1,12 +1,12 @@
 {
-  "cash": 50503.37,
+  "cash": 20206.96,
   "initial_capital": 200000,
   "holdings": {
     "603050": {
       "name": "科林电气",
       "code": "603050",
       "qty": 3300,
-      "avg_cost": 22.569,
+      "avg_cost": 21.953,
       "buy_date": "2026-06-01",
       "buy_score": 100,
       "signals": []
@@ -46,16 +46,34 @@
       "buy_date": "2026-06-03",
       "buy_score": 100,
       "signals": []
+    },
+    "002241": {
+      "name": "歌尔股份",
+      "code": "002241",
+      "qty": 800,
+      "avg_cost": 26.396,
+      "buy_date": "2026-06-04",
+      "buy_score": 93,
+      "signals": []
+    },
+    "600679": {
+      "name": "上海凤凰",
+      "code": "600679",
+      "qty": 1000,
+      "avg_cost": 10.91,
+      "buy_date": "2026-06-04",
+      "buy_score": 79,
+      "signals": []
     }
   },
-  "total_assets": 199369.87,
-  "total_return": -0.32,
+  "total_assets": 199067.46,
+  "total_return": -0.47,
   "trading_stats": {
-    "total_trades": 33,
+    "total_trades": 38,
     "win_trades": 7,
-    "lose_trades": 4,
-    "total_pnl": -506.45,
-    "total_commission": 181.63,
+    "lose_trades": 5,
+    "total_pnl": -787.72,
+    "total_commission": 210.84,
     "max_drawdown": 0
   }
 }
