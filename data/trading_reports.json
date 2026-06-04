@@ -1,6 +1,202 @@
 {
   "daily": [
     {
+      "date": "2026-06-04",
+      "created_at": "15:00",
+      "total_assets": 208705.96,
+      "cash": 8329.96,
+      "market_value": 200376.0,
+      "initial_capital": 200000,
+      "total_return": 4.35,
+      "total_pnl": 9643.5,
+      "buy_count": 5,
+      "sell_count": 1,
+      "hold_count": 8,
+      "buys": [
+        {
+          "name": "歌尔股份",
+          "code": "002241",
+          "qty": 800,
+          "cost": 0,
+          "total_cost": 21117.199999999997,
+          "trades": [
+            {
+              "price": 26.883,
+              "qty": 400
+            },
+            {
+              "price": 25.91,
+              "qty": 400
+            }
+          ],
+          "avg_cost": 26.396499999999996,
+          "current_price": 24.94,
+          "pnl": -1165.1999999999957,
+          "pnl_pct": -5.517776978008429
+        },
+        {
+          "name": "科林电气",
+          "code": "603050",
+          "qty": 1100,
+          "cost": 0,
+          "total_cost": 22792.0,
+          "trades": [
+            {
+              "price": 20.72,
+              "qty": 1100
+            }
+          ],
+          "avg_cost": 20.72,
+          "current_price": 20.53,
+          "pnl": -208.9999999999975,
+          "pnl_pct": -0.9169884169884062
+        },
+        {
+          "name": "上海凤凰",
+          "code": "600679",
+          "qty": 1000,
+          "cost": 0,
+          "total_cost": 10910.0,
+          "trades": [
+            {
+              "price": 10.91,
+              "qty": 1000
+            }
+          ],
+          "avg_cost": 10.91,
+          "current_price": 10.83,
+          "pnl": -80.00000000000007,
+          "pnl_pct": -0.7332722273143911
+        },
+        {
+          "name": "黑猫股份",
+          "code": "002068",
+          "qty": 2800,
+          "cost": 0,
+          "total_cost": 11872.0,
+          "trades": [
+            {
+              "price": 4.24,
+              "qty": 2800
+            }
+          ],
+          "avg_cost": 4.24,
+          "current_price": 10.65,
+          "pnl": 17948.0,
+          "pnl_pct": 151.17924528301887
+        }
+      ],
+      "sells": [
+        {
+          "name": "科林电气",
+          "code": "603050",
+          "qty": 1100,
+          "price": 22.32,
+          "pnl": -281.27,
+          "pnl_pct": -1.1
+        }
+      ],
+      "sell_total_pnl": -281.27,
+      "holdings": [
+        {
+          "code": "002068",
+          "name": "黑猫股份",
+          "qty": 2800,
+          "cost": 4.24,
+          "price": 10.65,
+          "high": 10.96,
+          "low": 10.4,
+          "change_pct": 1.53,
+          "pnl": 17948.0,
+          "pnl_pct": 151.18
+        },
+        {
+          "code": "603386",
+          "name": "骏亚科技",
+          "qty": 1200,
+          "cost": 16.884,
+          "price": 17.24,
+          "high": 17.35,
+          "low": 16.76,
+          "change_pct": 1.17,
+          "pnl": 427.2,
+          "pnl_pct": 2.11
+        },
+        {
+          "code": "600679",
+          "name": "上海凤凰",
+          "qty": 1000,
+          "cost": 10.91,
+          "price": 10.83,
+          "high": 11.48,
+          "low": 10.65,
+          "change_pct": 0.93,
+          "pnl": -80.0,
+          "pnl_pct": -0.73
+        },
+        {
+          "code": "600992",
+          "name": "贵绳股份",
+          "qty": 800,
+          "cost": 12.86,
+          "price": 12.23,
+          "high": 12.36,
+          "low": 11.68,
+          "change_pct": 0.99,
+          "pnl": -504.0,
+          "pnl_pct": -4.9
+        },
+        {
+          "code": "002870",
+          "name": "香山股份",
+          "qty": 300,
+          "cost": 42.96,
+          "price": 39.39,
+          "high": 39.7,
+          "low": 38.02,
+          "change_pct": -0.68,
+          "pnl": -1071.0,
+          "pnl_pct": -8.31
+        },
+        {
+          "code": "002241",
+          "name": "歌尔股份",
+          "qty": 800,
+          "cost": 26.396,
+          "price": 24.94,
+          "high": 26.42,
+          "low": 24.9,
+          "change_pct": -6.98,
+          "pnl": -1164.8,
+          "pnl_pct": -5.52
+        },
+        {
+          "code": "002273",
+          "name": "水晶光电",
+          "qty": 800,
+          "cost": 38.69,
+          "price": 37.17,
+          "high": 37.59,
+          "low": 35.7,
+          "change_pct": 0.87,
+          "pnl": -1216.0,
+          "pnl_pct": -3.93
+        },
+        {
+          "code": "603050",
+          "name": "科林电气",
+          "qty": 3300,
+          "cost": 21.953,
+          "price": 20.53,
+          "high": 22.37,
+          "low": 20.33,
+          "change_pct": -2.7,
+          "pnl": -4695.9,
+          "pnl_pct": -6.48
+        }
+      ]
+    },
+    {
       "date": "2026-06-03",
       "created_at": "15:00",
       "total_assets": 191951.37,

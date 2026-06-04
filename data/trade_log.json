@@ -467,7 +467,19 @@
       "commission": 5,
       "reason": "推荐买入",
       "timestamp": "2026-06-04 13:58:27"
+    },
+    {
+      "id": 39,
+      "type": "buy",
+      "code": "002068",
+      "name": "黑猫股份",
+      "price": 4.24,
+      "qty": 2800,
+      "amount": 11872.0,
+      "commission": 5,
+      "reason": "推荐买入",
+      "timestamp": "2026-06-04 14:23:39"
     }
   ],
-  "next_id": 39
+  "next_id": 40
 }

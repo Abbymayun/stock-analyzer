@@ -52,8 +52,19 @@
         "boll_middle": 14.86,
         "boll_lower": 14.01,
         "snapshot_price": 15.79,
-        "latest_price": 15.75,
-        "latest_change_pct": 1.88
+        "latest_price": 15.82,
+        "latest_change_pct": 0.44,
+        "next_day_actual": {
+          "actual_pct": 0.19,
+          "actual_close": 15.82,
+          "next_date": "2026-06-04",
+          "vs_estimate": -2.01
+        },
+        "prediction_result": {
+          "label": "低于预期",
+          "icon": "↓",
+          "hit_dir": true
+        }
       },
       {
         "code": "002241",
@@ -100,8 +111,19 @@
         "boll_middle": 25.98,
         "boll_lower": 23.88,
         "snapshot_price": 27.49,
-        "latest_price": 26.81,
-        "latest_change_pct": 0.41
+        "latest_price": 24.94,
+        "latest_change_pct": -6.98,
+        "next_day_actual": {
+          "actual_pct": -9.28,
+          "actual_close": 24.94,
+          "next_date": "2026-06-04",
+          "vs_estimate": -12.28
+        },
+        "prediction_result": {
+          "label": "远低预期-12.3%",
+          "icon": "✗",
+          "hit_dir": false
+        }
       },
       {
         "code": "002815",
@@ -149,8 +171,19 @@
         "boll_middle": 16.15,
         "boll_lower": 14.82,
         "snapshot_price": 17.3,
-        "latest_price": 16.99,
-        "latest_change_pct": 3.03
+        "latest_price": 17.81,
+        "latest_change_pct": 4.83,
+        "next_day_actual": {
+          "actual_pct": 2.95,
+          "actual_close": 17.81,
+          "next_date": "2026-06-04",
+          "vs_estimate": 0.95
+        },
+        "prediction_result": {
+          "label": "超预期",
+          "icon": "✓",
+          "hit_dir": true
+        }
       },
       {
         "code": "605177",
@@ -197,8 +230,19 @@
         "boll_middle": 22.03,
         "boll_lower": 20.36,
         "snapshot_price": 23.26,
-        "latest_price": 23.38,
-        "latest_change_pct": 3.45
+        "latest_price": 23.47,
+        "latest_change_pct": 0.38,
+        "next_day_actual": {
+          "actual_pct": 0.9,
+          "actual_close": 23.47,
+          "next_date": "2026-06-04",
+          "vs_estimate": -1.1
+        },
+        "prediction_result": {
+          "label": "低于预期",
+          "icon": "↓",
+          "hit_dir": true
+        }
       },
       {
         "code": "002072",
@@ -245,8 +289,19 @@
         "boll_middle": 7.53,
         "boll_lower": 6.6,
         "snapshot_price": 8.21,
-        "latest_price": 8.17,
-        "latest_change_pct": 2.13
+        "latest_price": 8.99,
+        "latest_change_pct": 10.04,
+        "next_day_actual": {
+          "actual_pct": 9.5,
+          "actual_close": 8.99,
+          "next_date": "2026-06-04",
+          "vs_estimate": 6.5
+        },
+        "prediction_result": {
+          "label": "超预期+6.5%",
+          "icon": "🔥",
+          "hit_dir": true
+        }
       }
     ],
     "buy": [
@@ -296,8 +351,19 @@
         "boll_middle": 38.37,
         "boll_lower": 35.39,
         "snapshot_price": 40.53,
-        "latest_price": 40.05,
-        "latest_change_pct": 0.96
+        "latest_price": 38.48,
+        "latest_change_pct": -2.71,
+        "next_day_actual": {
+          "actual_pct": -5.06,
+          "actual_close": 38.48,
+          "next_date": "2026-06-04",
+          "vs_estimate": -8.06
+        },
+        "prediction_result": {
+          "label": "远低预期-8.1%",
+          "icon": "✗",
+          "hit_dir": false
+        }
       },
       {
         "code": "000510",
@@ -344,8 +410,19 @@
         "boll_middle": 16.3,
         "boll_lower": 12.5,
         "snapshot_price": 19.63,
-        "latest_price": 19.18,
-        "latest_change_pct": -2.04
+        "latest_price": 19.23,
+        "latest_change_pct": 0.26,
+        "next_day_actual": {
+          "actual_pct": -2.04,
+          "actual_close": 19.23,
+          "next_date": "2026-06-04",
+          "vs_estimate": -3.54
+        },
+        "prediction_result": {
+          "label": "远低预期-3.5%",
+          "icon": "✗",
+          "hit_dir": false
+        }
       },
       {
         "code": "000727",
@@ -389,8 +466,19 @@
         "boll_middle": 2.89,
         "boll_lower": 2.74,
         "snapshot_price": 2.97,
-        "latest_price": 2.92,
-        "latest_change_pct": -2.01
+        "latest_price": 2.9,
+        "latest_change_pct": -0.68,
+        "next_day_actual": {
+          "actual_pct": -2.36,
+          "actual_close": 2.9,
+          "next_date": "2026-06-04",
+          "vs_estimate": -1.36
+        },
+        "prediction_result": {
+          "label": "低于预期",
+          "icon": "↓",
+          "hit_dir": true
+        }
       },
       {
         "code": "002636",
@@ -435,8 +523,19 @@
         "boll_middle": 47.39,
         "boll_lower": 41.0,
         "snapshot_price": 51.33,
-        "latest_price": 51.73,
-        "latest_change_pct": 2.17
+        "latest_price": 54.0,
+        "latest_change_pct": 4.39,
+        "next_day_actual": {
+          "actual_pct": 5.2,
+          "actual_close": 54.0,
+          "next_date": "2026-06-04",
+          "vs_estimate": 2.2
+        },
+        "prediction_result": {
+          "label": "超预期+2.2%",
+          "icon": "🔥",
+          "hit_dir": true
+        }
       },
       {
         "code": "600545",
@@ -480,8 +579,19 @@
         "boll_middle": 6.54,
         "boll_lower": 5.01,
         "snapshot_price": 7.38,
-        "latest_price": 7.18,
-        "latest_change_pct": -1.37
+        "latest_price": 7.13,
+        "latest_change_pct": -0.7,
+        "next_day_actual": {
+          "actual_pct": -3.39,
+          "actual_close": 7.13,
+          "next_date": "2026-06-04",
+          "vs_estimate": -5.39
+        },
+        "prediction_result": {
+          "label": "远低预期-5.4%",
+          "icon": "✗",
+          "hit_dir": false
+        }
       },
       {
         "code": "000636",
@@ -531,8 +641,19 @@
         "boll_middle": 38.3,
         "boll_lower": 15.55,
         "snapshot_price": 60.72,
-        "latest_price": 60.54,
-        "latest_change_pct": 1.05
+        "latest_price": 63.5,
+        "latest_change_pct": 4.89,
+        "next_day_actual": {
+          "actual_pct": 4.58,
+          "actual_close": 63.5,
+          "next_date": "2026-06-04",
+          "vs_estimate": 4.58
+        },
+        "prediction_result": {
+          "label": "超预期+4.6%",
+          "icon": "🔥",
+          "hit_dir": false
+        }
       },
       {
         "code": "600184",
@@ -576,8 +697,19 @@
         "boll_middle": 26.87,
         "boll_lower": 24.07,
         "snapshot_price": 27.33,
-        "latest_price": 26.66,
-        "latest_change_pct": -0.04
+        "latest_price": 27.15,
+        "latest_change_pct": 1.84,
+        "next_day_actual": {
+          "actual_pct": -0.66,
+          "actual_close": 27.15,
+          "next_date": "2026-06-04",
+          "vs_estimate": -1.16
+        },
+        "prediction_result": {
+          "label": "低于预期",
+          "icon": "↓",
+          "hit_dir": false
+        }
       },
       {
         "code": "603399",
@@ -623,8 +755,19 @@
         "boll_middle": 19.62,
         "boll_lower": 14.39,
         "snapshot_price": 17.03,
-        "latest_price": 16.8,
-        "latest_change_pct": -1.41
+        "latest_price": 16.33,
+        "latest_change_pct": -2.8,
+        "next_day_actual": {
+          "actual_pct": -4.11,
+          "actual_close": 16.33,
+          "next_date": "2026-06-04",
+          "vs_estimate": -2.11
+        },
+        "prediction_result": {
+          "label": "低于预期",
+          "icon": "↓",
+          "hit_dir": true
+        }
       },
       {
         "code": "605186",
@@ -672,8 +815,19 @@
         "boll_middle": 25.07,
         "boll_lower": 20.86,
         "snapshot_price": 28.01,
-        "latest_price": 27.89,
-        "latest_change_pct": 2.42
+        "latest_price": 28.28,
+        "latest_change_pct": 1.4,
+        "next_day_actual": {
+          "actual_pct": 0.96,
+          "actual_close": 28.28,
+          "next_date": "2026-06-04",
+          "vs_estimate": 1.96
+        },
+        "prediction_result": {
+          "label": "超预期",
+          "icon": "✓",
+          "hit_dir": false
+        }
       },
       {
         "code": "601688",
@@ -718,8 +872,19 @@
         "boll_middle": 18.75,
         "boll_lower": 17.84,
         "snapshot_price": 18.89,
-        "latest_price": 19.12,
-        "latest_change_pct": 2.74
+        "latest_price": 19.11,
+        "latest_change_pct": -0.05,
+        "next_day_actual": {
+          "actual_pct": 1.16,
+          "actual_close": 19.11,
+          "next_date": "2026-06-04",
+          "vs_estimate": -0.34
+        },
+        "prediction_result": {
+          "label": "精准命中",
+          "icon": "✓",
+          "hit_dir": true
+        }
       }
     ],
     "watch": [],

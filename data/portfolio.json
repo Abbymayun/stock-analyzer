@@ -1,5 +1,5 @@
 {
-  "cash": 20206.96,
+  "cash": 8329.96,
   "initial_capital": 200000,
   "holdings": {
     "603050": {
@@ -64,16 +64,25 @@
       "buy_date": "2026-06-04",
       "buy_score": 79,
       "signals": []
+    },
+    "002068": {
+      "name": "黑猫股份",
+      "code": "002068",
+      "qty": 2800,
+      "avg_cost": 4.24,
+      "buy_date": "2026-06-04",
+      "buy_score": 100,
+      "signals": []
     }
   },
-  "total_assets": 199067.46,
+  "total_assets": 199062.46,
   "total_return": -0.47,
   "trading_stats": {
-    "total_trades": 38,
+    "total_trades": 39,
     "win_trades": 7,
     "lose_trades": 5,
     "total_pnl": -787.72,
-    "total_commission": 210.84,
+    "total_commission": 215.84,
     "max_drawdown": 0
   }
 }
