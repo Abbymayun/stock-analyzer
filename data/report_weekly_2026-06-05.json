@@ -1,0 +1,32 @@
+{
+  "date": "2026-06-05",
+  "created_at": "15:00",
+  "type": "weekly",
+  "week": "2026-06-01 ~ 2026-06-05",
+  "trading_days": 4,
+  "total_pnl": -10543.5,
+  "total_buys": 26,
+  "total_sells": 12,
+  "daily_summary": [
+    {
+      "date": "2026-06-04",
+      "pnl": 9643.5,
+      "return": 4.35
+    },
+    {
+      "date": "2026-06-03",
+      "pnl": -7418.5,
+      "return": -4.02
+    },
+    {
+      "date": "2026-06-02",
+      "pnl": -7836.7,
+      "return": -2.8
+    },
+    {
+      "date": "2026-06-01",
+      "pnl": -4931.8,
+      "return": -2.28
+    }
+  ]
+}
