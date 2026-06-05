@@ -469,17 +469,45 @@
       "timestamp": "2026-06-04 13:58:27"
     },
     {
-      "id": 39,
+      "id": 40,
+      "type": "sell",
+      "code": "603386",
+      "name": "骏亚科技",
+      "price": 17.88,
+      "qty": 1200,
+      "amount": 21456.0,
+      "commission": 6.44,
+      "pnl": 1188.76,
+      "pnl_pct": 5.9,
+      "reason": "手动卖出",
+      "timestamp": "2026-06-05 09:38:51"
+    },
+    {
+      "id": 41,
+      "type": "sell",
+      "code": "002241",
+      "name": "歌尔股份",
+      "price": 25.4,
+      "qty": 800,
+      "amount": 20320.0,
+      "commission": 6.1,
+      "pnl": -802.9,
+      "pnl_pct": -3.77,
+      "reason": "手动卖出",
+      "timestamp": "2026-06-05 11:12:47"
+    },
+    {
+      "id": 42,
       "type": "buy",
-      "code": "002068",
-      "name": "黑猫股份",
-      "price": 4.24,
+      "code": "601015",
+      "name": "陕西黑猫",
+      "price": 4.242,
       "qty": 2800,
-      "amount": 11872.0,
+      "amount": 11877.6,
       "commission": 5,
       "reason": "推荐买入",
-      "timestamp": "2026-06-04 14:23:39"
+      "timestamp": "2026-06-05 11:19:37"
     }
   ],
-  "next_id": 40
+  "next_id": 43
 }

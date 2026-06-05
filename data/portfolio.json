@@ -1,5 +1,5 @@
 {
-  "cash": 8329.96,
+  "cash": 50082.82,
   "initial_capital": 200000,
   "holdings": {
     "603050": {
@@ -38,24 +38,6 @@
       "buy_score": 0,
       "signals": []
     },
-    "603386": {
-      "name": "骏亚科技",
-      "code": "603386",
-      "qty": 1200,
-      "avg_cost": 16.884,
-      "buy_date": "2026-06-03",
-      "buy_score": 100,
-      "signals": []
-    },
-    "002241": {
-      "name": "歌尔股份",
-      "code": "002241",
-      "qty": 800,
-      "avg_cost": 26.396,
-      "buy_date": "2026-06-04",
-      "buy_score": 93,
-      "signals": []
-    },
     "600679": {
       "name": "上海凤凰",
       "code": "600679",
@@ -65,24 +47,24 @@
       "buy_score": 79,
       "signals": []
     },
-    "002068": {
-      "name": "黑猫股份",
-      "code": "002068",
+    "601015": {
+      "name": "陕西黑猫",
+      "code": "601015",
       "qty": 2800,
-      "avg_cost": 4.24,
-      "buy_date": "2026-06-04",
-      "buy_score": 100,
+      "avg_cost": 4.242,
+      "buy_date": "2026-06-05",
+      "buy_score": 0,
       "signals": []
     }
   },
-  "total_assets": 199062.46,
-  "total_return": -0.47,
+  "total_assets": 199443.32,
+  "total_return": -0.28,
   "trading_stats": {
-    "total_trades": 39,
-    "win_trades": 7,
-    "lose_trades": 5,
-    "total_pnl": -787.72,
-    "total_commission": 215.84,
+    "total_trades": 42,
+    "win_trades": 8,
+    "lose_trades": 6,
+    "total_pnl": -401.86,
+    "total_commission": 233.38,
     "max_drawdown": 0
   }
 }
