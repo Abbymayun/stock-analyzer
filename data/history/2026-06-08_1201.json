@@ -1,1 +1,3924 @@
-{"update_time": "2026-06-08 12:01:35", "market_analysis": "【A股大盘】\n\n全市场3079只股票：上涨375只（12.2%），下跌2511只（81.6%），平均涨幅-2.02%。涨停40只，跌停12只。\n两市总成交额约10356亿元。\n\n【美股隔夜行情】\n美股数据暂未获取（可能为非交易时段）\n\n【板块资金动向】\n高换手率（>10%）个股55只，市场活跃度一般。\n涨停40只中评分60+的有0只，涨停质量一般。\n\n【综合结论】市场情绪偏空，综合评分44.0分。赚钱效应很差。\n技术面偏弱，注意控制风险，以防守为主，等待企稳信号。", "next_day_advice": "【明日总体策略】市场情绪偏冷，以防守为主。\n保持低仓位（3-4成），优先考虑减仓或观望。\n\n========================================\n【重点推荐操作计划】\n========================================\n\n📌 1. 晶方科技（603005）评分88分 | 明日预估+1.5%\n   现价：45.87元  今日涨幅：+0.15%\n   建议买入区间：43.08 元\n   止损位：40.93 元\n   目标价位：49.47 元\n   买入时间：开盘30分钟内 (9:30-10:00)\n   关键信号：均线多头排列、MA金叉、红柱放大\n   👉 操作计划：\n      建议低吸为主，若回调至43.08附近企稳可分批建仓。\n      目标49.47元，止损40.93元。\n\n📌 2. 永太科技（002326）评分86分 | 明日预估+2.0%\n   现价：22.80元  今日涨幅：+4.11%\n   建议买入区间：21.90 元\n   止损位：20.81 元\n   目标价位：25.34 元\n   买入时间：开盘30分钟内 (9:30-10:00)\n   关键信号：MA金叉、MACD金叉、红柱放大\n   👉 操作计划：\n      开盘观察竞价量能，若高开1-2%且量能放大，可在21.9附近介入。\n      目标25.34元（约11.1%空间），止损20.81元。\n\n📌 3. 展鹏科技（603488）评分86分 | 明日预估+3.0%\n   现价：12.24元  今日涨幅：+1.24%\n   建议买入区间：11.79 元\n   止损位：11.20 元\n   目标价位：12.85 元\n   买入时间：开盘30分钟内 (9:30-10:00)\n   关键信号：均线多头排列、红柱放大\n   👉 操作计划：\n      开盘观察竞价量能，若高开1-2%且量能放大，可在11.79附近介入。\n      目标12.85元（约5.0%空间），止损11.2元。\n\n========================================\n【备选买入标的】\n========================================\n   • 翔鹭钨业（002842）78分 | 预估+2.0% | 买入33.48元 | 目标42.21元 | 止损31.81元\n   • 冰山冷热（000530）78分 | 预估+1.5% | 买入6.32元 | 目标6.77元 | 止损6.0元\n   • 泛微网络（603039）77分 | 预估+3.0% | 买入40.15元 | 目标43.52元 | 止损38.14元\n\n【回调低吸策略】技术面超卖或触及支撑位的强势股，可在支撑位附近分批建仓\n\n【技术突破策略】MACD/MA出现金叉确认信号，趋势有望延续", "recommendations": {"strong_buy": [{"code": "603005", "name": "晶方科技", "score": 88, "price": 45.87, "prev_close": 45.8, "change_pct": 0.15, "buy_point": 43.08, "buy_time": "开盘30分钟内 (9:30-10:00)", "target_price": 49.47, "stop_loss": 40.93, "sell_time": "冲高回落时 (10:30-11:00 或 14:00-14:30)", "support": 31.58, "resistance": 48.5, "trend": "上升", "recommendation": "强烈买入", "next_day_estimate": {"estimate": 1.5, "factors": ["连续上涨", "MACD多头"]}, "signals": ["横盘整理", "高换手", "大振幅", "放量", "均线多头排列", "MA金叉", "红柱放大"], "analysis_text": "该股处于上升趋势，现价45.87元运行在MA5(43.08)上方。综合评分61分，操作建议：关注。参考买入区间 43.08 元，止损 40.93 元，目标 49.47 元。", "ma5": 43.08, "ma10": 42.79, "ma20": 39.03, "ma60": 32.57, "rsi6": 69.7, "rsi12": 67.4, "kdj_k": 58.7, "kdj_j": 70.4, "macd_dif": 3.2512, "boll_upper": 48.83, "boll_middle": 39.03, "boll_lower": 29.24, "snapshot_price": 45.87}, {"code": "002326", "name": "永太科技", "score": 86, "price": 22.8, "prev_close": 21.9, "change_pct": 4.11, "buy_point": 21.9, "buy_time": "开盘30分钟内 (9:30-10:00)", "target_price": 25.34, "stop_loss": 20.81, "sell_time": "冲高回落时 (10:30-11:00 或 14:00-14:30)", "support": 20.59, "resistance": 24.84, "trend": "上升", "recommendation": "强烈买入", "next_day_estimate": {"estimate": 2.0, "factors": ["技术面偏强", "MACD多头"]}, "signals": ["温和上涨", "收在高位", "大振幅", "高PE", "放量", "MA金叉", "MACD金叉", "红柱放大"], "analysis_text": "该股处于上升趋势，现价22.80元运行在MA5(21.90)上方。综合评分67分，操作建议：买入。参考买入区间 21.9 元，止损 20.81 元，目标 25.34 元。", "ma5": 21.9, "ma10": 21.67, "ma20": 22.33, "ma60": 23.29, "rsi6": 62.5, "rsi12": 52.0, "kdj_k": 63.8, "kdj_j": 82.1, "macd_dif": -0.4989, "boll_upper": 24.09, "boll_middle": 22.33, "boll_lower": 20.57, "snapshot_price": 22.8}, {"code": "603488", "name": "展鹏科技", "score": 86, "price": 12.24, "prev_close": 12.09, "change_pct": 1.24, "buy_point": 11.79, "buy_time": "开盘30分钟内 (9:30-10:00)", "target_price": 12.85, "stop_loss": 11.2, "sell_time": "冲高回落时 (10:30-11:00 或 14:00-14:30)", "support": 10.6, "resistance": 12.6, "trend": "上升", "recommendation": "强烈买入", "next_day_estimate": {"estimate": 3.0, "factors": ["技术面偏强", "连续上涨", "MACD多头"]}, "signals": ["温和上涨", "大振幅", "放量", "均线多头排列", "红柱放大"], "analysis_text": "该股处于上升趋势，现价12.24元运行在MA5(11.79)上方。综合评分67分，操作建议：买入。参考买入区间 11.79 元，止损 11.2 元，目标 12.85 元。", "ma5": 11.79, "ma10": 11.61, "ma20": 11.57, "ma60": 11.03, "rsi6": 69.0, "rsi12": 59.9, "kdj_k": 60.3, "kdj_j": 74.1, "macd_dif": 0.1444, "boll_upper": 12.39, "boll_middle": 11.57, "boll_lower": 10.75, "snapshot_price": 12.24}, {"code": "000966", "name": "长源电力", "score": 83, "price": 5.49, "prev_close": 5.42, "change_pct": 1.29, "buy_point": 5.36, "buy_time": "开盘30分钟内 (9:30-10:00)", "target_price": 5.93, "stop_loss": 5.1, "sell_time": "冲高回落时 (10:30-11:00 或 14:00-14:30)", "support": 4.6, "resistance": 5.81, "trend": "上升", "recommendation": "强烈买入", "next_day_estimate": {"estimate": 1.5, "factors": ["连续上涨", "MACD多头"]}, "signals": ["温和上涨", "大振幅", "高PE", "放量", "均线多头排列", "红柱放大"], "analysis_text": "该股处于上升趋势，现价5.49元运行在MA5(5.36)上方。综合评分64分，操作建议：关注。参考买入区间 5.36 元，止损 5.1 元，目标 5.93 元。", "ma5": 5.36, "ma10": 5.32, "ma20": 5.12, "ma60": 4.86, "rsi6": 66.8, "rsi12": 64.0, "kdj_k": 53.0, "kdj_j": 57.0, "macd_dif": 0.1785, "boll_upper": 5.6, "boll_middle": 5.12, "boll_lower": 4.64, "snapshot_price": 5.49}, {"code": "601869", "name": "长飞光纤", "score": 83, "price": 446.84, "prev_close": 441.67, "change_pct": 1.17, "buy_point": 439.63, "buy_time": "开盘30分钟内 (9:30-10:00)", "target_price": 496.84, "stop_loss": 417.64, "sell_time": "冲高回落时 (10:30-11:00 或 14:00-14:30)", "support": 351.37, "resistance": 487.1, "trend": "上升", "recommendation": "强烈买入", "next_day_estimate": {"estimate": 0.5, "factors": ["MACD多头"]}, "signals": ["温和上涨", "大振幅", "高PE", "放量", "均线多头排列", "红柱放大"], "analysis_text": "该股处于上升趋势，现价446.84元运行在MA5(439.63)上方。综合评分64分，操作建议：关注。参考买入区间 439.63 元，止损 417.64 元，目标 496.84 元。", "ma5": 439.63, "ma10": 407.31, "ma20": 400.82, "ma60": 349.85, "rsi6": 66.9, "rsi12": 63.1, "kdj_k": 56.8, "kdj_j": 65.8, "macd_dif": 18.7998, "boll_upper": 455.68, "boll_middle": 400.82, "boll_lower": 345.97, "snapshot_price": 446.84}], "buy": [{"code": "002842", "name": "翔鹭钨业", "score": 78, "price": 33.52, "prev_close": 32.94, "change_pct": 1.76, "buy_point": 33.48, "buy_time": "开盘30分钟内 (9:30-10:00)", "target_price": 42.21, "stop_loss": 31.81, "sell_time": "冲高回落时 (10:30-11:00 或 14:00-14:30)", "support": 30.5, "resistance": 41.38, "trend": "上升", "recommendation": "买入", "next_day_estimate": {"estimate": 2.0, "factors": ["技术面偏强", "MACD多头"]}, "signals": ["温和上涨", "高换手", "大振幅", "放量", "MACD金叉", "红柱放大"], "analysis_text": "该股处于上升趋势，现价33.52元运行在MA5(33.48)上方。综合评分67分，操作建议：买入。参考买入区间 33.48 元，止损 31.81 元，目标 42.21 元。", "ma5": 33.48, "ma10": 33.03, "ma20": 34.07, "ma60": 33.81, "rsi6": 51.1, "rsi12": 48.5, "kdj_k": 55.3, "kdj_j": 62.4, "macd_dif": -0.4332, "boll_upper": 38.29, "boll_middle": 34.07, "boll_lower": 29.84, "snapshot_price": 33.52}, {"code": "000530", "name": "冰山冷热", "score": 78, "price": 6.48, "prev_close": 6.31, "change_pct": 2.69, "buy_point": 6.32, "buy_time": "开盘30分钟内 (9:30-10:00)", "target_price": 6.77, "stop_loss": 6.0, "sell_time": "冲高回落时 (10:30-11:00 或 14:00-14:30)", "support": 5.38, "resistance": 6.64, "trend": "上升", "recommendation": "买入", "next_day_estimate": {"estimate": 1.5, "factors": ["连续上涨", "MACD多头"]}, "signals": ["温和上涨", "高换手", "大振幅", "高PE", "放量", "均线多头排列", "红柱放大", "RSI偏高"], "analysis_text": "该股处于上升趋势，现价6.48元运行在MA5(6.32)上方。综合评分64分，操作建议：关注。参考买入区间 6.32 元，止损 6.0 元，目标 6.77 元。", "ma5": 6.32, "ma10": 6.14, "ma20": 6.02, "ma60": 6.04, "rsi6": 71.9, "rsi12": 64.0, "kdj_k": 62.4, "kdj_j": 79.0, "macd_dif": 0.0998, "boll_upper": 6.58, "boll_middle": 6.02, "boll_lower": 5.46, "snapshot_price": 6.48}, {"code": "603039", "name": "泛微网络", "score": 77, "price": 41.46, "prev_close": 39.94, "change_pct": 3.81, "buy_point": 40.15, "buy_time": "开盘30分钟内 (9:30-10:00)", "target_price": 43.52, "stop_loss": 38.14, "sell_time": "冲高回落时 (10:30-11:00 或 14:00-14:30)", "support": 35.6, "resistance": 42.67, "trend": "上升", "recommendation": "买入", "next_day_estimate": {"estimate": 3.0, "factors": ["技术面偏强", "连续上涨", "MACD多头"]}, "signals": ["温和上涨", "收在高位", "大振幅", "放量", "红柱放大"], "analysis_text": "该股处于上升趋势，现价41.46元运行在MA5(40.15)上方。综合评分70分，操作建议：买入。参考买入区间 40.15 元，止损 38.14 元，目标 43.52 元。", "ma5": 40.15, "ma10": 38.87, "ma20": 39.14, "ma60": 37.45, "rsi6": 61.4, "rsi12": 57.4, "kdj_k": 61.0, "kdj_j": 75.6, "macd_dif": 0.4748, "boll_upper": 42.23, "boll_middle": 39.14, "boll_lower": 36.05, "snapshot_price": 41.46}, {"code": "002987", "name": "京北方", "score": 77, "price": 12.37, "prev_close": 12.27, "change_pct": 0.81, "buy_point": 11.77, "buy_time": "开盘30分钟内 (9:30-10:00)", "target_price": 13.24, "stop_loss": 11.18, "sell_time": "冲高回落时 (10:30-11:00 或 14:00-14:30)", "support": 11.1, "resistance": 12.98, "trend": "上升", "recommendation": "买入", "next_day_estimate": {"estimate": 2.5, "factors": ["连续上涨", "MACD多头", "放量上攻"]}, "signals": ["横盘整理", "大振幅", "放量", "MACD金叉", "红柱放大", "放量上涨"], "analysis_text": "该股处于上升趋势，现价12.37元运行在MA5(11.77)上方。综合评分61分，操作建议：关注。参考买入区间 11.77 元，止损 11.18 元，目标 13.24 元。", "ma5": 11.77, "ma10": 11.84, "ma20": 12.17, "ma60": 13.1, "rsi6": 61.8, "rsi12": 52.1, "kdj_k": 60.3, "kdj_j": 74.0, "macd_dif": -0.3146, "boll_upper": 13.08, "boll_middle": 12.17, "boll_lower": 11.27, "snapshot_price": 12.37}, {"code": "603662", "name": "柯力传感", "score": 76, "price": 69.19, "prev_close": 66.24, "change_pct": 4.45, "buy_point": 64.27, "buy_time": "开盘30分钟内 (9:30-10:00)", "target_price": 72.23, "stop_loss": 61.05, "sell_time": "冲高回落时 (10:30-11:00 或 14:00-14:30)", "support": 58.62, "resistance": 70.81, "trend": "上升", "recommendation": "买入", "next_day_estimate": {"estimate": 2.0, "factors": ["技术面偏强", "连续上涨"]}, "signals": ["温和上涨", "收在高位", "大振幅", "放量", "MA金叉", "RSI偏高"], "analysis_text": "该股处于上升趋势，现价69.19元运行在MA5(64.27)上方。综合评分70分，操作建议：买入。参考买入区间 64.27 元，止损 61.05 元，目标 72.23 元。", "ma5": 64.27, "ma10": 63.95, "ma20": 64.49, "ma60": 59.4, "rsi6": 72.8, "rsi12": 65.3, "kdj_k": 64.8, "kdj_j": 84.5, "macd_dif": 1.3683, "boll_upper": 70.92, "boll_middle": 64.49, "boll_lower": 58.07, "snapshot_price": 69.19}, {"code": "002471", "name": "中超控股", "score": 76, "price": 8.07, "prev_close": 7.95, "change_pct": 1.51, "buy_point": 7.46, "buy_time": "开盘30分钟内 (9:30-10:00)", "target_price": 9.13, "stop_loss": 7.09, "sell_time": "冲高回落时 (10:30-11:00 或 14:00-14:30)", "support": 6.61, "resistance": 8.95, "trend": "上升", "recommendation": "买入", "next_day_estimate": {"estimate": 4.0, "factors": ["技术面偏强", "连续上涨", "MACD多头", "放量上攻"]}, "signals": ["温和上涨", "高换手", "大振幅", "放量", "MA金叉", "红柱放大", "RSI偏高", "放量上涨"], "analysis_text": "该股处于上升趋势，现价8.07元运行在MA5(7.46)上方。综合评分67分，操作建议：买入。参考买入区间 7.46 元，止损 7.09 元，目标 9.13 元。", "ma5": 7.46, "ma10": 7.35, "ma20": 7.74, "ma60": 8.42, "rsi6": 71.8, "rsi12": 55.3, "kdj_k": 61.3, "kdj_j": 76.4, "macd_dif": -0.2792, "boll_upper": 8.78, "boll_middle": 7.74, "boll_lower": 6.7, "snapshot_price": 8.07}, {"code": "603619", "name": "中曼石油", "score": 76, "price": 26.07, "prev_close": 25.39, "change_pct": 2.68, "buy_point": 25.92, "buy_time": "开盘30分钟内 (9:30-10:00)", "target_price": 30.97, "stop_loss": 24.62, "sell_time": "冲高回落时 (10:30-11:00 或 14:00-14:30)", "support": 24.81, "resistance": 30.36, "trend": "上升", "recommendation": "买入", "next_day_estimate": {"estimate": 2.0, "factors": ["技术面偏强", "MACD多头"]}, "signals": ["温和上涨", "放量", "MA金叉", "红柱放大"], "analysis_text": "该股处于上升趋势，现价26.07元运行在MA5(25.92)上方。综合评分67分，操作建议：买入。参考买入区间 25.92 元，止损 24.62 元，目标 30.97 元。", "ma5": 25.92, "ma10": 25.9, "ma20": 27.32, "ma60": 31.99, "rsi6": 45.6, "rsi12": 39.5, "kdj_k": 50.3, "kdj_j": 50.8, "macd_dif": -1.6348, "boll_upper": 30.52, "boll_middle": 27.32, "boll_lower": 24.12, "snapshot_price": 26.07}, {"code": "000951", "name": "中国重汽", "score": 76, "price": 23.14, "prev_close": 22.16, "change_pct": 4.42, "buy_point": 22.66, "buy_time": "开盘30分钟内 (9:30-10:00)", "target_price": 24.12, "stop_loss": 21.52, "sell_time": "冲高回落时 (10:30-11:00 或 14:00-14:30)", "support": 20.4, "resistance": 23.65, "trend": "上升", "recommendation": "买入", "next_day_estimate": {"estimate": 0.5, "factors": ["MACD多头"]}, "signals": ["温和上涨", "大振幅", "低PE", "均线多头排列", "红柱放大"], "analysis_text": "该股处于上升趋势，现价23.14元运行在MA5(22.66)上方。积极信号：低PE。综合评分63分，操作建议：关注。参考买入区间 22.66 元，止损 21.52 元，目标 24.12 元。", "ma5": 22.66, "ma10": 21.96, "ma20": 21.88, "ma60": 22.76, "rsi6": 69.7, "rsi12": 59.3, "kdj_k": 63.3, "kdj_j": 81.0, "macd_dif": -0.0673, "boll_upper": 23.52, "boll_middle": 21.88, "boll_lower": 20.23, "snapshot_price": 23.14}, {"code": "002981", "name": "朝阳科技", "score": 76, "price": 28.02, "prev_close": 27.99, "change_pct": 0.11, "buy_point": 27.66, "buy_time": "开盘30分钟内 (9:30-10:00)", "target_price": 30.15, "stop_loss": 26.27, "sell_time": "冲高回落时 (10:30-11:00 或 14:00-14:30)", "support": 24.12, "resistance": 29.56, "trend": "上升", "recommendation": "买入", "next_day_estimate": {"estimate": 0.5, "factors": ["MACD多头"]}, "signals": ["横盘整理", "放量", "均线多头排列"], "analysis_text": "该股处于上升趋势，现价28.02元运行在MA5(27.66)上方。综合评分61分，操作建议：关注。参考买入区间 27.66 元，止损 26.27 元，目标 30.15 元。", "ma5": 27.66, "ma10": 26.99, "ma20": 26.15, "ma60": 24.9, "rsi6": 63.5, "rsi12": 63.5, "kdj_k": 56.6, "kdj_j": 65.5, "macd_dif": 0.8137, "boll_upper": 28.46, "boll_middle": 26.15, "boll_lower": 23.84, "snapshot_price": 28.02}, {"code": "603150", "name": "万朗磁塑", "score": 75, "price": 70.67, "prev_close": 67.59, "change_pct": 4.56, "buy_point": 66.77, "buy_time": "开盘30分钟内 (9:30-10:00)", "target_price": 79.36, "stop_loss": 63.43, "sell_time": "冲高回落时 (10:30-11:00 或 14:00-14:30)", "support": 61.31, "resistance": 77.8, "trend": "上升", "recommendation": "买入", "next_day_estimate": {"estimate": 3.0, "factors": ["技术面偏强", "连续上涨", "放量上攻"]}, "signals": ["温和上涨", "大振幅", "放量", "放量上涨"], "analysis_text": "该股处于上升趋势，现价70.67元运行在MA5(66.77)上方。综合评分67分，操作建议：买入。参考买入区间 66.77 元，止损 63.43 元，目标 79.36 元。", "ma5": 66.77, "ma10": 68.03, "ma20": 69.27, "ma60": 60.03, "rsi6": 65.7, "rsi12": 59.5, "kdj_k": 60.2, "kdj_j": 73.8, "macd_dif": 1.256, "boll_upper": 75.2, "boll_middle": 69.27, "boll_lower": 63.33, "snapshot_price": 70.67}], "watch": [], "avoid": [{"code": "603991", "name": "领先股份", "score": 29, "price": 101.1, "prev_close": 106.58, "change_pct": -5.14, "trend": "下降", "recommendation": "强烈卖出", "signals": ["大幅下跌", "收在低位", "高PE"], "snapshot_price": 101.1}, {"code": "605598", "name": "上海港湾", "score": 29, "price": 39.22, "prev_close": 41.45, "change_pct": -5.38, "trend": "下降", "recommendation": "强烈卖出", "signals": ["大幅下跌", "收在低位", "大振幅", "高PE"], "snapshot_price": 39.22}, {"code": "000011", "name": "深物业A", "score": 27, "price": 7.2, "prev_close": 7.58, "change_pct": -5.01, "trend": "下降", "recommendation": "强烈卖出", "signals": ["大幅下跌", "低换手", "收在低位", "高PE"], "snapshot_price": 7.2}, {"code": "002579", "name": "中京电子", "score": 27, "price": 16.85, "prev_close": 18.69, "change_pct": -9.84, "trend": "下降", "recommendation": "强烈卖出", "signals": ["大幅下跌", "异常换手", "收在低位", "高PE", "放量"], "snapshot_price": 16.85}, {"code": "600893", "name": "航发动力", "score": 27, "price": 39.93, "prev_close": 42.37, "change_pct": -5.76, "trend": "下降", "recommendation": "强烈卖出", "signals": ["大幅下跌", "低换手", "收在低位", "高PE"], "snapshot_price": 39.93}]}, "scores": {"603005": {"score": 88, "price": 45.87, "name": "晶方科技", "change_pct": 0.15}, "002326": {"score": 86, "price": 22.8, "name": "永太科技", "change_pct": 4.11}, "603488": {"score": 86, "price": 12.24, "name": "展鹏科技", "change_pct": 1.24}, "000966": {"score": 83, "price": 5.49, "name": "长源电力", "change_pct": 1.29}, "601869": {"score": 83, "price": 446.84, "name": "长飞光纤", "change_pct": 1.17}, "002463": {"score": 82, "price": 135.46, "name": "沪电股份", "change_pct": 1.68}, "600707": {"score": 82, "price": 11.9, "name": "彩虹股份", "change_pct": 1.62}, "003004": {"score": 81, "price": 64.41, "name": "声迅股份", "change_pct": 3.4}, "600114": {"score": 81, "price": 40.93, "name": "东睦股份", "change_pct": 1.34}, "600881": {"score": 81, "price": 1.69, "name": "亚泰集团", "change_pct": 2.42}, "600906": {"score": 81, "price": 6.99, "name": "财达证券", "change_pct": 1.75}, "603236": {"score": 81, "price": 58.13, "name": "移远通信", "change_pct": 1.4}, "000333": {"score": 80, "price": 83.08, "name": "美的集团", "change_pct": 1.7}, "601077": {"score": 80, "price": 6.79, "name": "渝农商行", "change_pct": 2.41}, "002842": {"score": 78, "price": 33.52, "name": "翔鹭钨业", "change_pct": 1.76}, "000530": {"score": 78, "price": 6.48, "name": "冰山冷热", "change_pct": 2.69}, "603039": {"score": 77, "price": 41.46, "name": "泛微网络", "change_pct": 3.81}, "002987": {"score": 77, "price": 12.37, "name": "京北方", "change_pct": 0.81}, "603662": {"score": 76, "price": 69.19, "name": "柯力传感", "change_pct": 4.45}, "002471": {"score": 76, "price": 8.07, "name": "中超控股", "change_pct": 1.51}, "603045": {"score": 76, "price": 87.55, "name": "福达合金", "change_pct": 4.96}, "603212": {"score": 76, "price": 16.3, "name": "赛伍技术", "change_pct": 2.71}, "603386": {"score": 76, "price": 17.99, "name": "骏亚科技", "change_pct": 1.52}, "603619": {"score": 76, "price": 26.07, "name": "中曼石油", "change_pct": 2.68}, "603861": {"score": 76, "price": 18.29, "name": "白云电器", "change_pct": 1.67}, "000951": {"score": 76, "price": 23.14, "name": "中国重汽", "change_pct": 4.42}, "002981": {"score": 76, "price": 28.02, "name": "朝阳科技", "change_pct": 0.11}, "603150": {"score": 75, "price": 70.67, "name": "万朗磁塑", "change_pct": 4.56}, "002278": {"score": 75, "price": 9.1, "name": "神开股份", "change_pct": 2.36}, "002615": {"score": 75, "price": 8.29, "name": "哈尔斯", "change_pct": 2.6}, "002851": {"score": 75, "price": 150.39, "name": "麦格米特", "change_pct": 2.66}, "601689": {"score": 75, "price": 69.26, "name": "拓普集团", "change_pct": 1.85}, "000887": {"score": 75, "price": 21.89, "name": "中鼎股份", "change_pct": -0.45}, "002171": {"score": 75, "price": 12.97, "name": "楚江新材", "change_pct": 0.93}, "603060": {"score": 75, "price": 7.31, "name": "国检集团", "change_pct": 1.25}, "600011": {"score": 74, "price": 8.51, "name": "华能国际", "change_pct": 1.43}, "002670": {"score": 74, "price": 11.56, "name": "国盛证券", "change_pct": 4.81}, "603036": {"score": 73, "price": 13.97, "name": "如通股份", "change_pct": 4.25}, "000668": {"score": 73, "price": 21.12, "name": "荣丰控股", "change_pct": 2.57}, "002527": {"score": 73, "price": 15.84, "name": "新时达", "change_pct": 2.66}, "603608": {"score": 73, "price": 21.59, "name": "天创时尚", "change_pct": 4.35}, "601288": {"score": 73, "price": 6.57, "name": "农业银行", "change_pct": 3.3}, "002194": {"score": 72, "price": 12.5, "name": "武汉凡谷", "change_pct": 2.97}, "000921": {"score": 72, "price": 27.08, "name": "海信家电", "change_pct": 1.31}, "000657": {"score": 72, "price": 69.65, "name": "中钨高新", "change_pct": -0.64}, "000799": {"score": 72, "price": 44.86, "name": "酒鬼酒", "change_pct": 0.79}, "002520": {"score": 72, "price": 6.41, "name": "日发精机", "change_pct": 0.94}, "600121": {"score": 72, "price": 5.22, "name": "郑州煤电", "change_pct": 0.0}, "600503": {"score": 72, "price": 2.78, "name": "华丽家族", "change_pct": 0.36}, "600031": {"score": 72, "price": 19.34, "name": "三一重工", "change_pct": 3.7}, "002645": {"score": 71, "price": 32.02, "name": "华宏科技", "change_pct": 2.73}, "600458": {"score": 71, "price": 14.38, "name": "时代新材", "change_pct": 1.7}, "601398": {"score": 71, "price": 7.49, "name": "工商银行", "change_pct": 2.04}, "000890": {"score": 71, "price": 10.17, "name": "法尔胜", "change_pct": -0.88}, "000001": {"score": 71, "price": 11.08, "name": "平安银行", "change_pct": 0.91}, "002674": {"score": 70, "price": 15.23, "name": "兴业科技", "change_pct": 3.32}, "002881": {"score": 70, "price": 45.02, "name": "美格智能", "change_pct": 2.2}, "003025": {"score": 70, "price": 15.53, "name": "思进智能", "change_pct": 4.51}, "600303": {"score": 70, "price": 3.52, "name": "曙光股份", "change_pct": 1.44}, "603159": {"score": 70, "price": 27.83, "name": "上海亚虹", "change_pct": 2.77}, "603179": {"score": 70, "price": 53.4, "name": "新泉股份", "change_pct": 2.28}, "603728": {"score": 70, "price": 67.25, "name": "鸣志电器", "change_pct": 2.17}, "000725": {"score": 70, "price": 6.44, "name": "京东方Ａ", "change_pct": 0.16}, "002138": {"score": 70, "price": 55.97, "name": "顺络电子", "change_pct": 0.65}, "600487": {"score": 70, "price": 96.04, "name": "亨通光电", "change_pct": -0.08}, "605358": {"score": 70, "price": 66.43, "name": "立昂微", "change_pct": -0.51}, "601628": {"score": 70, "price": 33.24, "name": "中国人寿", "change_pct": 1.28}, "002165": {"score": 69, "price": 6.72, "name": "红 宝 丽", "change_pct": 1.2}, "002798": {"score": 69, "price": 6.38, "name": "帝欧水华", "change_pct": 2.24}, "600793": {"score": 69, "price": 14.0, "name": "宜宾纸业", "change_pct": 3.7}, "002888": {"score": 69, "price": 20.28, "name": "惠威科技", "change_pct": 1.3}, "601211": {"score": 69, "price": 16.52, "name": "国泰海通", "change_pct": 1.66}, "603270": {"score": 69, "price": 30.06, "name": "金帝股份", "change_pct": 0.97}, "000410": {"score": 69, "price": 5.4, "name": "沈阳机床", "change_pct": 2.47}, "002378": {"score": 68, "price": 30.34, "name": "章源钨业", "change_pct": 2.19}, "002624": {"score": 68, "price": 14.15, "name": "完美世界", "change_pct": 1.36}, "002955": {"score": 68, "price": 27.72, "name": "鸿合科技", "change_pct": 1.72}, "603078": {"score": 68, "price": 43.17, "name": "江化微", "change_pct": 3.87}, "002571": {"score": 68, "price": 12.73, "name": "德力股份", "change_pct": 0.55}, "601988": {"score": 68, "price": 6.13, "name": "中国银行", "change_pct": 1.32}, "603325": {"score": 67, "price": 59.15, "name": "博隆技术", "change_pct": 1.11}, "002515": {"score": 67, "price": 6.75, "name": "金字火腿", "change_pct": 1.05}, "605488": {"score": 67, "price": 36.44, "name": "福莱新材", "change_pct": 4.17}, "000425": {"score": 67, "price": 9.96, "name": "徐工机械", "change_pct": 4.62}, "601898": {"score": 65, "price": 17.02, "name": "中煤能源", "change_pct": 1.07}, "000680": {"score": 65, "price": 11.06, "name": "山推股份", "change_pct": 1.47}, "600985": {"score": 65, "price": 17.42, "name": "淮北矿业", "change_pct": 1.93}, "601011": {"score": 65, "price": 3.3, "name": "宝泰隆", "change_pct": 0.3}, "002733": {"score": 65, "price": 33.92, "name": "雄韬股份", "change_pct": -0.12}, "000788": {"score": 64, "price": 5.3, "name": "北大医药", "change_pct": 2.32}, "000803": {"score": 64, "price": 7.74, "name": "山高环能", "change_pct": 3.61}, "002009": {"score": 64, "price": 22.74, "name": "天奇股份", "change_pct": 3.74}, "002029": {"score": 64, "price": 8.47, "name": "七 匹 狼", "change_pct": 4.18}, "002548": {"score": 64, "price": 4.09, "name": "金新农", "change_pct": 2.51}, "002623": {"score": 64, "price": 18.65, "name": "亚玛顿", "change_pct": 1.25}, "002681": {"score": 64, "price": 5.34, "name": "奋达科技", "change_pct": 3.29}, "600227": {"score": 64, "price": 2.99, "name": "赤天化", "change_pct": 1.7}, "600343": {"score": 64, "price": 26.16, "name": "航天动力", "change_pct": 1.16}, "600573": {"score": 64, "price": 12.77, "name": "惠泉啤酒", "change_pct": 1.43}, "600630": {"score": 64, "price": 8.52, "name": "龙头股份", "change_pct": 1.43}, "603278": {"score": 64, "price": 13.39, "name": "大业股份", "change_pct": 4.2}, "603667": {"score": 64, "price": 75.54, "name": "五洲新春", "change_pct": 1.61}, "603690": {"score": 64, "price": 26.35, "name": "至纯科技", "change_pct": 1.19}, "600938": {"score": 64, "price": 36.04, "name": "中国海油", "change_pct": 2.44}, "002374": {"score": 64, "price": 3.49, "name": "中锐股份", "change_pct": 1.75}, "600060": {"score": 64, "price": 26.12, "name": "海信视像", "change_pct": 2.63}, "600101": {"score": 64, "price": 9.89, "name": "明星电力", "change_pct": -0.6}, "603867": {"score": 64, "price": 38.01, "name": "新化股份", "change_pct": 1.82}, "002469": {"score": 64, "price": 6.46, "name": "三维化学", "change_pct": 2.54}, "000528": {"score": 63, "price": 8.67, "name": "柳    工", "change_pct": 1.64}, "603080": {"score": 63, "price": 21.14, "name": "新疆火炬", "change_pct": 3.37}, "600560": {"score": 63, "price": 13.16, "name": "金自天正", "change_pct": 2.73}, "603166": {"score": 63, "price": 13.75, "name": "福达股份", "change_pct": 2.23}, "600078": {"score": 63, "price": 13.95, "name": "澄星股份", "change_pct": 0.07}, "002364": {"score": 62, "price": 54.1, "name": "中恒电气", "change_pct": 2.17}, "002225": {"score": 62, "price": 3.89, "name": "濮耐股份", "change_pct": -0.51}, "002426": {"score": 62, "price": 3.8, "name": "胜利精密", "change_pct": -0.52}, "002657": {"score": 62, "price": 19.1, "name": "中科金财", "change_pct": 0.95}, "002779": {"score": 62, "price": 75.42, "name": "中坚科技", "change_pct": 3.93}, "600397": {"score": 62, "price": 13.81, "name": "江钨装备", "change_pct": 1.4}, "601009": {"score": 62, "price": 11.38, "name": "南京银行", "change_pct": 1.97}, "000157": {"score": 62, "price": 7.68, "name": "中联重科", "change_pct": 2.13}, "002196": {"score": 61, "price": 13.96, "name": "方正电机", "change_pct": 2.05}, "002342": {"score": 61, "price": 11.45, "name": "巨力索具", "change_pct": 3.15}, "002892": {"score": 61, "price": 10.99, "name": "科力尔", "change_pct": 1.01}, "003021": {"score": 61, "price": 106.54, "name": "兆威机电", "change_pct": 1.77}, "601601": {"score": 61, "price": 31.49, "name": "中国太保", "change_pct": 1.42}, "603268": {"score": 61, "price": 148.8, "name": "松发股份", "change_pct": 4.72}, "002831": {"score": 61, "price": 27.4, "name": "裕同科技", "change_pct": 1.93}, "601199": {"score": 60, "price": 5.65, "name": "江南水务", "change_pct": 2.73}, "600926": {"score": 60, "price": 16.15, "name": "杭州银行", "change_pct": 1.89}, "603568": {"score": 60, "price": 15.54, "name": "伟明环保", "change_pct": 3.67}, "000709": {"score": 60, "price": 2.21, "name": "河钢股份", "change_pct": 1.38}, "002601": {"score": 60, "price": 14.22, "name": "龙佰集团", "change_pct": 2.08}, "002971": {"score": 60, "price": 39.33, "name": "和远气体", "change_pct": 0.08}, "003001": {"score": 60, "price": 17.02, "name": "中岩大地", "change_pct": 0.71}, "002014": {"score": 59, "price": 10.31, "name": "永新股份", "change_pct": 1.28}, "601857": {"score": 59, "price": 10.8, "name": "中国石油", "change_pct": 1.79}, "601998": {"score": 59, "price": 7.63, "name": "中信银行", "change_pct": 3.53}, "600743": {"score": 59, "price": 2.48, "name": "华远控股", "change_pct": -0.4}, "603637": {"score": 59, "price": 17.88, "name": "镇海股份", "change_pct": -0.45}, "000520": {"score": 58, "price": 4.62, "name": "凤凰航运", "change_pct": 0.43}, "000547": {"score": 58, "price": 20.27, "name": "航天发展", "change_pct": -0.98}, "002031": {"score": 58, "price": 6.73, "name": "巨轮智能", "change_pct": 0.9}, "002048": {"score": 58, "price": 26.71, "name": "宁波华翔", "change_pct": 3.33}, "002085": {"score": 58, "price": 11.77, "name": "万丰奥威", "change_pct": 1.47}, "002139": {"score": 58, "price": 10.23, "name": "拓邦股份", "change_pct": 1.09}, "002184": {"score": 58, "price": 11.7, "name": "海得控制", "change_pct": -0.43}, "002246": {"score": 58, "price": 21.32, "name": "北化股份", "change_pct": 1.09}, "002407": {"score": 58, "price": 33.41, "name": "多氟多", "change_pct": 0.63}, "002948": {"score": 58, "price": 5.5, "name": "青岛银行", "change_pct": 1.1}, "600984": {"score": 58, "price": 4.41, "name": "建设机械", "change_pct": 0.68}, "603286": {"score": 58, "price": 61.03, "name": "日盈电子", "change_pct": 0.11}, "601366": {"score": 58, "price": 3.81, "name": "利群股份", "change_pct": 1.6}, "600396": {"score": 58, "price": 20.14, "name": "华电辽能", "change_pct": 0.65}, "600475": {"score": 58, "price": 15.39, "name": "华光环能", "change_pct": 1.38}, "600516": {"score": 58, "price": 5.83, "name": "方大炭素", "change_pct": 0.0}, "600693": {"score": 58, "price": 10.32, "name": "东百集团", "change_pct": -0.29}, "600733": {"score": 58, "price": 5.98, "name": "北汽蓝谷", "change_pct": 1.18}, "600810": {"score": 58, "price": 6.03, "name": "神马股份", "change_pct": 3.61}, "600879": {"score": 58, "price": 21.34, "name": "航天电子", "change_pct": -0.93}, "601328": {"score": 58, "price": 6.88, "name": "交通银行", "change_pct": 0.73}, "601666": {"score": 58, "price": 9.8, "name": "平煤股份", "change_pct": 1.34}, "603038": {"score": 58, "price": 16.16, "name": "华立股份", "change_pct": 1.25}, "603040": {"score": 58, "price": 91.76, "name": "新坐标", "change_pct": 1.34}, "603110": {"score": 58, "price": 20.84, "name": "东方材料", "change_pct": 0.82}, "603119": {"score": 58, "price": 73.5, "name": "浙江荣泰", "change_pct": -0.27}, "603337": {"score": 58, "price": 41.34, "name": "杰克科技", "change_pct": 4.08}, "603486": {"score": 58, "price": 60.2, "name": "科沃斯", "change_pct": 2.17}, "603598": {"score": 58, "price": 20.87, "name": "引力传媒", "change_pct": -0.81}, "603638": {"score": 58, "price": 23.64, "name": "艾迪精密", "change_pct": 2.07}, "603665": {"score": 58, "price": 27.18, "name": "康隆达", "change_pct": 1.65}, "603688": {"score": 58, "price": 69.03, "name": "石英股份", "change_pct": -0.66}, "603730": {"score": 58, "price": 12.74, "name": "XD岱美股", "change_pct": 4.17}, "603888": {"score": 58, "price": 19.41, "name": "新华网", "change_pct": 0.83}, "603915": {"score": 58, "price": 16.71, "name": "国茂股份", "change_pct": 1.7}, "605128": {"score": 58, "price": 23.33, "name": "上海沿浦", "change_pct": 3.6}, "605186": {"score": 58, "price": 28.6, "name": "健麾信息", "change_pct": -1.0}, "605288": {"score": 58, "price": 102.94, "name": "凯迪股份", "change_pct": 3.3}, "605566": {"score": 58, "price": 42.64, "name": "福莱蒽特", "change_pct": -0.86}, "689009": {"score": 58, "price": 36.78, "name": "九号公司-WD", "change_pct": 1.16}, "600998": {"score": 57, "price": 4.82, "name": "XD九州通", "change_pct": 1.05}, "603516": {"score": 57, "price": 134.37, "name": "淳中科技", "change_pct": -0.48}, "002034": {"score": 57, "price": 18.25, "name": "旺能环境", "change_pct": -0.92}, "002631": {"score": 57, "price": 7.96, "name": "德尔未来", "change_pct": 6.85}, "002700": {"score": 57, "price": 8.54, "name": "万憬能源", "change_pct": 7.02}, "600007": {"score": 57, "price": 21.88, "name": "中国国贸", "change_pct": 2.82}, "600027": {"score": 57, "price": 5.18, "name": "华电国际", "change_pct": -0.38}, "600522": {"score": 57, "price": 49.69, "name": "中天科技", "change_pct": 7.86}, "600729": {"score": 57, "price": 19.61, "name": "重百集团", "change_pct": -0.2}, "601088": {"score": 57, "price": 50.6, "name": "中国神华", "change_pct": 4.29}, "603048": {"score": 57, "price": 22.36, "name": "浙江黎明", "change_pct": 7.55}, "002142": {"score": 56, "price": 31.04, "name": "宁波银行", "change_pct": 1.57}, "605098": {"score": 56, "price": 55.23, "name": "行动教育", "change_pct": 1.62}, "000538": {"score": 56, "price": 49.47, "name": "云南白药", "change_pct": 1.35}, "000690": {"score": 56, "price": 5.25, "name": "宝新能源", "change_pct": -1.5}, "000761": {"score": 56, "price": 2.5, "name": "本钢板材", "change_pct": 2.46}, "002491": {"score": 56, "price": 25.65, "name": "通鼎互联", "change_pct": 3.34}, "600000": {"score": 56, "price": 9.39, "name": "浦发银行", "change_pct": 0.54}, "600039": {"score": 56, "price": 8.46, "name": "四川路桥", "change_pct": 0.71}, "600234": {"score": 56, "price": 24.06, "name": "科新发展", "change_pct": 1.43}, "600293": {"score": 56, "price": 4.14, "name": "三峡新材", "change_pct": 4.55}, "600600": {"score": 56, "price": 60.3, "name": "青岛啤酒", "change_pct": 1.01}, "600675": {"score": 56, "price": 2.43, "name": "中华企业", "change_pct": 1.25}, "600826": {"score": 56, "price": 8.95, "name": "兰生股份", "change_pct": 1.36}, "601100": {"score": 56, "price": 120.93, "name": "恒立液压", "change_pct": 3.18}, "601225": {"score": 56, "price": 27.59, "name": "陕西煤业", "change_pct": 1.66}, "601658": {"score": 56, "price": 4.99, "name": "邮储银行", "change_pct": 0.6}, "601882": {"score": 56, "price": 20.95, "name": "海天精工", "change_pct": 2.15}, "601886": {"score": 56, "price": 8.59, "name": "江河集团", "change_pct": 1.3}, "603087": {"score": 56, "price": 55.27, "name": "甘李药业", "change_pct": 1.26}, "603129": {"score": 56, "price": 235.69, "name": "春风动力", "change_pct": 3.06}, "603766": {"score": 56, "price": 12.8, "name": "隆鑫通用", "change_pct": 1.43}, "603826": {"score": 56, "price": 30.22, "name": "坤彩科技", "change_pct": 1.58}, "605016": {"score": 56, "price": 24.11, "name": "百龙创园", "change_pct": 1.05}, "000099": {"score": 55, "price": 15.4, "name": "中信海直", "change_pct": 1.32}, "000665": {"score": 55, "price": 4.29, "name": "湖北广电", "change_pct": 1.42}, "002064": {"score": 55, "price": 10.52, "name": "华峰化学", "change_pct": 2.94}, "002117": {"score": 55, "price": 9.43, "name": "东港股份", "change_pct": 2.17}, "002565": {"score": 55, "price": 15.42, "name": "顺灏股份", "change_pct": 0.52}, "002864": {"score": 55, "price": 28.34, "name": "盘龙药业", "change_pct": 1.47}, "002915": {"score": 55, "price": 20.23, "name": "中欣氟材", "change_pct": -0.3}, "000030": {"score": 55, "price": 4.5, "name": "富奥股份", "change_pct": -0.44}, "000527": {"score": 55, "price": 14.02, "name": "美的电器", "change_pct": 0.0}, "000554": {"score": 55, "price": 6.68, "name": "泰山石油", "change_pct": -0.74}, "000606": {"score": 55, "price": 0.28, "name": "顺利退", "change_pct": 0.0}, "000651": {"score": 55, "price": 38.29, "name": "格力电器", "change_pct": -0.44}, "000776": {"score": 55, "price": 18.87, "name": "广发证券", "change_pct": 0.32}, "000782": {"score": 55, "price": 7.29, "name": "恒申新材", "change_pct": -0.41}, "000786": {"score": 55, "price": 21.72, "name": "北新建材", "change_pct": -1.0}, "000817": {"score": 55, "price": 8.75, "name": "辽河油田", "change_pct": 0.0}, "000866": {"score": 55, "price": 13.84, "name": "扬子石化", "change_pct": 0.0}, "000875": {"score": 55, "price": 6.52, "name": "电投绿能", "change_pct": 1.88}, "000956": {"score": 55, "price": 11.91, "name": "中原油气", "change_pct": 0.0}, "000973": {"score": 55, "price": 13.84, "name": "佛塑科技", "change_pct": -0.5}, "000996": {"score": 55, "price": 0.38, "name": "中期退", "change_pct": 0.0}, "002043": {"score": 55, "price": 12.3, "name": "兔 宝 宝", "change_pct": -0.73}, "002050": {"score": 55, "price": 47.91, "name": "三花智控", "change_pct": 0.84}, "002070": {"score": 55, "price": 0.71, "name": "众和退", "change_pct": 0.0}, "002146": {"score": 55, "price": 1.28, "name": "荣盛发展", "change_pct": 0.79}, "002147": {"score": 55, "price": 0.37, "name": "新光退", "change_pct": 0.0}, "002293": {"score": 55, "price": 9.57, "name": "罗莱生活", "change_pct": -0.83}, "002317": {"score": 55, "price": 22.07, "name": "众生药业", "change_pct": 0.91}, "002336": {"score": 55, "price": 0.36, "name": "人乐退", "change_pct": 0.0}, "002425": {"score": 55, "price": 3.01, "name": "凯撒文化", "change_pct": 0.67}, "002450": {"score": 55, "price": 0.2, "name": "康得退", "change_pct": 0.0}, "002464": {"score": 55, "price": 0.26, "name": "众应退", "change_pct": 0.0}, "002473": {"score": 55, "price": 0.79, "name": "圣莱退", "change_pct": 0.0}, "002530": {"score": 55, "price": 7.8, "name": "金财互联", "change_pct": -0.76}, "002553": {"score": 55, "price": 18.43, "name": "南方精工", "change_pct": 0.16}, "002648": {"score": 55, "price": 24.12, "name": "卫星化学", "change_pct": 0.63}, "002680": {"score": 55, "price": 0.77, "name": "长生退", "change_pct": 0.0}, "002684": {"score": 55, "price": 0.69, "name": "猛狮退", "change_pct": 0.0}, "002770": {"score": 55, "price": 0.6, "name": "科迪退", "change_pct": 0.0}, "002780": {"score": 55, "price": 13.53, "name": "三夫户外", "change_pct": -0.81}, "002788": {"score": 55, "price": 11.58, "name": "鹭燕医药", "change_pct": -0.52}, "002807": {"score": 55, "price": 3.94, "name": "江阴银行", "change_pct": 0.0}, "002818": {"score": 55, "price": 11.03, "name": "富森美", "change_pct": -0.45}, "002839": {"score": 55, "price": 4.2, "name": "张家港行", "change_pct": -0.71}, "002849": {"score": 55, "price": 16.71, "name": "威星智能", "change_pct": 0.24}, "002936": {"score": 55, "price": 1.77, "name": "郑州银行", "change_pct": 0.0}, "002966": {"score": 55, "price": 8.03, "name": "苏州银行", "change_pct": -0.25}, "600002": {"score": 55, "price": 10.09, "name": "齐鲁石化", "change_pct": 0.0}, "600016": {"score": 55, "price": 3.57, "name": "民生银行", "change_pct": 0.0}, "600030": {"score": 55, "price": 25.63, "name": "中信证券", "change_pct": -0.16}, "600066": {"score": 55, "price": 30.79, "name": "宇通客车", "change_pct": 0.72}, "600087": {"score": 55, "price": 0.83, "name": "退市长油", "change_pct": 0.0}, "600088": {"score": 55, "price": 14.1, "name": "中视传媒", "change_pct": -0.98}, "600183": {"score": 55, "price": 136.02, "name": "生益科技", "change_pct": -0.98}, "600270": {"score": 55, "price": 20.99, "name": "外运发展", "change_pct": 0.0}, "600291": {"score": 55, "price": 0.89, "name": "退市西水", "change_pct": 0.0}, "600323": {"score": 55, "price": 29.84, "name": "瀚蓝环境", "change_pct": -0.23}, "600366": {"score": 55, "price": 12.85, "name": "宁波韵升", "change_pct": 0.94}, "600483": {"score": 55, "price": 11.69, "name": "福能股份", "change_pct": 0.95}, "600580": {"score": 55, "price": 39.9, "name": "卧龙电驱", "change_pct": -0.25}, "600583": {"score": 55, "price": 5.67, "name": "海油工程", "change_pct": -0.35}, "600690": {"score": 55, "price": 20.24, "name": "海尔智家", "change_pct": -0.34}, "600757": {"score": 55, "price": 7.98, "name": "长江传媒", "change_pct": -0.37}, "600761": {"score": 55, "price": 16.93, "name": "安徽合力", "change_pct": -0.47}, "600795": {"score": 55, "price": 5.04, "name": "国电电力", "change_pct": -0.59}, "600827": {"score": 55, "price": 8.18, "name": "百联股份", "change_pct": 0.25}, "600897": {"score": 55, "price": 15.07, "name": "厦门空港", "change_pct": -0.46}, "600908": {"score": 55, "price": 5.41, "name": "无锡银行", "change_pct": -0.37}, "600919": {"score": 55, "price": 11.48, "name": "江苏银行", "change_pct": 0.88}, "600989": {"score": 55, "price": 23.37, "name": "宝丰能源", "change_pct": -0.26}, "600999": {"score": 55, "price": 16.91, "name": "招商证券", "change_pct": 0.12}, "601058": {"score": 55, "price": 12.44, "name": "赛轮轮胎", "change_pct": 0.16}, "601101": {"score": 55, "price": 13.65, "name": "昊华能源", "change_pct": 0.89}, "601107": {"score": 55, "price": 5.94, "name": "四川成渝", "change_pct": -0.34}, "601128": {"score": 55, "price": 7.03, "name": "常熟银行", "change_pct": -0.42}, "601187": {"score": 55, "price": 7.35, "name": "厦门银行", "change_pct": 0.14}, "601318": {"score": 55, "price": 53.55, "name": "中国平安", "change_pct": 0.13}, "601336": {"score": 55, "price": 56.38, "name": "新华保险", "change_pct": 0.05}, "601528": {"score": 55, "price": 4.71, "name": "瑞丰银行", "change_pct": -0.42}, "601688": {"score": 55, "price": 18.85, "name": "华泰证券", "change_pct": 0.0}, "601818": {"score": 55, "price": 3.12, "name": "光大银行", "change_pct": -0.32}, "601838": {"score": 55, "price": 19.08, "name": "成都银行", "change_pct": 0.21}, "601860": {"score": 55, "price": 2.63, "name": "紫金银行", "change_pct": 0.77}, "601916": {"score": 55, "price": 3.07, "name": "浙商银行", "change_pct": -0.65}, "601919": {"score": 55, "price": 14.96, "name": "中远海控", "change_pct": -0.27}, "601939": {"score": 55, "price": 10.32, "name": "建设银行", "change_pct": 0.98}, "601963": {"score": 55, "price": 12.0, "name": "重庆银行", "change_pct": -0.08}, "601996": {"score": 55, "price": 2.62, "name": "丰林集团", "change_pct": 0.38}, "601997": {"score": 55, "price": 5.92, "name": "贵阳银行", "change_pct": -0.5}, "603010": {"score": 55, "price": 13.97, "name": "万盛股份", "change_pct": -0.14}, "603020": {"score": 55, "price": 10.63, "name": "爱普股份", "change_pct": -0.37}, "603161": {"score": 55, "price": 14.99, "name": "科华控股", "change_pct": 0.67}, "603201": {"score": 55, "price": 17.96, "name": "常润股份", "change_pct": -0.94}, "603298": {"score": 55, "price": 24.74, "name": "杭叉集团", "change_pct": -0.16}, "603302": {"score": 55, "price": 7.79, "name": "鑫广绿环", "change_pct": 0.0}, "603323": {"score": 55, "price": 4.71, "name": "苏农银行", "change_pct": -0.21}, "603331": {"score": 55, "price": 12.7, "name": "百达精工", "change_pct": -0.31}, "603334": {"score": 55, "price": 41.19, "name": "XD丰倍生", "change_pct": -0.29}, "603558": {"score": 55, "price": 11.87, "name": "健盛集团", "change_pct": 0.94}, "603679": {"score": 55, "price": 16.43, "name": "华体科技", "change_pct": -0.42}, "603716": {"score": 55, "price": 16.12, "name": "塞力医疗", "change_pct": -0.74}, "603767": {"score": 55, "price": 17.51, "name": "中马传动", "change_pct": -0.68}, "603816": {"score": 55, "price": 27.46, "name": "顾家家居", "change_pct": -0.76}, "603871": {"score": 55, "price": 12.2, "name": "嘉友国际", "change_pct": -0.41}, "603931": {"score": 55, "price": 57.3, "name": "格林达", "change_pct": -0.83}, "603939": {"score": 55, "price": 19.86, "name": "益丰药房", "change_pct": -0.2}, "603976": {"score": 55, "price": 22.79, "name": "正川股份", "change_pct": 1.92}, "603998": {"score": 55, "price": 9.61, "name": "方盛制药", "change_pct": -0.72}, "000048": {"score": 54, "price": 14.82, "name": "京基智农", "change_pct": 5.11}, "000608": {"score": 54, "price": 5.82, "name": "阳光股份", "change_pct": 5.43}, "002457": {"score": 54, "price": 12.82, "name": "青龙管业", "change_pct": 5.08}, "002472": {"score": 54, "price": 45.25, "name": "双环传动", "change_pct": 5.58}, "002552": {"score": 54, "price": 62.18, "name": "宝鼎科技", "change_pct": 6.62}, "002832": {"score": 54, "price": 21.09, "name": "比音勒芬", "change_pct": 5.56}, "002850": {"score": 54, "price": 182.2, "name": "科达利", "change_pct": 5.84}, "003009": {"score": 54, "price": 58.82, "name": "中天火箭", "change_pct": 6.17}, "600403": {"score": 54, "price": 8.81, "name": "大有能源", "change_pct": 8.23}, "600578": {"score": 54, "price": 8.96, "name": "京能电力", "change_pct": 5.91}, "600736": {"score": 54, "price": 7.66, "name": "苏州高新", "change_pct": 5.8}, "600776": {"score": 54, "price": 16.75, "name": "东方通信", "change_pct": 5.08}, "603135": {"score": 54, "price": 14.99, "name": "中重科技", "change_pct": 6.84}, "603466": {"score": 54, "price": 12.22, "name": "风语筑", "change_pct": 5.71}, "603773": {"score": 54, "price": 141.04, "name": "沃格光电", "change_pct": 6.53}, "000151": {"score": 53, "price": 13.64, "name": "中成股份", "change_pct": -1.94}, "000600": {"score": 53, "price": 10.98, "name": "建投能源", "change_pct": -4.36}, "000999": {"score": 53, "price": 24.14, "name": "华润三九", "change_pct": -0.29}, "002577": {"score": 53, "price": 18.08, "name": "雷柏科技", "change_pct": 0.84}, "002736": {"score": 53, "price": 9.96, "name": "国信证券", "change_pct": -0.5}, "600015": {"score": 53, "price": 6.83, "name": "华夏银行", "change_pct": 0.0}, "600023": {"score": 53, "price": 5.95, "name": "浙能电力", "change_pct": -0.67}, "600036": {"score": 53, "price": 38.63, "name": "招商银行", "change_pct": 0.13}, "600062": {"score": 53, "price": 16.73, "name": "华润双鹤", "change_pct": -0.83}, "600255": {"score": 53, "price": 4.64, "name": "鑫科材料", "change_pct": 3.34}, "600377": {"score": 53, "price": 12.59, "name": "宁沪高速", "change_pct": -0.71}, "600398": {"score": 53, "price": 5.76, "name": "海澜之家", "change_pct": -0.17}, "600552": {"score": 53, "price": 22.32, "name": "凯盛科技", "change_pct": 2.81}, "600861": {"score": 53, "price": 14.16, "name": "北京人力", "change_pct": -0.63}, "600873": {"score": 53, "price": 9.14, "name": "梅花生物", "change_pct": -0.33}, "600901": {"score": 53, "price": 6.4, "name": "江苏金租", "change_pct": -0.78}, "600941": {"score": 53, "price": 97.42, "name": "中国移动", "change_pct": 0.09}, "600958": {"score": 53, "price": 8.91, "name": "东方证券", "change_pct": -0.78}, "600968": {"score": 53, "price": 3.96, "name": "海油发展", "change_pct": 0.0}, "601166": {"score": 53, "price": 18.59, "name": "兴业银行", "change_pct": -0.05}, "601169": {"score": 53, "price": 5.13, "name": "北京银行", "change_pct": -0.19}, "601229": {"score": 53, "price": 9.14, "name": "XD上海银", "change_pct": 0.44}, "601319": {"score": 53, "price": 6.58, "name": "中国人保", "change_pct": 0.15}, "601577": {"score": 53, "price": 9.57, "name": "长沙银行", "change_pct": 0.1}, "601668": {"score": 53, "price": 4.7, "name": "中国建筑", "change_pct": -0.42}, "601811": {"score": 53, "price": 12.91, "name": "新华文轩", "change_pct": -0.77}, "601825": {"score": 53, "price": 8.67, "name": "沪农商行", "change_pct": 0.12}, "601928": {"score": 53, "price": 8.96, "name": "凤凰传媒", "change_pct": -0.33}, "002443": {"score": 52, "price": 11.18, "name": "金洲管道", "change_pct": 2.76}, "605580": {"score": 52, "price": 25.9, "name": "恒盛能源", "change_pct": -0.99}, "000007": {"score": 52, "price": 12.4, "name": "全新好", "change_pct": 0.73}, "000019": {"score": 52, "price": 6.36, "name": "深粮控股", "change_pct": -0.93}, "000031": {"score": 52, "price": 2.67, "name": "大悦城", "change_pct": 0.75}, "000559": {"score": 52, "price": 14.94, "name": "万向钱潮", "change_pct": -0.8}, "000797": {"score": 52, "price": 2.52, "name": "中国武夷", "change_pct": -0.4}, "000882": {"score": 52, "price": 1.49, "name": "华联股份", "change_pct": 0.0}, "000897": {"score": 52, "price": 1.93, "name": "津滨发展", "change_pct": -0.52}, "000949": {"score": 52, "price": 6.68, "name": "新乡化纤", "change_pct": -0.6}, "000965": {"score": 52, "price": 3.43, "name": "天保基建", "change_pct": 0.29}, "000968": {"score": 52, "price": 7.41, "name": "蓝焰控股", "change_pct": 0.68}, "002016": {"score": 52, "price": 4.88, "name": "世荣兆业", "change_pct": 0.0}, "002028": {"score": 52, "price": 178.84, "name": "思源电气", "change_pct": 0.76}, "002062": {"score": 52, "price": 7.72, "name": "宏润建设", "change_pct": -0.9}, "002187": {"score": 52, "price": 5.5, "name": "广百股份", "change_pct": -0.9}, "002249": {"score": 52, "price": 8.41, "name": "大洋电机", "change_pct": 0.36}, "002315": {"score": 52, "price": 26.15, "name": "焦点科技", "change_pct": -0.57}, "002403": {"score": 52, "price": 10.65, "name": "爱仕达", "change_pct": 0.28}, "002482": {"score": 52, "price": 1.48, "name": "广田集团", "change_pct": 0.0}, "002541": {"score": 52, "price": 18.54, "name": "鸿路钢构", "change_pct": 0.71}, "002554": {"score": 52, "price": 3.1, "name": "惠博普", "change_pct": 0.0}, "002568": {"score": 52, "price": 18.52, "name": "百润股份", "change_pct": 0.76}, "002647": {"score": 52, "price": 12.0, "name": "仁东控股", "change_pct": -0.91}, "002664": {"score": 52, "price": 18.99, "name": "信质集团", "change_pct": 0.96}, "002698": {"score": 52, "price": 12.59, "name": "博实股份", "change_pct": 0.96}, "002723": {"score": 52, "price": 8.56, "name": "小崧股份", "change_pct": -0.35}, "002746": {"score": 52, "price": 5.63, "name": "仙坛股份", "change_pct": -0.35}, "002774": {"score": 52, "price": 12.01, "name": "快意电梯", "change_pct": 0.76}, "002916": {"score": 52, "price": 375.65, "name": "深南电路", "change_pct": 0.71}, "003005": {"score": 52, "price": 15.19, "name": "竞业达", "change_pct": 0.8}, "003028": {"score": 52, "price": 26.18, "name": "振邦智能", "change_pct": -0.83}, "600051": {"score": 52, "price": 6.49, "name": "宁波联合", "change_pct": -0.92}, "600052": {"score": 52, "price": 3.91, "name": "东望时代", "change_pct": 0.26}, "600130": {"score": 52, "price": 4.75, "name": "波导股份", "change_pct": -0.63}, "600215": {"score": 52, "price": 6.69, "name": "派斯林", "change_pct": 0.75}, "600256": {"score": 52, "price": 6.71, "name": "广汇能源", "change_pct": -0.45}, "600322": {"score": 52, "price": 2.64, "name": "津投城开", "change_pct": 0.38}, "600636": {"score": 52, "price": 1.9, "name": "退市国化", "change_pct": -0.52}, "600686": {"score": 52, "price": 12.57, "name": "金龙汽车", "change_pct": -0.63}, "600722": {"score": 52, "price": 10.06, "name": "金牛化工", "change_pct": -0.98}, "600749": {"score": 52, "price": 14.91, "name": "西藏旅游", "change_pct": -0.53}, "600779": {"score": 52, "price": 31.33, "name": "水井坊", "change_pct": -0.41}, "600830": {"score": 52, "price": 7.9, "name": "香溢融通", "change_pct": 0.13}, "600838": {"score": 52, "price": 7.92, "name": "上海九百", "change_pct": -1.0}, "600843": {"score": 52, "price": 7.49, "name": "上工申贝", "change_pct": -0.53}, "600862": {"score": 52, "price": 17.8, "name": "中航高科", "change_pct": -0.22}, "600930": {"score": 52, "price": 6.01, "name": "华电新能", "change_pct": -0.83}, "601001": {"score": 52, "price": 22.0, "name": "晋控煤业", "change_pct": 0.0}, "601086": {"score": 52, "price": 7.32, "name": "国芳集团", "change_pct": -0.68}, "601699": {"score": 52, "price": 18.95, "name": "潞安环能", "change_pct": 0.8}, "603006": {"score": 52, "price": 14.05, "name": "联明股份", "change_pct": 0.57}, "603009": {"score": 52, "price": 50.56, "name": "北特科技", "change_pct": 0.52}, "603155": {"score": 52, "price": 19.68, "name": "新亚强", "change_pct": -0.81}, "603165": {"score": 52, "price": 16.76, "name": "荣晟环保", "change_pct": 0.42}, "603194": {"score": 52, "price": 35.67, "name": "中力股份", "change_pct": 0.82}, "603222": {"score": 52, "price": 8.58, "name": "济民健康", "change_pct": -0.58}, "603289": {"score": 52, "price": 9.72, "name": "泰瑞机器", "change_pct": -0.31}, "603305": {"score": 52, "price": 14.82, "name": "旭升集团", "change_pct": -0.6}, "603329": {"score": 52, "price": 10.08, "name": "上海雅仕", "change_pct": -0.98}, "603345": {"score": 52, "price": 87.23, "name": "安井食品", "change_pct": 0.63}, "603350": {"score": 52, "price": 30.41, "name": "安乃达", "change_pct": -0.85}, "603380": {"score": 52, "price": 35.48, "name": "易德龙", "change_pct": -0.17}, "603383": {"score": 52, "price": 29.85, "name": "顶点软件", "change_pct": -0.53}, "603416": {"score": 52, "price": 58.92, "name": "信捷电气", "change_pct": -0.84}, "603528": {"score": 52, "price": 6.87, "name": "多伦科技", "change_pct": -0.43}, "603583": {"score": 52, "price": 25.96, "name": "捷昌驱动", "change_pct": -0.57}, "603605": {"score": 52, "price": 65.73, "name": "珀莱雅", "change_pct": -0.08}, "603607": {"score": 52, "price": 21.93, "name": "京华激光", "change_pct": -0.23}, "603611": {"score": 52, "price": 18.24, "name": "诺力股份", "change_pct": -0.92}, "603666": {"score": 52, "price": 28.8, "name": "亿嘉和", "change_pct": -0.07}, "603677": {"score": 52, "price": 15.86, "name": "奇精机械", "change_pct": -0.63}, "603809": {"score": 52, "price": 10.27, "name": "豪能股份", "change_pct": 0.49}, "603815": {"score": 52, "price": 5.91, "name": "交建股份", "change_pct": -0.17}, "603839": {"score": 52, "price": 6.81, "name": "安正时尚", "change_pct": 0.44}, "603863": {"score": 52, "price": 15.81, "name": "松炀资源", "change_pct": -0.25}, "603919": {"score": 52, "price": 19.01, "name": "金徽酒", "change_pct": -0.26}, "603960": {"score": 52, "price": 21.71, "name": "克来机电", "change_pct": 0.23}, "603968": {"score": 52, "price": 10.8, "name": "醋化股份", "change_pct": -0.28}, "605088": {"score": 52, "price": 33.17, "name": "冠盛股份", "change_pct": 0.06}, "605168": {"score": 52, "price": 46.95, "name": "三人行", "change_pct": -0.53}, "605319": {"score": 52, "price": 27.55, "name": "无锡振华", "change_pct": -0.47}, "605398": {"score": 52, "price": 24.45, "name": "新炬网络", "change_pct": 0.0}, "600158": {"score": 51, "price": 9.53, "name": "中体产业", "change_pct": 1.82}, "002380": {"score": 51, "price": 38.33, "name": "科远智慧", "change_pct": -0.21}, "002703": {"score": 51, "price": 16.6, "name": "浙江世宝", "change_pct": -0.95}, "003018": {"score": 51, "price": 51.1, "name": "金富科技", "change_pct": 0.02}, "000060": {"score": 51, "price": 7.14, "name": "中金岭南", "change_pct": -4.16}, "000417": {"score": 51, "price": 7.25, "name": "合百集团", "change_pct": -3.33}, "000430": {"score": 51, "price": 8.23, "name": "张家界", "change_pct": -1.44}, "000536": {"score": 51, "price": 4.0, "name": "华映科技", "change_pct": -3.15}, "000539": {"score": 51, "price": 7.97, "name": "粤电力Ａ", "change_pct": -3.39}, "000586": {"score": 51, "price": 15.81, "name": "汇源通信", "change_pct": -3.07}, "000592": {"score": 51, "price": 7.92, "name": "平潭发展", "change_pct": -1.74}, "000681": {"score": 51, "price": 23.52, "name": "视觉中国", "change_pct": -3.25}, "000692": {"score": 51, "price": 4.76, "name": "惠天热电", "change_pct": -2.06}, "000700": {"score": 51, "price": 16.6, "name": "模塑科技", "change_pct": -3.99}, "000718": {"score": 51, "price": 2.2, "name": "苏宁环球", "change_pct": -4.35}, "000727": {"score": 51, "price": 2.96, "name": "冠捷科技", "change_pct": -1.33}, "000767": {"score": 51, "price": 5.08, "name": "晋控电力", "change_pct": -4.87}, "000802": {"score": 51, "price": 4.66, "name": "北京文化", "change_pct": -4.31}, "000823": {"score": 51, "price": 17.25, "name": "超声电子", "change_pct": -2.04}, "000837": {"score": 51, "price": 12.81, "name": "秦川机床", "change_pct": 6.57}, "000859": {"score": 51, "price": 10.5, "name": "国风新材", "change_pct": -2.33}, "000988": {"score": 51, "price": 150.51, "name": "华工科技", "change_pct": -4.26}, "002008": {"score": 51, "price": 123.79, "name": "大族激光", "change_pct": -3.19}, "002036": {"score": 51, "price": 8.81, "name": "联创电子", "change_pct": -3.08}, "002119": {"score": 51, "price": 24.18, "name": "康强电子", "change_pct": -2.62}, "002169": {"score": 51, "price": 15.6, "name": "智光电气", "change_pct": -1.02}, "002229": {"score": 51, "price": 13.94, "name": "鸿博股份", "change_pct": -1.13}, "002245": {"score": 51, "price": 20.13, "name": "蔚蓝锂芯", "change_pct": -2.09}, "002272": {"score": 51, "price": 18.62, "name": "川润股份", "change_pct": -2.0}, "002297": {"score": 51, "price": 19.86, "name": "博云新材", "change_pct": -2.84}, "002319": {"score": 51, "price": 11.54, "name": "乐通股份", "change_pct": -3.75}, "002329": {"score": 51, "price": 3.44, "name": "皇氏集团", "change_pct": -3.37}, "002406": {"score": 51, "price": 7.95, "name": "远东传动", "change_pct": -1.49}, "002413": {"score": 51, "price": 10.34, "name": "雷科防务", "change_pct": -2.45}, "002570": {"score": 51, "price": 5.45, "name": "贝因美", "change_pct": -2.68}, "002575": {"score": 51, "price": 5.64, "name": "群兴玩具", "change_pct": -3.26}, "002591": {"score": 51, "price": 7.36, "name": "恒大高新", "change_pct": -3.03}, "002611": {"score": 51, "price": 18.23, "name": "东方精工", "change_pct": -1.09}, "002637": {"score": 51, "price": 12.68, "name": "赞宇科技", "change_pct": -3.13}, "002669": {"score": 51, "price": 15.96, "name": "康达新材", "change_pct": -3.97}, "002708": {"score": 51, "price": 15.3, "name": "光洋股份", "change_pct": -3.53}, "002771": {"score": 51, "price": 15.56, "name": "真视通", "change_pct": -4.48}, "002806": {"score": 51, "price": 19.52, "name": "华锋股份", "change_pct": -1.31}, "002815": {"score": 51, "price": 17.15, "name": "崇达技术", "change_pct": -3.49}, "002823": {"score": 51, "price": 19.03, "name": "凯中精密", "change_pct": -4.85}, "002829": {"score": 51, "price": 21.91, "name": "星网宇达", "change_pct": -4.24}, "002893": {"score": 51, "price": 10.52, "name": "京能热力", "change_pct": -3.49}, "002902": {"score": 51, "price": 32.66, "name": "铭普光磁", "change_pct": -4.17}, "002918": {"score": 51, "price": 11.8, "name": "蒙娜丽莎", "change_pct": -4.07}, "002979": {"score": 51, "price": 54.87, "name": "雷赛智能", "change_pct": -1.47}, "002983": {"score": 51, "price": 24.23, "name": "芯瑞达", "change_pct": -2.46}}, "market_sentiment": "偏空", "avg_score": 44.0, "strategies": [{"name": "回调低吸", "desc": "技术面超卖或触及支撑位的强势股，可在支撑位附近分批建仓", "stocks": [{"code": "002165", "name": "红 宝 丽", "score": 69}, {"code": "000890", "name": "法尔胜", "score": 71}, {"code": "003001", "name": "中岩大地", "score": 60}]}, {"name": "技术突破", "desc": "MACD/MA出现金叉确认信号，趋势有望延续", "stocks": [{"code": "603662", "name": "柯力传感", "score": 76}, {"code": "002194", "name": "武汉凡谷", "score": 72}, {"code": "002326", "name": "永太科技", "score": 86}, {"code": "002471", "name": "中超控股", "score": 76}, {"code": "002842", "name": "翔鹭钨业", "score": 78}]}], "macro_indices": {"000001": {"name": "上证指数", "code": "000001", "price": 3976.83, "prev_close": 4027.74, "change_pct": -1.26, "high": 4007.49, "low": 3938.71}, "399001": {"name": "深证成指", "code": "399001", "price": 14933.82, "prev_close": 15314.7, "change_pct": -2.49, "high": 15137.75, "low": 14835.37}, "399006": {"name": "创业板指", "code": "399006", "price": 3845.78, "prev_close": 3957.94, "change_pct": -2.83, "high": 3903.77, "low": 3820.23}, "000688": {"name": "科创50", "code": "000688", "price": 1607.78, "prev_close": 1668.33, "change_pct": -3.63, "high": 1634.03, "low": 1587.97}, "000300": {"name": "沪深300", "code": "000300", "price": 4737.5, "prev_close": 4816.92, "change_pct": -1.65, "high": 4779.86, "low": 4703.77}}}
+{
+  "update_time": "2026-06-08 12:01:35",
+  "market_analysis": "【A股大盘】\n\n全市场3079只股票：上涨375只（12.2%），下跌2511只（81.6%），平均涨幅-2.02%。涨停40只，跌停12只。\n两市总成交额约10356亿元。\n\n【美股隔夜行情】\n美股数据暂未获取（可能为非交易时段）\n\n【板块资金动向】\n高换手率（>10%）个股55只，市场活跃度一般。\n涨停40只中评分60+的有0只，涨停质量一般。\n\n【综合结论】市场情绪偏空，综合评分44.0分。赚钱效应很差。\n技术面偏弱，注意控制风险，以防守为主，等待企稳信号。",
+  "next_day_advice": "【明日总体策略】市场情绪偏冷，以防守为主。\n保持低仓位（3-4成），优先考虑减仓或观望。\n\n========================================\n【重点推荐操作计划】\n========================================\n\n📌 1. 晶方科技（603005）评分88分 | 明日预估+1.5%\n   现价：45.87元  今日涨幅：+0.15%\n   建议买入区间：43.08 元\n   止损位：40.93 元\n   目标价位：49.47 元\n   买入时间：开盘30分钟内 (9:30-10:00)\n   关键信号：均线多头排列、MA金叉、红柱放大\n   👉 操作计划：\n      建议低吸为主，若回调至43.08附近企稳可分批建仓。\n      目标49.47元，止损40.93元。\n\n📌 2. 永太科技（002326）评分86分 | 明日预估+2.0%\n   现价：22.80元  今日涨幅：+4.11%\n   建议买入区间：21.90 元\n   止损位：20.81 元\n   目标价位：25.34 元\n   买入时间：开盘30分钟内 (9:30-10:00)\n   关键信号：MA金叉、MACD金叉、红柱放大\n   👉 操作计划：\n      开盘观察竞价量能，若高开1-2%且量能放大，可在21.9附近介入。\n      目标25.34元（约11.1%空间），止损20.81元。\n\n📌 3. 展鹏科技（603488）评分86分 | 明日预估+3.0%\n   现价：12.24元  今日涨幅：+1.24%\n   建议买入区间：11.79 元\n   止损位：11.20 元\n   目标价位：12.85 元\n   买入时间：开盘30分钟内 (9:30-10:00)\n   关键信号：均线多头排列、红柱放大\n   👉 操作计划：\n      开盘观察竞价量能，若高开1-2%且量能放大，可在11.79附近介入。\n      目标12.85元（约5.0%空间），止损11.2元。\n\n========================================\n【备选买入标的】\n========================================\n   • 翔鹭钨业（002842）78分 | 预估+2.0% | 买入33.48元 | 目标42.21元 | 止损31.81元\n   • 冰山冷热（000530）78分 | 预估+1.5% | 买入6.32元 | 目标6.77元 | 止损6.0元\n   • 泛微网络（603039）77分 | 预估+3.0% | 买入40.15元 | 目标43.52元 | 止损38.14元\n\n【回调低吸策略】技术面超卖或触及支撑位的强势股，可在支撑位附近分批建仓\n\n【技术突破策略】MACD/MA出现金叉确认信号，趋势有望延续",
+  "recommendations": {
+    "strong_buy": [
+      {
+        "code": "603005",
+        "name": "晶方科技",
+        "score": 88,
+        "price": 45.87,
+        "prev_close": 45.8,
+        "change_pct": 0.15,
+        "buy_point": 43.08,
+        "buy_time": "开盘30分钟内 (9:30-10:00)",
+        "target_price": 49.47,
+        "stop_loss": 40.93,
+        "sell_time": "冲高回落时 (10:30-11:00 或 14:00-14:30)",
+        "support": 31.58,
+        "resistance": 48.5,
+        "trend": "上升",
+        "recommendation": "强烈买入",
+        "next_day_estimate": {
+          "estimate": 1.5,
+          "factors": [
+            "连续上涨",
+            "MACD多头"
+          ]
+        },
+        "signals": [
+          "横盘整理",
+          "高换手",
+          "大振幅",
+          "放量",
+          "均线多头排列",
+          "MA金叉",
+          "红柱放大"
+        ],
+        "analysis_text": "该股处于上升趋势，现价45.87元运行在MA5(43.08)上方。综合评分61分，操作建议：关注。参考买入区间 43.08 元，止损 40.93 元，目标 49.47 元。",
+        "ma5": 43.08,
+        "ma10": 42.79,
+        "ma20": 39.03,
+        "ma60": 32.57,
+        "rsi6": 69.7,
+        "rsi12": 67.4,
+        "kdj_k": 58.7,
+        "kdj_j": 70.4,
+        "macd_dif": 3.2512,
+        "boll_upper": 48.83,
+        "boll_middle": 39.03,
+        "boll_lower": 29.24,
+        "snapshot_price": 45.87,
+        "latest_price": 45.15,
+        "latest_change_pct": -1.42
+      },
+      {
+        "code": "002326",
+        "name": "永太科技",
+        "score": 86,
+        "price": 22.8,
+        "prev_close": 21.9,
+        "change_pct": 4.11,
+        "buy_point": 21.9,
+        "buy_time": "开盘30分钟内 (9:30-10:00)",
+        "target_price": 25.34,
+        "stop_loss": 20.81,
+        "sell_time": "冲高回落时 (10:30-11:00 或 14:00-14:30)",
+        "support": 20.59,
+        "resistance": 24.84,
+        "trend": "上升",
+        "recommendation": "强烈买入",
+        "next_day_estimate": {
+          "estimate": 2.0,
+          "factors": [
+            "技术面偏强",
+            "MACD多头"
+          ]
+        },
+        "signals": [
+          "温和上涨",
+          "收在高位",
+          "大振幅",
+          "高PE",
+          "放量",
+          "MA金叉",
+          "MACD金叉",
+          "红柱放大"
+        ],
+        "analysis_text": "该股处于上升趋势，现价22.80元运行在MA5(21.90)上方。综合评分67分，操作建议：买入。参考买入区间 21.9 元，止损 20.81 元，目标 25.34 元。",
+        "ma5": 21.9,
+        "ma10": 21.67,
+        "ma20": 22.33,
+        "ma60": 23.29,
+        "rsi6": 62.5,
+        "rsi12": 52.0,
+        "kdj_k": 63.8,
+        "kdj_j": 82.1,
+        "macd_dif": -0.4989,
+        "boll_upper": 24.09,
+        "boll_middle": 22.33,
+        "boll_lower": 20.57,
+        "snapshot_price": 22.8,
+        "latest_price": 23.13,
+        "latest_change_pct": 5.62
+      },
+      {
+        "code": "603488",
+        "name": "展鹏科技",
+        "score": 86,
+        "price": 12.24,
+        "prev_close": 12.09,
+        "change_pct": 1.24,
+        "buy_point": 11.79,
+        "buy_time": "开盘30分钟内 (9:30-10:00)",
+        "target_price": 12.85,
+        "stop_loss": 11.2,
+        "sell_time": "冲高回落时 (10:30-11:00 或 14:00-14:30)",
+        "support": 10.6,
+        "resistance": 12.6,
+        "trend": "上升",
+        "recommendation": "强烈买入",
+        "next_day_estimate": {
+          "estimate": 3.0,
+          "factors": [
+            "技术面偏强",
+            "连续上涨",
+            "MACD多头"
+          ]
+        },
+        "signals": [
+          "温和上涨",
+          "大振幅",
+          "放量",
+          "均线多头排列",
+          "红柱放大"
+        ],
+        "analysis_text": "该股处于上升趋势，现价12.24元运行在MA5(11.79)上方。综合评分67分，操作建议：买入。参考买入区间 11.79 元，止损 11.2 元，目标 12.85 元。",
+        "ma5": 11.79,
+        "ma10": 11.61,
+        "ma20": 11.57,
+        "ma60": 11.03,
+        "rsi6": 69.0,
+        "rsi12": 59.9,
+        "kdj_k": 60.3,
+        "kdj_j": 74.1,
+        "macd_dif": 0.1444,
+        "boll_upper": 12.39,
+        "boll_middle": 11.57,
+        "boll_lower": 10.75,
+        "snapshot_price": 12.24,
+        "latest_price": 12.6,
+        "latest_change_pct": 4.22
+      },
+      {
+        "code": "000966",
+        "name": "长源电力",
+        "score": 83,
+        "price": 5.49,
+        "prev_close": 5.42,
+        "change_pct": 1.29,
+        "buy_point": 5.36,
+        "buy_time": "开盘30分钟内 (9:30-10:00)",
+        "target_price": 5.93,
+        "stop_loss": 5.1,
+        "sell_time": "冲高回落时 (10:30-11:00 或 14:00-14:30)",
+        "support": 4.6,
+        "resistance": 5.81,
+        "trend": "上升",
+        "recommendation": "强烈买入",
+        "next_day_estimate": {
+          "estimate": 1.5,
+          "factors": [
+            "连续上涨",
+            "MACD多头"
+          ]
+        },
+        "signals": [
+          "温和上涨",
+          "大振幅",
+          "高PE",
+          "放量",
+          "均线多头排列",
+          "红柱放大"
+        ],
+        "analysis_text": "该股处于上升趋势，现价5.49元运行在MA5(5.36)上方。综合评分64分，操作建议：关注。参考买入区间 5.36 元，止损 5.1 元，目标 5.93 元。",
+        "ma5": 5.36,
+        "ma10": 5.32,
+        "ma20": 5.12,
+        "ma60": 4.86,
+        "rsi6": 66.8,
+        "rsi12": 64.0,
+        "kdj_k": 53.0,
+        "kdj_j": 57.0,
+        "macd_dif": 0.1785,
+        "boll_upper": 5.6,
+        "boll_middle": 5.12,
+        "boll_lower": 4.64,
+        "snapshot_price": 5.49,
+        "latest_price": 5.47,
+        "latest_change_pct": 0.92
+      },
+      {
+        "code": "601869",
+        "name": "长飞光纤",
+        "score": 83,
+        "price": 446.84,
+        "prev_close": 441.67,
+        "change_pct": 1.17,
+        "buy_point": 439.63,
+        "buy_time": "开盘30分钟内 (9:30-10:00)",
+        "target_price": 496.84,
+        "stop_loss": 417.64,
+        "sell_time": "冲高回落时 (10:30-11:00 或 14:00-14:30)",
+        "support": 351.37,
+        "resistance": 487.1,
+        "trend": "上升",
+        "recommendation": "强烈买入",
+        "next_day_estimate": {
+          "estimate": 0.5,
+          "factors": [
+            "MACD多头"
+          ]
+        },
+        "signals": [
+          "温和上涨",
+          "大振幅",
+          "高PE",
+          "放量",
+          "均线多头排列",
+          "红柱放大"
+        ],
+        "analysis_text": "该股处于上升趋势，现价446.84元运行在MA5(439.63)上方。综合评分64分，操作建议：关注。参考买入区间 439.63 元，止损 417.64 元，目标 496.84 元。",
+        "ma5": 439.63,
+        "ma10": 407.31,
+        "ma20": 400.82,
+        "ma60": 349.85,
+        "rsi6": 66.9,
+        "rsi12": 63.1,
+        "kdj_k": 56.8,
+        "kdj_j": 65.8,
+        "macd_dif": 18.7998,
+        "boll_upper": 455.68,
+        "boll_middle": 400.82,
+        "boll_lower": 345.97,
+        "snapshot_price": 446.84,
+        "latest_price": 440.3,
+        "latest_change_pct": -0.31
+      }
+    ],
+    "buy": [
+      {
+        "code": "002842",
+        "name": "翔鹭钨业",
+        "score": 78,
+        "price": 33.52,
+        "prev_close": 32.94,
+        "change_pct": 1.76,
+        "buy_point": 33.48,
+        "buy_time": "开盘30分钟内 (9:30-10:00)",
+        "target_price": 42.21,
+        "stop_loss": 31.81,
+        "sell_time": "冲高回落时 (10:30-11:00 或 14:00-14:30)",
+        "support": 30.5,
+        "resistance": 41.38,
+        "trend": "上升",
+        "recommendation": "买入",
+        "next_day_estimate": {
+          "estimate": 2.0,
+          "factors": [
+            "技术面偏强",
+            "MACD多头"
+          ]
+        },
+        "signals": [
+          "温和上涨",
+          "高换手",
+          "大振幅",
+          "放量",
+          "MACD金叉",
+          "红柱放大"
+        ],
+        "analysis_text": "该股处于上升趋势，现价33.52元运行在MA5(33.48)上方。综合评分67分，操作建议：买入。参考买入区间 33.48 元，止损 31.81 元，目标 42.21 元。",
+        "ma5": 33.48,
+        "ma10": 33.03,
+        "ma20": 34.07,
+        "ma60": 33.81,
+        "rsi6": 51.1,
+        "rsi12": 48.5,
+        "kdj_k": 55.3,
+        "kdj_j": 62.4,
+        "macd_dif": -0.4332,
+        "boll_upper": 38.29,
+        "boll_middle": 34.07,
+        "boll_lower": 29.84,
+        "snapshot_price": 33.52,
+        "latest_price": 33.08,
+        "latest_change_pct": 0.43
+      },
+      {
+        "code": "000530",
+        "name": "冰山冷热",
+        "score": 78,
+        "price": 6.48,
+        "prev_close": 6.31,
+        "change_pct": 2.69,
+        "buy_point": 6.32,
+        "buy_time": "开盘30分钟内 (9:30-10:00)",
+        "target_price": 6.77,
+        "stop_loss": 6.0,
+        "sell_time": "冲高回落时 (10:30-11:00 或 14:00-14:30)",
+        "support": 5.38,
+        "resistance": 6.64,
+        "trend": "上升",
+        "recommendation": "买入",
+        "next_day_estimate": {
+          "estimate": 1.5,
+          "factors": [
+            "连续上涨",
+            "MACD多头"
+          ]
+        },
+        "signals": [
+          "温和上涨",
+          "高换手",
+          "大振幅",
+          "高PE",
+          "放量",
+          "均线多头排列",
+          "红柱放大",
+          "RSI偏高"
+        ],
+        "analysis_text": "该股处于上升趋势，现价6.48元运行在MA5(6.32)上方。综合评分64分，操作建议：关注。参考买入区间 6.32 元，止损 6.0 元，目标 6.77 元。",
+        "ma5": 6.32,
+        "ma10": 6.14,
+        "ma20": 6.02,
+        "ma60": 6.04,
+        "rsi6": 71.9,
+        "rsi12": 64.0,
+        "kdj_k": 62.4,
+        "kdj_j": 79.0,
+        "macd_dif": 0.0998,
+        "boll_upper": 6.58,
+        "boll_middle": 6.02,
+        "boll_lower": 5.46,
+        "snapshot_price": 6.48,
+        "latest_price": 6.49,
+        "latest_change_pct": 2.85
+      },
+      {
+        "code": "603039",
+        "name": "泛微网络",
+        "score": 77,
+        "price": 41.46,
+        "prev_close": 39.94,
+        "change_pct": 3.81,
+        "buy_point": 40.15,
+        "buy_time": "开盘30分钟内 (9:30-10:00)",
+        "target_price": 43.52,
+        "stop_loss": 38.14,
+        "sell_time": "冲高回落时 (10:30-11:00 或 14:00-14:30)",
+        "support": 35.6,
+        "resistance": 42.67,
+        "trend": "上升",
+        "recommendation": "买入",
+        "next_day_estimate": {
+          "estimate": 3.0,
+          "factors": [
+            "技术面偏强",
+            "连续上涨",
+            "MACD多头"
+          ]
+        },
+        "signals": [
+          "温和上涨",
+          "收在高位",
+          "大振幅",
+          "放量",
+          "红柱放大"
+        ],
+        "analysis_text": "该股处于上升趋势，现价41.46元运行在MA5(40.15)上方。综合评分70分，操作建议：买入。参考买入区间 40.15 元，止损 38.14 元，目标 43.52 元。",
+        "ma5": 40.15,
+        "ma10": 38.87,
+        "ma20": 39.14,
+        "ma60": 37.45,
+        "rsi6": 61.4,
+        "rsi12": 57.4,
+        "kdj_k": 61.0,
+        "kdj_j": 75.6,
+        "macd_dif": 0.4748,
+        "boll_upper": 42.23,
+        "boll_middle": 39.14,
+        "boll_lower": 36.05,
+        "snapshot_price": 41.46,
+        "latest_price": 41.15,
+        "latest_change_pct": 3.03
+      },
+      {
+        "code": "002987",
+        "name": "京北方",
+        "score": 77,
+        "price": 12.37,
+        "prev_close": 12.27,
+        "change_pct": 0.81,
+        "buy_point": 11.77,
+        "buy_time": "开盘30分钟内 (9:30-10:00)",
+        "target_price": 13.24,
+        "stop_loss": 11.18,
+        "sell_time": "冲高回落时 (10:30-11:00 或 14:00-14:30)",
+        "support": 11.1,
+        "resistance": 12.98,
+        "trend": "上升",
+        "recommendation": "买入",
+        "next_day_estimate": {
+          "estimate": 2.5,
+          "factors": [
+            "连续上涨",
+            "MACD多头",
+            "放量上攻"
+          ]
+        },
+        "signals": [
+          "横盘整理",
+          "大振幅",
+          "放量",
+          "MACD金叉",
+          "红柱放大",
+          "放量上涨"
+        ],
+        "analysis_text": "该股处于上升趋势，现价12.37元运行在MA5(11.77)上方。综合评分61分，操作建议：关注。参考买入区间 11.77 元，止损 11.18 元，目标 13.24 元。",
+        "ma5": 11.77,
+        "ma10": 11.84,
+        "ma20": 12.17,
+        "ma60": 13.1,
+        "rsi6": 61.8,
+        "rsi12": 52.1,
+        "kdj_k": 60.3,
+        "kdj_j": 74.0,
+        "macd_dif": -0.3146,
+        "boll_upper": 13.08,
+        "boll_middle": 12.17,
+        "boll_lower": 11.27,
+        "snapshot_price": 12.37,
+        "latest_price": 12.48,
+        "latest_change_pct": 1.71
+      },
+      {
+        "code": "603662",
+        "name": "柯力传感",
+        "score": 76,
+        "price": 69.19,
+        "prev_close": 66.24,
+        "change_pct": 4.45,
+        "buy_point": 64.27,
+        "buy_time": "开盘30分钟内 (9:30-10:00)",
+        "target_price": 72.23,
+        "stop_loss": 61.05,
+        "sell_time": "冲高回落时 (10:30-11:00 或 14:00-14:30)",
+        "support": 58.62,
+        "resistance": 70.81,
+        "trend": "上升",
+        "recommendation": "买入",
+        "next_day_estimate": {
+          "estimate": 2.0,
+          "factors": [
+            "技术面偏强",
+            "连续上涨"
+          ]
+        },
+        "signals": [
+          "温和上涨",
+          "收在高位",
+          "大振幅",
+          "放量",
+          "MA金叉",
+          "RSI偏高"
+        ],
+        "analysis_text": "该股处于上升趋势，现价69.19元运行在MA5(64.27)上方。综合评分70分，操作建议：买入。参考买入区间 64.27 元，止损 61.05 元，目标 72.23 元。",
+        "ma5": 64.27,
+        "ma10": 63.95,
+        "ma20": 64.49,
+        "ma60": 59.4,
+        "rsi6": 72.8,
+        "rsi12": 65.3,
+        "kdj_k": 64.8,
+        "kdj_j": 84.5,
+        "macd_dif": 1.3683,
+        "boll_upper": 70.92,
+        "boll_middle": 64.49,
+        "boll_lower": 58.07,
+        "snapshot_price": 69.19,
+        "latest_price": 69.9,
+        "latest_change_pct": 5.53
+      },
+      {
+        "code": "002471",
+        "name": "中超控股",
+        "score": 76,
+        "price": 8.07,
+        "prev_close": 7.95,
+        "change_pct": 1.51,
+        "buy_point": 7.46,
+        "buy_time": "开盘30分钟内 (9:30-10:00)",
+        "target_price": 9.13,
+        "stop_loss": 7.09,
+        "sell_time": "冲高回落时 (10:30-11:00 或 14:00-14:30)",
+        "support": 6.61,
+        "resistance": 8.95,
+        "trend": "上升",
+        "recommendation": "买入",
+        "next_day_estimate": {
+          "estimate": 4.0,
+          "factors": [
+            "技术面偏强",
+            "连续上涨",
+            "MACD多头",
+            "放量上攻"
+          ]
+        },
+        "signals": [
+          "温和上涨",
+          "高换手",
+          "大振幅",
+          "放量",
+          "MA金叉",
+          "红柱放大",
+          "RSI偏高",
+          "放量上涨"
+        ],
+        "analysis_text": "该股处于上升趋势，现价8.07元运行在MA5(7.46)上方。综合评分67分，操作建议：买入。参考买入区间 7.46 元，止损 7.09 元，目标 9.13 元。",
+        "ma5": 7.46,
+        "ma10": 7.35,
+        "ma20": 7.74,
+        "ma60": 8.42,
+        "rsi6": 71.8,
+        "rsi12": 55.3,
+        "kdj_k": 61.3,
+        "kdj_j": 76.4,
+        "macd_dif": -0.2792,
+        "boll_upper": 8.78,
+        "boll_middle": 7.74,
+        "boll_lower": 6.7,
+        "snapshot_price": 8.07,
+        "latest_price": 8.1,
+        "latest_change_pct": 1.89
+      },
+      {
+        "code": "603619",
+        "name": "中曼石油",
+        "score": 76,
+        "price": 26.07,
+        "prev_close": 25.39,
+        "change_pct": 2.68,
+        "buy_point": 25.92,
+        "buy_time": "开盘30分钟内 (9:30-10:00)",
+        "target_price": 30.97,
+        "stop_loss": 24.62,
+        "sell_time": "冲高回落时 (10:30-11:00 或 14:00-14:30)",
+        "support": 24.81,
+        "resistance": 30.36,
+        "trend": "上升",
+        "recommendation": "买入",
+        "next_day_estimate": {
+          "estimate": 2.0,
+          "factors": [
+            "技术面偏强",
+            "MACD多头"
+          ]
+        },
+        "signals": [
+          "温和上涨",
+          "放量",
+          "MA金叉",
+          "红柱放大"
+        ],
+        "analysis_text": "该股处于上升趋势，现价26.07元运行在MA5(25.92)上方。综合评分67分，操作建议：买入。参考买入区间 25.92 元，止损 24.62 元，目标 30.97 元。",
+        "ma5": 25.92,
+        "ma10": 25.9,
+        "ma20": 27.32,
+        "ma60": 31.99,
+        "rsi6": 45.6,
+        "rsi12": 39.5,
+        "kdj_k": 50.3,
+        "kdj_j": 50.8,
+        "macd_dif": -1.6348,
+        "boll_upper": 30.52,
+        "boll_middle": 27.32,
+        "boll_lower": 24.12,
+        "snapshot_price": 26.07,
+        "latest_price": 25.96,
+        "latest_change_pct": 2.24
+      },
+      {
+        "code": "000951",
+        "name": "中国重汽",
+        "score": 76,
+        "price": 23.14,
+        "prev_close": 22.16,
+        "change_pct": 4.42,
+        "buy_point": 22.66,
+        "buy_time": "开盘30分钟内 (9:30-10:00)",
+        "target_price": 24.12,
+        "stop_loss": 21.52,
+        "sell_time": "冲高回落时 (10:30-11:00 或 14:00-14:30)",
+        "support": 20.4,
+        "resistance": 23.65,
+        "trend": "上升",
+        "recommendation": "买入",
+        "next_day_estimate": {
+          "estimate": 0.5,
+          "factors": [
+            "MACD多头"
+          ]
+        },
+        "signals": [
+          "温和上涨",
+          "大振幅",
+          "低PE",
+          "均线多头排列",
+          "红柱放大"
+        ],
+        "analysis_text": "该股处于上升趋势，现价23.14元运行在MA5(22.66)上方。积极信号：低PE。综合评分63分，操作建议：关注。参考买入区间 22.66 元，止损 21.52 元，目标 24.12 元。",
+        "ma5": 22.66,
+        "ma10": 21.96,
+        "ma20": 21.88,
+        "ma60": 22.76,
+        "rsi6": 69.7,
+        "rsi12": 59.3,
+        "kdj_k": 63.3,
+        "kdj_j": 81.0,
+        "macd_dif": -0.0673,
+        "boll_upper": 23.52,
+        "boll_middle": 21.88,
+        "boll_lower": 20.23,
+        "snapshot_price": 23.14,
+        "latest_price": 23.26,
+        "latest_change_pct": 4.96
+      },
+      {
+        "code": "002981",
+        "name": "朝阳科技",
+        "score": 76,
+        "price": 28.02,
+        "prev_close": 27.99,
+        "change_pct": 0.11,
+        "buy_point": 27.66,
+        "buy_time": "开盘30分钟内 (9:30-10:00)",
+        "target_price": 30.15,
+        "stop_loss": 26.27,
+        "sell_time": "冲高回落时 (10:30-11:00 或 14:00-14:30)",
+        "support": 24.12,
+        "resistance": 29.56,
+        "trend": "上升",
+        "recommendation": "买入",
+        "next_day_estimate": {
+          "estimate": 0.5,
+          "factors": [
+            "MACD多头"
+          ]
+        },
+        "signals": [
+          "横盘整理",
+          "放量",
+          "均线多头排列"
+        ],
+        "analysis_text": "该股处于上升趋势，现价28.02元运行在MA5(27.66)上方。综合评分61分，操作建议：关注。参考买入区间 27.66 元，止损 26.27 元，目标 30.15 元。",
+        "ma5": 27.66,
+        "ma10": 26.99,
+        "ma20": 26.15,
+        "ma60": 24.9,
+        "rsi6": 63.5,
+        "rsi12": 63.5,
+        "kdj_k": 56.6,
+        "kdj_j": 65.5,
+        "macd_dif": 0.8137,
+        "boll_upper": 28.46,
+        "boll_middle": 26.15,
+        "boll_lower": 23.84,
+        "snapshot_price": 28.02,
+        "latest_price": 28.11,
+        "latest_change_pct": 0.43
+      },
+      {
+        "code": "603150",
+        "name": "万朗磁塑",
+        "score": 75,
+        "price": 70.67,
+        "prev_close": 67.59,
+        "change_pct": 4.56,
+        "buy_point": 66.77,
+        "buy_time": "开盘30分钟内 (9:30-10:00)",
+        "target_price": 79.36,
+        "stop_loss": 63.43,
+        "sell_time": "冲高回落时 (10:30-11:00 或 14:00-14:30)",
+        "support": 61.31,
+        "resistance": 77.8,
+        "trend": "上升",
+        "recommendation": "买入",
+        "next_day_estimate": {
+          "estimate": 3.0,
+          "factors": [
+            "技术面偏强",
+            "连续上涨",
+            "放量上攻"
+          ]
+        },
+        "signals": [
+          "温和上涨",
+          "大振幅",
+          "放量",
+          "放量上涨"
+        ],
+        "analysis_text": "该股处于上升趋势，现价70.67元运行在MA5(66.77)上方。综合评分67分，操作建议：买入。参考买入区间 66.77 元，止损 63.43 元，目标 79.36 元。",
+        "ma5": 66.77,
+        "ma10": 68.03,
+        "ma20": 69.27,
+        "ma60": 60.03,
+        "rsi6": 65.7,
+        "rsi12": 59.5,
+        "kdj_k": 60.2,
+        "kdj_j": 73.8,
+        "macd_dif": 1.256,
+        "boll_upper": 75.2,
+        "boll_middle": 69.27,
+        "boll_lower": 63.33,
+        "snapshot_price": 70.67,
+        "latest_price": 67.8,
+        "latest_change_pct": 0.31
+      }
+    ],
+    "watch": [],
+    "avoid": [
+      {
+        "code": "603991",
+        "name": "领先股份",
+        "score": 29,
+        "price": 101.1,
+        "prev_close": 106.58,
+        "change_pct": -5.14,
+        "trend": "下降",
+        "recommendation": "强烈卖出",
+        "signals": [
+          "大幅下跌",
+          "收在低位",
+          "高PE"
+        ],
+        "snapshot_price": 101.1
+      },
+      {
+        "code": "605598",
+        "name": "上海港湾",
+        "score": 29,
+        "price": 39.22,
+        "prev_close": 41.45,
+        "change_pct": -5.38,
+        "trend": "下降",
+        "recommendation": "强烈卖出",
+        "signals": [
+          "大幅下跌",
+          "收在低位",
+          "大振幅",
+          "高PE"
+        ],
+        "snapshot_price": 39.22
+      },
+      {
+        "code": "000011",
+        "name": "深物业A",
+        "score": 27,
+        "price": 7.2,
+        "prev_close": 7.58,
+        "change_pct": -5.01,
+        "trend": "下降",
+        "recommendation": "强烈卖出",
+        "signals": [
+          "大幅下跌",
+          "低换手",
+          "收在低位",
+          "高PE"
+        ],
+        "snapshot_price": 7.2
+      },
+      {
+        "code": "002579",
+        "name": "中京电子",
+        "score": 27,
+        "price": 16.85,
+        "prev_close": 18.69,
+        "change_pct": -9.84,
+        "trend": "下降",
+        "recommendation": "强烈卖出",
+        "signals": [
+          "大幅下跌",
+          "异常换手",
+          "收在低位",
+          "高PE",
+          "放量"
+        ],
+        "snapshot_price": 16.85
+      },
+      {
+        "code": "600893",
+        "name": "航发动力",
+        "score": 27,
+        "price": 39.93,
+        "prev_close": 42.37,
+        "change_pct": -5.76,
+        "trend": "下降",
+        "recommendation": "强烈卖出",
+        "signals": [
+          "大幅下跌",
+          "低换手",
+          "收在低位",
+          "高PE"
+        ],
+        "snapshot_price": 39.93
+      }
+    ]
+  },
+  "scores": {
+    "603005": {
+      "score": 88,
+      "price": 45.87,
+      "name": "晶方科技",
+      "change_pct": 0.15
+    },
+    "002326": {
+      "score": 86,
+      "price": 22.8,
+      "name": "永太科技",
+      "change_pct": 4.11
+    },
+    "603488": {
+      "score": 86,
+      "price": 12.24,
+      "name": "展鹏科技",
+      "change_pct": 1.24
+    },
+    "000966": {
+      "score": 83,
+      "price": 5.49,
+      "name": "长源电力",
+      "change_pct": 1.29
+    },
+    "601869": {
+      "score": 83,
+      "price": 446.84,
+      "name": "长飞光纤",
+      "change_pct": 1.17
+    },
+    "002463": {
+      "score": 82,
+      "price": 135.46,
+      "name": "沪电股份",
+      "change_pct": 1.68
+    },
+    "600707": {
+      "score": 82,
+      "price": 11.9,
+      "name": "彩虹股份",
+      "change_pct": 1.62
+    },
+    "003004": {
+      "score": 81,
+      "price": 64.41,
+      "name": "声迅股份",
+      "change_pct": 3.4
+    },
+    "600114": {
+      "score": 81,
+      "price": 40.93,
+      "name": "东睦股份",
+      "change_pct": 1.34
+    },
+    "600881": {
+      "score": 81,
+      "price": 1.69,
+      "name": "亚泰集团",
+      "change_pct": 2.42
+    },
+    "600906": {
+      "score": 81,
+      "price": 6.99,
+      "name": "财达证券",
+      "change_pct": 1.75
+    },
+    "603236": {
+      "score": 81,
+      "price": 58.13,
+      "name": "移远通信",
+      "change_pct": 1.4
+    },
+    "000333": {
+      "score": 80,
+      "price": 83.08,
+      "name": "美的集团",
+      "change_pct": 1.7
+    },
+    "601077": {
+      "score": 80,
+      "price": 6.79,
+      "name": "渝农商行",
+      "change_pct": 2.41
+    },
+    "002842": {
+      "score": 78,
+      "price": 33.52,
+      "name": "翔鹭钨业",
+      "change_pct": 1.76
+    },
+    "000530": {
+      "score": 78,
+      "price": 6.48,
+      "name": "冰山冷热",
+      "change_pct": 2.69
+    },
+    "603039": {
+      "score": 77,
+      "price": 41.46,
+      "name": "泛微网络",
+      "change_pct": 3.81
+    },
+    "002987": {
+      "score": 77,
+      "price": 12.37,
+      "name": "京北方",
+      "change_pct": 0.81
+    },
+    "603662": {
+      "score": 76,
+      "price": 69.19,
+      "name": "柯力传感",
+      "change_pct": 4.45
+    },
+    "002471": {
+      "score": 76,
+      "price": 8.07,
+      "name": "中超控股",
+      "change_pct": 1.51
+    },
+    "603045": {
+      "score": 76,
+      "price": 87.55,
+      "name": "福达合金",
+      "change_pct": 4.96
+    },
+    "603212": {
+      "score": 76,
+      "price": 16.3,
+      "name": "赛伍技术",
+      "change_pct": 2.71
+    },
+    "603386": {
+      "score": 76,
+      "price": 17.99,
+      "name": "骏亚科技",
+      "change_pct": 1.52
+    },
+    "603619": {
+      "score": 76,
+      "price": 26.07,
+      "name": "中曼石油",
+      "change_pct": 2.68
+    },
+    "603861": {
+      "score": 76,
+      "price": 18.29,
+      "name": "白云电器",
+      "change_pct": 1.67
+    },
+    "000951": {
+      "score": 76,
+      "price": 23.14,
+      "name": "中国重汽",
+      "change_pct": 4.42
+    },
+    "002981": {
+      "score": 76,
+      "price": 28.02,
+      "name": "朝阳科技",
+      "change_pct": 0.11
+    },
+    "603150": {
+      "score": 75,
+      "price": 70.67,
+      "name": "万朗磁塑",
+      "change_pct": 4.56
+    },
+    "002278": {
+      "score": 75,
+      "price": 9.1,
+      "name": "神开股份",
+      "change_pct": 2.36
+    },
+    "002615": {
+      "score": 75,
+      "price": 8.29,
+      "name": "哈尔斯",
+      "change_pct": 2.6
+    },
+    "002851": {
+      "score": 75,
+      "price": 150.39,
+      "name": "麦格米特",
+      "change_pct": 2.66
+    },
+    "601689": {
+      "score": 75,
+      "price": 69.26,
+      "name": "拓普集团",
+      "change_pct": 1.85
+    },
+    "000887": {
+      "score": 75,
+      "price": 21.89,
+      "name": "中鼎股份",
+      "change_pct": -0.45
+    },
+    "002171": {
+      "score": 75,
+      "price": 12.97,
+      "name": "楚江新材",
+      "change_pct": 0.93
+    },
+    "603060": {
+      "score": 75,
+      "price": 7.31,
+      "name": "国检集团",
+      "change_pct": 1.25
+    },
+    "600011": {
+      "score": 74,
+      "price": 8.51,
+      "name": "华能国际",
+      "change_pct": 1.43
+    },
+    "002670": {
+      "score": 74,
+      "price": 11.56,
+      "name": "国盛证券",
+      "change_pct": 4.81
+    },
+    "603036": {
+      "score": 73,
+      "price": 13.97,
+      "name": "如通股份",
+      "change_pct": 4.25
+    },
+    "000668": {
+      "score": 73,
+      "price": 21.12,
+      "name": "荣丰控股",
+      "change_pct": 2.57
+    },
+    "002527": {
+      "score": 73,
+      "price": 15.84,
+      "name": "新时达",
+      "change_pct": 2.66
+    },
+    "603608": {
+      "score": 73,
+      "price": 21.59,
+      "name": "天创时尚",
+      "change_pct": 4.35
+    },
+    "601288": {
+      "score": 73,
+      "price": 6.57,
+      "name": "农业银行",
+      "change_pct": 3.3
+    },
+    "002194": {
+      "score": 72,
+      "price": 12.5,
+      "name": "武汉凡谷",
+      "change_pct": 2.97
+    },
+    "000921": {
+      "score": 72,
+      "price": 27.08,
+      "name": "海信家电",
+      "change_pct": 1.31
+    },
+    "000657": {
+      "score": 72,
+      "price": 69.65,
+      "name": "中钨高新",
+      "change_pct": -0.64
+    },
+    "000799": {
+      "score": 72,
+      "price": 44.86,
+      "name": "酒鬼酒",
+      "change_pct": 0.79
+    },
+    "002520": {
+      "score": 72,
+      "price": 6.41,
+      "name": "日发精机",
+      "change_pct": 0.94
+    },
+    "600121": {
+      "score": 72,
+      "price": 5.22,
+      "name": "郑州煤电",
+      "change_pct": 0.0
+    },
+    "600503": {
+      "score": 72,
+      "price": 2.78,
+      "name": "华丽家族",
+      "change_pct": 0.36
+    },
+    "600031": {
+      "score": 72,
+      "price": 19.34,
+      "name": "三一重工",
+      "change_pct": 3.7
+    },
+    "002645": {
+      "score": 71,
+      "price": 32.02,
+      "name": "华宏科技",
+      "change_pct": 2.73
+    },
+    "600458": {
+      "score": 71,
+      "price": 14.38,
+      "name": "时代新材",
+      "change_pct": 1.7
+    },
+    "601398": {
+      "score": 71,
+      "price": 7.49,
+      "name": "工商银行",
+      "change_pct": 2.04
+    },
+    "000890": {
+      "score": 71,
+      "price": 10.17,
+      "name": "法尔胜",
+      "change_pct": -0.88
+    },
+    "000001": {
+      "score": 71,
+      "price": 11.08,
+      "name": "平安银行",
+      "change_pct": 0.91
+    },
+    "002674": {
+      "score": 70,
+      "price": 15.23,
+      "name": "兴业科技",
+      "change_pct": 3.32
+    },
+    "002881": {
+      "score": 70,
+      "price": 45.02,
+      "name": "美格智能",
+      "change_pct": 2.2
+    },
+    "003025": {
+      "score": 70,
+      "price": 15.53,
+      "name": "思进智能",
+      "change_pct": 4.51
+    },
+    "600303": {
+      "score": 70,
+      "price": 3.52,
+      "name": "曙光股份",
+      "change_pct": 1.44
+    },
+    "603159": {
+      "score": 70,
+      "price": 27.83,
+      "name": "上海亚虹",
+      "change_pct": 2.77
+    },
+    "603179": {
+      "score": 70,
+      "price": 53.4,
+      "name": "新泉股份",
+      "change_pct": 2.28
+    },
+    "603728": {
+      "score": 70,
+      "price": 67.25,
+      "name": "鸣志电器",
+      "change_pct": 2.17
+    },
+    "000725": {
+      "score": 70,
+      "price": 6.44,
+      "name": "京东方Ａ",
+      "change_pct": 0.16
+    },
+    "002138": {
+      "score": 70,
+      "price": 55.97,
+      "name": "顺络电子",
+      "change_pct": 0.65
+    },
+    "600487": {
+      "score": 70,
+      "price": 96.04,
+      "name": "亨通光电",
+      "change_pct": -0.08
+    },
+    "605358": {
+      "score": 70,
+      "price": 66.43,
+      "name": "立昂微",
+      "change_pct": -0.51
+    },
+    "601628": {
+      "score": 70,
+      "price": 33.24,
+      "name": "中国人寿",
+      "change_pct": 1.28
+    },
+    "002165": {
+      "score": 69,
+      "price": 6.72,
+      "name": "红 宝 丽",
+      "change_pct": 1.2
+    },
+    "002798": {
+      "score": 69,
+      "price": 6.38,
+      "name": "帝欧水华",
+      "change_pct": 2.24
+    },
+    "600793": {
+      "score": 69,
+      "price": 14.0,
+      "name": "宜宾纸业",
+      "change_pct": 3.7
+    },
+    "002888": {
+      "score": 69,
+      "price": 20.28,
+      "name": "惠威科技",
+      "change_pct": 1.3
+    },
+    "601211": {
+      "score": 69,
+      "price": 16.52,
+      "name": "国泰海通",
+      "change_pct": 1.66
+    },
+    "603270": {
+      "score": 69,
+      "price": 30.06,
+      "name": "金帝股份",
+      "change_pct": 0.97
+    },
+    "000410": {
+      "score": 69,
+      "price": 5.4,
+      "name": "沈阳机床",
+      "change_pct": 2.47
+    },
+    "002378": {
+      "score": 68,
+      "price": 30.34,
+      "name": "章源钨业",
+      "change_pct": 2.19
+    },
+    "002624": {
+      "score": 68,
+      "price": 14.15,
+      "name": "完美世界",
+      "change_pct": 1.36
+    },
+    "002955": {
+      "score": 68,
+      "price": 27.72,
+      "name": "鸿合科技",
+      "change_pct": 1.72
+    },
+    "603078": {
+      "score": 68,
+      "price": 43.17,
+      "name": "江化微",
+      "change_pct": 3.87
+    },
+    "002571": {
+      "score": 68,
+      "price": 12.73,
+      "name": "德力股份",
+      "change_pct": 0.55
+    },
+    "601988": {
+      "score": 68,
+      "price": 6.13,
+      "name": "中国银行",
+      "change_pct": 1.32
+    },
+    "603325": {
+      "score": 67,
+      "price": 59.15,
+      "name": "博隆技术",
+      "change_pct": 1.11
+    },
+    "002515": {
+      "score": 67,
+      "price": 6.75,
+      "name": "金字火腿",
+      "change_pct": 1.05
+    },
+    "605488": {
+      "score": 67,
+      "price": 36.44,
+      "name": "福莱新材",
+      "change_pct": 4.17
+    },
+    "000425": {
+      "score": 67,
+      "price": 9.96,
+      "name": "徐工机械",
+      "change_pct": 4.62
+    },
+    "601898": {
+      "score": 65,
+      "price": 17.02,
+      "name": "中煤能源",
+      "change_pct": 1.07
+    },
+    "000680": {
+      "score": 65,
+      "price": 11.06,
+      "name": "山推股份",
+      "change_pct": 1.47
+    },
+    "600985": {
+      "score": 65,
+      "price": 17.42,
+      "name": "淮北矿业",
+      "change_pct": 1.93
+    },
+    "601011": {
+      "score": 65,
+      "price": 3.3,
+      "name": "宝泰隆",
+      "change_pct": 0.3
+    },
+    "002733": {
+      "score": 65,
+      "price": 33.92,
+      "name": "雄韬股份",
+      "change_pct": -0.12
+    },
+    "000788": {
+      "score": 64,
+      "price": 5.3,
+      "name": "北大医药",
+      "change_pct": 2.32
+    },
+    "000803": {
+      "score": 64,
+      "price": 7.74,
+      "name": "山高环能",
+      "change_pct": 3.61
+    },
+    "002009": {
+      "score": 64,
+      "price": 22.74,
+      "name": "天奇股份",
+      "change_pct": 3.74
+    },
+    "002029": {
+      "score": 64,
+      "price": 8.47,
+      "name": "七 匹 狼",
+      "change_pct": 4.18
+    },
+    "002548": {
+      "score": 64,
+      "price": 4.09,
+      "name": "金新农",
+      "change_pct": 2.51
+    },
+    "002623": {
+      "score": 64,
+      "price": 18.65,
+      "name": "亚玛顿",
+      "change_pct": 1.25
+    },
+    "002681": {
+      "score": 64,
+      "price": 5.34,
+      "name": "奋达科技",
+      "change_pct": 3.29
+    },
+    "600227": {
+      "score": 64,
+      "price": 2.99,
+      "name": "赤天化",
+      "change_pct": 1.7
+    },
+    "600343": {
+      "score": 64,
+      "price": 26.16,
+      "name": "航天动力",
+      "change_pct": 1.16
+    },
+    "600573": {
+      "score": 64,
+      "price": 12.77,
+      "name": "惠泉啤酒",
+      "change_pct": 1.43
+    },
+    "600630": {
+      "score": 64,
+      "price": 8.52,
+      "name": "龙头股份",
+      "change_pct": 1.43
+    },
+    "603278": {
+      "score": 64,
+      "price": 13.39,
+      "name": "大业股份",
+      "change_pct": 4.2
+    },
+    "603667": {
+      "score": 64,
+      "price": 75.54,
+      "name": "五洲新春",
+      "change_pct": 1.61
+    },
+    "603690": {
+      "score": 64,
+      "price": 26.35,
+      "name": "至纯科技",
+      "change_pct": 1.19
+    },
+    "600938": {
+      "score": 64,
+      "price": 36.04,
+      "name": "中国海油",
+      "change_pct": 2.44
+    },
+    "002374": {
+      "score": 64,
+      "price": 3.49,
+      "name": "中锐股份",
+      "change_pct": 1.75
+    },
+    "600060": {
+      "score": 64,
+      "price": 26.12,
+      "name": "海信视像",
+      "change_pct": 2.63
+    },
+    "600101": {
+      "score": 64,
+      "price": 9.89,
+      "name": "明星电力",
+      "change_pct": -0.6
+    },
+    "603867": {
+      "score": 64,
+      "price": 38.01,
+      "name": "新化股份",
+      "change_pct": 1.82
+    },
+    "002469": {
+      "score": 64,
+      "price": 6.46,
+      "name": "三维化学",
+      "change_pct": 2.54
+    },
+    "000528": {
+      "score": 63,
+      "price": 8.67,
+      "name": "柳    工",
+      "change_pct": 1.64
+    },
+    "603080": {
+      "score": 63,
+      "price": 21.14,
+      "name": "新疆火炬",
+      "change_pct": 3.37
+    },
+    "600560": {
+      "score": 63,
+      "price": 13.16,
+      "name": "金自天正",
+      "change_pct": 2.73
+    },
+    "603166": {
+      "score": 63,
+      "price": 13.75,
+      "name": "福达股份",
+      "change_pct": 2.23
+    },
+    "600078": {
+      "score": 63,
+      "price": 13.95,
+      "name": "澄星股份",
+      "change_pct": 0.07
+    },
+    "002364": {
+      "score": 62,
+      "price": 54.1,
+      "name": "中恒电气",
+      "change_pct": 2.17
+    },
+    "002225": {
+      "score": 62,
+      "price": 3.89,
+      "name": "濮耐股份",
+      "change_pct": -0.51
+    },
+    "002426": {
+      "score": 62,
+      "price": 3.8,
+      "name": "胜利精密",
+      "change_pct": -0.52
+    },
+    "002657": {
+      "score": 62,
+      "price": 19.1,
+      "name": "中科金财",
+      "change_pct": 0.95
+    },
+    "002779": {
+      "score": 62,
+      "price": 75.42,
+      "name": "中坚科技",
+      "change_pct": 3.93
+    },
+    "600397": {
+      "score": 62,
+      "price": 13.81,
+      "name": "江钨装备",
+      "change_pct": 1.4
+    },
+    "601009": {
+      "score": 62,
+      "price": 11.38,
+      "name": "南京银行",
+      "change_pct": 1.97
+    },
+    "000157": {
+      "score": 62,
+      "price": 7.68,
+      "name": "中联重科",
+      "change_pct": 2.13
+    },
+    "002196": {
+      "score": 61,
+      "price": 13.96,
+      "name": "方正电机",
+      "change_pct": 2.05
+    },
+    "002342": {
+      "score": 61,
+      "price": 11.45,
+      "name": "巨力索具",
+      "change_pct": 3.15
+    },
+    "002892": {
+      "score": 61,
+      "price": 10.99,
+      "name": "科力尔",
+      "change_pct": 1.01
+    },
+    "003021": {
+      "score": 61,
+      "price": 106.54,
+      "name": "兆威机电",
+      "change_pct": 1.77
+    },
+    "601601": {
+      "score": 61,
+      "price": 31.49,
+      "name": "中国太保",
+      "change_pct": 1.42
+    },
+    "603268": {
+      "score": 61,
+      "price": 148.8,
+      "name": "松发股份",
+      "change_pct": 4.72
+    },
+    "002831": {
+      "score": 61,
+      "price": 27.4,
+      "name": "裕同科技",
+      "change_pct": 1.93
+    },
+    "601199": {
+      "score": 60,
+      "price": 5.65,
+      "name": "江南水务",
+      "change_pct": 2.73
+    },
+    "600926": {
+      "score": 60,
+      "price": 16.15,
+      "name": "杭州银行",
+      "change_pct": 1.89
+    },
+    "603568": {
+      "score": 60,
+      "price": 15.54,
+      "name": "伟明环保",
+      "change_pct": 3.67
+    },
+    "000709": {
+      "score": 60,
+      "price": 2.21,
+      "name": "河钢股份",
+      "change_pct": 1.38
+    },
+    "002601": {
+      "score": 60,
+      "price": 14.22,
+      "name": "龙佰集团",
+      "change_pct": 2.08
+    },
+    "002971": {
+      "score": 60,
+      "price": 39.33,
+      "name": "和远气体",
+      "change_pct": 0.08
+    },
+    "003001": {
+      "score": 60,
+      "price": 17.02,
+      "name": "中岩大地",
+      "change_pct": 0.71
+    },
+    "002014": {
+      "score": 59,
+      "price": 10.31,
+      "name": "永新股份",
+      "change_pct": 1.28
+    },
+    "601857": {
+      "score": 59,
+      "price": 10.8,
+      "name": "中国石油",
+      "change_pct": 1.79
+    },
+    "601998": {
+      "score": 59,
+      "price": 7.63,
+      "name": "中信银行",
+      "change_pct": 3.53
+    },
+    "600743": {
+      "score": 59,
+      "price": 2.48,
+      "name": "华远控股",
+      "change_pct": -0.4
+    },
+    "603637": {
+      "score": 59,
+      "price": 17.88,
+      "name": "镇海股份",
+      "change_pct": -0.45
+    },
+    "000520": {
+      "score": 58,
+      "price": 4.62,
+      "name": "凤凰航运",
+      "change_pct": 0.43
+    },
+    "000547": {
+      "score": 58,
+      "price": 20.27,
+      "name": "航天发展",
+      "change_pct": -0.98
+    },
+    "002031": {
+      "score": 58,
+      "price": 6.73,
+      "name": "巨轮智能",
+      "change_pct": 0.9
+    },
+    "002048": {
+      "score": 58,
+      "price": 26.71,
+      "name": "宁波华翔",
+      "change_pct": 3.33
+    },
+    "002085": {
+      "score": 58,
+      "price": 11.77,
+      "name": "万丰奥威",
+      "change_pct": 1.47
+    },
+    "002139": {
+      "score": 58,
+      "price": 10.23,
+      "name": "拓邦股份",
+      "change_pct": 1.09
+    },
+    "002184": {
+      "score": 58,
+      "price": 11.7,
+      "name": "海得控制",
+      "change_pct": -0.43
+    },
+    "002246": {
+      "score": 58,
+      "price": 21.32,
+      "name": "北化股份",
+      "change_pct": 1.09
+    },
+    "002407": {
+      "score": 58,
+      "price": 33.41,
+      "name": "多氟多",
+      "change_pct": 0.63
+    },
+    "002948": {
+      "score": 58,
+      "price": 5.5,
+      "name": "青岛银行",
+      "change_pct": 1.1
+    },
+    "600984": {
+      "score": 58,
+      "price": 4.41,
+      "name": "建设机械",
+      "change_pct": 0.68
+    },
+    "603286": {
+      "score": 58,
+      "price": 61.03,
+      "name": "日盈电子",
+      "change_pct": 0.11
+    },
+    "601366": {
+      "score": 58,
+      "price": 3.81,
+      "name": "利群股份",
+      "change_pct": 1.6
+    },
+    "600396": {
+      "score": 58,
+      "price": 20.14,
+      "name": "华电辽能",
+      "change_pct": 0.65
+    },
+    "600475": {
+      "score": 58,
+      "price": 15.39,
+      "name": "华光环能",
+      "change_pct": 1.38
+    },
+    "600516": {
+      "score": 58,
+      "price": 5.83,
+      "name": "方大炭素",
+      "change_pct": 0.0
+    },
+    "600693": {
+      "score": 58,
+      "price": 10.32,
+      "name": "东百集团",
+      "change_pct": -0.29
+    },
+    "600733": {
+      "score": 58,
+      "price": 5.98,
+      "name": "北汽蓝谷",
+      "change_pct": 1.18
+    },
+    "600810": {
+      "score": 58,
+      "price": 6.03,
+      "name": "神马股份",
+      "change_pct": 3.61
+    },
+    "600879": {
+      "score": 58,
+      "price": 21.34,
+      "name": "航天电子",
+      "change_pct": -0.93
+    },
+    "601328": {
+      "score": 58,
+      "price": 6.88,
+      "name": "交通银行",
+      "change_pct": 0.73
+    },
+    "601666": {
+      "score": 58,
+      "price": 9.8,
+      "name": "平煤股份",
+      "change_pct": 1.34
+    },
+    "603038": {
+      "score": 58,
+      "price": 16.16,
+      "name": "华立股份",
+      "change_pct": 1.25
+    },
+    "603040": {
+      "score": 58,
+      "price": 91.76,
+      "name": "新坐标",
+      "change_pct": 1.34
+    },
+    "603110": {
+      "score": 58,
+      "price": 20.84,
+      "name": "东方材料",
+      "change_pct": 0.82
+    },
+    "603119": {
+      "score": 58,
+      "price": 73.5,
+      "name": "浙江荣泰",
+      "change_pct": -0.27
+    },
+    "603337": {
+      "score": 58,
+      "price": 41.34,
+      "name": "杰克科技",
+      "change_pct": 4.08
+    },
+    "603486": {
+      "score": 58,
+      "price": 60.2,
+      "name": "科沃斯",
+      "change_pct": 2.17
+    },
+    "603598": {
+      "score": 58,
+      "price": 20.87,
+      "name": "引力传媒",
+      "change_pct": -0.81
+    },
+    "603638": {
+      "score": 58,
+      "price": 23.64,
+      "name": "艾迪精密",
+      "change_pct": 2.07
+    },
+    "603665": {
+      "score": 58,
+      "price": 27.18,
+      "name": "康隆达",
+      "change_pct": 1.65
+    },
+    "603688": {
+      "score": 58,
+      "price": 69.03,
+      "name": "石英股份",
+      "change_pct": -0.66
+    },
+    "603730": {
+      "score": 58,
+      "price": 12.74,
+      "name": "XD岱美股",
+      "change_pct": 4.17
+    },
+    "603888": {
+      "score": 58,
+      "price": 19.41,
+      "name": "新华网",
+      "change_pct": 0.83
+    },
+    "603915": {
+      "score": 58,
+      "price": 16.71,
+      "name": "国茂股份",
+      "change_pct": 1.7
+    },
+    "605128": {
+      "score": 58,
+      "price": 23.33,
+      "name": "上海沿浦",
+      "change_pct": 3.6
+    },
+    "605186": {
+      "score": 58,
+      "price": 28.6,
+      "name": "健麾信息",
+      "change_pct": -1.0
+    },
+    "605288": {
+      "score": 58,
+      "price": 102.94,
+      "name": "凯迪股份",
+      "change_pct": 3.3
+    },
+    "605566": {
+      "score": 58,
+      "price": 42.64,
+      "name": "福莱蒽特",
+      "change_pct": -0.86
+    },
+    "689009": {
+      "score": 58,
+      "price": 36.78,
+      "name": "九号公司-WD",
+      "change_pct": 1.16
+    },
+    "600998": {
+      "score": 57,
+      "price": 4.82,
+      "name": "XD九州通",
+      "change_pct": 1.05
+    },
+    "603516": {
+      "score": 57,
+      "price": 134.37,
+      "name": "淳中科技",
+      "change_pct": -0.48
+    },
+    "002034": {
+      "score": 57,
+      "price": 18.25,
+      "name": "旺能环境",
+      "change_pct": -0.92
+    },
+    "002631": {
+      "score": 57,
+      "price": 7.96,
+      "name": "德尔未来",
+      "change_pct": 6.85
+    },
+    "002700": {
+      "score": 57,
+      "price": 8.54,
+      "name": "万憬能源",
+      "change_pct": 7.02
+    },
+    "600007": {
+      "score": 57,
+      "price": 21.88,
+      "name": "中国国贸",
+      "change_pct": 2.82
+    },
+    "600027": {
+      "score": 57,
+      "price": 5.18,
+      "name": "华电国际",
+      "change_pct": -0.38
+    },
+    "600522": {
+      "score": 57,
+      "price": 49.69,
+      "name": "中天科技",
+      "change_pct": 7.86
+    },
+    "600729": {
+      "score": 57,
+      "price": 19.61,
+      "name": "重百集团",
+      "change_pct": -0.2
+    },
+    "601088": {
+      "score": 57,
+      "price": 50.6,
+      "name": "中国神华",
+      "change_pct": 4.29
+    },
+    "603048": {
+      "score": 57,
+      "price": 22.36,
+      "name": "浙江黎明",
+      "change_pct": 7.55
+    },
+    "002142": {
+      "score": 56,
+      "price": 31.04,
+      "name": "宁波银行",
+      "change_pct": 1.57
+    },
+    "605098": {
+      "score": 56,
+      "price": 55.23,
+      "name": "行动教育",
+      "change_pct": 1.62
+    },
+    "000538": {
+      "score": 56,
+      "price": 49.47,
+      "name": "云南白药",
+      "change_pct": 1.35
+    },
+    "000690": {
+      "score": 56,
+      "price": 5.25,
+      "name": "宝新能源",
+      "change_pct": -1.5
+    },
+    "000761": {
+      "score": 56,
+      "price": 2.5,
+      "name": "本钢板材",
+      "change_pct": 2.46
+    },
+    "002491": {
+      "score": 56,
+      "price": 25.65,
+      "name": "通鼎互联",
+      "change_pct": 3.34
+    },
+    "600000": {
+      "score": 56,
+      "price": 9.39,
+      "name": "浦发银行",
+      "change_pct": 0.54
+    },
+    "600039": {
+      "score": 56,
+      "price": 8.46,
+      "name": "四川路桥",
+      "change_pct": 0.71
+    },
+    "600234": {
+      "score": 56,
+      "price": 24.06,
+      "name": "科新发展",
+      "change_pct": 1.43
+    },
+    "600293": {
+      "score": 56,
+      "price": 4.14,
+      "name": "三峡新材",
+      "change_pct": 4.55
+    },
+    "600600": {
+      "score": 56,
+      "price": 60.3,
+      "name": "青岛啤酒",
+      "change_pct": 1.01
+    },
+    "600675": {
+      "score": 56,
+      "price": 2.43,
+      "name": "中华企业",
+      "change_pct": 1.25
+    },
+    "600826": {
+      "score": 56,
+      "price": 8.95,
+      "name": "兰生股份",
+      "change_pct": 1.36
+    },
+    "601100": {
+      "score": 56,
+      "price": 120.93,
+      "name": "恒立液压",
+      "change_pct": 3.18
+    },
+    "601225": {
+      "score": 56,
+      "price": 27.59,
+      "name": "陕西煤业",
+      "change_pct": 1.66
+    },
+    "601658": {
+      "score": 56,
+      "price": 4.99,
+      "name": "邮储银行",
+      "change_pct": 0.6
+    },
+    "601882": {
+      "score": 56,
+      "price": 20.95,
+      "name": "海天精工",
+      "change_pct": 2.15
+    },
+    "601886": {
+      "score": 56,
+      "price": 8.59,
+      "name": "江河集团",
+      "change_pct": 1.3
+    },
+    "603087": {
+      "score": 56,
+      "price": 55.27,
+      "name": "甘李药业",
+      "change_pct": 1.26
+    },
+    "603129": {
+      "score": 56,
+      "price": 235.69,
+      "name": "春风动力",
+      "change_pct": 3.06
+    },
+    "603766": {
+      "score": 56,
+      "price": 12.8,
+      "name": "隆鑫通用",
+      "change_pct": 1.43
+    },
+    "603826": {
+      "score": 56,
+      "price": 30.22,
+      "name": "坤彩科技",
+      "change_pct": 1.58
+    },
+    "605016": {
+      "score": 56,
+      "price": 24.11,
+      "name": "百龙创园",
+      "change_pct": 1.05
+    },
+    "000099": {
+      "score": 55,
+      "price": 15.4,
+      "name": "中信海直",
+      "change_pct": 1.32
+    },
+    "000665": {
+      "score": 55,
+      "price": 4.29,
+      "name": "湖北广电",
+      "change_pct": 1.42
+    },
+    "002064": {
+      "score": 55,
+      "price": 10.52,
+      "name": "华峰化学",
+      "change_pct": 2.94
+    },
+    "002117": {
+      "score": 55,
+      "price": 9.43,
+      "name": "东港股份",
+      "change_pct": 2.17
+    },
+    "002565": {
+      "score": 55,
+      "price": 15.42,
+      "name": "顺灏股份",
+      "change_pct": 0.52
+    },
+    "002864": {
+      "score": 55,
+      "price": 28.34,
+      "name": "盘龙药业",
+      "change_pct": 1.47
+    },
+    "002915": {
+      "score": 55,
+      "price": 20.23,
+      "name": "中欣氟材",
+      "change_pct": -0.3
+    },
+    "000030": {
+      "score": 55,
+      "price": 4.5,
+      "name": "富奥股份",
+      "change_pct": -0.44
+    },
+    "000527": {
+      "score": 55,
+      "price": 14.02,
+      "name": "美的电器",
+      "change_pct": 0.0
+    },
+    "000554": {
+      "score": 55,
+      "price": 6.68,
+      "name": "泰山石油",
+      "change_pct": -0.74
+    },
+    "000606": {
+      "score": 55,
+      "price": 0.28,
+      "name": "顺利退",
+      "change_pct": 0.0
+    },
+    "000651": {
+      "score": 55,
+      "price": 38.29,
+      "name": "格力电器",
+      "change_pct": -0.44
+    },
+    "000776": {
+      "score": 55,
+      "price": 18.87,
+      "name": "广发证券",
+      "change_pct": 0.32
+    },
+    "000782": {
+      "score": 55,
+      "price": 7.29,
+      "name": "恒申新材",
+      "change_pct": -0.41
+    },
+    "000786": {
+      "score": 55,
+      "price": 21.72,
+      "name": "北新建材",
+      "change_pct": -1.0
+    },
+    "000817": {
+      "score": 55,
+      "price": 8.75,
+      "name": "辽河油田",
+      "change_pct": 0.0
+    },
+    "000866": {
+      "score": 55,
+      "price": 13.84,
+      "name": "扬子石化",
+      "change_pct": 0.0
+    },
+    "000875": {
+      "score": 55,
+      "price": 6.52,
+      "name": "电投绿能",
+      "change_pct": 1.88
+    },
+    "000956": {
+      "score": 55,
+      "price": 11.91,
+      "name": "中原油气",
+      "change_pct": 0.0
+    },
+    "000973": {
+      "score": 55,
+      "price": 13.84,
+      "name": "佛塑科技",
+      "change_pct": -0.5
+    },
+    "000996": {
+      "score": 55,
+      "price": 0.38,
+      "name": "中期退",
+      "change_pct": 0.0
+    },
+    "002043": {
+      "score": 55,
+      "price": 12.3,
+      "name": "兔 宝 宝",
+      "change_pct": -0.73
+    },
+    "002050": {
+      "score": 55,
+      "price": 47.91,
+      "name": "三花智控",
+      "change_pct": 0.84
+    },
+    "002070": {
+      "score": 55,
+      "price": 0.71,
+      "name": "众和退",
+      "change_pct": 0.0
+    },
+    "002146": {
+      "score": 55,
+      "price": 1.28,
+      "name": "荣盛发展",
+      "change_pct": 0.79
+    },
+    "002147": {
+      "score": 55,
+      "price": 0.37,
+      "name": "新光退",
+      "change_pct": 0.0
+    },
+    "002293": {
+      "score": 55,
+      "price": 9.57,
+      "name": "罗莱生活",
+      "change_pct": -0.83
+    },
+    "002317": {
+      "score": 55,
+      "price": 22.07,
+      "name": "众生药业",
+      "change_pct": 0.91
+    },
+    "002336": {
+      "score": 55,
+      "price": 0.36,
+      "name": "人乐退",
+      "change_pct": 0.0
+    },
+    "002425": {
+      "score": 55,
+      "price": 3.01,
+      "name": "凯撒文化",
+      "change_pct": 0.67
+    },
+    "002450": {
+      "score": 55,
+      "price": 0.2,
+      "name": "康得退",
+      "change_pct": 0.0
+    },
+    "002464": {
+      "score": 55,
+      "price": 0.26,
+      "name": "众应退",
+      "change_pct": 0.0
+    },
+    "002473": {
+      "score": 55,
+      "price": 0.79,
+      "name": "圣莱退",
+      "change_pct": 0.0
+    },
+    "002530": {
+      "score": 55,
+      "price": 7.8,
+      "name": "金财互联",
+      "change_pct": -0.76
+    },
+    "002553": {
+      "score": 55,
+      "price": 18.43,
+      "name": "南方精工",
+      "change_pct": 0.16
+    },
+    "002648": {
+      "score": 55,
+      "price": 24.12,
+      "name": "卫星化学",
+      "change_pct": 0.63
+    },
+    "002680": {
+      "score": 55,
+      "price": 0.77,
+      "name": "长生退",
+      "change_pct": 0.0
+    },
+    "002684": {
+      "score": 55,
+      "price": 0.69,
+      "name": "猛狮退",
+      "change_pct": 0.0
+    },
+    "002770": {
+      "score": 55,
+      "price": 0.6,
+      "name": "科迪退",
+      "change_pct": 0.0
+    },
+    "002780": {
+      "score": 55,
+      "price": 13.53,
+      "name": "三夫户外",
+      "change_pct": -0.81
+    },
+    "002788": {
+      "score": 55,
+      "price": 11.58,
+      "name": "鹭燕医药",
+      "change_pct": -0.52
+    },
+    "002807": {
+      "score": 55,
+      "price": 3.94,
+      "name": "江阴银行",
+      "change_pct": 0.0
+    },
+    "002818": {
+      "score": 55,
+      "price": 11.03,
+      "name": "富森美",
+      "change_pct": -0.45
+    },
+    "002839": {
+      "score": 55,
+      "price": 4.2,
+      "name": "张家港行",
+      "change_pct": -0.71
+    },
+    "002849": {
+      "score": 55,
+      "price": 16.71,
+      "name": "威星智能",
+      "change_pct": 0.24
+    },
+    "002936": {
+      "score": 55,
+      "price": 1.77,
+      "name": "郑州银行",
+      "change_pct": 0.0
+    },
+    "002966": {
+      "score": 55,
+      "price": 8.03,
+      "name": "苏州银行",
+      "change_pct": -0.25
+    },
+    "600002": {
+      "score": 55,
+      "price": 10.09,
+      "name": "齐鲁石化",
+      "change_pct": 0.0
+    },
+    "600016": {
+      "score": 55,
+      "price": 3.57,
+      "name": "民生银行",
+      "change_pct": 0.0
+    },
+    "600030": {
+      "score": 55,
+      "price": 25.63,
+      "name": "中信证券",
+      "change_pct": -0.16
+    },
+    "600066": {
+      "score": 55,
+      "price": 30.79,
+      "name": "宇通客车",
+      "change_pct": 0.72
+    },
+    "600087": {
+      "score": 55,
+      "price": 0.83,
+      "name": "退市长油",
+      "change_pct": 0.0
+    },
+    "600088": {
+      "score": 55,
+      "price": 14.1,
+      "name": "中视传媒",
+      "change_pct": -0.98
+    },
+    "600183": {
+      "score": 55,
+      "price": 136.02,
+      "name": "生益科技",
+      "change_pct": -0.98
+    },
+    "600270": {
+      "score": 55,
+      "price": 20.99,
+      "name": "外运发展",
+      "change_pct": 0.0
+    },
+    "600291": {
+      "score": 55,
+      "price": 0.89,
+      "name": "退市西水",
+      "change_pct": 0.0
+    },
+    "600323": {
+      "score": 55,
+      "price": 29.84,
+      "name": "瀚蓝环境",
+      "change_pct": -0.23
+    },
+    "600366": {
+      "score": 55,
+      "price": 12.85,
+      "name": "宁波韵升",
+      "change_pct": 0.94
+    },
+    "600483": {
+      "score": 55,
+      "price": 11.69,
+      "name": "福能股份",
+      "change_pct": 0.95
+    },
+    "600580": {
+      "score": 55,
+      "price": 39.9,
+      "name": "卧龙电驱",
+      "change_pct": -0.25
+    },
+    "600583": {
+      "score": 55,
+      "price": 5.67,
+      "name": "海油工程",
+      "change_pct": -0.35
+    },
+    "600690": {
+      "score": 55,
+      "price": 20.24,
+      "name": "海尔智家",
+      "change_pct": -0.34
+    },
+    "600757": {
+      "score": 55,
+      "price": 7.98,
+      "name": "长江传媒",
+      "change_pct": -0.37
+    },
+    "600761": {
+      "score": 55,
+      "price": 16.93,
+      "name": "安徽合力",
+      "change_pct": -0.47
+    },
+    "600795": {
+      "score": 55,
+      "price": 5.04,
+      "name": "国电电力",
+      "change_pct": -0.59
+    },
+    "600827": {
+      "score": 55,
+      "price": 8.18,
+      "name": "百联股份",
+      "change_pct": 0.25
+    },
+    "600897": {
+      "score": 55,
+      "price": 15.07,
+      "name": "厦门空港",
+      "change_pct": -0.46
+    },
+    "600908": {
+      "score": 55,
+      "price": 5.41,
+      "name": "无锡银行",
+      "change_pct": -0.37
+    },
+    "600919": {
+      "score": 55,
+      "price": 11.48,
+      "name": "江苏银行",
+      "change_pct": 0.88
+    },
+    "600989": {
+      "score": 55,
+      "price": 23.37,
+      "name": "宝丰能源",
+      "change_pct": -0.26
+    },
+    "600999": {
+      "score": 55,
+      "price": 16.91,
+      "name": "招商证券",
+      "change_pct": 0.12
+    },
+    "601058": {
+      "score": 55,
+      "price": 12.44,
+      "name": "赛轮轮胎",
+      "change_pct": 0.16
+    },
+    "601101": {
+      "score": 55,
+      "price": 13.65,
+      "name": "昊华能源",
+      "change_pct": 0.89
+    },
+    "601107": {
+      "score": 55,
+      "price": 5.94,
+      "name": "四川成渝",
+      "change_pct": -0.34
+    },
+    "601128": {
+      "score": 55,
+      "price": 7.03,
+      "name": "常熟银行",
+      "change_pct": -0.42
+    },
+    "601187": {
+      "score": 55,
+      "price": 7.35,
+      "name": "厦门银行",
+      "change_pct": 0.14
+    },
+    "601318": {
+      "score": 55,
+      "price": 53.55,
+      "name": "中国平安",
+      "change_pct": 0.13
+    },
+    "601336": {
+      "score": 55,
+      "price": 56.38,
+      "name": "新华保险",
+      "change_pct": 0.05
+    },
+    "601528": {
+      "score": 55,
+      "price": 4.71,
+      "name": "瑞丰银行",
+      "change_pct": -0.42
+    },
+    "601688": {
+      "score": 55,
+      "price": 18.85,
+      "name": "华泰证券",
+      "change_pct": 0.0
+    },
+    "601818": {
+      "score": 55,
+      "price": 3.12,
+      "name": "光大银行",
+      "change_pct": -0.32
+    },
+    "601838": {
+      "score": 55,
+      "price": 19.08,
+      "name": "成都银行",
+      "change_pct": 0.21
+    },
+    "601860": {
+      "score": 55,
+      "price": 2.63,
+      "name": "紫金银行",
+      "change_pct": 0.77
+    },
+    "601916": {
+      "score": 55,
+      "price": 3.07,
+      "name": "浙商银行",
+      "change_pct": -0.65
+    },
+    "601919": {
+      "score": 55,
+      "price": 14.96,
+      "name": "中远海控",
+      "change_pct": -0.27
+    },
+    "601939": {
+      "score": 55,
+      "price": 10.32,
+      "name": "建设银行",
+      "change_pct": 0.98
+    },
+    "601963": {
+      "score": 55,
+      "price": 12.0,
+      "name": "重庆银行",
+      "change_pct": -0.08
+    },
+    "601996": {
+      "score": 55,
+      "price": 2.62,
+      "name": "丰林集团",
+      "change_pct": 0.38
+    },
+    "601997": {
+      "score": 55,
+      "price": 5.92,
+      "name": "贵阳银行",
+      "change_pct": -0.5
+    },
+    "603010": {
+      "score": 55,
+      "price": 13.97,
+      "name": "万盛股份",
+      "change_pct": -0.14
+    },
+    "603020": {
+      "score": 55,
+      "price": 10.63,
+      "name": "爱普股份",
+      "change_pct": -0.37
+    },
+    "603161": {
+      "score": 55,
+      "price": 14.99,
+      "name": "科华控股",
+      "change_pct": 0.67
+    },
+    "603201": {
+      "score": 55,
+      "price": 17.96,
+      "name": "常润股份",
+      "change_pct": -0.94
+    },
+    "603298": {
+      "score": 55,
+      "price": 24.74,
+      "name": "杭叉集团",
+      "change_pct": -0.16
+    },
+    "603302": {
+      "score": 55,
+      "price": 7.79,
+      "name": "鑫广绿环",
+      "change_pct": 0.0
+    },
+    "603323": {
+      "score": 55,
+      "price": 4.71,
+      "name": "苏农银行",
+      "change_pct": -0.21
+    },
+    "603331": {
+      "score": 55,
+      "price": 12.7,
+      "name": "百达精工",
+      "change_pct": -0.31
+    },
+    "603334": {
+      "score": 55,
+      "price": 41.19,
+      "name": "XD丰倍生",
+      "change_pct": -0.29
+    },
+    "603558": {
+      "score": 55,
+      "price": 11.87,
+      "name": "健盛集团",
+      "change_pct": 0.94
+    },
+    "603679": {
+      "score": 55,
+      "price": 16.43,
+      "name": "华体科技",
+      "change_pct": -0.42
+    },
+    "603716": {
+      "score": 55,
+      "price": 16.12,
+      "name": "塞力医疗",
+      "change_pct": -0.74
+    },
+    "603767": {
+      "score": 55,
+      "price": 17.51,
+      "name": "中马传动",
+      "change_pct": -0.68
+    },
+    "603816": {
+      "score": 55,
+      "price": 27.46,
+      "name": "顾家家居",
+      "change_pct": -0.76
+    },
+    "603871": {
+      "score": 55,
+      "price": 12.2,
+      "name": "嘉友国际",
+      "change_pct": -0.41
+    },
+    "603931": {
+      "score": 55,
+      "price": 57.3,
+      "name": "格林达",
+      "change_pct": -0.83
+    },
+    "603939": {
+      "score": 55,
+      "price": 19.86,
+      "name": "益丰药房",
+      "change_pct": -0.2
+    },
+    "603976": {
+      "score": 55,
+      "price": 22.79,
+      "name": "正川股份",
+      "change_pct": 1.92
+    },
+    "603998": {
+      "score": 55,
+      "price": 9.61,
+      "name": "方盛制药",
+      "change_pct": -0.72
+    },
+    "000048": {
+      "score": 54,
+      "price": 14.82,
+      "name": "京基智农",
+      "change_pct": 5.11
+    },
+    "000608": {
+      "score": 54,
+      "price": 5.82,
+      "name": "阳光股份",
+      "change_pct": 5.43
+    },
+    "002457": {
+      "score": 54,
+      "price": 12.82,
+      "name": "青龙管业",
+      "change_pct": 5.08
+    },
+    "002472": {
+      "score": 54,
+      "price": 45.25,
+      "name": "双环传动",
+      "change_pct": 5.58
+    },
+    "002552": {
+      "score": 54,
+      "price": 62.18,
+      "name": "宝鼎科技",
+      "change_pct": 6.62
+    },
+    "002832": {
+      "score": 54,
+      "price": 21.09,
+      "name": "比音勒芬",
+      "change_pct": 5.56
+    },
+    "002850": {
+      "score": 54,
+      "price": 182.2,
+      "name": "科达利",
+      "change_pct": 5.84
+    },
+    "003009": {
+      "score": 54,
+      "price": 58.82,
+      "name": "中天火箭",
+      "change_pct": 6.17
+    },
+    "600403": {
+      "score": 54,
+      "price": 8.81,
+      "name": "大有能源",
+      "change_pct": 8.23
+    },
+    "600578": {
+      "score": 54,
+      "price": 8.96,
+      "name": "京能电力",
+      "change_pct": 5.91
+    },
+    "600736": {
+      "score": 54,
+      "price": 7.66,
+      "name": "苏州高新",
+      "change_pct": 5.8
+    },
+    "600776": {
+      "score": 54,
+      "price": 16.75,
+      "name": "东方通信",
+      "change_pct": 5.08
+    },
+    "603135": {
+      "score": 54,
+      "price": 14.99,
+      "name": "中重科技",
+      "change_pct": 6.84
+    },
+    "603466": {
+      "score": 54,
+      "price": 12.22,
+      "name": "风语筑",
+      "change_pct": 5.71
+    },
+    "603773": {
+      "score": 54,
+      "price": 141.04,
+      "name": "沃格光电",
+      "change_pct": 6.53
+    },
+    "000151": {
+      "score": 53,
+      "price": 13.64,
+      "name": "中成股份",
+      "change_pct": -1.94
+    },
+    "000600": {
+      "score": 53,
+      "price": 10.98,
+      "name": "建投能源",
+      "change_pct": -4.36
+    },
+    "000999": {
+      "score": 53,
+      "price": 24.14,
+      "name": "华润三九",
+      "change_pct": -0.29
+    },
+    "002577": {
+      "score": 53,
+      "price": 18.08,
+      "name": "雷柏科技",
+      "change_pct": 0.84
+    },
+    "002736": {
+      "score": 53,
+      "price": 9.96,
+      "name": "国信证券",
+      "change_pct": -0.5
+    },
+    "600015": {
+      "score": 53,
+      "price": 6.83,
+      "name": "华夏银行",
+      "change_pct": 0.0
+    },
+    "600023": {
+      "score": 53,
+      "price": 5.95,
+      "name": "浙能电力",
+      "change_pct": -0.67
+    },
+    "600036": {
+      "score": 53,
+      "price": 38.63,
+      "name": "招商银行",
+      "change_pct": 0.13
+    },
+    "600062": {
+      "score": 53,
+      "price": 16.73,
+      "name": "华润双鹤",
+      "change_pct": -0.83
+    },
+    "600255": {
+      "score": 53,
+      "price": 4.64,
+      "name": "鑫科材料",
+      "change_pct": 3.34
+    },
+    "600377": {
+      "score": 53,
+      "price": 12.59,
+      "name": "宁沪高速",
+      "change_pct": -0.71
+    },
+    "600398": {
+      "score": 53,
+      "price": 5.76,
+      "name": "海澜之家",
+      "change_pct": -0.17
+    },
+    "600552": {
+      "score": 53,
+      "price": 22.32,
+      "name": "凯盛科技",
+      "change_pct": 2.81
+    },
+    "600861": {
+      "score": 53,
+      "price": 14.16,
+      "name": "北京人力",
+      "change_pct": -0.63
+    },
+    "600873": {
+      "score": 53,
+      "price": 9.14,
+      "name": "梅花生物",
+      "change_pct": -0.33
+    },
+    "600901": {
+      "score": 53,
+      "price": 6.4,
+      "name": "江苏金租",
+      "change_pct": -0.78
+    },
+    "600941": {
+      "score": 53,
+      "price": 97.42,
+      "name": "中国移动",
+      "change_pct": 0.09
+    },
+    "600958": {
+      "score": 53,
+      "price": 8.91,
+      "name": "东方证券",
+      "change_pct": -0.78
+    },
+    "600968": {
+      "score": 53,
+      "price": 3.96,
+      "name": "海油发展",
+      "change_pct": 0.0
+    },
+    "601166": {
+      "score": 53,
+      "price": 18.59,
+      "name": "兴业银行",
+      "change_pct": -0.05
+    },
+    "601169": {
+      "score": 53,
+      "price": 5.13,
+      "name": "北京银行",
+      "change_pct": -0.19
+    },
+    "601229": {
+      "score": 53,
+      "price": 9.14,
+      "name": "XD上海银",
+      "change_pct": 0.44
+    },
+    "601319": {
+      "score": 53,
+      "price": 6.58,
+      "name": "中国人保",
+      "change_pct": 0.15
+    },
+    "601577": {
+      "score": 53,
+      "price": 9.57,
+      "name": "长沙银行",
+      "change_pct": 0.1
+    },
+    "601668": {
+      "score": 53,
+      "price": 4.7,
+      "name": "中国建筑",
+      "change_pct": -0.42
+    },
+    "601811": {
+      "score": 53,
+      "price": 12.91,
+      "name": "新华文轩",
+      "change_pct": -0.77
+    },
+    "601825": {
+      "score": 53,
+      "price": 8.67,
+      "name": "沪农商行",
+      "change_pct": 0.12
+    },
+    "601928": {
+      "score": 53,
+      "price": 8.96,
+      "name": "凤凰传媒",
+      "change_pct": -0.33
+    },
+    "002443": {
+      "score": 52,
+      "price": 11.18,
+      "name": "金洲管道",
+      "change_pct": 2.76
+    },
+    "605580": {
+      "score": 52,
+      "price": 25.9,
+      "name": "恒盛能源",
+      "change_pct": -0.99
+    },
+    "000007": {
+      "score": 52,
+      "price": 12.4,
+      "name": "全新好",
+      "change_pct": 0.73
+    },
+    "000019": {
+      "score": 52,
+      "price": 6.36,
+      "name": "深粮控股",
+      "change_pct": -0.93
+    },
+    "000031": {
+      "score": 52,
+      "price": 2.67,
+      "name": "大悦城",
+      "change_pct": 0.75
+    },
+    "000559": {
+      "score": 52,
+      "price": 14.94,
+      "name": "万向钱潮",
+      "change_pct": -0.8
+    },
+    "000797": {
+      "score": 52,
+      "price": 2.52,
+      "name": "中国武夷",
+      "change_pct": -0.4
+    },
+    "000882": {
+      "score": 52,
+      "price": 1.49,
+      "name": "华联股份",
+      "change_pct": 0.0
+    },
+    "000897": {
+      "score": 52,
+      "price": 1.93,
+      "name": "津滨发展",
+      "change_pct": -0.52
+    },
+    "000949": {
+      "score": 52,
+      "price": 6.68,
+      "name": "新乡化纤",
+      "change_pct": -0.6
+    },
+    "000965": {
+      "score": 52,
+      "price": 3.43,
+      "name": "天保基建",
+      "change_pct": 0.29
+    },
+    "000968": {
+      "score": 52,
+      "price": 7.41,
+      "name": "蓝焰控股",
+      "change_pct": 0.68
+    },
+    "002016": {
+      "score": 52,
+      "price": 4.88,
+      "name": "世荣兆业",
+      "change_pct": 0.0
+    },
+    "002028": {
+      "score": 52,
+      "price": 178.84,
+      "name": "思源电气",
+      "change_pct": 0.76
+    },
+    "002062": {
+      "score": 52,
+      "price": 7.72,
+      "name": "宏润建设",
+      "change_pct": -0.9
+    },
+    "002187": {
+      "score": 52,
+      "price": 5.5,
+      "name": "广百股份",
+      "change_pct": -0.9
+    },
+    "002249": {
+      "score": 52,
+      "price": 8.41,
+      "name": "大洋电机",
+      "change_pct": 0.36
+    },
+    "002315": {
+      "score": 52,
+      "price": 26.15,
+      "name": "焦点科技",
+      "change_pct": -0.57
+    },
+    "002403": {
+      "score": 52,
+      "price": 10.65,
+      "name": "爱仕达",
+      "change_pct": 0.28
+    },
+    "002482": {
+      "score": 52,
+      "price": 1.48,
+      "name": "广田集团",
+      "change_pct": 0.0
+    },
+    "002541": {
+      "score": 52,
+      "price": 18.54,
+      "name": "鸿路钢构",
+      "change_pct": 0.71
+    },
+    "002554": {
+      "score": 52,
+      "price": 3.1,
+      "name": "惠博普",
+      "change_pct": 0.0
+    },
+    "002568": {
+      "score": 52,
+      "price": 18.52,
+      "name": "百润股份",
+      "change_pct": 0.76
+    },
+    "002647": {
+      "score": 52,
+      "price": 12.0,
+      "name": "仁东控股",
+      "change_pct": -0.91
+    },
+    "002664": {
+      "score": 52,
+      "price": 18.99,
+      "name": "信质集团",
+      "change_pct": 0.96
+    },
+    "002698": {
+      "score": 52,
+      "price": 12.59,
+      "name": "博实股份",
+      "change_pct": 0.96
+    },
+    "002723": {
+      "score": 52,
+      "price": 8.56,
+      "name": "小崧股份",
+      "change_pct": -0.35
+    },
+    "002746": {
+      "score": 52,
+      "price": 5.63,
+      "name": "仙坛股份",
+      "change_pct": -0.35
+    },
+    "002774": {
+      "score": 52,
+      "price": 12.01,
+      "name": "快意电梯",
+      "change_pct": 0.76
+    },
+    "002916": {
+      "score": 52,
+      "price": 375.65,
+      "name": "深南电路",
+      "change_pct": 0.71
+    },
+    "003005": {
+      "score": 52,
+      "price": 15.19,
+      "name": "竞业达",
+      "change_pct": 0.8
+    },
+    "003028": {
+      "score": 52,
+      "price": 26.18,
+      "name": "振邦智能",
+      "change_pct": -0.83
+    },
+    "600051": {
+      "score": 52,
+      "price": 6.49,
+      "name": "宁波联合",
+      "change_pct": -0.92
+    },
+    "600052": {
+      "score": 52,
+      "price": 3.91,
+      "name": "东望时代",
+      "change_pct": 0.26
+    },
+    "600130": {
+      "score": 52,
+      "price": 4.75,
+      "name": "波导股份",
+      "change_pct": -0.63
+    },
+    "600215": {
+      "score": 52,
+      "price": 6.69,
+      "name": "派斯林",
+      "change_pct": 0.75
+    },
+    "600256": {
+      "score": 52,
+      "price": 6.71,
+      "name": "广汇能源",
+      "change_pct": -0.45
+    },
+    "600322": {
+      "score": 52,
+      "price": 2.64,
+      "name": "津投城开",
+      "change_pct": 0.38
+    },
+    "600636": {
+      "score": 52,
+      "price": 1.9,
+      "name": "退市国化",
+      "change_pct": -0.52
+    },
+    "600686": {
+      "score": 52,
+      "price": 12.57,
+      "name": "金龙汽车",
+      "change_pct": -0.63
+    },
+    "600722": {
+      "score": 52,
+      "price": 10.06,
+      "name": "金牛化工",
+      "change_pct": -0.98
+    },
+    "600749": {
+      "score": 52,
+      "price": 14.91,
+      "name": "西藏旅游",
+      "change_pct": -0.53
+    },
+    "600779": {
+      "score": 52,
+      "price": 31.33,
+      "name": "水井坊",
+      "change_pct": -0.41
+    },
+    "600830": {
+      "score": 52,
+      "price": 7.9,
+      "name": "香溢融通",
+      "change_pct": 0.13
+    },
+    "600838": {
+      "score": 52,
+      "price": 7.92,
+      "name": "上海九百",
+      "change_pct": -1.0
+    },
+    "600843": {
+      "score": 52,
+      "price": 7.49,
+      "name": "上工申贝",
+      "change_pct": -0.53
+    },
+    "600862": {
+      "score": 52,
+      "price": 17.8,
+      "name": "中航高科",
+      "change_pct": -0.22
+    },
+    "600930": {
+      "score": 52,
+      "price": 6.01,
+      "name": "华电新能",
+      "change_pct": -0.83
+    },
+    "601001": {
+      "score": 52,
+      "price": 22.0,
+      "name": "晋控煤业",
+      "change_pct": 0.0
+    },
+    "601086": {
+      "score": 52,
+      "price": 7.32,
+      "name": "国芳集团",
+      "change_pct": -0.68
+    },
+    "601699": {
+      "score": 52,
+      "price": 18.95,
+      "name": "潞安环能",
+      "change_pct": 0.8
+    },
+    "603006": {
+      "score": 52,
+      "price": 14.05,
+      "name": "联明股份",
+      "change_pct": 0.57
+    },
+    "603009": {
+      "score": 52,
+      "price": 50.56,
+      "name": "北特科技",
+      "change_pct": 0.52
+    },
+    "603155": {
+      "score": 52,
+      "price": 19.68,
+      "name": "新亚强",
+      "change_pct": -0.81
+    },
+    "603165": {
+      "score": 52,
+      "price": 16.76,
+      "name": "荣晟环保",
+      "change_pct": 0.42
+    },
+    "603194": {
+      "score": 52,
+      "price": 35.67,
+      "name": "中力股份",
+      "change_pct": 0.82
+    },
+    "603222": {
+      "score": 52,
+      "price": 8.58,
+      "name": "济民健康",
+      "change_pct": -0.58
+    },
+    "603289": {
+      "score": 52,
+      "price": 9.72,
+      "name": "泰瑞机器",
+      "change_pct": -0.31
+    },
+    "603305": {
+      "score": 52,
+      "price": 14.82,
+      "name": "旭升集团",
+      "change_pct": -0.6
+    },
+    "603329": {
+      "score": 52,
+      "price": 10.08,
+      "name": "上海雅仕",
+      "change_pct": -0.98
+    },
+    "603345": {
+      "score": 52,
+      "price": 87.23,
+      "name": "安井食品",
+      "change_pct": 0.63
+    },
+    "603350": {
+      "score": 52,
+      "price": 30.41,
+      "name": "安乃达",
+      "change_pct": -0.85
+    },
+    "603380": {
+      "score": 52,
+      "price": 35.48,
+      "name": "易德龙",
+      "change_pct": -0.17
+    },
+    "603383": {
+      "score": 52,
+      "price": 29.85,
+      "name": "顶点软件",
+      "change_pct": -0.53
+    },
+    "603416": {
+      "score": 52,
+      "price": 58.92,
+      "name": "信捷电气",
+      "change_pct": -0.84
+    },
+    "603528": {
+      "score": 52,
+      "price": 6.87,
+      "name": "多伦科技",
+      "change_pct": -0.43
+    },
+    "603583": {
+      "score": 52,
+      "price": 25.96,
+      "name": "捷昌驱动",
+      "change_pct": -0.57
+    },
+    "603605": {
+      "score": 52,
+      "price": 65.73,
+      "name": "珀莱雅",
+      "change_pct": -0.08
+    },
+    "603607": {
+      "score": 52,
+      "price": 21.93,
+      "name": "京华激光",
+      "change_pct": -0.23
+    },
+    "603611": {
+      "score": 52,
+      "price": 18.24,
+      "name": "诺力股份",
+      "change_pct": -0.92
+    },
+    "603666": {
+      "score": 52,
+      "price": 28.8,
+      "name": "亿嘉和",
+      "change_pct": -0.07
+    },
+    "603677": {
+      "score": 52,
+      "price": 15.86,
+      "name": "奇精机械",
+      "change_pct": -0.63
+    },
+    "603809": {
+      "score": 52,
+      "price": 10.27,
+      "name": "豪能股份",
+      "change_pct": 0.49
+    },
+    "603815": {
+      "score": 52,
+      "price": 5.91,
+      "name": "交建股份",
+      "change_pct": -0.17
+    },
+    "603839": {
+      "score": 52,
+      "price": 6.81,
+      "name": "安正时尚",
+      "change_pct": 0.44
+    },
+    "603863": {
+      "score": 52,
+      "price": 15.81,
+      "name": "松炀资源",
+      "change_pct": -0.25
+    },
+    "603919": {
+      "score": 52,
+      "price": 19.01,
+      "name": "金徽酒",
+      "change_pct": -0.26
+    },
+    "603960": {
+      "score": 52,
+      "price": 21.71,
+      "name": "克来机电",
+      "change_pct": 0.23
+    },
+    "603968": {
+      "score": 52,
+      "price": 10.8,
+      "name": "醋化股份",
+      "change_pct": -0.28
+    },
+    "605088": {
+      "score": 52,
+      "price": 33.17,
+      "name": "冠盛股份",
+      "change_pct": 0.06
+    },
+    "605168": {
+      "score": 52,
+      "price": 46.95,
+      "name": "三人行",
+      "change_pct": -0.53
+    },
+    "605319": {
+      "score": 52,
+      "price": 27.55,
+      "name": "无锡振华",
+      "change_pct": -0.47
+    },
+    "605398": {
+      "score": 52,
+      "price": 24.45,
+      "name": "新炬网络",
+      "change_pct": 0.0
+    },
+    "600158": {
+      "score": 51,
+      "price": 9.53,
+      "name": "中体产业",
+      "change_pct": 1.82
+    },
+    "002380": {
+      "score": 51,
+      "price": 38.33,
+      "name": "科远智慧",
+      "change_pct": -0.21
+    },
+    "002703": {
+      "score": 51,
+      "price": 16.6,
+      "name": "浙江世宝",
+      "change_pct": -0.95
+    },
+    "003018": {
+      "score": 51,
+      "price": 51.1,
+      "name": "金富科技",
+      "change_pct": 0.02
+    },
+    "000060": {
+      "score": 51,
+      "price": 7.14,
+      "name": "中金岭南",
+      "change_pct": -4.16
+    },
+    "000417": {
+      "score": 51,
+      "price": 7.25,
+      "name": "合百集团",
+      "change_pct": -3.33
+    },
+    "000430": {
+      "score": 51,
+      "price": 8.23,
+      "name": "张家界",
+      "change_pct": -1.44
+    },
+    "000536": {
+      "score": 51,
+      "price": 4.0,
+      "name": "华映科技",
+      "change_pct": -3.15
+    },
+    "000539": {
+      "score": 51,
+      "price": 7.97,
+      "name": "粤电力Ａ",
+      "change_pct": -3.39
+    },
+    "000586": {
+      "score": 51,
+      "price": 15.81,
+      "name": "汇源通信",
+      "change_pct": -3.07
+    },
+    "000592": {
+      "score": 51,
+      "price": 7.92,
+      "name": "平潭发展",
+      "change_pct": -1.74
+    },
+    "000681": {
+      "score": 51,
+      "price": 23.52,
+      "name": "视觉中国",
+      "change_pct": -3.25
+    },
+    "000692": {
+      "score": 51,
+      "price": 4.76,
+      "name": "惠天热电",
+      "change_pct": -2.06
+    },
+    "000700": {
+      "score": 51,
+      "price": 16.6,
+      "name": "模塑科技",
+      "change_pct": -3.99
+    },
+    "000718": {
+      "score": 51,
+      "price": 2.2,
+      "name": "苏宁环球",
+      "change_pct": -4.35
+    },
+    "000727": {
+      "score": 51,
+      "price": 2.96,
+      "name": "冠捷科技",
+      "change_pct": -1.33
+    },
+    "000767": {
+      "score": 51,
+      "price": 5.08,
+      "name": "晋控电力",
+      "change_pct": -4.87
+    },
+    "000802": {
+      "score": 51,
+      "price": 4.66,
+      "name": "北京文化",
+      "change_pct": -4.31
+    },
+    "000823": {
+      "score": 51,
+      "price": 17.25,
+      "name": "超声电子",
+      "change_pct": -2.04
+    },
+    "000837": {
+      "score": 51,
+      "price": 12.81,
+      "name": "秦川机床",
+      "change_pct": 6.57
+    },
+    "000859": {
+      "score": 51,
+      "price": 10.5,
+      "name": "国风新材",
+      "change_pct": -2.33
+    },
+    "000988": {
+      "score": 51,
+      "price": 150.51,
+      "name": "华工科技",
+      "change_pct": -4.26
+    },
+    "002008": {
+      "score": 51,
+      "price": 123.79,
+      "name": "大族激光",
+      "change_pct": -3.19
+    },
+    "002036": {
+      "score": 51,
+      "price": 8.81,
+      "name": "联创电子",
+      "change_pct": -3.08
+    },
+    "002119": {
+      "score": 51,
+      "price": 24.18,
+      "name": "康强电子",
+      "change_pct": -2.62
+    },
+    "002169": {
+      "score": 51,
+      "price": 15.6,
+      "name": "智光电气",
+      "change_pct": -1.02
+    },
+    "002229": {
+      "score": 51,
+      "price": 13.94,
+      "name": "鸿博股份",
+      "change_pct": -1.13
+    },
+    "002245": {
+      "score": 51,
+      "price": 20.13,
+      "name": "蔚蓝锂芯",
+      "change_pct": -2.09
+    },
+    "002272": {
+      "score": 51,
+      "price": 18.62,
+      "name": "川润股份",
+      "change_pct": -2.0
+    },
+    "002297": {
+      "score": 51,
+      "price": 19.86,
+      "name": "博云新材",
+      "change_pct": -2.84
+    },
+    "002319": {
+      "score": 51,
+      "price": 11.54,
+      "name": "乐通股份",
+      "change_pct": -3.75
+    },
+    "002329": {
+      "score": 51,
+      "price": 3.44,
+      "name": "皇氏集团",
+      "change_pct": -3.37
+    },
+    "002406": {
+      "score": 51,
+      "price": 7.95,
+      "name": "远东传动",
+      "change_pct": -1.49
+    },
+    "002413": {
+      "score": 51,
+      "price": 10.34,
+      "name": "雷科防务",
+      "change_pct": -2.45
+    },
+    "002570": {
+      "score": 51,
+      "price": 5.45,
+      "name": "贝因美",
+      "change_pct": -2.68
+    },
+    "002575": {
+      "score": 51,
+      "price": 5.64,
+      "name": "群兴玩具",
+      "change_pct": -3.26
+    },
+    "002591": {
+      "score": 51,
+      "price": 7.36,
+      "name": "恒大高新",
+      "change_pct": -3.03
+    },
+    "002611": {
+      "score": 51,
+      "price": 18.23,
+      "name": "东方精工",
+      "change_pct": -1.09
+    },
+    "002637": {
+      "score": 51,
+      "price": 12.68,
+      "name": "赞宇科技",
+      "change_pct": -3.13
+    },
+    "002669": {
+      "score": 51,
+      "price": 15.96,
+      "name": "康达新材",
+      "change_pct": -3.97
+    },
+    "002708": {
+      "score": 51,
+      "price": 15.3,
+      "name": "光洋股份",
+      "change_pct": -3.53
+    },
+    "002771": {
+      "score": 51,
+      "price": 15.56,
+      "name": "真视通",
+      "change_pct": -4.48
+    },
+    "002806": {
+      "score": 51,
+      "price": 19.52,
+      "name": "华锋股份",
+      "change_pct": -1.31
+    },
+    "002815": {
+      "score": 51,
+      "price": 17.15,
+      "name": "崇达技术",
+      "change_pct": -3.49
+    },
+    "002823": {
+      "score": 51,
+      "price": 19.03,
+      "name": "凯中精密",
+      "change_pct": -4.85
+    },
+    "002829": {
+      "score": 51,
+      "price": 21.91,
+      "name": "星网宇达",
+      "change_pct": -4.24
+    },
+    "002893": {
+      "score": 51,
+      "price": 10.52,
+      "name": "京能热力",
+      "change_pct": -3.49
+    },
+    "002902": {
+      "score": 51,
+      "price": 32.66,
+      "name": "铭普光磁",
+      "change_pct": -4.17
+    },
+    "002918": {
+      "score": 51,
+      "price": 11.8,
+      "name": "蒙娜丽莎",
+      "change_pct": -4.07
+    },
+    "002979": {
+      "score": 51,
+      "price": 54.87,
+      "name": "雷赛智能",
+      "change_pct": -1.47
+    },
+    "002983": {
+      "score": 51,
+      "price": 24.23,
+      "name": "芯瑞达",
+      "change_pct": -2.46
+    }
+  },
+  "market_sentiment": "偏空",
+  "avg_score": 44.0,
+  "strategies": [
+    {
+      "name": "回调低吸",
+      "desc": "技术面超卖或触及支撑位的强势股，可在支撑位附近分批建仓",
+      "stocks": [
+        {
+          "code": "002165",
+          "name": "红 宝 丽",
+          "score": 69
+        },
+        {
+          "code": "000890",
+          "name": "法尔胜",
+          "score": 71
+        },
+        {
+          "code": "003001",
+          "name": "中岩大地",
+          "score": 60
+        }
+      ]
+    },
+    {
+      "name": "技术突破",
+      "desc": "MACD/MA出现金叉确认信号，趋势有望延续",
+      "stocks": [
+        {
+          "code": "603662",
+          "name": "柯力传感",
+          "score": 76
+        },
+        {
+          "code": "002194",
+          "name": "武汉凡谷",
+          "score": 72
+        },
+        {
+          "code": "002326",
+          "name": "永太科技",
+          "score": 86
+        },
+        {
+          "code": "002471",
+          "name": "中超控股",
+          "score": 76
+        },
+        {
+          "code": "002842",
+          "name": "翔鹭钨业",
+          "score": 78
+        }
+      ]
+    }
+  ],
+  "macro_indices": {
+    "000001": {
+      "name": "上证指数",
+      "code": "000001",
+      "price": 3976.83,
+      "prev_close": 4027.74,
+      "change_pct": -1.26,
+      "high": 4007.49,
+      "low": 3938.71
+    },
+    "399001": {
+      "name": "深证成指",
+      "code": "399001",
+      "price": 14933.82,
+      "prev_close": 15314.7,
+      "change_pct": -2.49,
+      "high": 15137.75,
+      "low": 14835.37
+    },
+    "399006": {
+      "name": "创业板指",
+      "code": "399006",
+      "price": 3845.78,
+      "prev_close": 3957.94,
+      "change_pct": -2.83,
+      "high": 3903.77,
+      "low": 3820.23
+    },
+    "000688": {
+      "name": "科创50",
+      "code": "000688",
+      "price": 1607.78,
+      "prev_close": 1668.33,
+      "change_pct": -3.63,
+      "high": 1634.03,
+      "low": 1587.97
+    },
+    "000300": {
+      "name": "沪深300",
+      "code": "000300",
+      "price": 4737.5,
+      "prev_close": 4816.92,
+      "change_pct": -1.65,
+      "high": 4779.86,
+      "low": 4703.77
+    }
+  }
+}

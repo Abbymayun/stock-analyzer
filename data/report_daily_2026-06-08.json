@@ -1,0 +1,90 @@
+{
+  "date": "2026-06-08",
+  "created_at": "15:00",
+  "total_assets": 182950.82,
+  "cash": 50082.82,
+  "market_value": 132868.0,
+  "initial_capital": 200000,
+  "total_return": -8.52,
+  "total_pnl": -16492.5,
+  "buy_count": 0,
+  "sell_count": 0,
+  "hold_count": 6,
+  "buys": [],
+  "sells": [],
+  "sell_total_pnl": 0,
+  "holdings": [
+    {
+      "code": "600679",
+      "name": "上海凤凰",
+      "qty": 1000,
+      "cost": 10.91,
+      "price": 10.34,
+      "high": 10.51,
+      "low": 10.13,
+      "change_pct": -2.18,
+      "pnl": -570.0,
+      "pnl_pct": -5.22
+    },
+    {
+      "code": "601015",
+      "name": "陕西黑猫",
+      "qty": 2800,
+      "cost": 4.242,
+      "price": 3.88,
+      "high": 4.11,
+      "low": 3.82,
+      "change_pct": -4.2,
+      "pnl": -1013.6,
+      "pnl_pct": -8.53
+    },
+    {
+      "code": "600992",
+      "name": "贵绳股份",
+      "qty": 800,
+      "cost": 12.86,
+      "price": 11.53,
+      "high": 12.1,
+      "low": 11.45,
+      "change_pct": -6.11,
+      "pnl": -1064.0,
+      "pnl_pct": -10.34
+    },
+    {
+      "code": "002870",
+      "name": "香山股份",
+      "qty": 300,
+      "cost": 42.96,
+      "price": 38.32,
+      "high": 39.16,
+      "low": 37.46,
+      "change_pct": -2.69,
+      "pnl": -1392.0,
+      "pnl_pct": -10.8
+    },
+    {
+      "code": "002273",
+      "name": "水晶光电",
+      "qty": 800,
+      "cost": 38.69,
+      "price": 34.15,
+      "high": 36.19,
+      "low": 34.08,
+      "change_pct": -5.72,
+      "pnl": -3632.0,
+      "pnl_pct": -11.73
+    },
+    {
+      "code": "603050",
+      "name": "科林电气",
+      "qty": 3300,
+      "cost": 21.953,
+      "price": 19.28,
+      "high": 19.76,
+      "low": 18.7,
+      "change_pct": -3.36,
+      "pnl": -8820.9,
+      "pnl_pct": -12.18
+    }
+  ]
+}
