@@ -1,137 +1,109 @@
 {
-  "update_time": "2026-06-05 14:20:02",
+  "update_time": "2026-06-08 14:20:02",
   "cn_indices": {
     "000001": {
       "name": "上证指数",
       "code": "000001",
-      "price": 4042.38,
-      "prev_close": 4057.78,
-      "change_pct": -0.38
+      "price": 3957.15,
+      "prev_close": 4027.74,
+      "change_pct": -1.75
     },
     "399001": {
       "name": "深证成指",
       "code": "399001",
-      "price": 15395.39,
-      "prev_close": 15661.57,
-      "change_pct": -1.7
+      "price": 14841.7,
+      "prev_close": 15314.7,
+      "change_pct": -3.09
     },
     "399006": {
       "name": "创业板指",
       "code": "399006",
-      "price": 3982.29,
-      "prev_close": 4088.88,
-      "change_pct": -2.61
+      "price": 3826.18,
+      "prev_close": 3957.94,
+      "change_pct": -3.33
     },
     "000688": {
       "name": "科创50",
       "code": "000688",
-      "price": 1679.62,
-      "prev_close": 1738.06,
-      "change_pct": -3.36
+      "price": 1598.96,
+      "prev_close": 1668.33,
+      "change_pct": -4.16
     },
     "000300": {
       "name": "沪深300",
       "code": "000300",
-      "price": 4836.76,
-      "prev_close": 4904.75,
-      "change_pct": -1.39
+      "price": 4718.35,
+      "prev_close": 4816.92,
+      "change_pct": -2.05
     },
     "399005": {
       "name": "中小100",
       "code": "399005",
-      "price": 9256.94,
-      "prev_close": 9425.84,
-      "change_pct": -1.79
+      "price": 8943.23,
+      "prev_close": 9204.79,
+      "change_pct": -2.84
     }
   },
   "recommended_stocks": [
     {
-      "code": "002068",
-      "name": "黑猫股份",
-      "status": "正常",
-      "current_price": 10.74,
-      "change_pct": 0.94,
-      "high": 11.09,
-      "low": 10.52,
-      "turnover_rate": 4.17,
-      "amplitude": 5.36,
-      "pnl_pct": 5.71,
-      "action": "🟢 持有，走势正常",
-      "action_type": "持有"
+      "code": "000626",
+      "name": "远大控股",
+      "status": "下跌",
+      "current_price": 7.39,
+      "change_pct": -8.54,
+      "high": 8.04,
+      "low": 7.31,
+      "turnover_rate": 3.84,
+      "amplitude": 9.03,
+      "pnl_pct": -7.86,
+      "action": "🔴 建议止损",
+      "action_type": "止损"
     },
     {
-      "code": "600821",
-      "name": "金开新能",
+      "code": "605020",
+      "name": "永和股份",
       "status": "下跌",
-      "current_price": 8.39,
-      "change_pct": -2.67,
-      "high": 8.8,
-      "low": 8.15,
-      "turnover_rate": 9.73,
-      "amplitude": 7.54,
-      "pnl_pct": 1.94,
-      "action": "🟡 小幅波动，继续观察",
-      "action_type": "观察"
-    },
-    {
-      "code": "600578",
-      "name": "京能电力",
-      "status": "下跌",
-      "current_price": 8.73,
-      "change_pct": -6.73,
-      "high": 9.85,
-      "low": 8.73,
-      "turnover_rate": 4.09,
-      "amplitude": 11.97,
-      "pnl_pct": -3.85,
+      "current_price": 32.91,
+      "change_pct": -4.5,
+      "high": 34.98,
+      "low": 32.48,
+      "turnover_rate": 4.67,
+      "amplitude": 7.25,
+      "pnl_pct": -3.43,
       "action": "⚠️ 跌幅较大，关注止损位",
       "action_type": "关注止损"
+    },
+    {
+      "code": "000159",
+      "name": "国际实业",
+      "status": "下跌",
+      "current_price": 6.5,
+      "change_pct": -7.14,
+      "high": 7.05,
+      "low": 6.43,
+      "turnover_rate": 6.24,
+      "amplitude": 8.86,
+      "pnl_pct": -5.39,
+      "action": "🔴 建议止损",
+      "action_type": "止损"
     }
   ],
   "top_buys": [
     {
-      "code": "000159",
-      "name": "国际实业",
-      "score": 100,
-      "price": 7.01,
-      "change_pct": 1.89,
-      "buy_point": 6.87,
+      "code": "002842",
+      "name": "翔鹭钨业",
+      "score": 78,
+      "price": 33.52,
+      "change_pct": 1.76,
+      "buy_point": 33.48,
       "buy_time": "尾盘买入 (14:20-14:50)",
-      "stop_loss": 6.53,
-      "target_price": 7.55,
+      "stop_loss": 31.81,
+      "target_price": 42.21,
       "signals": [
         "温和上涨",
+        "高换手",
+        "大振幅",
         "放量",
-        "均线多头排列",
-        "MA金叉",
-        "MACD金叉",
-        "红柱放大"
-      ],
-      "next_day_estimate": {
-        "estimate": 3.0,
-        "factors": [
-          "技术面偏强",
-          "连续上涨",
-          "MACD多头"
-        ]
-      },
-      "entry_score": 27
-    },
-    {
-      "code": "002319",
-      "name": "乐通股份",
-      "score": 100,
-      "price": 12.08,
-      "change_pct": 2.81,
-      "buy_point": 11.95,
-      "buy_time": "尾盘买入 (14:20-14:50)",
-      "stop_loss": 11.35,
-      "target_price": 12.85,
-      "signals": [
-        "温和上涨",
-        "放量",
-        "均线多头排列",
-        "MA金叉",
         "MACD金叉",
         "红柱放大"
       ],
@@ -142,52 +114,80 @@
           "MACD多头"
         ]
       },
-      "entry_score": 24
+      "entry_score": 38
     },
     {
-      "code": "002669",
-      "name": "康达新材",
-      "score": 89,
-      "price": 16.92,
-      "change_pct": 2.24,
-      "buy_point": 16.34,
+      "code": "603619",
+      "name": "中曼石油",
+      "score": 76,
+      "price": 26.07,
+      "change_pct": 2.68,
+      "buy_point": 25.92,
       "buy_time": "尾盘买入 (14:20-14:50)",
-      "stop_loss": 15.53,
-      "target_price": 19.35,
+      "stop_loss": 24.62,
+      "target_price": 30.97,
       "signals": [
         "温和上涨",
-        "高换手",
-        "收在高位",
         "放量",
-        "均线多头排列",
+        "MA金叉",
         "红柱放大"
       ],
       "next_day_estimate": {
-        "estimate": 3.0,
+        "estimate": 2.0,
         "factors": [
           "技术面偏强",
-          "连续上涨",
           "MACD多头"
         ]
       },
-      "entry_score": 22
+      "entry_score": 38
+    },
+    {
+      "code": "002471",
+      "name": "中超控股",
+      "score": 76,
+      "price": 8.07,
+      "change_pct": 1.51,
+      "buy_point": 7.46,
+      "buy_time": "尾盘买入 (14:20-14:50)",
+      "stop_loss": 7.09,
+      "target_price": 9.13,
+      "signals": [
+        "温和上涨",
+        "高换手",
+        "大振幅",
+        "放量",
+        "MA金叉",
+        "红柱放大",
+        "RSI偏高",
+        "放量上涨"
+      ],
+      "next_day_estimate": {
+        "estimate": 4.0,
+        "factors": [
+          "技术面偏强",
+          "连续上涨",
+          "MACD多头",
+          "放量上攻"
+        ]
+      },
+      "entry_score": 19
     }
   ],
   "market_stats": {
-    "total": 3076,
-    "up": 2126,
-    "down": 729,
-    "flat": 221,
-    "limit_up": 53,
-    "limit_down": 5,
-    "up_ratio": 69.1,
-    "avg_change": 0.99
+    "total": 3079,
+    "up": 375,
+    "down": 2511,
+    "flat": 193,
+    "limit_up": 40,
+    "limit_down": 12,
+    "up_ratio": 12.2,
+    "avg_change": -2.02
   },
   "sentiment": {
     "000001": {
-      "level": "偏弱",
-      "score": 40,
-      "emoji": "↘️"
+      "level": "弱势",
+      "score": 20,
+      "emoji": "📉"
     },
     "399001": {
       "level": "弱势",
@@ -216,57 +216,79 @@
     }
   },
   "advices": [
-    "➡️ 大盘震荡（上证-0.38%），控制仓位，尾盘不建议追涨",
-    "🟢 推荐股平均浮盈 +3.8%，走势良好，继续持有",
-    "🟡 推荐股平均浮亏 -3.9%，关注关键支撑位",
-    "💰 赚钱效应较好（69.1%上涨），市场情绪积极",
+    "📉 大盘偏弱（上证-1.75%），注意风险，尾盘考虑减仓",
+    "🔴 止损预警: 远大控股(-8.5%), 国际实业(-7.1%)，尾盘建议卖出",
+    "⚠️ 赚钱效应较差（12.2%上涨），操作需谨慎",
     "⏰ 距收盘约40分钟，避免尾盘追涨杀跌"
   ],
   "source_recommendations": [
     {
-      "code": "002068",
-      "name": "黑猫股份",
+      "code": "000626",
+      "name": "远大控股",
+      "score": 78,
+      "price": 8.1,
+      "change_pct": 3.18,
+      "buy_point": 8.02,
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
+      "stop_loss": 7.62,
+      "target_price": 9.75,
+      "signals": [
+        "温和上涨",
+        "大振幅",
+        "放量",
+        "MACD金叉",
+        "红柱放大"
+      ],
+      "next_day_estimate": {
+        "estimate": 2.0,
+        "factors": [
+          "技术面偏强",
+          "MACD多头"
+        ]
+      },
+      "entry_score": 51,
+      "reason": "MACD金叉，回调至MA5附近(+1.0%)，盈亏比4.3:1"
+    },
+    {
+      "code": "605020",
+      "name": "永和股份",
+      "score": 78,
+      "price": 34.65,
+      "change_pct": 1.64,
+      "buy_point": 34.08,
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
+      "stop_loss": 32.38,
+      "target_price": 37.62,
+      "signals": [
+        "温和上涨",
+        "大振幅",
+        "放量",
+        "短期多头"
+      ],
+      "next_day_estimate": {
+        "estimate": 2.0,
+        "factors": [
+          "技术面偏强",
+          "MACD多头"
+        ]
+      },
+      "entry_score": 43,
+      "reason": "回调至MA5附近(-0.6%)，资金活跃，盈亏比2.1:1"
+    },
+    {
+      "code": "000159",
+      "name": "国际实业",
       "score": 100,
-      "price": 10.55,
-      "change_pct": 0.57,
-      "buy_point": 10.16,
+      "price": 7.01,
+      "change_pct": 1.89,
+      "buy_point": 6.87,
       "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 9.65,
-      "target_price": 11.18,
-      "signals": [
-        "横盘整理",
-        "大振幅",
-        "放量",
-        "均线多头排列",
-        "MA金叉",
-        "MACD金叉",
-        "红柱放大"
-      ],
-      "next_day_estimate": {
-        "estimate": 1.5,
-        "factors": [
-          "连续上涨",
-          "MACD多头"
-        ]
-      },
-      "entry_score": 30.7,
-      "reason": "趋势启动信号（均线多头+金叉+放量）"
-    },
-    {
-      "code": "600821",
-      "name": "金开新能",
-      "score": 91,
-      "price": 8.63,
-      "change_pct": 4.61,
-      "buy_point": 8.23,
-      "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 7.82,
-      "target_price": 10.18,
+      "stop_loss": 6.53,
+      "target_price": 7.55,
       "signals": [
         "温和上涨",
-        "高换手",
-        "大振幅",
         "放量",
+        "均线多头排列",
         "MA金叉",
         "MACD金叉",
         "红柱放大"
@@ -279,36 +301,8 @@
           "MACD多头"
         ]
       },
-      "entry_score": 0,
-      "reason": "金叉信号，短期看涨，资金活跃度高，⚠RSI偏高，注意追高风险，高胜率策略: s02_volume_breakout(胜率60%)、s15_high_turnover_start(胜率72%)"
-    },
-    {
-      "code": "600578",
-      "name": "京能电力",
-      "score": 90,
-      "price": 9.76,
-      "change_pct": 4.5,
-      "buy_point": 9.08,
-      "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 8.62,
-      "target_price": 10.25,
-      "signals": [
-        "温和上涨",
-        "大振幅",
-        "放量",
-        "均线多头排列",
-        "红柱放大"
-      ],
-      "next_day_estimate": {
-        "estimate": 3.0,
-        "factors": [
-          "技术面偏强",
-          "连续上涨",
-          "MACD多头"
-        ]
-      },
-      "entry_score": 0,
-      "reason": "均线多头排列，趋势确立，资金活跃度高，⚠RSI偏高，注意追高风险"
+      "entry_score": 28,
+      "reason": "均线多头趋势，MACD金叉，高于MA5(+2.0%)注意追高，盈亏比2.0:1"
     }
   ]
 }

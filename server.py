@@ -164,6 +164,10 @@ class Handler(SimpleHTTPRequestHandler):
                 self._handle_stock_advice(parsed)
             elif path == '/api/buy_plan':
                 self._handle_buy_plan()
+            elif path == '/api/real_portfolio':
+                self._handle_real_portfolio()
+            elif path == '/api/auto_trade_config':
+                self._handle_auto_trade_config()
             elif path == '/api/unified_buys':
                 self._handle_unified_buys()
             elif path == '/api/latest_trades':
@@ -200,6 +204,18 @@ class Handler(SimpleHTTPRequestHandler):
 
             if path == '/api/manual_buy':
                 self._handle_manual_buy(params)
+            elif path == '/api/real_portfolio':
+                self._handle_real_portfolio(params)
+            elif path == '/api/broker_connect':
+                self._handle_broker_connect(params)
+            elif path == '/api/broker_sync':
+                self._handle_broker_sync()
+            elif path == '/api/broker_signals':
+                self._handle_broker_signals()
+            elif path == '/api/auto_trade_config':
+                self._handle_auto_trade_config(params)
+            elif path == '/api/batch_stop_profit':
+                self._handle_batch_stop_profit(params)
             elif path == '/api/delete_holding':
                 self._handle_delete_holding(params)
             elif path == '/api/manual_sell':
@@ -952,6 +968,252 @@ class Handler(SimpleHTTPRequestHandler):
             json.dump(tl, f, ensure_ascii=False, indent=2)
 
         self._json({'ok': True, 'message': f'买入 {name} {qty}股 × {price}元，手续费{commission}元', 'trade': trade, 'cash': pf['cash']})
+
+    def _handle_real_portfolio(self, params=None):
+        """真实持仓管理"""
+        rp_path = os.path.join(DATA_DIR, 'real_portfolio.json')
+        if params:
+            action = params.get('action', '')
+            
+            if action == 'add':
+                rp = load_json(rp_path, {'holdings': [], 'cash': params.get('cash', 0), 'initial': params.get('initial', 0)})
+                code = params.get('code', '').strip()
+                name = params.get('name', '').strip()
+                cost = float(params.get('cost', 0))
+                qty = int(params.get('qty', 0))
+                if not code or cost <= 0 or qty <= 0:
+                    self._json({'error': '参数不完整'})
+                    return
+                # 去重更新
+                existing = [h for h in rp['holdings'] if h['code'] == code]
+                if existing:
+                    existing[0]['cost'] = cost
+                    existing[0]['qty'] = qty
+                    existing[0]['name'] = name
+                else:
+                    rp['holdings'].append({'code': code, 'name': name, 'cost': cost, 'qty': qty, 'stop_loss': params.get('stop_loss', 0), 'target_price': params.get('target_price', 0)})
+                rp['cash'] = params.get('cash', rp.get('cash', 0))
+                rp['initial'] = params.get('initial', rp.get('initial', 0))
+                _save_json(rp_path, rp)
+                self._json({'ok': True, 'message': f'已添加 {name}'})
+            elif action == 'delete':
+                rp = load_json(rp_path, {'holdings': []})
+                code = params.get('code', '')
+                rp['holdings'] = [h for h in rp['holdings'] if h['code'] != code]
+                _save_json(rp_path, rp)
+                self._json({'ok': True, 'message': '已删除'})
+            elif action == 'update_settings':
+                rp = load_json(rp_path, {'holdings': [], 'cash': 0, 'initial': 0})
+                rp['cash'] = params.get('cash', rp.get('cash', 0))
+                rp['initial'] = params.get('initial', rp.get('initial', 0))
+                _save_json(rp_path, rp)
+                self._json({'ok': True})
+            elif action == 'import':
+                rp = load_json(rp_path, {'holdings': [], 'cash': 0, 'initial': 0})
+                stocks = params.get('stocks', [])
+                for s in stocks:
+                    existing = [h for h in rp['holdings'] if h['code'] == s['code']]
+                    if existing:
+                        existing[0]['cost'] = float(s.get('cost', 0))
+                        existing[0]['qty'] = int(s.get('qty', 0))
+                        existing[0]['name'] = s.get('name', '')
+                    else:
+                        rp['holdings'].append({'code': s['code'], 'name': s.get('name', ''), 'cost': float(s.get('cost', 0)), 'qty': int(s.get('qty', 0)), 'stop_loss': 0, 'target_price': 0})
+                rp['cash'] = params.get('cash', rp.get('cash', 0))
+                rp['initial'] = params.get('initial', rp.get('initial', 0))
+                _save_json(rp_path, rp)
+                self._json({'ok': True, 'message': f'已导入 {len(stocks)} 只股票'})
+            else:
+                self._json({'error': '未知操作'})
+            return
+        
+        # GET: 返回真实持仓+实时价格
+        rp = load_json(rp_path, {'holdings': [], 'cash': 0, 'initial': 0})
+        holdings = rp.get('holdings', [])
+        codes = [h['code'] for h in holdings]
+        rt = get_cached_realtime(codes) if codes else {}
+        
+        total_cost = 0
+        total_market = 0
+        result = []
+        for h in holdings:
+            r = rt.get(h['code'], {})
+            cp = r.get('price', h.get('cost', 0))
+            if cp <= 0: cp = h.get('cost', 0)
+            cost_val = h['cost'] * h['qty']
+            market_val = cp * h['qty']
+            total_cost += cost_val
+            total_market += market_val
+            pnl = market_val - cost_val
+            pnl_pct = (cp - h['cost']) / h['cost'] * 100 if h['cost'] > 0 else 0
+            
+            # 查找推荐数据获取止盈止损
+            rec_data = load_json(os.path.join(DATA_DIR, 'recommendations.json'), {})
+            target = h.get('target_price') or 0
+            stop = h.get('stop_loss') or 0
+            if not target or not stop:
+                for k in ['strong_buy', 'buy', 'watch']:
+                    for s in rec_data.get(k, []):
+                        if s.get('code') == h['code']:
+                            if not target: target = s.get('target_price', 0)
+                            if not stop: stop = s.get('stop_loss', 0)
+                            break
+            
+            # 预警状态
+            alert = ''
+            if stop > 0 and cp <= stop:
+                alert = 'stop'  # 触及止损
+            elif target > 0 and cp >= target:
+                alert = 'target'  # 触及止盈
+            
+            result.append({
+                'code': h['code'], 'name': h['name'],
+                'qty': h['qty'], 'cost': h['cost'],
+                'current_price': cp, 'change_pct': r.get('change_pct', 0),
+                'cost_value': round(cost_val, 2),
+                'market_value': round(market_val, 2),
+                'pnl': round(pnl, 2), 'pnl_pct': round(pnl_pct, 2),
+                'target_price': round(target, 2) if target else 0,
+                'stop_loss': round(stop, 2) if stop else 0,
+                'alert': alert,
+            })
+        
+        total_pnl = total_market - total_cost
+        self._json({
+            'holdings': result,
+            'cash': rp.get('cash', 0),
+            'initial': rp.get('initial', 0),
+            'total_cost': round(total_cost, 2),
+            'total_market': round(total_market, 2),
+            'total_pnl': round(total_pnl, 2),
+            'total_pnl_pct': round(total_pnl / total_cost * 100, 2) if total_cost > 0 else 0,
+            'total_assets': round((rp.get('cash', 0)) + total_market, 2),
+        })
+
+    def _handle_broker_connect(self, params):
+        """连接券商账户"""
+        broker = params.get('broker', 'htsc')
+        user = params.get('user', '')
+        password = params.get('password', '')
+        if not user or not password:
+            self._json({'error': '请输入账号密码'})
+            return
+        try:
+            # 尝试连接
+            import easytrader
+            session = easytrader.use('ht')
+            session.prepare(user=user, password=password)
+            # 获取持仓
+            positions = session.position
+            balance = session.balance
+            # 保存到real_portfolio
+            rp = {'holdings': [], 'cash': float(balance.get('可用资金', 0)), 'initial': float(balance.get('总资产', 0))}
+            for p in positions:
+                rp['holdings'].append({
+                    'code': p.get('证券代码', '').strip(),
+                    'name': p.get('证券名称', '').strip(),
+                    'cost': float(p.get('成本价', 0)),
+                    'qty': int(p.get('股票余额', 0)),
+                    'stop_loss': 0, 'target_price': 0
+                })
+            _save_json(os.path.join(DATA_DIR, 'real_portfolio.json'), rp)
+            # 保存登录凭证
+            _save_json(os.path.join(DATA_DIR, 'broker_config.json'), {'broker': broker, 'user': user, 'password': password})
+            self._json({'ok': True, 'count': len(positions), 'message': f'连接成功，已导入{len(positions)}只持仓'})
+        except Exception as e:
+            self._json({'error': f'连接失败: {e}'})
+
+    def _handle_broker_sync(self):
+        """同步券商持仓"""
+        cfg = load_json(os.path.join(DATA_DIR, 'broker_config.json'))
+        if not cfg.get('user'):
+            self._json({'error': '请先连接券商账户'})
+            return
+        try:
+            import easytrader
+            session = easytrader.use('ht')
+            session.prepare(user=cfg['user'], password=cfg['password'])
+            positions = session.position
+            balance = session.balance
+            rp = {'holdings': [], 'cash': float(balance.get('可用资金', 0)), 'initial': float(balance.get('总资产', 0))}
+            for p in positions:
+                rp['holdings'].append({
+                    'code': p.get('证券代码', '').strip(),
+                    'name': p.get('证券名称', '').strip(),
+                    'cost': float(p.get('成本价', 0)),
+                    'qty': int(p.get('股票余额', 0)),
+                    'stop_loss': 0, 'target_price': 0
+                })
+            _save_json(os.path.join(DATA_DIR, 'real_portfolio.json'), rp)
+            self._json({'ok': True, 'count': len(positions), 'message': f'已同步{len(positions)}只持仓'})
+        except Exception as e:
+            self._json({'error': f'同步失败: {e}'})
+
+    def _handle_broker_signals(self):
+        """检查交易信号"""
+        cfg = load_json(os.path.join(DATA_DIR, 'broker_config.json'))
+        if not cfg.get('user'):
+            self._json({'error': '请先连接券商账户'})
+            return
+        try:
+            import easytrader
+            session = easytrader.use('ht')
+            session.prepare(user=cfg['user'], password=cfg['password'])
+            positions = session.position
+            rec = load_json(os.path.join(DATA_DIR, 'recommendations.json'), {})
+            signals = []
+            for p in positions:
+                code = p.get('证券代码', '').strip()
+                cost = float(p.get('成本价', 0))
+                qty = int(p.get('股票余额', 0))
+                price = float(p.get('市价', 0))
+                pnl_pct = (price - cost) / cost * 100 if cost > 0 else 0
+                target = stop = 0
+                for k in ['strong_buy', 'buy']:
+                    for s in rec.get(k, []):
+                        if s.get('code') == code:
+                            target = s.get('target_price', 0)
+                            stop = s.get('stop_loss', 0)
+                            break
+                action = ''
+                reason = ''
+                if pnl_pct <= -8:
+                    action = 'stop_loss'; reason = f'触及-8%止损线'
+                elif stop > 0 and price <= stop:
+                    action = 'stop_loss'; reason = f'触及止损价{stop}'
+                elif target > 0 and price >= target:
+                    action = 'take_profit'; reason = f'触及止盈价{target}'
+                elif pnl_pct >= 15:
+                    action = 'take_profit'; reason = f'盈利{pnl_pct:.0f}%'
+                if action:
+                    signals.append({'code': code, 'name': p.get('证券名称', ''), 'action': action, 'reason': reason, 'price': price, 'pnl_pct': round(pnl_pct, 2)})
+            self._json({'ok': True, 'signals': signals})
+        except Exception as e:
+            self._json({'error': f'检查失败: {e}'})
+
+    def _handle_auto_trade_config(self, params=None):
+        """自动交易配置"""
+        cfg_path = os.path.join(DATA_DIR, 'auto_trade_config.json')
+        if params:
+            _save_json(cfg_path, params)
+            self._json({'ok': True, 'message': '配置已保存'})
+        else:
+            cfg = load_json(cfg_path, {'per_stock': 10000, 'stop_loss_pct': 5, 'take_profit_pct': 10, 'auto_buy': False, 'auto_sell': False})
+            self._json(cfg)
+
+    def _handle_batch_stop_profit(self, params):
+        """批量设置止盈止损"""
+        stop_pct = float(params.get('stop_loss_pct', 5))
+        profit_pct = float(params.get('take_profit_pct', 10))
+        rp_path = os.path.join(DATA_DIR, 'real_portfolio.json')
+        rp = load_json(rp_path, {'holdings': []})
+        for h in rp['holdings']:
+            cost = h.get('cost', 0)
+            if cost > 0:
+                h['stop_loss'] = round(cost * (1 - stop_pct / 100), 2)
+                h['target_price'] = round(cost * (1 + profit_pct / 100), 2)
+        _save_json(rp_path, rp)
+        self._json({'ok': True, 'message': f'已设置{len(rp["holdings"])}只股票的止盈止损'})
 
     def _handle_delete_holding(self, params):
         """删除持仓股票，退回资金，不计入盈亏"""

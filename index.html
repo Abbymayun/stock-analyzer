@@ -75,6 +75,7 @@
         <span id="update-time">加载中...</span>
         <span id="market-sentiment" class="sentiment"></span>
         <a class="trading-entry" onclick="App.showPage('trading')">💰 虚拟交易</a>
+        <a class="trading-entry" onclick="App.showPage('real')" style="margin-left:6px">📊 真实持仓</a>
         <a class="trading-entry" onclick="App.showPage('strategy')" style="margin-left:6px">🧪 策略</a>
       </div>
     </header>
@@ -233,6 +234,15 @@
     </div>
   </div>
 
+  <!-- ========== 真实持仓页 ========== -->
+  <div id="page-real" class="page">
+    <header class="header">
+      <button class="btn-back" onclick="App.showPage('home')">← 返回</button>
+      <h2>📊 真实持仓分析</h2>
+    </header>
+    <div id="real-portfolio-content" style="max-width:900px;margin:0 auto;padding:20px"></div>
+  </div>
+
   <!-- ========== 虚拟交易页 ========== -->
   <div id="page-trading" class="page">
     <header class="header">
@@ -300,6 +310,6 @@
 <!-- Toast -->
 <div id="toast" class="toast hidden"><span id="toast-msg"></span><span onclick="document.getElementById('toast').classList.add('hidden')" style="cursor:pointer;margin-left:12px;font-size:16px;line-height:1">×</span></div>
 
-<script src="app.js?t=1780630798"></script>
+<script src="app.js?v=5.9"></script>
 </body>
 </html>

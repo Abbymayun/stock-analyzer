@@ -94,8 +94,6 @@ const App = {
     const el = document.getElementById('unified-buys-list');
     const labelEl = document.getElementById('unified-source-label');
     const items = data.items || [];
-    // 按分数从高到低排序
-    items.sort((a, b) => (b.score || 0) - (a.score || 0));
     if (!items.length) {
       el.innerHTML = '<div class="empty">暂无推荐，等待分析更新...</div>';
       if (labelEl) labelEl.textContent = '';
@@ -172,7 +170,7 @@ const App = {
       this.showToast('请输入股票代码/名称和买入价格');
       return;
     }
-    const card = document.getElementById('advice-result-area');
+    const card = document.getElementById('advice-result-card');
     const body = document.getElementById('advice-result-body');
     const title = document.getElementById('advice-result-title');
     
@@ -501,14 +499,13 @@ const App = {
         if (json.data) {
           this.realtimeCache = json.data;
           this._updateDisplayWithRealtime();
-          this.renderVirtualHoldings().catch(()=>{});
         }
       } catch {}
     };
     // 立即刷新一次
     refresh();
-    // 每10秒刷新行情
-    this.realtimeTimer = setInterval(refresh, 10000);
+    // 每30秒刷新
+    this.realtimeTimer = setInterval(refresh, 30000);
   },
 
   _getImportantCodes() {
@@ -586,36 +583,7 @@ const App = {
       if (priceSpan) priceSpan.textContent = data.price.toFixed(2);
       if (pnlSpan) { pnlSpan.textContent = sign + pnl.toFixed(0) + '元'; pnlSpan.className = 'vh-pnl ' + cls; }
       if (pctSpan) { pctSpan.textContent = sign + pnlPct.toFixed(2) + '%'; pctSpan.className = 'vh-pct ' + cls; }
-
-    // 更新分析页面中的股票价格
-    document.querySelectorAll('.top-buys-price[data-code]').forEach(el => {
-      const code = el.dataset.code;
-      const data = rt[code];
-      if (!data) return;
-      el.textContent = data.price.toFixed(2);
-      const chg = data.change_pct || 0;
-      el.className = 'top-buys-price ' + (chg >= 0 ? 'text-rise' : 'text-fall');
     });
-    });
-    // 更新总盈亏（浮动+已实现）
-    let totalUnrealized = 0;
-    document.querySelectorAll('.vh-card[data-code]').forEach(el => {
-      const r = rt[el.dataset.code];
-      if (!r) return;
-      const cost = parseFloat(el.dataset.cost) || 0;
-      const qty = parseInt(el.dataset.qty) || 0;
-      totalUnrealized += (r.price - cost) * qty;
-    });
-    const totalEl = document.getElementById('vh-total-pnl');
-    if (totalEl) {
-      // 加上已实现盈亏（从页面存储中读取，初始值保留在data属性中）
-      const realized = parseFloat(totalEl.dataset.realized || '0') || 0;
-      const total = totalUnrealized + realized;
-      const cls = total >= 0 ? 'text-rise' : 'text-fall';
-      const sign = total >= 0 ? '+' : '';
-      totalEl.textContent = sign + total.toFixed(0);
-      totalEl.className = cls;
-    }
   },
 
   // === 加载历史数据 ===
@@ -745,7 +713,7 @@ const App = {
           <div style="flex:1;cursor:pointer;display:flex;align-items:center;gap:6px" onclick="App.openStock('${s.code}')">
           <span style="font-weight:600;color:var(--text1);min-width:52px;font-size:12px">${this.esc(s.name)}</span>
           <span style="font-size:10px;color:var(--text3);min-width:48px">${s.code}</span>
-          <span style="min-width:52px;text-align:right" class="${chgCls} top-buys-price" data-code="${s.code}">${chgSign}${s.change_pct.toFixed(2)}%</span>
+          <span style="min-width:52px;text-align:right" class="${chgCls}">${chgSign}${s.change_pct.toFixed(2)}%</span>
           <span style="min-width:50px;text-align:right;font-size:11px" class="${estCls}">${estStr}</span>
           <span style="min-width:52px;text-align:right;font-size:11px;color:var(--rise)">${s.buy_point?.toFixed(2) || '-'}</span>
           <span style="min-width:52px;text-align:right;font-size:11px;color:var(--rise)">${s.target_price?.toFixed(2) || '-'}</span>
@@ -876,7 +844,7 @@ const App = {
           <div style="flex:1;cursor:pointer;display:flex;align-items:center;gap:6px" onclick="App.openStock('${s.code}')">
           <span style="font-weight:600;color:var(--text1);min-width:52px;font-size:12px">${this.esc(s.name)}</span>
           <span style="font-size:10px;color:var(--text3);min-width:48px">${s.code}</span>
-          <span style="min-width:52px;text-align:right" class="${chgCls} top-buys-price" data-code="${s.code}">${chgSign}${s.change_pct.toFixed(2)}%</span>
+          <span style="min-width:52px;text-align:right" class="${chgCls}">${chgSign}${s.change_pct.toFixed(2)}%</span>
           <span style="min-width:50px;text-align:right;font-size:11px" class="${estCls}">${estStr}</span>
           <span style="min-width:52px;text-align:right;font-size:11px;color:var(--rise)">${s.buy_point?.toFixed(2) || '-'}</span>
           <span style="min-width:52px;text-align:right;font-size:11px;color:var(--rise)">${s.target_price?.toFixed(2) || '-'}</span>
@@ -1240,7 +1208,7 @@ const App = {
             <div style="flex:1;cursor:pointer;display:flex;align-items:center;gap:6px" onclick="App.openStock('${s.code}')">
             <span style="font-weight:600;color:var(--text1);min-width:52px;font-size:12px">${this.esc(s.name)}</span>
             <span style="font-size:10px;color:var(--text3);min-width:48px">${s.code}</span>
-            <span style="min-width:52px;text-align:right" class="${chgCls} top-buys-price" data-code="${s.code}">${chgSign}${s.change_pct.toFixed(2)}%</span>
+            <span style="min-width:52px;text-align:right" class="${chgCls}">${chgSign}${s.change_pct.toFixed(2)}%</span>
             <span style="min-width:50px;text-align:right;font-size:11px" class="${estCls}">${estStr}</span>
             <span style="min-width:52px;text-align:right;font-size:11px;color:var(--rise)">${s.buy_point?.toFixed(2) || '-'}</span>
             <span style="min-width:52px;text-align:right;font-size:11px;color:var(--rise)">${s.target_price?.toFixed(2) || '-'}</span>
@@ -1602,8 +1570,8 @@ const App = {
         return;
       }
 
-      // 计算总盈亏（浮动+已实现）
-      const totalPnl = holdings.reduce((s, h) => s + (h.pnl || 0), 0) + (data.realized_pnl || 0);
+      // 计算总盈亏
+      const totalPnl = holdings.reduce((s, h) => s + (h.pnl || 0), 0);
       const totalCost = holdings.reduce((s, h) => s + h.avg_cost * h.qty, 0);
       const totalPnlPct = totalCost > 0 ? totalPnl / totalCost * 100 : 0;
       const cls = totalPnl >= 0 ? 'text-rise' : 'text-fall';
@@ -1612,9 +1580,8 @@ const App = {
       const cash = data.cash || 0;
       if (cashEl) cashEl.textContent = `资金: ${(data.total_assets || 0).toLocaleString()} · 可用 ${cash.toLocaleString()}`;
       let html = `<div style="text-align:center;padding:6px 0 10px;border-bottom:1px solid var(--border);margin-bottom:8px">
-        <div style="font-size:11px;color:var(--text3)">总盈亏（浮动+已实现）</div>
-        <div style="font-size:18px;font-weight:800" class="${cls}"><span id="vh-total-pnl" data-realized="${data.realized_pnl || 0}">${sign}${totalPnl.toFixed(0)}</span>元 (${sign}${totalPnlPct.toFixed(2)}%)</div>
-        <div style="font-size:10px;color:var(--text3);margin-top:2px">浮动 ${holdings.reduce((s,h)=>s+(h.pnl||0),0) >= 0 ? '+' : ''}${holdings.reduce((s,h)=>s+(h.pnl||0),0).toFixed(0)} · 已实现 ${(data.realized_pnl||0) >= 0 ? '+' : ''}${(data.realized_pnl||0).toFixed(0)}</div>
+        <div style="font-size:11px;color:var(--text3)">总盈亏</div>
+        <div style="font-size:18px;font-weight:800" class="${cls}">${sign}${totalPnl.toFixed(0)}元 (${sign}${totalPnlPct.toFixed(2)}%)</div>
         <div style="font-size:11px;color:var(--text3)">总资产 ${(data.total_assets || 0).toLocaleString()}元 · 可用 ${cash.toLocaleString()}元</div>
       </div>`;
 
@@ -1622,13 +1589,6 @@ const App = {
         const hCls = (h.pnl || 0) >= 0 ? 'text-rise' : 'text-fall';
         const hSign = (h.pnl || 0) >= 0 ? '+' : '';
         const emoji = (h.pnl || 0) >= 0 ? '🟢' : '🔴';
-        // 从推荐数据查找止盈止损
-        let target = null, stop = null;
-        const rec = this.recData || {};
-        for (const k of ['strong_buy','buy','watch']) {
-          const f = (rec[k]||[]).find(s => s.code === h.code);
-          if (f) { target = f.target_price; stop = f.stop_loss; break; }
-        }
 
         html += `<div class="vh-card" data-code="${h.code}" data-cost="${h.avg_cost}" data-qty="${h.qty}" onclick="App.openStock('${h.code}')" style="cursor:pointer;padding:10px 0;border-bottom:1px solid rgba(42,58,80,0.15)">
           <div style="display:flex;justify-content:space-between;align-items:center">
@@ -1636,7 +1596,6 @@ const App = {
               <span style="font-weight:600;font-size:14px">${this.esc(h.name)}</span>
               <span style="color:var(--text3);font-size:11px;margin-left:4px">${h.code}</span>
               <span style="font-size:11px;color:var(--text3);margin-left:6px">${h.qty}股 × ${h.avg_cost.toFixed(2)}</span>
-            <span style="font-size:10px;color:var(--text3);margin-left:8px">${target ? '🎯'+target.toFixed(2) : ''} ${stop ? '🛑'+stop.toFixed(2) : ''}</span>
             </div>
             <div style="text-align:right">
               <div class="vh-price" style="font-weight:600;font-size:14px">${h.current_price.toFixed(2)}</div>
@@ -1652,7 +1611,6 @@ const App = {
           <div style="margin-top:4px;display:flex;gap:4px">
             <button onclick="event.stopPropagation();App._quickAdvice('${h.code}','${this.esc(h.name)}',${h.avg_cost})" style="padding:2px 8px;background:#3b82f622;color:#3b82f6;border:1px solid #3b82f644;border-radius:4px;cursor:pointer;font-size:11px">获取建议</button>
             <button onclick="event.stopPropagation();App.manualSell('${h.code}','${this.esc(h.name)}',${h.qty})" style="padding:2px 8px;background:#ef444422;color:#ef4444;border:1px solid #ef444444;border-radius:4px;cursor:pointer;font-size:11px">卖出</button>
-            <button onclick="event.stopPropagation();if(confirm('确定删除 ${this.esc(h.name)} ？资金会退回但不计入盈亏。'))App._deleteHolding('${h.code}')" style="padding:2px 8px;background:rgba(255,255,255,0.05);color:var(--text3);border:1px solid rgba(255,255,255,0.1);border-radius:4px;cursor:pointer;font-size:10px">删除</button>
           </div>`;
 
         // 交易明细（折叠）
@@ -2128,7 +2086,7 @@ const App = {
       <div style="text-align:center;margin-bottom:16px">
         <div style="font-size:36px;font-weight:800" class="${chgCls}">${displayPrice.toFixed(2)}</div>
         <div style="font-size:16px;font-weight:600" class="${chgCls}">${chgSign}${displayChgPct.toFixed(2)}%</div>
-        ${this._apiAvailable ? '<div style="font-size:10px;color:var(--text3)">实时行情 · 每5秒刷新</div>' : ''}
+        ${this._apiAvailable ? '<div style="font-size:10px;color:var(--text3)">实时数据 · 每30秒刷新</div>' : ''}
         <div style="font-size:24px;font-weight:800;margin-top:8px;color:${this.recColor(s.recommendation)}">${s.recommendation} · ${s.score}分</div>`;
 
     if (s.next_day_estimate) {
@@ -2300,16 +2258,18 @@ const App = {
     window.scrollTo(0, 0);
     if (id === 'history') { this._historyDetailFile = null; this.renderHistory(); }
     if (id === 'trading') this.renderTrading();
+    if (id === 'real') this.renderRealPortfolio();
     if (id === 'strategy') this.renderStrategy();
   },
 
   back() { this.showPage('home'); },
 
   // === 策略分析页 ===
-async renderStrategy() {
+  async renderStrategy() {
     const el = document.getElementById('strategy-content');
     if (!el) return;
     el.innerHTML = '<div style="padding:40px;text-align:center;color:var(--text3)">加载策略数据...</div>';
+
     try {
       let data = null;
       if (this._apiAvailable) {
@@ -2317,109 +2277,107 @@ async renderStrategy() {
         if (res.ok) data = await res.json();
       }
       if (!data) {
-        try { const res = await fetch('data/recommendations.json'); if (res.ok) { const rec = await res.json(); data = rec.strategy_results || null; } } catch {}
+        // 从 recommendations.json 加载
+        try {
+          const res = await fetch('data/recommendations.json');
+          if (res.ok) {
+            const rec = await res.json();
+            data = rec.strategy_results || null;
+          }
+        } catch {}
       }
-      if (!data) { el.innerHTML = '<div style="padding:40px;text-align:center;color:var(--text3)">暂无策略数据</div>'; return; }
-      const stats = data.stats || {}, results = data.results || {}, date = data.date || '';
-      document.getElementById('strategy-update-time').textContent = (this.allData?.update_time || date) + ' 筛选';
-      this._sd = { stats, results };
+      if (!data) {
+        el.innerHTML = '<div style="padding:40px;text-align:center;color:var(--text3)">暂无策略数据，等待下次分析更新</div>';
+        return;
+      }
 
-      // 顶部按钮
-      let html = '<div style="margin-bottom:12px;display:flex;gap:8px;align-items:center">';
-      html += '<button onclick="App._showTrackHistory()" style="padding:6px 14px;background:#3b82f6;border:none;border-radius:6px;color:#fff;cursor:pointer;font-size:12px;font-weight:600">📊 每日追踪详情</button>';
-      html += '<span style="font-size:11px;color:var(--text3)">查看每天策略选股验证记录</span></div>';
+      const stats = data.stats || {};
+      const results = data.results || {};
+      const date = data.date || '';
+      document.getElementById('strategy-update-time').textContent = date ? date + ' 筛选' : '';
 
-      // 左侧策略列表
-      let left = '<div style="font-size:14px;font-weight:700;margin-bottom:8px">📊 策略列表</div>';
-      left += '<div style="font-size:10px;color:var(--text3);margin-bottom:10px">点击策略查看对应股票</div>';
-      let total = 0; Object.values(results).forEach(a => total += a.length);
-      left += '<div class="si on" data-sid="ALL" onclick="App._sf(\'ALL\')" style="padding:10px 12px;background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);border-radius:8px;cursor:pointer;margin-bottom:6px"><div style="display:flex;justify-content:space-between"><span style="font-weight:700;font-size:13px;color:#60a5fa">🎯 全部策略</span><span style="font-size:11px;color:var(--text3)">' + total + '只</span></div></div>';
-      Object.entries(stats).sort((a,b) => (b[1].win_rate||0) - (a[1].win_rate||0)).forEach(([sid, st]) => {
-        const cnt = (results[sid]||[]).length; if (!cnt) return;
+      // 策略统计排行
+      let html = `<div style="margin-bottom:16px">
+        <div style="font-size:15px;font-weight:700;margin-bottom:12px">📊 策略表现排行</div>
+        <div style="font-size:11px;color:var(--text3);margin-bottom:8px">按胜率排序 · 追踪中 · 30天验证期</div>
+        <div style="overflow-x:auto"><table style="width:100%;font-size:12px;border-collapse:collapse">
+          <thead><tr style="border-bottom:1px solid var(--border)">
+            <th style="padding:6px 8px;text-align:left">策略</th>
+            <th style="padding:6px 4px">类别</th>
+            <th style="padding:6px 4px">胜率</th>
+            <th style="padding:6px 4px">平均收益</th>
+            <th style="padding:6px 4px">样本数</th>
+            <th style="padding:6px 4px">活跃天数</th>
+          </tr></thead><tbody>`;
+
+      const statEntries = Object.entries(stats);
+      statEntries.sort((a, b) => (b[1].win_rate || 0) - (a[1].win_rate || 0));
+
+      statEntries.forEach(([sid, st]) => {
         const wr = st.win_rate || 0;
-        left += '<div class="si" data-sid="' + sid + '" onclick="App._sf(\'' + sid + '\')" style="padding:10px 12px;background:var(--bg2);border:1px solid transparent;border-radius:8px;cursor:pointer;margin-bottom:4px;transition:0.2s">';
-        left += '<div style="display:flex;justify-content:space-between;margin-bottom:2px"><span style="font-weight:600;font-size:12px">' + this.esc(st.name) + '</span><span style="font-size:10px;color:#ef4444;font-weight:600">' + wr + '%</span></div>';
-        left += '<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3)"><span>' + (st.category||'') + '</span><span>' + (st.total_trades||0) + '笔</span></div>';
-        left += '<div style="font-size:10px;color:var(--text3);margin-top:2px">📌 ' + cnt + '只匹配</div></div>';
+        const wrCls = wr >= 50 ? 'text-rise' : 'text-fall';
+        const wrBar = `<div style="height:4px;border-radius:2px;background:${wr >= 50 ? 'var(--rise)' : 'var(--fall)'};width:${Math.min(wr, 100)}%;margin-top:2px"></div>`;
+        const avgCls = (st.avg_pnl || 0) >= 0 ? 'text-rise' : 'text-fall';
+        html += `<tr style="border-bottom:1px solid var(--border)">
+          <td style="padding:6px 8px;font-weight:600">${this.esc(st.name)}</td>
+          <td style="padding:6px 4px;color:var(--text3)">${st.category || ''}</td>
+          <td style="padding:6px 4px"><span class="${wrCls}">${wr}%</span>${wrBar}</td>
+          <td style="padding:6px 4px" class="${avgCls}">${st.avg_pnl >= 0 ? '+' : ''}${st.avg_pnl}%</td>
+          <td style="padding:6px 4px">${st.total_trades || 0}</td>
+          <td style="padding:6px 4px;color:var(--text3)">${st.days_active || 0}</td>
+        </tr>`;
       });
 
-      html += '<div style="display:grid;grid-template-columns:280px 1fr;gap:20px;max-width:1100px;margin:0 auto">';
-      html += '<div style="position:sticky;top:0;max-height:calc(100vh-180px);overflow-y:auto;padding-right:8px">' + left + '</div>';
-      html += '<div><div style="font-size:14px;font-weight:700;margin-bottom:8px" id="stitle">🎯 筛选结果（全部）</div><div id="slist"></div></div>';
-      html += '</div>';
+      html += '</tbody></table></div></div>';
+
+      // 今日筛选结果
+      html += '<div style="margin-top:16px"><div style="font-size:15px;font-weight:700;margin-bottom:12px">🎯 今日筛选结果</div>';
+
+      const resultEntries = Object.entries(results);
+      if (resultEntries.length === 0) {
+        html += '<div style="padding:20px;text-align:center;color:var(--text3)">今日无匹配策略</div>';
+      } else {
+        resultEntries.forEach(([sid, stocks]) => {
+          const stName = (stats[sid] || {}).name || sid;
+          html += `<div style="margin-bottom:12px">
+            <div style="font-size:13px;font-weight:600;margin-bottom:6px">📌 ${this.esc(stName)}（${stocks.length}只）</div>`;
+
+          stocks.forEach((s, i) => {
+            const chgCls = (s.change_pct || 0) >= 0 ? 'text-rise' : 'text-fall';
+            const chgSign = (s.change_pct || 0) >= 0 ? '+' : '';
+            html += `<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 10px;background:var(--bg2);border-radius:6px;margin-bottom:4px;font-size:12px">
+              <div>
+                <span style="font-weight:600">${this.esc(s.name)}</span>
+                <span style="color:var(--text3);margin-left:6px">${s.code}</span>
+                <span style="color:var(--text3);margin-left:4px">评分${s.score || '-'}</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px">
+                <span class="${chgCls}">${s.price?.toFixed(2) || '-'}元 ${chgSign}${(s.change_pct || 0).toFixed(2)}%</span>
+                <span style="color:var(--text3);font-size:11px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${this.esc(s.reason || '')}</span>
+              </div>
+            </div>`;
+          });
+
+          html += '</div>';
+        });
+      }
+
+      // 策略说明
+      html += `<div style="margin-top:20px;padding:12px;background:var(--bg2);border-radius:8px">
+        <div style="font-size:12px;color:var(--text3);line-height:1.6">
+          🧪 <strong>策略实验室说明</strong><br>
+          • 定义了20个短线策略，覆盖趋势、技术、形态、资金、庄家5大类别<br>
+          • 每次分析自动筛选符合条件的股票（每策略最多5只）<br>
+          • 追踪30天表现，统计各策略胜率和平均收益<br>
+          • 不断优化策略权重，目标是筛选出高收益强稳定性的策略<br>
+          • 策略基于技术指标和庄家行为分析，捕捉拉升前埋伏和回调吃利机会
+        </div>
+      </div>`;
+
       el.innerHTML = html;
-      this._sf('ALL');
-    } catch (e) { el.innerHTML = '<div style="padding:40px;text-align:center;color:var(--text3)">加载失败</div>'; }
-  },
-
-  _sf(sid) {
-    const d = this._sd; if (!d) return;
-    document.querySelectorAll('.si').forEach(e => {
-      e.style.background = e.dataset.sid === sid ? 'rgba(59,130,246,0.1)' : 'var(--bg2)';
-      e.style.borderColor = e.dataset.sid === sid ? 'rgba(59,130,246,0.3)' : 'transparent';
-    });
-    document.getElementById('stitle').textContent = '🎯 筛选结果（' + (sid==='ALL'?'全部':((d.stats[sid]||{}).name||sid)) + '）';
-    const ls = document.getElementById('slist'); if (!ls) return;
-    let h = '';
-    (sid === 'ALL' ? Object.entries(d.results) : [[sid, d.results[sid]||[]]]).forEach(([s,stocks]) => {
-      if (!stocks.length) { if (sid!=='ALL') h = '<div style="padding:20px;text-align:center;color:var(--text3)">无匹配</div>'; return; }
-      if (sid==='ALL') h += '<div style="margin-bottom:12px"><div style="font-size:12px;font-weight:600;color:#94a3b8;margin-bottom:4px">📌 ' + this.esc((d.stats[s]||{}).name||s) + ' · ' + stocks.length + '只</div>';
-      stocks.forEach(x => {
-        const stk = this.findStock(x.code);
-        const chg = stk ? (stk.change_pct || 0) : 0;
-        const cc = chg>=0?'text-rise':'text-fall', cs = chg>=0?'+':'';
-        h += '<div style="display:flex;justify-content:space-between;padding:8px 12px;background:var(--bg2);border-radius:8px;margin-bottom:4px;font-size:12px;cursor:pointer" onclick="App.openStock(\'' + x.code + '\')"><div style="display:flex;align-items:center;gap:8px"><span style="font-weight:600">' + App.esc(x.name) + '</span><span style="color:var(--text3);font-size:10px">' + x.code + '</span><span style="font-size:10px;background:rgba(239,68,68,0.1);color:#ef4444;padding:1px 6px;border-radius:4px">' + (x.score||'?') + '分</span></div><div style="display:flex;gap:12px"><span class="' + cc + '" style="font-weight:600">' + (x.price?.toFixed(2)||(stk?.price?.toFixed(2)||'-')) + '</span><span class="' + cc + '" style="font-size:10px">' + cs + chg.toFixed(2) + '%</span></div></div>';
-      });
-      if (sid==='ALL') h += '</div>';
-    });
-    ls.innerHTML = h;
-  },
-
-  _showTrackHistory() {
-    const el = document.getElementById('strategy-content');
-    el.innerHTML = '<div style="padding:40px;text-align:center;color:var(--text3)">加载追踪数据...</div>';
-    fetch((App._apiAvailable ? App.API_BASE + '/api/strategy_tracks' : 'data/strategy_tracks_summary.json')).then(r => r.json()).then(d => {
-      const tracks = d.tracks || [];
-      let h = '<div style="max-width:900px;margin:0 auto">';
-      h += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><span style="font-size:16px;font-weight:700">📊 每日策略追踪</span><button onclick="App.renderStrategy()" style="padding:6px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text2);cursor:pointer;font-size:12px">← 返回策略页</button></div>';
-      tracks.filter(t => t.verified).forEach(t => {
-        let up = 0, down = 0;
-        Object.values(t.results||{}).forEach(r => { up += r.up||0; down += r.down||0; });
-        const wr = (up+down) > 0 ? (up/(up+down)*100) : 0;
-        h += '<div onclick="App._showTrackDay(\'' + t.date + '\')" style="background:var(--bg2);border-radius:10px;padding:14px;margin-bottom:10px;cursor:pointer;border-left:3px solid ' + (wr>=50?'#ef4444':'#22c55e') + '">';
-        h += '<div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:700;font-size:14px">' + t.date + '</span><span style="font-size:12px;color:' + (wr>=50?'#ef4444':'#22c55e') + ';font-weight:700">' + wr.toFixed(0) + '% 准确率</span></div>';
-        h += '<div style="font-size:11px;color:var(--text3);margin-top:4px">' + (t.total_stocks||0) + '只推荐 · ' + Object.keys(t.results||{}).length + '个策略 · ' + up + '涨 ' + down + '跌</div></div>';
-      });
-      if (!tracks.filter(t => t.verified).length) h += '<div style="text-align:center;color:var(--text3);padding:40px">暂无验证数据</div>';
-      h += '</div>';
-      el.innerHTML = h;
-    }).catch(() => { el.innerHTML = '<div style="text-align:center;color:var(--text3);padding:40px">加载失败</div>'; });
-  },
-
-  _showTrackDay(date) {
-    const el = document.getElementById('strategy-content');
-    fetch((App._apiAvailable ? App.API_BASE + '/api/strategy_tracks' : 'data/strategy_tracks_summary.json')).then(r => r.json()).then(d => {
-      const t = (d.tracks||[]).find(x => x.date === date);
-      if (!t) { el.innerHTML = '<div style="text-align:center;padding:40px">未找到数据</div>'; return; }
-      let h = '<div style="max-width:900px;margin:0 auto">';
-      h += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><span style="font-size:16px;font-weight:700">📊 ' + date + ' 策略详情</span><button onclick="App._showTrackHistory()" style="padding:6px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text2);cursor:pointer;font-size:12px">← 返回列表</button></div>';
-      let up = 0, down = 0;
-      Object.values(t.results||{}).forEach(r => { up += r.up||0; down += r.down||0; });
-      const wr = (up+down) > 0 ? (up/(up+down)*100) : 0;
-      h += '<div style="background:var(--bg2);border-radius:10px;padding:16px;margin-bottom:16px;text-align:center">';
-      h += '<div style="font-size:12px;color:var(--text3)">总推荐 ' + (t.total_stocks||0) + '只</div>';
-      h += '<div style="font-size:28px;font-weight:800;color:' + (wr>=50?'#ef4444':'#22c55e') + '">' + wr.toFixed(0) + '%</div>';
-      h += '<div style="font-size:12px;color:var(--text3)">' + up + '涨 ' + down + '跌</div></div>';
-      Object.entries(t.results||{}).forEach(([sid, r]) => {
-        const name = (App._sd?.stats||{})[sid]?.name || sid;
-        const swr = (r.up+r.down) > 0 ? (r.up/(r.up+r.down)*100) : 0;
-        h += '<div style="background:var(--bg2);border-radius:8px;padding:12px;margin-bottom:8px">';
-        h += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><span style="font-weight:600;font-size:13px">' + App.esc(name) + '</span><span style="font-size:12px;color:' + (swr>=50?'#ef4444':'#22c55e') + ';font-weight:700">' + swr.toFixed(0) + '%</span></div>';
-        h += '<div style="font-size:10px;color:var(--text3);margin-bottom:4px">' + r.up + '涨 ' + r.down + '跌 ' + (r.flat||0) + '平</div></div>';
-      });
-      h += '</div>';
-      el.innerHTML = h;
-    }).catch(() => { el.innerHTML = '<div style="text-align:center;padding:40px">加载失败</div>'; });
+    } catch (e) {
+      el.innerHTML = '<div style="padding:40px;text-align:center;color:var(--text3)">加载失败: ' + e.message + '</div>';
+    }
   },
 
   // === 工具 ===
@@ -2458,7 +2416,7 @@ async renderStrategy() {
     t.textContent = msg;
     t.classList.remove('hidden');
     clearTimeout(this._tt);
-    this._tt = setTimeout(() => t.classList.add('hidden'), 3000);
+    this._tt = setTimeout(() => t.classList.add('hidden'), 2000);
   },
 
   copyText(text) {
@@ -2492,18 +2450,15 @@ const Portfolio = {
 };
 
 // ========== 虚拟交易页面 ==========
-App.renderTrading = async function() {
-  const el = document.getElementById('trading-overview');
-  el.innerHTML = '<div class="empty">加载中...</div>';
-  try {
-    const pfRes = await fetch(this.API_BASE + '/api/portfolio');
-    if (!pfRes.ok) throw new Error();
-    const p = await pfRes.json();
-    const s = p.trading_stats || {};
-    const t = { portfolio: p, stats: { total_trades: s.total_trades||0, win_trades: s.win_trades||0, lose_trades: s.lose_trades||0, total_pnl: (p.unrealized_pnl||0)+(p.realized_pnl||0), max_drawdown: s.max_drawdown||0 }, latest_report: null };
-    this.renderTradingOverview(t);
-    this.renderTradingReport(t);
-  } catch(e) { el.innerHTML = '<div class="empty">API未连接</div>'; }
+App.renderTrading = function() {
+  const r = App.recData;
+  const trading = r?.trading;
+  if (!trading) {
+    document.getElementById('trading-overview').innerHTML = '<div class="empty">等待首次交易分析...</div>';
+    return;
+  }
+  this.renderTradingOverview(trading);
+  this.renderTradingReport(trading);
 };
 
 App.showTradingTab = function(tab) {
@@ -2723,11 +2678,6 @@ App.renderPurchasedStocks = function() {
       const pnlCls = (s.total_pnl || 0) >= 0 ? 'text-rise' : 'text-fall';
       const pnlSign = (s.total_pnl || 0) >= 0 ? '+' : '';
 
-      const holdPnl = s.status !== '已卖出' ? (s.current_price - s.buy_price) * s.buy_qty : 0;
-      const showPnl = s.status === '已卖出' ? (s.total_pnl || 0) : holdPnl;
-      const spc = showPnl >= 0 ? 'text-rise' : 'text-fall';
-      const sps = showPnl >= 0 ? '+' : '';
-
       html += `<div class="ps-card" id="ps-${s.code}">
         <div class="ps-header" onclick="App.togglePsDetail('${s.code}')">
           <div class="ps-left">
@@ -2735,10 +2685,9 @@ App.renderPurchasedStocks = function() {
             <span style="color:var(--text3);font-size:11px;margin-left:6px">${s.code}</span>
             <span class="ps-status" style="color:${statusColor};margin-left:8px">${statusEmoji} ${s.status}</span>
           </div>
-          <div class="ps-right" style="gap:10px">
-            <span style="font-size:12px;font-weight:600" class="${spc}">${sps}${showPnl.toFixed(0)}元</span>
-            <span style="font-size:13px;font-weight:600" class="${chgCls}">${s.current_price.toFixed(2)}</span>
-            <span style="font-size:11px" class="${chgCls}">${chgSign}${s.change_pct.toFixed(2)}%</span>
+          <div class="ps-right">
+            <span style="font-size:14px;font-weight:600" class="${chgCls}">${s.current_price.toFixed(2)}</span>
+            <span style="font-size:12px" class="${chgCls}">${chgSign}${s.change_pct.toFixed(2)}%</span>
             <span class="ps-arrow" id="arrow-${s.code}">▼</span>
           </div>
         </div>
@@ -2897,7 +2846,6 @@ App._showTradeModal = function(opts) {
     '<span style="cursor:pointer;font-size:18px;color:var(--text3)" onclick="App._closeTradeModal()">&#10005;</span>' +
     '</div>' +
     '<div style="margin-bottom:12px;font-size:12px;color:var(--text3)">' + priceHint + (opts.maxQty ? ' · 持有' + opts.maxQty + '股' : '') + '</div>' +
-    (!opts.code && isBuy ? '<div style="margin-bottom:12px"><label style="font-size:12px;color:var(--text2);display:block;margin-bottom:4px">股票代码或名称</label><input id="trade-code" type="text" placeholder="如：002039 或 黔源电力" style="width:100%;padding:8px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text1);font-size:14px;outline:none;box-sizing:border-box" /></div>' : '') +
     '<div style="margin-bottom:12px">' +
     '<label style="font-size:12px;color:var(--text2);display:block;margin-bottom:4px">' + title + '价格（元）</label>' +
     '<input id="trade-price" type="text" inputmode="decimal" value="' + (opts.price || '') + '" placeholder="输入价格" ' +
@@ -2953,9 +2901,6 @@ App._closeTradeModal = function() {
 };
 
 App._confirmTrade = async function(mode, code, name, score) {
-  var errDiv = document.getElementById('trade-error');
-  var btn = document.getElementById('trade-confirm-btn');
-  if (!code || code === '0') { var ci = document.getElementById('trade-code'); if (ci && ci.value.trim()) { code = ci.value.trim(); var stk = App.findStock(code); name = stk ? stk.name : code; } if (!code) { errDiv.textContent = '请输入股票代码'; errDiv.style.display = 'block'; return; } }
   var price = parseFloat(document.getElementById('trade-price').value);
   var qty = parseInt(document.getElementById('trade-qty').value);
   var errDiv = document.getElementById('trade-error');
@@ -2984,30 +2929,10 @@ App._confirmTrade = async function(mode, code, name, score) {
 };
 
 // 快速获取持仓建议
-App._quickAdvice = async function(code, name, cost) {
-  var card = document.querySelector('.vh-card[data-code="' + code + '"]');
-  if (!card) return;
-  var old = card.nextElementSibling;
-  if (old && old.classList.contains('vh-advice')) old.remove();
-  var panel = document.createElement('div');
-  panel.className = 'vh-advice';
-  panel.innerHTML = '<div style="background:var(--bg2);border-radius:8px;padding:10px;margin:4px 0 8px;font-size:12px"><span style="color:var(--text3)">加载建议中...</span></div>';
-  card.after(panel);
-  try {
-    var r = await fetch(App.API_BASE + '/api/stock_advice?code=' + code + '&buy_price=' + cost);
-    if (!r.ok) throw new Error();
-    var a = await r.json();
-    if (a.error) throw new Error(a.error);
-    var pc = a.pnl_pct >= 0 ? 'text-rise' : 'text-fall';
-    var ps = a.pnl_pct >= 0 ? '+' : '';
-    panel.innerHTML = '<div style="background:var(--bg2);border-radius:8px;padding:10px;margin:4px 0 8px;font-size:12px;border-left:3px solid ' + a.action_color + '">' +
-      '<div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-weight:600">📋 ' + App.esc(name) + ' 操作建议</span><span onclick="this.closest(\'.vh-advice\').remove()" style="cursor:pointer;color:var(--text3);font-size:16px">×</span></div>' +
-      '<div style="display:flex;gap:12px;margin-bottom:6px;font-size:11px;color:var(--text3)"><span>评分: <b style="color:' + (a.score>=75?'#22c55e':a.score>=50?'#f59e0b':'#ef4444') + '">' + a.score + '</b></span><span>趋势: ' + App.esc(a.trend||'--') + '</span><span class="' + pc + '">' + ps + a.pnl_pct.toFixed(1) + '%</span></div>' +
-      '<div style="background:' + a.action_color + '15;border:1px solid ' + a.action_color + '33;border-radius:6px;padding:8px"><div style="font-weight:700;font-size:13px;color:' + a.action_color + ';margin-bottom:4px">' + a.action + '</div><div style="font-size:11px;color:var(--text2);line-height:1.7;white-space:pre-line">' + App.esc(a.advice) + '</div></div>' +
-      (a.signals&&a.signals.length?'<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:6px">'+a.signals.slice(0,4).map(function(s){return'<span style="font-size:10px;background:rgba(100,116,139,0.15);color:#94a3b8;padding:1px 5px;border-radius:3px">'+App.esc(s)+'</span>'}).join('')+'</div>':'')+'</div>';
-  } catch(e) {
-    panel.innerHTML = '<div style="background:var(--bg2);border-radius:8px;padding:10px;margin:4px 0 8px;font-size:12px;border-left:3px solid #f59e0b"><div style="display:flex;justify-content:space-between"><span>📋 建议</span><span onclick="this.closest(\'.vh-advice\').remove()" style="cursor:pointer;color:var(--text3)">×</span></div><div style="color:var(--text2);margin-top:4px">无法获取建议</div></div>';
-  }
+App._quickAdvice = function(code, name, cost) {
+  document.getElementById('advice-code').value = code;
+  document.getElementById('advice-price').value = cost;
+  this.getStockAdvice();
 };
 
 App.manualBuy = function(code, name, buyPoint, score) {
@@ -3018,13 +2943,287 @@ App.manualSell = function(code, name, maxQty) {
   this._showTradeModal({ mode: 'sell', code: code, name: name, price: '', maxQty: maxQty });
 };
 
-App._deleteHolding = async function(code) {
+// === 真实持仓 ===
+App.renderRealPortfolio = async function() {
+  const el = document.getElementById('real-portfolio-content');
+  el.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text3)">加载中...</div>';
   try {
-    const r = await fetch(this.API_BASE + '/api/delete_holding', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({code}) });
-    const d = await r.json();
-    if (d.ok) { this.showToast('已删除，资金已退回'); this.renderVirtualHoldings(); }
-    else { this.showToast(d.error || '删除失败'); }
-  } catch(e) { this.showToast('删除失败'); }
+    const r = await fetch(App.API_BASE + '/api/real_portfolio');
+    if (!r.ok) throw new Error();
+    const data = await r.json();
+    const holdings = data.holdings || [];
+    const totalPnl = data.total_pnl || 0;
+    const pnlCls = totalPnl >= 0 ? 'text-rise' : 'text-fall';
+    const pnlSign = totalPnl >= 0 ? '+' : '';
+
+    let html = '<div style="background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:12px;padding:20px;margin-bottom:16px;text-align:center">';
+    html += '<div style="font-size:12px;color:#64748b;margin-bottom:4px">真实持仓总览</div>';
+    html += '<div style="font-size:28px;font-weight:800;color:#f1f5f9;margin:8px 0">¥' + (data.total_assets || 0).toLocaleString() + '</div>';
+    html += '<div style="display:flex;justify-content:center;gap:24px;font-size:12px;color:#94a3b8">';
+    html += '<div>📊 成本 <span style="color:#f1f5f9;font-weight:600">¥' + (data.total_cost || 0).toLocaleString() + '</span></div>';
+    html += '<div>💰 市值 <span style="color:#f1f5f9;font-weight:600">¥' + (data.total_market || 0).toLocaleString() + '</span></div>';
+    html += '<div>📈 盈亏 <span class="' + pnlCls + '" style="font-weight:700">' + pnlSign + totalPnl.toLocaleString() + '元 (' + pnlSign + (data.total_pnl_pct||0).toFixed(2) + '%)</span></div>';
+    html += '<div>📦 持仓 ' + holdings.length + '只</div></div>';
+    html += '<div style="font-size:10px;color:var(--text3);margin-top:4px">现金 ¥' + (data.cash||0).toLocaleString() + ' · 本金 ¥' + (data.initial||0).toLocaleString() + '</div></div>';
+
+    // 添加/导入按钮
+    html += '<div style="display:flex;gap:8px;margin-bottom:12px">';
+    html += '<button onclick="App._showAddRealStock()" style="padding:6px 14px;background:#22c55e;border:none;border-radius:6px;color:#fff;cursor:pointer;font-size:12px;font-weight:600">+ 添加持仓</button>';
+    html += '<button onclick="App._showRealImport()" style="padding:6px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text2);cursor:pointer;font-size:12px">📋 CSV导入</button>';
+    html += '<button onclick="App._showAutoTradeConfig()" style="padding:6px 14px;background:#f59e0b;border:none;border-radius:6px;color:#fff;cursor:pointer;font-size:12px;font-weight:600">⚙ 自动交易设置</button>';
+    html += '<button onclick="App._setAllStopProfit()" style="padding:6px 14px;background:rgba(239,68,68,0.1);color:#ef4444;border:1px solid rgba(239,68,68,0.2);border-radius:6px;cursor:pointer;font-size:12px">🎯 批量设止盈止损</button>';
+    html += '<button onclick="App._showBrokerConnect()" style="padding:6px 14px;background:#ef4444;border:none;border-radius:6px;color:#fff;cursor:pointer;font-size:12px;font-weight:600">🔐 连接华泰证券</button>';
+    html += '<button onclick="App._syncBroker()" style="padding:6px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text2);cursor:pointer;font-size:12px">🔄 同步持仓</button>';
+    html += '</div>';
+
+    // 持仓列表
+    if (!holdings.length) {
+      html += '<div style="text-align:center;padding:40px;color:var(--text3)">暂无持仓，点击上方按钮添加</div>';
+    } else {
+      holdings.forEach(h => {
+        const hc = h.pnl >= 0 ? 'text-rise' : 'text-fall';
+        const hs = h.pnl >= 0 ? '+' : '';
+        const alertBg = h.alert === 'stop' ? 'rgba(239,68,68,0.08)' : h.alert === 'target' ? 'rgba(34,197,94,0.08)' : 'transparent';
+        const alertBorder = h.alert === 'stop' ? '#ef4444' : h.alert === 'target' ? '#22c55e' : 'transparent';
+
+        html += '<div style="background:var(--bg2);border-radius:10px;padding:14px;margin-bottom:8px;cursor:pointer' + (alertBorder !== 'transparent' ? ';border:2px solid ' + alertBorder : '') + '" onclick="App._showRealStockDetail(\'' + h.code + '\')">';
+        html += '<div style="display:flex;justify-content:space-between;align-items:center">';
+        html += '<div><span style="font-weight:700;font-size:14px">' + App.esc(h.name) + '</span><span style="color:var(--text3);font-size:11px;margin-left:6px">' + h.code + '</span></div>';
+        html += '<span style="font-weight:600;font-size:14px">' + h.current_price.toFixed(2) + '</span></div>';
+        html += '<div style="display:flex;justify-content:space-between;margin-top:4px;font-size:12px;color:var(--text3)">';
+        html += '<span>' + h.qty + '股 × 成本' + h.cost.toFixed(2) + '</span>';
+        html += '<span class="' + hc + '" style="font-weight:600">' + hs + h.pnl.toFixed(0) + '元 (' + hs + h.pnl_pct.toFixed(2) + '%)</span></div>';
+        html += '<div style="display:flex;justify-content:space-between;margin-top:4px;font-size:11px;color:var(--text3)">';
+        html += '<span>💰 市值: ¥' + h.market_value.toLocaleString() + '</span>';
+        html += '<span>🎯目标: ' + (h.target_price > 0 ? h.target_price.toFixed(2) : '--') + ' | 🛑止损: ' + (h.stop_loss > 0 ? h.stop_loss.toFixed(2) : '--') + '</span>';
+        html += '</div>';
+        if (h.alert) {
+          html += '<div style="margin-top:6px;padding:4px 8px;border-radius:4px;font-size:11px;font-weight:600;background:' + alertBg + ';color:' + alertBorder + '">';
+          html += h.alert === 'stop' ? '⚠️ 已触及止损线！建议立即卖出' : '✅ 已触及止盈线！建议分批止盈';
+          html += '</div>';
+        }
+        html += '<div style="margin-top:6px;display:flex;gap:4px">';
+        html += '<button onclick="event.stopPropagation();App._quickAdvice(\'' + h.code + '\',\'' + App.esc(h.name) + '\',' + h.cost + ')" style="padding:2px 8px;background:#3b82f622;color:#3b82f6;border:1px solid #3b82f644;border-radius:4px;cursor:pointer;font-size:10px">操作建议</button>';
+        html += '<button onclick="event.stopPropagation();App._editRealStock(\'' + h.code + '\',\'' + App.esc(h.name) + '\',' + h.cost + ',' + h.qty + ',' + h.stop_loss + ',' + h.target_price + ')" style="padding:2px 8px;background:rgba(255,255,255,0.05);color:var(--text2);border:1px solid rgba(255,255,255,0.1);border-radius:4px;cursor:pointer;font-size:10px">编辑</button>';
+        html += '<button onclick="event.stopPropagation();if(confirm(\'确定删除 ' + App.esc(h.name) + '？\'))App._deleteRealStock(\'' + h.code + '\')" style="padding:2px 8px;background:rgba(239,68,68,0.1);color:#ef4444;border:1px solid rgba(239,68,68,0.2);border-radius:4px;cursor:pointer;font-size:10px">删除</button>';
+        html += '</div></div>';
+      });
+    }
+    el.innerHTML = html;
+  } catch(e) { el.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text3)">加载失败</div>'; }
 };
 
+// 添加真实持仓弹窗
+App._showAddRealStock = function(code, name, cost, qty, stop, target) {
+  const m = document.createElement('div');
+  m.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:center;justify-content:center';
+  m.onclick = function(e) { if (e.target === m) m.remove(); };
+  m.innerHTML = '<div style="background:var(--bg1);border:1px solid var(--border);border-radius:12px;padding:20px;width:360px" onclick="event.stopPropagation()">' +
+    '<div style="display:flex;justify-content:space-between;margin-bottom:12px"><span style="font-size:16px;font-weight:700">' + (code ? '编辑' : '添加') + '持仓</span><span onclick="this.closest(\'div[style*=fixed]\').remove()" style="cursor:pointer;font-size:18px;color:var(--text3)">×</span></div>' +
+    '<div style="margin-bottom:10px"><input id="real-code" value="' + (code||'') + '" placeholder="股票代码（如002039）" style="width:100%;padding:8px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text1);font-size:14px;box-sizing:border-box"></div>' +
+    '<div style="margin-bottom:10px"><input id="real-cost" value="' + (cost||'') + '" placeholder="成本价" type="number" step="0.01" style="width:100%;padding:8px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text1);font-size:14px;box-sizing:border-box"></div>' +
+    '<div style="margin-bottom:10px"><input id="real-qty" value="' + (qty||'') + '" placeholder="股数" type="number" style="width:100%;padding:8px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text1);font-size:14px;box-sizing:border-box"></div>' +
+    '<div style="display:flex;gap:8px;margin-bottom:10px"><input id="real-stop" value="' + (stop||'') + '" placeholder="止损价(可选)" type="number" step="0.01" style="flex:1;padding:8px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text1);font-size:13px;box-sizing:border-box"><input id="real-target" value="' + (target||'') + '" placeholder="目标价(可选)" type="number" step="0.01" style="flex:1;padding:8px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text1);font-size:13px;box-sizing:border-box"></div>' +
+    '<button onclick="App._saveRealStock()" style="width:100%;padding:10px;background:#22c55e;border:none;border-radius:8px;color:#fff;font-size:14px;font-weight:600;cursor:pointer">确认' + (code ? '修改' : '添加') + '</button>' +
+    '<div id="real-error" style="color:#ef4444;font-size:12px;margin-top:8px;display:none"></div></div>';
+  document.body.appendChild(m);
+};
+
+App._editRealStock = function(code, name, cost, qty, stop, target) {
+  App._showAddRealStock(code, name, cost, qty, stop, target);
+};
+
+App._saveRealStock = async function() {
+  const code = document.getElementById('real-code').value.trim();
+  const cost = parseFloat(document.getElementById('real-cost').value);
+  const qty = parseInt(document.getElementById('real-qty').value);
+  const stop = parseFloat(document.getElementById('real-stop').value) || 0;
+  const target = parseFloat(document.getElementById('real-target').value) || 0;
+  const errEl = document.getElementById('real-error');
+  if (!code || !cost || cost <= 0 || !qty || qty <= 0) {
+    errEl.textContent = '请填写完整信息'; errEl.style.display = 'block'; return;
+  }
+  try {
+    const r = await fetch(App.API_BASE + '/api/real_portfolio', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({action: 'add', code, name: code, cost, qty, stop_loss: stop, target_price: target})
+    });
+    const d = await r.json();
+    if (d.ok) { document.querySelector('div[style*=fixed][style*=9999]').remove(); App.renderRealPortfolio(); App.showToast('已添加'); }
+    else { errEl.textContent = d.error; errEl.style.display = 'block'; }
+  } catch(e) { errEl.textContent = '请求失败'; errEl.style.display = 'block'; }
+};
+
+App._deleteRealStock = async function(code) {
+  try {
+    await fetch(App.API_BASE + '/api/real_portfolio', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({action: 'delete', code})
+    });
+    App.renderRealPortfolio();
+    App.showToast('已删除');
+  } catch(e) {}
+};
+
+App._showRealSettings = function() {
+  const init = prompt('请输入初始本金（元）：', '100000');
+  const cash = prompt('请输入当前可用资金（元）：', init || '100000');
+  if (init && cash) {
+    fetch(App.API_BASE + '/api/real_portfolio', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({action: 'update_settings', initial: parseInt(init), cash: parseInt(cash)})
+    }).then(() => App.renderRealPortfolio());
+  }
+};
+
+App._showRealImport = function() {
+  const m = document.createElement('div');
+  m.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:center;justify-content:center';
+  m.onclick = function(e) { if (e.target === m) m.remove(); };
+  m.innerHTML = '<div style="background:var(--bg1);border:1px solid var(--border);border-radius:12px;padding:20px;width:500px;max-height:80vh;overflow-y:auto" onclick="event.stopPropagation()">' +
+    '<div style="display:flex;justify-content:space-between;margin-bottom:12px"><span style="font-size:16px;font-weight:700">📋 CSV 导入</span><span onclick="this.closest(\'div[style*=fixed]\').remove()" style="cursor:pointer;font-size:18px;color:var(--text3)">×</span></div>' +
+    '<div style="font-size:11px;color:var(--text3);margin-bottom:8px">格式：股票代码,成本价,股数（每行一只）<br>示例：002129,9.98,1000</div>' +
+    '<textarea id="real-csv" rows="8" placeholder="002129,9.98,1000\n600780,7.01,1500" style="width:100%;padding:8px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text1);font-size:13px;box-sizing:border-box;resize:vertical"></textarea>' +
+    '<button onclick="App._importRealCSV()" style="width:100%;padding:10px;margin-top:10px;background:#3b82f6;border:none;border-radius:8px;color:#fff;font-size:14px;font-weight:600;cursor:pointer">导入</button>' +
+    '<div id="real-import-error" style="color:#ef4444;font-size:12px;margin-top:8px;display:none"></div></div>';
+  document.body.appendChild(m);
+};
+
+App._importRealCSV = async function() {
+  const text = document.getElementById('real-csv').value.trim();
+  if (!text) return;
+  const stocks = [];
+  text.split('\n').forEach(line => {
+    const parts = line.split(',');
+    if (parts.length >= 3) {
+      stocks.push({code: parts[0].trim(), name: parts[0].trim(), cost: parseFloat(parts[1]), qty: parseInt(parts[2])});
+    }
+  });
+  if (!stocks.length) return;
+  try {
+    const r = await fetch(App.API_BASE + '/api/real_portfolio', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({action: 'import', stocks})
+    });
+    const d = await r.json();
+    if (d.ok) {
+      document.querySelector('div[style*=fixed][style*=9999]').remove();
+      App.renderRealPortfolio();
+      App.showToast(d.message);
+    }
+  } catch(e) {}
+};
+
+// === 券商连接 ===
+App._showBrokerConnect = function() {
+  const m = document.createElement("div");
+  m.style.cssText = "position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:center;justify-content:center";
+  m.onclick = function(e) { if (e.target === m) m.remove(); };
+  m.innerHTML = "<div style=\"background:var(--bg1);border:1px solid var(--border);border-radius:12px;padding:24px;width:380px\" onclick=\"event.stopPropagation()\">" +
+    "<div style=\"display:flex;justify-content:space-between;margin-bottom:16px\"><span style=\"font-size:16px;font-weight:700\">\\ud83d\\udd10 连接华泰证券</span><span onclick=\"this.closest('div[style*=fixed]').remove()\" style=\"cursor:pointer;font-size:18px;color:var(--text3)\">\\u00d7</span></div>" +
+    "<div style=\"font-size:11px;color:var(--text3);margin-bottom:10px\">输入涨乐财富通账号密码，系统将自动拉取持仓</div>" +
+    "<div style=\"margin-bottom:10px\"><input id=\"broker-user\" placeholder=\"资金账号\" style=\"width:100%;padding:10px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text1);font-size:14px;box-sizing:border-box\"></div>" +
+    "<div style=\"margin-bottom:10px\"><input id=\"broker-pass\" type=\"password\" placeholder=\"交易密码\" style=\"width:100%;padding:10px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text1);font-size:14px;box-sizing:border-box\"></div>" +
+    "<button onclick=\"App._doBrokerConnect()\" style=\"width:100%;padding:10px;background:#ef4444;border:none;border-radius:8px;color:#fff;font-size:14px;font-weight:600;cursor:pointer\">\\u23f3 连接并同步持仓</button>" +
+    "<div id=\"broker-error\" style=\"color:#ef4444;font-size:12px;margin-top:8px;display:none\"></div></div>";
+  document.body.appendChild(m);
+};
+
+App._doBrokerConnect = async function() {
+  const user = document.getElementById("broker-user").value.trim();
+  const pass = document.getElementById("broker-pass").value.trim();
+  const err = document.getElementById("broker-error");
+  if (!user || !pass) { err.textContent = "请输入账号密码"; err.style.display = "block"; return; }
+  err.style.display = "none";
+  try {
+    const r = await fetch(App.API_BASE + "/api/broker_connect", {
+      method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({broker:"htsc", user, password: pass})
+    });
+    const d = await r.json();
+    if (d.ok) {
+      document.querySelector("div[style*=fixed][style*=9999]").remove();
+      App.renderRealPortfolio();
+      App.showToast(d.message);
+    } else { err.textContent = d.error; err.style.display = "block"; }
+  } catch(e) { err.textContent = "连接失败"; err.style.display = "block"; }
+};
+
+App._syncBroker = async function() {
+  try {
+    const r = await fetch(App.API_BASE + "/api/broker_sync", { method: "POST", headers: {"Content-Type": "application/json"}, body: "{}" });
+    const d = await r.json();
+    if (d.ok) { App.renderRealPortfolio(); App.showToast(d.message); }
+    else { App.showToast(d.error || "同步失败"); }
+  } catch(e) { App.showToast("同步失败"); }
+};
+
+App._checkBrokerSignals = async function() {
+  try {
+    const r = await fetch(App.API_BASE + "/api/broker_signals", { method: "POST", headers: {"Content-Type": "application/json"}, body: "{}" });
+    const d = await r.json();
+    if (d.ok && d.signals && d.signals.length) {
+      let msg = d.signals.map(s => (s.action==="stop_loss"?"\\ud83d\\uded1":"\\u2705") + " " + s.name + " " + s.reason).join("\\n");
+      alert("\\ud83d\\udce2 交易信号提醒\\n\\n" + msg);
+    } else { App.showToast("\\u2705 无触发信号"); }
+  } catch(e) {}
+};
+// === 自动交易配置 ===
+App._showAutoTradeConfig = function() {
+  fetch(App.API_BASE + "/api/auto_trade_config").then(r => r.json()).then(d => {
+    const cfg = d || {};
+    const m = document.createElement("div");
+    m.style.cssText = "position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:center;justify-content:center";
+    m.onclick = function(e) { if (e.target === m) m.remove(); };
+    m.innerHTML = "<div style=\"background:var(--bg1);border:1px solid var(--border);border-radius:12px;padding:24px;width:400px\" onclick=\"event.stopPropagation()\">" +
+      "<div style=\"display:flex;justify-content:space-between;margin-bottom:16px\"><span style=\"font-size:16px;font-weight:700\">⚙ 自动交易设置</span><span onclick=\"this.closest('div[style*=fixed]').remove()\" style=\"cursor:pointer;font-size:18px;color:var(--text3)\">×</span></div>" +
+      "<div style=\"margin-bottom:12px\"><label style=\"font-size:12px;color:var(--text2);display:block;margin-bottom:4px\">每只股票买入金额（元）</label><input id=\"at-amount\" value=\"" + (cfg.per_stock||10000) + "\" type=\"number\" style=\"width:100%;padding:8px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text1);font-size:14px;box-sizing:border-box\"></div>" +
+      "<div style=\"margin-bottom:12px\"><label style=\"font-size:12px;color:var(--text2);display:block;margin-bottom:4px\">自动止损比例（%）</label><input id=\"at-stop\" value=\"" + (cfg.stop_loss_pct||5) + "\" type=\"number\" step=\"0.5\" style=\"width:100%;padding:8px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text1);font-size:14px;box-sizing:border-box\"></div>" +
+      "<div style=\"margin-bottom:12px\"><label style=\"font-size:12px;color:var(--text2);display:block;margin-bottom:4px\">自动止盈比例（%）</label><input id=\"at-profit\" value=\"" + (cfg.take_profit_pct||10) + "\" type=\"number\" step=\"0.5\" style=\"width:100%;padding:8px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text1);font-size:14px;box-sizing:border-box\"></div>" +
+      "<div style=\"margin-bottom:12px;font-size:12px;color:var(--text2)\">" +
+        "<label style=\"display:flex;align-items:center;gap:8px;cursor:pointer\">" +
+          "<input id=\"at-auto-buy\" type=\"checkbox\" " + (cfg.auto_buy?"checked":"") + "> 启用自动买入（根据推荐信号）" +
+        "</label></div>" +
+      "<div style=\"margin-bottom:12px;font-size:12px;color:var(--text2)\">" +
+        "<label style=\"display:flex;align-items:center;gap:8px;cursor:pointer\">" +
+          "<input id=\"at-auto-sell\" type=\"checkbox\" " + (cfg.auto_sell?"checked":"") + "> 启用自动卖出（触及止损/止盈）" +
+        "</label></div>" +
+      "<button onclick=\"App._saveAutoTradeConfig()\" style=\"width:100%;padding:10px;background:#f59e0b;border:none;border-radius:8px;color:#fff;font-size:14px;font-weight:600;cursor:pointer\">保存设置</button>" +
+      "<div id=\"at-error\" style=\"color:#ef4444;font-size:12px;margin-top:8px;display:none\"></div></div>";
+    document.body.appendChild(m);
+  });
+};
+
+App._saveAutoTradeConfig = async function() {
+  const cfg = {
+    per_stock: parseInt(document.getElementById("at-amount").value) || 10000,
+    stop_loss_pct: parseFloat(document.getElementById("at-stop").value) || 5,
+    take_profit_pct: parseFloat(document.getElementById("at-profit").value) || 10,
+    auto_buy: document.getElementById("at-auto-buy").checked,
+    auto_sell: document.getElementById("at-auto-sell").checked
+  };
+  try {
+    const r = await fetch(App.API_BASE + "/api/auto_trade_config", {
+      method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(cfg)
+    });
+    if (r.ok) {
+      document.querySelector("div[style*=fixed][style*=9999]").remove();
+      App.showToast("✅ 自动交易设置已保存");
+    }
+  } catch(e) { App.showToast("保存失败"); }
+};
+
+// 一键设置止损止盈
+App._setAllStopProfit = async function() {
+  const stopPct = prompt("设置止损比例（%），如：5");
+  const profitPct = prompt("设置止盈比例（%），如：10");
+  if (!stopPct || !profitPct) return;
+  try {
+    const r = await fetch(App.API_BASE + "/api/batch_stop_profit", {
+      method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({stop_loss_pct: parseFloat(stopPct), take_profit_pct: parseFloat(profitPct)})
+    });
+    if (r.ok) { App.renderRealPortfolio(); App.showToast("已批量设置"); }
+  } catch(e) {}
+};
 document.addEventListener('DOMContentLoaded', () => App.init());
