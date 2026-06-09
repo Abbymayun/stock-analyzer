@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """轻量级API服务器 - 提供实时股票数据 (v2)"""
-import json, time, os, sys, threading, subprocess
+import json, time, os, sys, threading, subprocess, datetime
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 import requests
@@ -164,6 +164,12 @@ class Handler(SimpleHTTPRequestHandler):
                 self._handle_stock_advice(parsed)
             elif path == '/api/buy_plan':
                 self._handle_buy_plan()
+            elif path == '/api/auto_trade_watch':
+                self._handle_auto_trade_watch()
+            elif path == '/api/bridge_pull':
+                self._handle_bridge_pull()
+            elif path == '/api/auto_trade_status':
+                self._handle_auto_trade_status()
             elif path == '/api/real_portfolio':
                 self._handle_real_portfolio()
             elif path == '/api/auto_trade_config':
@@ -216,6 +222,10 @@ class Handler(SimpleHTTPRequestHandler):
                 self._handle_auto_trade_config(params)
             elif path == '/api/batch_stop_profit':
                 self._handle_batch_stop_profit(params)
+            elif path == '/api/bridge_push':
+                self._handle_bridge_push(params)
+            elif path == '/api/bridge_done':
+                self._handle_bridge_done(params)
             elif path == '/api/delete_holding':
                 self._handle_delete_holding(params)
             elif path == '/api/manual_sell':
@@ -994,19 +1004,19 @@ class Handler(SimpleHTTPRequestHandler):
                     rp['holdings'].append({'code': code, 'name': name, 'cost': cost, 'qty': qty, 'stop_loss': params.get('stop_loss', 0), 'target_price': params.get('target_price', 0)})
                 rp['cash'] = params.get('cash', rp.get('cash', 0))
                 rp['initial'] = params.get('initial', rp.get('initial', 0))
-                _save_json(rp_path, rp)
+                with open(rp_path, 'w') as f: json.dump(rp, f, ensure_ascii=False, indent=2)
                 self._json({'ok': True, 'message': f'已添加 {name}'})
             elif action == 'delete':
                 rp = load_json(rp_path, {'holdings': []})
                 code = params.get('code', '')
                 rp['holdings'] = [h for h in rp['holdings'] if h['code'] != code]
-                _save_json(rp_path, rp)
+                with open(rp_path, 'w') as f: json.dump(rp, f, ensure_ascii=False, indent=2)
                 self._json({'ok': True, 'message': '已删除'})
             elif action == 'update_settings':
                 rp = load_json(rp_path, {'holdings': [], 'cash': 0, 'initial': 0})
                 rp['cash'] = params.get('cash', rp.get('cash', 0))
                 rp['initial'] = params.get('initial', rp.get('initial', 0))
-                _save_json(rp_path, rp)
+                with open(rp_path, 'w') as f: json.dump(rp, f, ensure_ascii=False, indent=2)
                 self._json({'ok': True})
             elif action == 'import':
                 rp = load_json(rp_path, {'holdings': [], 'cash': 0, 'initial': 0})
@@ -1021,7 +1031,7 @@ class Handler(SimpleHTTPRequestHandler):
                         rp['holdings'].append({'code': s['code'], 'name': s.get('name', ''), 'cost': float(s.get('cost', 0)), 'qty': int(s.get('qty', 0)), 'stop_loss': 0, 'target_price': 0})
                 rp['cash'] = params.get('cash', rp.get('cash', 0))
                 rp['initial'] = params.get('initial', rp.get('initial', 0))
-                _save_json(rp_path, rp)
+                with open(rp_path, 'w') as f: json.dump(rp, f, ensure_ascii=False, indent=2)
                 self._json({'ok': True, 'message': f'已导入 {len(stocks)} 只股票'})
             else:
                 self._json({'error': '未知操作'})
@@ -1116,9 +1126,9 @@ class Handler(SimpleHTTPRequestHandler):
                     'qty': int(p.get('股票余额', 0)),
                     'stop_loss': 0, 'target_price': 0
                 })
-            _save_json(os.path.join(DATA_DIR, 'real_portfolio.json'), rp)
+            with open(os.path.join(DATA_DIR, 'real_portfolio.json'), 'w') as f: json.dump(rp, f, ensure_ascii=False, indent=2)
             # 保存登录凭证
-            _save_json(os.path.join(DATA_DIR, 'broker_config.json'), {'broker': broker, 'user': user, 'password': password})
+            with open(os.path.join(DATA_DIR, 'broker_config.json'), 'w') as f: json.dump({'broker': broker, 'user': user, 'password': password}, f, ensure_ascii=False, indent=2)
             self._json({'ok': True, 'count': len(positions), 'message': f'连接成功，已导入{len(positions)}只持仓'})
         except Exception as e:
             self._json({'error': f'连接失败: {e}'})
@@ -1144,7 +1154,7 @@ class Handler(SimpleHTTPRequestHandler):
                     'qty': int(p.get('股票余额', 0)),
                     'stop_loss': 0, 'target_price': 0
                 })
-            _save_json(os.path.join(DATA_DIR, 'real_portfolio.json'), rp)
+            with open(os.path.join(DATA_DIR, 'real_portfolio.json'), 'w') as f: json.dump(rp, f, ensure_ascii=False, indent=2)
             self._json({'ok': True, 'count': len(positions), 'message': f'已同步{len(positions)}只持仓'})
         except Exception as e:
             self._json({'error': f'同步失败: {e}'})
@@ -1195,10 +1205,10 @@ class Handler(SimpleHTTPRequestHandler):
         """自动交易配置"""
         cfg_path = os.path.join(DATA_DIR, 'auto_trade_config.json')
         if params:
-            _save_json(cfg_path, params)
+            with open(cfg_path, 'w') as f: json.dump(params, f, ensure_ascii=False, indent=2)
             self._json({'ok': True, 'message': '配置已保存'})
         else:
-            cfg = load_json(cfg_path, {'per_stock': 10000, 'stop_loss_pct': 5, 'take_profit_pct': 10, 'auto_buy': False, 'auto_sell': False})
+            cfg = load_json(cfg_path, {'per_stock_min': 3000, 'per_stock_max': 5000, 'stop_loss_pct': 5, 'take_profit_pct': 10, 'pos_strategy': 'full', 'auto_buy': False, 'auto_sell': False})
             self._json(cfg)
 
     def _handle_batch_stop_profit(self, params):
@@ -1212,8 +1222,87 @@ class Handler(SimpleHTTPRequestHandler):
             if cost > 0:
                 h['stop_loss'] = round(cost * (1 - stop_pct / 100), 2)
                 h['target_price'] = round(cost * (1 + profit_pct / 100), 2)
-        _save_json(rp_path, rp)
+        with open(rp_path, 'w') as f: json.dump(rp, f, ensure_ascii=False, indent=2)
         self._json({'ok': True, 'message': f'已设置{len(rp["holdings"])}只股票的止盈止损'})
+
+    # 存储桥接订单
+    _bridge_orders = []
+    _bridge_positions = []
+
+    def _handle_auto_trade_status(self):
+        """自动交易状态"""
+        cfg = load_json(os.path.join(DATA_DIR, 'auto_trade_config.json'), {})
+        state = load_json(os.path.join(DATA_DIR, 'auto_trade_state.json'), {})
+        bridge = load_json(os.path.join(DATA_DIR, 'bridge_orders.json'), {})
+        now = datetime.datetime.now()
+        t = now.hour * 60 + now.minute
+        self._json({
+            'last_check': now.strftime('%H:%M:%S'),
+            'trading': (600 <= t < 690) or (780 <= t < 900),
+            'auto_buy': cfg.get('auto_buy', False),
+            'auto_sell': cfg.get('auto_sell', False),
+            'today_buys': state.get('today_buys', 0),
+            'pending': len(bridge.get('orders', [])),
+            'orders': bridge.get('orders', []),
+            'log': (state.get('log', []) if 'log' in state else ['等待首次检测...']),
+        })
+
+    def _handle_auto_trade_watch(self):
+        """返回引擎正在观察的候选股票"""
+        import subprocess
+        r = subprocess.run(['python3', os.path.join(os.path.dirname(os.path.abspath(__file__)), 'scripts', 'auto_trader.py'), '--watch'], capture_output=True, timeout=15, cwd=os.path.dirname(os.path.abspath(__file__)))
+        try:
+            self._json(json.loads(r.stdout))
+        except:
+            self._json({'error': '无法获取', 'output': r.stdout.decode()[:200]})
+
+    def _handle_bridge_push(self, params):
+        """Windows交易桥上传持仓 -> 同步到真实持仓"""
+        positions = params.get('positions', [])
+        # 保存到real_portfolio.json
+        rp = load_json(os.path.join(DATA_DIR, 'real_portfolio.json'), {'holdings': [], 'cash': 0, 'initial': 0})
+        balance = params.get('balance', {})
+        if isinstance(balance, dict):
+            rp['cash'] = float(balance.get('available', balance.get('可用资金', 0)))
+            rp['initial'] = float(balance.get('total', balance.get('总资产', 0)))
+        for p in positions:
+            code = p.get('code', p.get('证券代码', '')).strip()
+            name = p.get('name', p.get('证券名称', ''))
+            qty = int(float(p.get('current_amount', p.get('股票余额', 0))))
+            cost = float(p.get('cost', p.get('cost_price', p.get('成本价', 0))))
+            cp = float(p.get('current_price', p.get('市价', 0)))
+            existing = [h for h in rp['holdings'] if h['code'] == code]
+            if existing:
+                existing[0]['cost'] = cost
+                existing[0]['qty'] = qty
+                existing[0]['name'] = name
+            else:
+                rp['holdings'].append({'code': code, 'name': name, 'cost': cost, 'qty': qty, 'stop_loss': 0, 'target_price': 0})
+        with open(os.path.join(DATA_DIR, 'real_portfolio.json'), 'w') as f:
+            json.dump(rp, f, ensure_ascii=False, indent=2)
+        self._json({'ok': True, 'count': len(positions)})
+
+    def _handle_bridge_pull(self):
+        """Windows交易桥拉取待执行订单"""
+        # 从auto_trader读取订单
+        orders_file = os.path.join(DATA_DIR, 'bridge_orders.json')
+        orders = []
+        try:
+            with open(orders_file) as f:
+                data = json.load(f)
+                orders = data.get('orders', [])
+        except: pass
+        # 也读内存中的订单
+        orders = self._bridge_orders + orders
+        self._bridge_orders = []
+        # 清除文件中的订单
+        try: os.remove(orders_file)
+        except: pass
+        self._json({'orders': orders})
+
+    def _handle_bridge_done(self, params):
+        """Windows交易桥回调订单结果"""
+        self._json({'ok': True})
 
     def _handle_delete_holding(self, params):
         """删除持仓股票，退回资金，不计入盈亏"""
