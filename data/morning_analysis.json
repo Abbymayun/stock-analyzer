@@ -1,5 +1,5 @@
 {
-  "update_time": "2026-06-10 08:31:04",
+  "update_time": "2026-06-11 08:31:03",
   "us_indices": {},
   "bond_yield": {},
   "commodities": {},
@@ -9,37 +9,37 @@
     "000001": {
       "name": "上证指数",
       "code": "000001",
-      "price": 4010.03,
-      "prev_close": 3959.34,
-      "change_pct": 1.28
+      "price": 3993.23,
+      "prev_close": 4010.03,
+      "change_pct": -0.42
     },
     "399001": {
       "name": "深证成指",
       "code": "399001",
-      "price": 15268.71,
-      "prev_close": 14821.19,
-      "change_pct": 3.02
+      "price": 14954.1,
+      "prev_close": 15268.71,
+      "change_pct": -2.06
     },
     "399006": {
       "name": "创业板指",
       "code": "399006",
-      "price": 3961.75,
-      "prev_close": 3811.79,
-      "change_pct": 3.93
+      "price": 3854.79,
+      "prev_close": 3961.75,
+      "change_pct": -2.7
     },
     "000688": {
       "name": "科创50",
       "code": "000688",
-      "price": 1663.11,
-      "prev_close": 1596.57,
-      "change_pct": 4.17
+      "price": 1652.22,
+      "prev_close": 1663.11,
+      "change_pct": -0.65
     },
     "000300": {
       "name": "沪深300",
       "code": "000300",
-      "price": 4801.81,
-      "prev_close": 4713.64,
-      "change_pct": 1.87
+      "price": 4748.59,
+      "prev_close": 4801.81,
+      "change_pct": -1.11
     }
   },
   "us_impact": {
@@ -80,83 +80,94 @@
   },
   "top_buys": [
     {
-      "code": "000657",
-      "name": "中钨高新",
-      "score": 78,
-      "price": 69.28,
-      "change_pct": 2.0,
-      "buy_point": 68.48,
+      "code": "002129",
+      "name": "TCL中环",
+      "score": 84,
+      "price": 10.06,
+      "change_pct": 2.55,
+      "buy_point": 9.55,
       "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 65.06,
-      "target_price": 76.31,
+      "stop_loss": 9.07,
+      "target_price": 10.82,
+      "signals": [
+        "温和上涨",
+        "放量",
+        "MACD金叉",
+        "红柱放大"
+      ],
+      "next_day_estimate": {
+        "estimate": 3.0,
+        "factors": [
+          "技术面偏强",
+          "连续上涨",
+          "MACD多头"
+        ]
+      },
+      "entry_score": 24,
+      "reason": "MACD金叉，高于MA5(+5.3%)注意追高，资金活跃，盈亏比2.6:1"
+    },
+    {
+      "code": "000920",
+      "name": "沃顿科技",
+      "score": 94,
+      "price": 13.39,
+      "change_pct": 3.16,
+      "buy_point": 12.59,
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
+      "stop_loss": 11.96,
+      "target_price": 14.38,
       "signals": [
         "温和上涨",
         "大振幅",
         "放量",
-        "短期多头"
+        "均线多头排列",
+        "MA金叉",
+        "红柱放大",
+        "RSI偏高",
+        "放量上涨"
       ],
       "next_day_estimate": {
-        "estimate": 2.0,
+        "estimate": 3.2,
         "factors": [
           "技术面偏强",
-          "MACD多头"
+          "连续上涨",
+          "MACD多头",
+          "放量上攻",
+          "触及布林上轨"
         ]
       },
-      "entry_score": 43,
-      "reason": "回调至MA5附近(-2.0%)，资金活跃，盈亏比2.3:1"
+      "entry_score": 0,
+      "reason": "均线多头趋势，MA金叉，高于MA5(+6.4%)注意追高，盈亏比2.8:1"
     },
     {
-      "code": "002570",
-      "name": "贝因美",
+      "code": "605566",
+      "name": "福莱蒽特",
       "score": 78,
-      "price": 5.33,
-      "change_pct": 1.14,
-      "buy_point": 5.22,
+      "price": 44.19,
+      "change_pct": 3.98,
+      "buy_point": 42.55,
       "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 4.96,
-      "target_price": 6.09,
-      "signals": [
-        "温和上涨",
-        "放量",
-        "短期多头"
-      ],
-      "next_day_estimate": {
-        "estimate": 2.0,
-        "factors": [
-          "技术面偏强",
-          "MACD多头"
-        ]
-      },
-      "entry_score": 39,
-      "reason": "回调至MA5附近(-1.7%)，盈亏比3.3:1"
-    },
-    {
-      "code": "600667",
-      "name": "太极实业",
-      "score": 78,
-      "price": 15.26,
-      "change_pct": 2.14,
-      "buy_point": 14.65,
-      "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 13.92,
-      "target_price": 17.52,
+      "stop_loss": 40.42,
+      "target_price": 46.38,
       "signals": [
         "温和上涨",
         "大振幅",
+        "高PE",
         "放量",
-        "短期多头"
+        "均线多头排列",
+        "红柱放大",
+        "RSI偏高"
       ],
       "next_day_estimate": {
-        "estimate": 2.0,
+        "estimate": 0.5,
         "factors": [
-          "技术面偏强",
           "MACD多头"
         ]
       },
-      "entry_score": 33,
-      "reason": "回调至MA5附近(-1.7%)，资金活跃，盈亏比3.9:1"
+      "entry_score": 0,
+      "reason": "均线多头趋势，高于MA5(+3.9%)注意追高，盈亏比1.8:1"
     }
   ],
   "yesterday_sentiment": "中性",
-  "yesterday_score": 49.1
+  "yesterday_score": 46.3
 }

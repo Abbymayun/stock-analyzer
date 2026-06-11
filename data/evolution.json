@@ -1,0 +1,53 @@
+{
+  "generation": 1,
+  "weights": {
+    "s02_volume_breakout": 45.0,
+    "s03_macd_dif_bottom": 43.8,
+    "s04_boll_lower_bounce": 44.6,
+    "s09_w_bottom": 45.7,
+    "s10_smart_money_inflow": 36.0,
+    "s11_ma_bull_align": 49.0,
+    "s12_rsi_oversold_recover": 41.0,
+    "s13_chip_concentration": 32.5,
+    "s14_gap_up_fill": 45.0,
+    "s15_high_turnover_start": 52.3,
+    "s16_small_yang_accumulate": 22.0,
+    "s18_guiding_star": 39.0,
+    "s20_makers_silent_acc": 52.0,
+    "s05_pullback_ma20": 39.4,
+    "s08_platform_breakout": 15.0
+  },
+  "history": [
+    {
+      "time": "2026-06-11 13:12",
+      "avg_win_rate": 40.2,
+      "winners": 6,
+      "losers": 3,
+      "min_score": 82,
+      "max_buys": 1
+    }
+  ],
+  "rules": {
+    "min_score": 82,
+    "max_daily_buys": 1,
+    "prefer_winners": [
+      "s02_volume_breakout",
+      "s09_w_bottom",
+      "s11_ma_bull_align",
+      "s14_gap_up_fill",
+      "s15_high_turnover_start"
+    ],
+    "avoid_losers": [
+      "s13_chip_concentration",
+      "s16_small_yang_accumulate",
+      "s08_platform_breakout"
+    ]
+  },
+  "insights": [
+    "🏆 高胜率策略: s15_high_turnover_start(52.3%), s20_makers_silent_acc(52.0%), s11_ma_bull_align(49.0%)",
+    "📉 失效策略: s08_platform_breakout(15.0%), s16_small_yang_accumulate(22.0%), s13_chip_concentration(32.5%)",
+    "⚠️ 整体胜率偏低(40%)，已收紧买入条件",
+    "📊 评分门槛: 82分 | 日限买1只"
+  ],
+  "updated": "2026-06-11 13:12"
+}

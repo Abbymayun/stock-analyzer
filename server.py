@@ -166,6 +166,8 @@ class Handler(SimpleHTTPRequestHandler):
                 self._handle_buy_plan()
             elif path == '/api/auto_trade_watch':
                 self._handle_auto_trade_watch()
+            elif path == '/api/evolution':
+                self._handle_evolution()
             elif path == '/api/bridge_pull':
                 self._handle_bridge_pull()
             elif path == '/api/auto_trade_status':
@@ -1255,6 +1257,11 @@ class Handler(SimpleHTTPRequestHandler):
             self._json(json.loads(r.stdout))
         except:
             self._json({'error': '无法获取', 'output': r.stdout.decode()[:200]})
+
+    def _handle_evolution(self):
+        """进化引擎数据"""
+        data = load_json(os.path.join(DATA_DIR, 'evolution.json'), {'generation': 0, 'weights': {}, 'history': [], 'rules': {}, 'insights': ['等待首次进化...']})
+        self._json(data)
 
     def _handle_bridge_push(self, params):
         """Windows交易桥上传持仓 -> 同步到真实持仓"""
