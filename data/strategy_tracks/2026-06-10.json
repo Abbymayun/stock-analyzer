@@ -310,5 +310,569 @@
       }
     ]
   },
-  "total_stocks": 56
+  "total_stocks": 56,
+  "verified": true,
+  "verify_date": "2026-06-11",
+  "results": {
+    "s02_volume_breakout": {
+      "up": 1,
+      "down": 4,
+      "flat": 0,
+      "win_rate": 20.0,
+      "stocks": [
+        {
+          "code": "000920",
+          "name": "沃顿科技",
+          "pick_price": 13.39,
+          "today_price": 13.58,
+          "chg_pct": -1.74,
+          "verdict": "down"
+        },
+        {
+          "code": "600667",
+          "name": "太极实业",
+          "pick_price": 16.26,
+          "today_price": 17.51,
+          "chg_pct": 9.99,
+          "verdict": "up"
+        },
+        {
+          "code": "002194",
+          "name": "武汉凡谷",
+          "pick_price": 12.52,
+          "today_price": 11.3,
+          "chg_pct": -10.03,
+          "verdict": "down"
+        },
+        {
+          "code": "000158",
+          "name": "常山北明",
+          "pick_price": 15.85,
+          "today_price": 14.92,
+          "chg_pct": -3.43,
+          "verdict": "down"
+        },
+        {
+          "code": "600556",
+          "name": "天下秀",
+          "pick_price": 5.28,
+          "today_price": 4.91,
+          "chg_pct": -7.88,
+          "verdict": "down"
+        }
+      ]
+    },
+    "s03_macd_dif_bottom": {
+      "up": 1,
+      "down": 2,
+      "flat": 2,
+      "win_rate": 20.0,
+      "stocks": [
+        {
+          "code": "600158",
+          "name": "中体产业",
+          "pick_price": 9.43,
+          "today_price": 8.55,
+          "chg_pct": -10.0,
+          "verdict": "down"
+        },
+        {
+          "code": "002124",
+          "name": "天邦食品",
+          "pick_price": 2.33,
+          "today_price": 2.37,
+          "chg_pct": 1.28,
+          "verdict": "up"
+        },
+        {
+          "code": "000686",
+          "name": "东北证券",
+          "pick_price": 7.49,
+          "today_price": 7.4,
+          "chg_pct": -2.12,
+          "verdict": "down"
+        },
+        {
+          "code": "002020",
+          "name": "京新药业",
+          "pick_price": 12.35,
+          "today_price": 12.3,
+          "chg_pct": 0.24,
+          "verdict": "flat"
+        },
+        {
+          "code": "002921",
+          "name": "联诚精密",
+          "pick_price": 23.55,
+          "today_price": 23.22,
+          "chg_pct": 0.04,
+          "verdict": "flat"
+        }
+      ]
+    },
+    "s04_boll_lower_bounce": {
+      "up": 3,
+      "down": 2,
+      "flat": 0,
+      "win_rate": 60.0,
+      "stocks": [
+        {
+          "code": "600791",
+          "name": "京能置业",
+          "pick_price": 12.71,
+          "today_price": 13.49,
+          "chg_pct": 6.47,
+          "verdict": "up"
+        },
+        {
+          "code": "002926",
+          "name": "华西证券",
+          "pick_price": 7.81,
+          "today_price": 7.76,
+          "chg_pct": -1.52,
+          "verdict": "down"
+        },
+        {
+          "code": "000686",
+          "name": "东北证券",
+          "pick_price": 7.49,
+          "today_price": 7.4,
+          "chg_pct": -2.12,
+          "verdict": "down"
+        },
+        {
+          "code": "600809",
+          "name": "山西汾酒",
+          "pick_price": 119.43,
+          "today_price": 119.6,
+          "chg_pct": 0.68,
+          "verdict": "up"
+        },
+        {
+          "code": "603565",
+          "name": "中谷物流",
+          "pick_price": 9.56,
+          "today_price": 9.7,
+          "chg_pct": 1.04,
+          "verdict": "up"
+        }
+      ]
+    },
+    "s05_pullback_ma20": {
+      "up": 0,
+      "down": 1,
+      "flat": 0,
+      "win_rate": 0.0,
+      "stocks": [
+        {
+          "code": "002823",
+          "name": "凯中精密",
+          "pick_price": 17.82,
+          "today_price": 17.28,
+          "chg_pct": -6.9,
+          "verdict": "down"
+        }
+      ]
+    },
+    "s09_w_bottom": {
+      "up": 2,
+      "down": 1,
+      "flat": 2,
+      "win_rate": 40.0,
+      "stocks": [
+        {
+          "code": "603856",
+          "name": "XD东宏股",
+          "pick_price": 11.89,
+          "today_price": 11.86,
+          "chg_pct": 0.51,
+          "verdict": "up"
+        },
+        {
+          "code": "600791",
+          "name": "京能置业",
+          "pick_price": 12.71,
+          "today_price": 13.49,
+          "chg_pct": 6.47,
+          "verdict": "up"
+        },
+        {
+          "code": "000686",
+          "name": "东北证券",
+          "pick_price": 7.49,
+          "today_price": 7.4,
+          "chg_pct": -2.12,
+          "verdict": "down"
+        },
+        {
+          "code": "002020",
+          "name": "京新药业",
+          "pick_price": 12.35,
+          "today_price": 12.3,
+          "chg_pct": 0.24,
+          "verdict": "flat"
+        },
+        {
+          "code": "002921",
+          "name": "联诚精密",
+          "pick_price": 23.55,
+          "today_price": 23.22,
+          "chg_pct": 0.04,
+          "verdict": "flat"
+        }
+      ]
+    },
+    "s10_smart_money_inflow": {
+      "up": 1,
+      "down": 1,
+      "flat": 0,
+      "win_rate": 50.0,
+      "stocks": [
+        {
+          "code": "000920",
+          "name": "沃顿科技",
+          "pick_price": 13.39,
+          "today_price": 13.58,
+          "chg_pct": -1.74,
+          "verdict": "down"
+        },
+        {
+          "code": "603163",
+          "name": "圣晖集成",
+          "pick_price": 110.8,
+          "today_price": 115.03,
+          "chg_pct": 8.4,
+          "verdict": "up"
+        }
+      ]
+    },
+    "s11_ma_bull_align": {
+      "up": 3,
+      "down": 2,
+      "flat": 0,
+      "win_rate": 60.0,
+      "stocks": [
+        {
+          "code": "002993",
+          "name": "奥海科技",
+          "pick_price": 67.84,
+          "today_price": 64.82,
+          "chg_pct": -3.41,
+          "verdict": "down"
+        },
+        {
+          "code": "000657",
+          "name": "中钨高新",
+          "pick_price": 72.45,
+          "today_price": 77.95,
+          "chg_pct": 6.93,
+          "verdict": "up"
+        },
+        {
+          "code": "600667",
+          "name": "太极实业",
+          "pick_price": 16.26,
+          "today_price": 17.51,
+          "chg_pct": 9.99,
+          "verdict": "up"
+        },
+        {
+          "code": "600353",
+          "name": "旭光电子",
+          "pick_price": 26.51,
+          "today_price": 29.94,
+          "chg_pct": 9.99,
+          "verdict": "up"
+        },
+        {
+          "code": "003004",
+          "name": "声迅股份",
+          "pick_price": 67.87,
+          "today_price": 64.19,
+          "chg_pct": -5.46,
+          "verdict": "down"
+        }
+      ]
+    },
+    "s12_rsi_oversold_recover": {
+      "up": 1,
+      "down": 3,
+      "flat": 1,
+      "win_rate": 20.0,
+      "stocks": [
+        {
+          "code": "002455",
+          "name": "百川股份",
+          "pick_price": 8.11,
+          "today_price": 8.06,
+          "chg_pct": -0.86,
+          "verdict": "down"
+        },
+        {
+          "code": "002079",
+          "name": "苏州固锝",
+          "pick_price": 12.03,
+          "today_price": 11.9,
+          "chg_pct": -0.83,
+          "verdict": "down"
+        },
+        {
+          "code": "605020",
+          "name": "永和股份",
+          "pick_price": 32.59,
+          "today_price": 33.26,
+          "chg_pct": 1.09,
+          "verdict": "up"
+        },
+        {
+          "code": "002508",
+          "name": "老板电器",
+          "pick_price": 16.41,
+          "today_price": 16.41,
+          "chg_pct": -0.42,
+          "verdict": "flat"
+        },
+        {
+          "code": "600410",
+          "name": "华胜天成",
+          "pick_price": 18.34,
+          "today_price": 17.23,
+          "chg_pct": -5.95,
+          "verdict": "down"
+        }
+      ]
+    },
+    "s13_chip_concentration": {
+      "up": 1,
+      "down": 1,
+      "flat": 0,
+      "win_rate": 50.0,
+      "stocks": [
+        {
+          "code": "000920",
+          "name": "沃顿科技",
+          "pick_price": 13.39,
+          "today_price": 13.58,
+          "chg_pct": -1.74,
+          "verdict": "down"
+        },
+        {
+          "code": "603163",
+          "name": "圣晖集成",
+          "pick_price": 110.8,
+          "today_price": 115.03,
+          "chg_pct": 8.4,
+          "verdict": "up"
+        }
+      ]
+    },
+    "s14_gap_up_fill": {
+      "up": 2,
+      "down": 1,
+      "flat": 2,
+      "win_rate": 40.0,
+      "stocks": [
+        {
+          "code": "000657",
+          "name": "中钨高新",
+          "pick_price": 72.45,
+          "today_price": 77.95,
+          "chg_pct": 6.93,
+          "verdict": "up"
+        },
+        {
+          "code": "002129",
+          "name": "TCL中环",
+          "pick_price": 10.06,
+          "today_price": 10.13,
+          "chg_pct": 0.0,
+          "verdict": "flat"
+        },
+        {
+          "code": "601688",
+          "name": "华泰证券",
+          "pick_price": 19.11,
+          "today_price": 19.29,
+          "chg_pct": -0.41,
+          "verdict": "flat"
+        },
+        {
+          "code": "603323",
+          "name": "苏农银行",
+          "pick_price": 4.76,
+          "today_price": 4.76,
+          "chg_pct": -0.63,
+          "verdict": "down"
+        },
+        {
+          "code": "000963",
+          "name": "华东医药",
+          "pick_price": 28.04,
+          "today_price": 29.13,
+          "chg_pct": 1.78,
+          "verdict": "up"
+        }
+      ]
+    },
+    "s15_high_turnover_start": {
+      "up": 2,
+      "down": 2,
+      "flat": 1,
+      "win_rate": 40.0,
+      "stocks": [
+        {
+          "code": "600667",
+          "name": "太极实业",
+          "pick_price": 16.26,
+          "today_price": 17.51,
+          "chg_pct": 9.99,
+          "verdict": "up"
+        },
+        {
+          "code": "002194",
+          "name": "武汉凡谷",
+          "pick_price": 12.52,
+          "today_price": 11.3,
+          "chg_pct": -10.03,
+          "verdict": "down"
+        },
+        {
+          "code": "601208",
+          "name": "东材科技",
+          "pick_price": 62.13,
+          "today_price": 61.72,
+          "chg_pct": -1.01,
+          "verdict": "down"
+        },
+        {
+          "code": "603039",
+          "name": "泛微网络",
+          "pick_price": 47.29,
+          "today_price": 45.56,
+          "chg_pct": -0.31,
+          "verdict": "flat"
+        },
+        {
+          "code": "002584",
+          "name": "西陇科学",
+          "pick_price": 8.15,
+          "today_price": 8.22,
+          "chg_pct": 1.99,
+          "verdict": "up"
+        }
+      ]
+    },
+    "s16_small_yang_accumulate": {
+      "up": 0,
+      "down": 0,
+      "flat": 1,
+      "win_rate": 0.0,
+      "stocks": [
+        {
+          "code": "601688",
+          "name": "华泰证券",
+          "pick_price": 19.11,
+          "today_price": 19.29,
+          "chg_pct": -0.41,
+          "verdict": "flat"
+        }
+      ]
+    },
+    "s18_guiding_star": {
+      "up": 2,
+      "down": 3,
+      "flat": 0,
+      "win_rate": 40.0,
+      "stocks": [
+        {
+          "code": "000920",
+          "name": "沃顿科技",
+          "pick_price": 13.39,
+          "today_price": 13.58,
+          "chg_pct": -1.74,
+          "verdict": "down"
+        },
+        {
+          "code": "002993",
+          "name": "奥海科技",
+          "pick_price": 67.84,
+          "today_price": 64.82,
+          "chg_pct": -3.41,
+          "verdict": "down"
+        },
+        {
+          "code": "000657",
+          "name": "中钨高新",
+          "pick_price": 72.45,
+          "today_price": 77.95,
+          "chg_pct": 6.93,
+          "verdict": "up"
+        },
+        {
+          "code": "600667",
+          "name": "太极实业",
+          "pick_price": 16.26,
+          "today_price": 17.51,
+          "chg_pct": 9.99,
+          "verdict": "up"
+        },
+        {
+          "code": "002194",
+          "name": "武汉凡谷",
+          "pick_price": 12.52,
+          "today_price": 11.3,
+          "chg_pct": -10.03,
+          "verdict": "down"
+        }
+      ]
+    },
+    "s20_makers_silent_acc": {
+      "up": 0,
+      "down": 5,
+      "flat": 0,
+      "win_rate": 0.0,
+      "stocks": [
+        {
+          "code": "603323",
+          "name": "苏农银行",
+          "pick_price": 4.76,
+          "today_price": 4.76,
+          "chg_pct": -0.63,
+          "verdict": "down"
+        },
+        {
+          "code": "600928",
+          "name": "西安银行",
+          "pick_price": 3.53,
+          "today_price": 3.49,
+          "chg_pct": -1.97,
+          "verdict": "down"
+        },
+        {
+          "code": "002279",
+          "name": "久其软件",
+          "pick_price": 7.28,
+          "today_price": 6.78,
+          "chg_pct": -6.35,
+          "verdict": "down"
+        },
+        {
+          "code": "002839",
+          "name": "张家港行",
+          "pick_price": 4.29,
+          "today_price": 4.26,
+          "chg_pct": -1.16,
+          "verdict": "down"
+        },
+        {
+          "code": "600908",
+          "name": "无锡银行",
+          "pick_price": 5.51,
+          "today_price": 5.5,
+          "chg_pct": -0.54,
+          "verdict": "down"
+        }
+      ]
+    }
+  }
 }
