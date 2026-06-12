@@ -1,0 +1,309 @@
+{
+  "date": "2026-06-11",
+  "top_combos": [
+    {
+      "type": 2,
+      "strategies": [
+        "s02_volume_breakout",
+        "s15_high_turnover_start"
+      ],
+      "name": "放量突破 + 高换手启动",
+      "count": 4,
+      "avg_wr": 45.7,
+      "score": 64.0,
+      "stocks": [
+        "603155",
+        "600505",
+        "605589",
+        "605006"
+      ]
+    },
+    {
+      "type": 3,
+      "strategies": [
+        "s02_volume_breakout",
+        "s13_chip_concentration",
+        "s15_high_turnover_start"
+      ],
+      "name": "放量突破 + 筹码集中启动 + 高换手启动",
+      "count": 2,
+      "avg_wr": 43.8,
+      "score": 56.9,
+      "stocks": [
+        "603155",
+        "605589"
+      ]
+    },
+    {
+      "type": 3,
+      "strategies": [
+        "s02_volume_breakout",
+        "s10_smart_money_inflow",
+        "s15_high_turnover_start"
+      ],
+      "name": "放量突破 + 主力资金流入 + 高换手启动",
+      "count": 2,
+      "avg_wr": 42.7,
+      "score": 55.5,
+      "stocks": [
+        "603155",
+        "605589"
+      ]
+    },
+    {
+      "type": 3,
+      "strategies": [
+        "s10_smart_money_inflow",
+        "s13_chip_concentration",
+        "s15_high_turnover_start"
+      ],
+      "name": "主力资金流入 + 筹码集中启动 + 高换手启动",
+      "count": 2,
+      "avg_wr": 42.7,
+      "score": 55.5,
+      "stocks": [
+        "603155",
+        "605589"
+      ]
+    },
+    {
+      "type": 2,
+      "strategies": [
+        "s11_ma_bull_align",
+        "s14_gap_up_fill"
+      ],
+      "name": "多头排列 + 跳空缺口回补",
+      "count": 2,
+      "avg_wr": 46.2,
+      "score": 55.4,
+      "stocks": [
+        "603328",
+        "002768"
+      ]
+    },
+    {
+      "type": 2,
+      "strategies": [
+        "s11_ma_bull_align",
+        "s18_guiding_star"
+      ],
+      "name": "多头排列 + 仙人指路",
+      "count": 3,
+      "avg_wr": 42.5,
+      "score": 55.2,
+      "stocks": [
+        "603328",
+        "002768",
+        "603687"
+      ]
+    },
+    {
+      "type": 3,
+      "strategies": [
+        "s11_ma_bull_align",
+        "s14_gap_up_fill",
+        "s18_guiding_star"
+      ],
+      "name": "多头排列 + 跳空缺口回补 + 仙人指路",
+      "count": 2,
+      "avg_wr": 42.5,
+      "score": 55.2,
+      "stocks": [
+        "603328",
+        "002768"
+      ]
+    },
+    {
+      "type": 2,
+      "strategies": [
+        "s13_chip_concentration",
+        "s15_high_turnover_start"
+      ],
+      "name": "筹码集中启动 + 高换手启动",
+      "count": 2,
+      "avg_wr": 45.7,
+      "score": 54.8,
+      "stocks": [
+        "603155",
+        "605589"
+      ]
+    },
+    {
+      "type": 2,
+      "strategies": [
+        "s10_smart_money_inflow",
+        "s15_high_turnover_start"
+      ],
+      "name": "主力资金流入 + 高换手启动",
+      "count": 2,
+      "avg_wr": 44.1,
+      "score": 52.9,
+      "stocks": [
+        "603155",
+        "605589"
+      ]
+    },
+    {
+      "type": 3,
+      "strategies": [
+        "s02_volume_breakout",
+        "s10_smart_money_inflow",
+        "s13_chip_concentration"
+      ],
+      "name": "放量突破 + 主力资金流入 + 筹码集中启动",
+      "count": 2,
+      "avg_wr": 38.9,
+      "score": 50.6,
+      "stocks": [
+        "603155",
+        "605589"
+      ]
+    },
+    {
+      "type": 2,
+      "strategies": [
+        "s14_gap_up_fill",
+        "s20_makers_silent_acc"
+      ],
+      "name": "跳空缺口回补 + 庄家静默吸筹",
+      "count": 1,
+      "avg_wr": 44.4,
+      "score": 48.8,
+      "stocks": [
+        "600397"
+      ]
+    },
+    {
+      "type": 2,
+      "strategies": [
+        "s04_boll_lower_bounce",
+        "s09_w_bottom"
+      ],
+      "name": "布林下轨反弹 + W底形态",
+      "count": 1,
+      "avg_wr": 44.2,
+      "score": 48.6,
+      "stocks": [
+        "603012"
+      ]
+    },
+    {
+      "type": 3,
+      "strategies": [
+        "s02_volume_breakout",
+        "s15_high_turnover_start",
+        "s18_guiding_star"
+      ],
+      "name": "放量突破 + 高换手启动 + 仙人指路",
+      "count": 1,
+      "avg_wr": 42.1,
+      "score": 48.4,
+      "stocks": [
+        "600505"
+      ]
+    },
+    {
+      "type": 2,
+      "strategies": [
+        "s02_volume_breakout",
+        "s13_chip_concentration"
+      ],
+      "name": "放量突破 + 筹码集中启动",
+      "count": 2,
+      "avg_wr": 40.0,
+      "score": 48.0,
+      "stocks": [
+        "603155",
+        "605589"
+      ]
+    },
+    {
+      "type": 2,
+      "strategies": [
+        "s15_high_turnover_start",
+        "s18_guiding_star"
+      ],
+      "name": "高换手启动 + 仙人指路",
+      "count": 1,
+      "avg_wr": 43.2,
+      "score": 47.5,
+      "stocks": [
+        "600505"
+      ]
+    },
+    {
+      "type": 2,
+      "strategies": [
+        "s14_gap_up_fill",
+        "s18_guiding_star"
+      ],
+      "name": "跳空缺口回补 + 仙人指路",
+      "count": 2,
+      "avg_wr": 38.8,
+      "score": 46.6,
+      "stocks": [
+        "603328",
+        "002768"
+      ]
+    },
+    {
+      "type": 2,
+      "strategies": [
+        "s02_volume_breakout",
+        "s10_smart_money_inflow"
+      ],
+      "name": "放量突破 + 主力资金流入",
+      "count": 2,
+      "avg_wr": 38.4,
+      "score": 46.1,
+      "stocks": [
+        "603155",
+        "605589"
+      ]
+    },
+    {
+      "type": 2,
+      "strategies": [
+        "s03_macd_dif_bottom",
+        "s09_w_bottom"
+      ],
+      "name": "MACD底背离 + W底形态",
+      "count": 1,
+      "avg_wr": 40.9,
+      "score": 45.0,
+      "stocks": [
+        "603977"
+      ]
+    },
+    {
+      "type": 2,
+      "strategies": [
+        "s09_w_bottom",
+        "s12_rsi_oversold_recover"
+      ],
+      "name": "W底形态 + RSI超卖回升",
+      "count": 1,
+      "avg_wr": 39.1,
+      "score": 43.0,
+      "stocks": [
+        "000690"
+      ]
+    },
+    {
+      "type": 2,
+      "strategies": [
+        "s10_smart_money_inflow",
+        "s13_chip_concentration"
+      ],
+      "name": "主力资金流入 + 筹码集中启动",
+      "count": 2,
+      "avg_wr": 38.4,
+      "score": 42.6,
+      "stocks": [
+        "603155",
+        "605589"
+      ]
+    }
+  ],
+  "all_count": 22
+}

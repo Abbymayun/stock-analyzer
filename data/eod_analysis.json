@@ -1,124 +1,230 @@
 {
-  "update_time": "2026-06-11 14:20:01",
+  "update_time": "2026-06-12 14:20:02",
   "cn_indices": {
     "000001": {
       "name": "上证指数",
       "code": "000001",
-      "price": 3966.22,
-      "prev_close": 3993.23,
-      "change_pct": -0.68
+      "price": 4036.24,
+      "prev_close": 3987.01,
+      "change_pct": 1.23
     },
     "399001": {
       "name": "深证成指",
       "code": "399001",
-      "price": 14714.35,
-      "prev_close": 14954.1,
-      "change_pct": -1.6
+      "price": 15021.54,
+      "prev_close": 14851.98,
+      "change_pct": 1.14
     },
     "399006": {
       "name": "创业板指",
       "code": "399006",
-      "price": 3761.83,
-      "prev_close": 3854.79,
-      "change_pct": -2.41
+      "price": 3840.65,
+      "prev_close": 3811.25,
+      "change_pct": 0.77
     },
     "000688": {
       "name": "科创50",
       "code": "000688",
-      "price": 1638.78,
-      "prev_close": 1652.22,
-      "change_pct": -0.81
+      "price": 1675.26,
+      "prev_close": 1662.44,
+      "change_pct": 0.77
     },
     "000300": {
       "name": "沪深300",
       "code": "000300",
-      "price": 4687.82,
-      "prev_close": 4748.59,
-      "change_pct": -1.28
+      "price": 4784.95,
+      "prev_close": 4722.41,
+      "change_pct": 1.32
     },
     "399005": {
       "name": "中小100",
       "code": "399005",
-      "price": 8872.48,
-      "prev_close": 9008.47,
-      "change_pct": -1.51
+      "price": 9071.23,
+      "prev_close": 8947.01,
+      "change_pct": 1.39
     }
   },
   "recommended_stocks": [
     {
-      "code": "002129",
-      "name": "TCL中环",
+      "code": "603328",
+      "name": "依顿电子",
       "status": "下跌",
-      "current_price": 9.86,
-      "change_pct": -2.67,
-      "high": 10.18,
-      "low": 9.8,
-      "turnover_rate": 5.09,
-      "amplitude": 3.75,
-      "pnl_pct": 3.25,
-      "action": "🟡 小幅波动，继续观察",
-      "action_type": "观察"
+      "current_price": 13.39,
+      "change_pct": -4.22,
+      "high": 14.14,
+      "low": 13.32,
+      "turnover_rate": 5.3,
+      "amplitude": 5.87,
+      "pnl_pct": 0.53,
+      "action": "⚠️ 跌幅较大，关注止损位",
+      "action_type": "关注止损"
     },
     {
-      "code": "000920",
-      "name": "沃顿科技",
-      "status": "下跌",
-      "current_price": 13.45,
-      "change_pct": -2.68,
-      "high": 13.62,
-      "low": 12.9,
-      "turnover_rate": 4.91,
-      "amplitude": 5.21,
-      "pnl_pct": 6.83,
-      "action": "🟡 小幅波动，继续观察",
-      "action_type": "观察"
-    },
-    {
-      "code": "605566",
-      "name": "福莱蒽特",
+      "code": "603283",
+      "name": "赛腾股份",
       "status": "正常",
-      "current_price": 47.0,
-      "change_pct": 6.14,
-      "high": 47.69,
-      "low": 42.65,
-      "turnover_rate": 6.69,
-      "amplitude": 11.38,
-      "pnl_pct": 10.46,
-      "action": "🟢 到达目标价，建议止盈",
-      "action_type": "止盈"
+      "current_price": 51.51,
+      "change_pct": 1.14,
+      "high": 56.02,
+      "low": 51.3,
+      "turnover_rate": 11.91,
+      "amplitude": 9.27,
+      "pnl_pct": 5.94,
+      "action": "🟢 持有，走势正常",
+      "action_type": "持有"
+    },
+    {
+      "code": "002963",
+      "name": "豪尔赛",
+      "status": "正常",
+      "current_price": 19.29,
+      "change_pct": 2.66,
+      "high": 19.6,
+      "low": 18.58,
+      "turnover_rate": 4.49,
+      "amplitude": 5.43,
+      "pnl_pct": 8.25,
+      "action": "🟢 持有，走势正常",
+      "action_type": "持有"
     }
   ],
   "top_buys": [
     {
-      "code": "600698",
-      "name": "湖南天雁",
-      "score": 86,
-      "price": 7.11,
-      "change_pct": 3.64,
-      "buy_point": 6.55,
+      "code": "603212",
+      "name": "赛伍技术",
+      "score": 89,
+      "price": 16.13,
+      "change_pct": 2.94,
+      "buy_point": 16.06,
       "buy_time": "尾盘买入 (14:20-14:50)",
-      "stop_loss": 6.22,
-      "target_price": 8.26,
+      "stop_loss": 15.26,
+      "target_price": 16.9,
       "signals": [
         "温和上涨",
         "收在高位",
         "大振幅",
         "放量",
-        "MACD金叉",
-        "红柱放大",
-        "放量上涨"
+        "均线多头排列",
+        "红柱放大"
       ],
       "next_day_estimate": {
-        "estimate": 4.0,
+        "estimate": 3.0,
         "factors": [
           "技术面偏强",
           "连续上涨",
-          "MACD多头",
-          "放量上攻"
+          "MACD多头"
         ]
       },
-      "entry_score": 18
+      "entry_score": 33
     },
+    {
+      "code": "002460",
+      "name": "赣锋锂业",
+      "score": 89,
+      "price": 72.02,
+      "change_pct": 2.97,
+      "buy_point": 68.05,
+      "buy_time": "尾盘买入 (14:20-14:50)",
+      "stop_loss": 64.65,
+      "target_price": 82.5,
+      "signals": [
+        "温和上涨",
+        "收在高位",
+        "放量",
+        "MA金叉",
+        "MACD金叉",
+        "红柱放大"
+      ],
+      "next_day_estimate": {
+        "estimate": 3.0,
+        "factors": [
+          "技术面偏强",
+          "连续上涨",
+          "MACD多头"
+        ]
+      },
+      "entry_score": 25
+    },
+    {
+      "code": "600573",
+      "name": "惠泉啤酒",
+      "score": 97,
+      "price": 13.76,
+      "change_pct": 3.38,
+      "buy_point": 12.88,
+      "buy_time": "尾盘买入 (14:20-14:50)",
+      "stop_loss": 12.24,
+      "target_price": 14.41,
+      "signals": [
+        "温和上涨",
+        "高换手",
+        "收在高位",
+        "大振幅",
+        "放量",
+        "均线多头排列",
+        "MA金叉",
+        "红柱放大"
+      ],
+      "next_day_estimate": {
+        "estimate": 3.0,
+        "factors": [
+          "技术面偏强",
+          "连续上涨",
+          "MACD多头"
+        ]
+      },
+      "entry_score": 19
+    }
+  ],
+  "market_stats": {
+    "total": 3083,
+    "up": 2468,
+    "down": 417,
+    "flat": 198,
+    "limit_up": 85,
+    "limit_down": 7,
+    "up_ratio": 80.1,
+    "avg_change": 1.86
+  },
+  "sentiment": {
+    "000001": {
+      "level": "强势",
+      "score": 80,
+      "emoji": "📈"
+    },
+    "399001": {
+      "level": "强势",
+      "score": 80,
+      "emoji": "📈"
+    },
+    "399006": {
+      "level": "偏强",
+      "score": 60,
+      "emoji": "↗️"
+    },
+    "000688": {
+      "level": "偏强",
+      "score": 60,
+      "emoji": "↗️"
+    },
+    "000300": {
+      "level": "强势",
+      "score": 80,
+      "emoji": "📈"
+    },
+    "399005": {
+      "level": "强势",
+      "score": 80,
+      "emoji": "📈"
+    }
+  },
+  "advices": [
+    "📈 大盘强势（上证+1.23%），持股为主，尾盘可适当加仓优质标的",
+    "🟢 推荐股平均浮盈 +4.9%，走势良好，继续持有",
+    "💰 赚钱效应较好（80.1%上涨），市场情绪积极",
+    "⏰ 距收盘约40分钟，避免尾盘追涨杀跌"
+  ],
+  "source_recommendations": [
     {
       "code": "603328",
       "name": "依顿电子",
@@ -126,7 +232,7 @@
       "price": 13.42,
       "change_pct": 2.76,
       "buy_point": 13.32,
-      "buy_time": "尾盘买入 (14:20-14:50)",
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
       "stop_loss": 12.66,
       "target_price": 14.15,
       "signals": [
@@ -143,163 +249,51 @@
           "MACD多头"
         ]
       },
-      "entry_score": 33
+      "entry_score": 39,
+      "reason": "均线多头趋势，回调至MA5附近(+0.8%)，资金活跃，盈亏比1.3:1"
     },
     {
-      "code": "603679",
-      "name": "华体科技",
-      "score": 79,
-      "price": 18.49,
-      "change_pct": 1.32,
-      "buy_point": 17.56,
-      "buy_time": "尾盘买入 (14:20-14:50)",
-      "stop_loss": 16.69,
-      "target_price": 19.91,
+      "code": "603283",
+      "name": "赛腾股份",
+      "score": 78,
+      "price": 50.61,
+      "change_pct": 2.12,
+      "buy_point": 48.62,
+      "buy_time": "开盘30分钟内 (9:30-10:00)",
+      "stop_loss": 46.19,
+      "target_price": 56.63,
       "signals": [
         "温和上涨",
+        "大振幅",
         "放量",
-        "MACD金叉",
-        "红柱放大",
-        "RSI偏高"
+        "MA金叉"
       ],
       "next_day_estimate": {
-        "estimate": 3.0,
+        "estimate": 2.0,
         "factors": [
           "技术面偏强",
-          "连续上涨",
-          "MACD多头"
+          "连续上涨"
         ]
       },
-      "entry_score": 17
-    }
-  ],
-  "market_stats": {
-    "total": 3081,
-    "up": 547,
-    "down": 2329,
-    "flat": 205,
-    "limit_up": 44,
-    "limit_down": 25,
-    "up_ratio": 17.8,
-    "avg_change": -1.56
-  },
-  "sentiment": {
-    "000001": {
-      "level": "偏弱",
-      "score": 40,
-      "emoji": "↘️"
+      "entry_score": 25,
+      "reason": "MA金叉，高于MA5(+4.1%)注意追高，资金活跃，盈亏比3.3:1"
     },
-    "399001": {
-      "level": "弱势",
-      "score": 20,
-      "emoji": "📉"
-    },
-    "399006": {
-      "level": "弱势",
-      "score": 20,
-      "emoji": "📉"
-    },
-    "000688": {
-      "level": "偏弱",
-      "score": 40,
-      "emoji": "↘️"
-    },
-    "000300": {
-      "level": "弱势",
-      "score": 20,
-      "emoji": "📉"
-    },
-    "399005": {
-      "level": "弱势",
-      "score": 20,
-      "emoji": "📉"
-    }
-  },
-  "advices": [
-    "📉 大盘偏弱（上证-0.68%），注意风险，尾盘考虑减仓",
-    "🟢 止盈提醒: 福莱蒽特(+6.1%)，可考虑部分获利了结",
-    "⚠️ 赚钱效应较差（17.8%上涨），操作需谨慎",
-    "⏰ 距收盘约40分钟，避免尾盘追涨杀跌"
-  ],
-  "source_recommendations": [
     {
-      "code": "002129",
-      "name": "TCL中环",
-      "score": 84,
-      "price": 10.06,
-      "change_pct": 2.55,
-      "buy_point": 9.55,
+      "code": "002963",
+      "name": "豪尔赛",
+      "score": 78,
+      "price": 18.59,
+      "change_pct": -0.59,
+      "buy_point": 17.82,
       "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 9.07,
-      "target_price": 10.82,
+      "stop_loss": 16.93,
+      "target_price": 21.93,
       "signals": [
-        "温和上涨",
+        "横盘整理",
+        "大振幅",
         "放量",
         "MACD金叉",
         "红柱放大"
-      ],
-      "next_day_estimate": {
-        "estimate": 3.0,
-        "factors": [
-          "技术面偏强",
-          "连续上涨",
-          "MACD多头"
-        ]
-      },
-      "entry_score": 24,
-      "reason": "MACD金叉，高于MA5(+5.3%)注意追高，资金活跃，盈亏比2.6:1"
-    },
-    {
-      "code": "000920",
-      "name": "沃顿科技",
-      "score": 94,
-      "price": 13.39,
-      "change_pct": 3.16,
-      "buy_point": 12.59,
-      "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 11.96,
-      "target_price": 14.38,
-      "signals": [
-        "温和上涨",
-        "大振幅",
-        "放量",
-        "均线多头排列",
-        "MA金叉",
-        "红柱放大",
-        "RSI偏高",
-        "放量上涨"
-      ],
-      "next_day_estimate": {
-        "estimate": 3.2,
-        "factors": [
-          "技术面偏强",
-          "连续上涨",
-          "MACD多头",
-          "放量上攻",
-          "触及布林上轨"
-        ]
-      },
-      "entry_score": 0,
-      "reason": "均线多头趋势，MA金叉，高于MA5(+6.4%)注意追高，盈亏比2.8:1"
-    },
-    {
-      "code": "605566",
-      "name": "福莱蒽特",
-      "score": 78,
-      "price": 44.19,
-      "change_pct": 3.98,
-      "buy_point": 42.55,
-      "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 40.42,
-      "target_price": 46.38,
-      "signals": [
-        "温和上涨",
-        "大振幅",
-        "高PE",
-        "放量",
-        "均线多头排列",
-        "红柱放大",
-        "RSI偏高"
       ],
       "next_day_estimate": {
         "estimate": 0.5,
@@ -307,8 +301,8 @@
           "MACD多头"
         ]
       },
-      "entry_score": 0,
-      "reason": "均线多头趋势，高于MA5(+3.9%)注意追高，盈亏比1.8:1"
+      "entry_score": 20,
+      "reason": "MACD金叉，高于MA5(+4.3%)注意追高，盈亏比4.6:1"
     }
   ]
 }

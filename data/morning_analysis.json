@@ -1,5 +1,5 @@
 {
-  "update_time": "2026-06-11 08:31:03",
+  "update_time": "2026-06-12 08:31:03",
   "us_indices": {},
   "bond_yield": {},
   "commodities": {},
@@ -9,37 +9,37 @@
     "000001": {
       "name": "上证指数",
       "code": "000001",
-      "price": 3993.23,
-      "prev_close": 4010.03,
-      "change_pct": -0.42
+      "price": 3987.01,
+      "prev_close": 3993.23,
+      "change_pct": -0.16
     },
     "399001": {
       "name": "深证成指",
       "code": "399001",
-      "price": 14954.1,
-      "prev_close": 15268.71,
-      "change_pct": -2.06
+      "price": 14851.98,
+      "prev_close": 14954.1,
+      "change_pct": -0.68
     },
     "399006": {
       "name": "创业板指",
       "code": "399006",
-      "price": 3854.79,
-      "prev_close": 3961.75,
-      "change_pct": -2.7
+      "price": 3811.25,
+      "prev_close": 3854.79,
+      "change_pct": -1.13
     },
     "000688": {
       "name": "科创50",
       "code": "000688",
-      "price": 1652.22,
-      "prev_close": 1663.11,
-      "change_pct": -0.65
+      "price": 1662.44,
+      "prev_close": 1652.22,
+      "change_pct": 0.62
     },
     "000300": {
       "name": "沪深300",
       "code": "000300",
-      "price": 4748.59,
-      "prev_close": 4801.81,
-      "change_pct": -1.11
+      "price": 4722.41,
+      "prev_close": 4748.59,
+      "change_pct": -0.55
     }
   },
   "us_impact": {
@@ -71,92 +71,83 @@
   },
   "impact_summary": "🇺🇸 美股数据未获取",
   "strategy": {
-    "risk_score": 50,
-    "strategy_text": "\n🟢 【当日总体策略】中性环境\n  建议：中等仓位（4-6成），精选个股\n  操作：关注技术面信号明确的标的，分批建仓\n  策略：回调低吸为主，突破追涨为辅\n\n  📊 建议仓位：4-6成 | 风险评分：50/100\n\n  🚫 当日买入过滤规则：\n  • 今天涨幅 > 5% 的股票不买（追高风险）\n  • 昨天涨停的股票今天不追（获利盘抛压）\n  • 评分 < 50 的股票不考虑买入\n  • 买入价格必须低于MA5（回调买入，不追高）\n  • 单票仓位不超过总资金的30%",
+    "risk_score": 60,
+    "strategy_text": "⚠️ 昨日A股偏弱，市场情绪低迷，短期可能延续调整\n\n🟡 【当日总体策略】中高风险环境\n  建议：低仓位运行（2-4成），严格执行止损\n  操作：只做确定性高的低吸机会，避免追高\n  禁止：不追当天涨幅超3%的股票\n\n  📊 建议仓位：≤2成 | 风险评分：60/100\n\n  🚫 当日买入过滤规则：\n  • 今天涨幅 > 5% 的股票不买（追高风险）\n  • 昨天涨停的股票今天不追（获利盘抛压）\n  • 评分 < 50 的股票不考虑买入\n  • 买入价格必须低于MA5（回调买入，不追高）\n  • 单票仓位不超过总资金的30%",
     "position_advice": {
-      "max": 0.4,
+      "max": 0.2,
       "single_max": 0.3
     }
   },
   "top_buys": [
     {
-      "code": "002129",
-      "name": "TCL中环",
-      "score": 84,
-      "price": 10.06,
-      "change_pct": 2.55,
-      "buy_point": 9.55,
+      "code": "603328",
+      "name": "依顿电子",
+      "score": 86,
+      "price": 13.42,
+      "change_pct": 2.76,
+      "buy_point": 13.32,
       "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 9.07,
-      "target_price": 10.82,
+      "stop_loss": 12.66,
+      "target_price": 14.15,
       "signals": [
         "温和上涨",
+        "大振幅",
         "放量",
-        "MACD金叉",
+        "均线多头排列",
         "红柱放大"
       ],
       "next_day_estimate": {
-        "estimate": 3.0,
+        "estimate": 2.0,
         "factors": [
           "技术面偏强",
-          "连续上涨",
           "MACD多头"
         ]
       },
-      "entry_score": 24,
-      "reason": "MACD金叉，高于MA5(+5.3%)注意追高，资金活跃，盈亏比2.6:1"
+      "entry_score": 39,
+      "reason": "均线多头趋势，回调至MA5附近(+0.8%)，资金活跃，盈亏比1.3:1"
     },
     {
-      "code": "000920",
-      "name": "沃顿科技",
-      "score": 94,
-      "price": 13.39,
-      "change_pct": 3.16,
-      "buy_point": 12.59,
+      "code": "603283",
+      "name": "赛腾股份",
+      "score": 78,
+      "price": 50.61,
+      "change_pct": 2.12,
+      "buy_point": 48.62,
       "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 11.96,
-      "target_price": 14.38,
+      "stop_loss": 46.19,
+      "target_price": 56.63,
       "signals": [
         "温和上涨",
         "大振幅",
         "放量",
-        "均线多头排列",
-        "MA金叉",
-        "红柱放大",
-        "RSI偏高",
-        "放量上涨"
+        "MA金叉"
       ],
       "next_day_estimate": {
-        "estimate": 3.2,
+        "estimate": 2.0,
         "factors": [
           "技术面偏强",
-          "连续上涨",
-          "MACD多头",
-          "放量上攻",
-          "触及布林上轨"
+          "连续上涨"
         ]
       },
-      "entry_score": 0,
-      "reason": "均线多头趋势，MA金叉，高于MA5(+6.4%)注意追高，盈亏比2.8:1"
+      "entry_score": 25,
+      "reason": "MA金叉，高于MA5(+4.1%)注意追高，资金活跃，盈亏比3.3:1"
     },
     {
-      "code": "605566",
-      "name": "福莱蒽特",
+      "code": "002963",
+      "name": "豪尔赛",
       "score": 78,
-      "price": 44.19,
-      "change_pct": 3.98,
-      "buy_point": 42.55,
+      "price": 18.59,
+      "change_pct": -0.59,
+      "buy_point": 17.82,
       "buy_time": "开盘30分钟内 (9:30-10:00)",
-      "stop_loss": 40.42,
-      "target_price": 46.38,
+      "stop_loss": 16.93,
+      "target_price": 21.93,
       "signals": [
-        "温和上涨",
+        "横盘整理",
         "大振幅",
-        "高PE",
         "放量",
-        "均线多头排列",
-        "红柱放大",
-        "RSI偏高"
+        "MACD金叉",
+        "红柱放大"
       ],
       "next_day_estimate": {
         "estimate": 0.5,
@@ -164,10 +155,10 @@
           "MACD多头"
         ]
       },
-      "entry_score": 0,
-      "reason": "均线多头趋势，高于MA5(+3.9%)注意追高，盈亏比1.8:1"
+      "entry_score": 20,
+      "reason": "MACD金叉，高于MA5(+4.3%)注意追高，盈亏比4.6:1"
     }
   ],
-  "yesterday_sentiment": "中性",
-  "yesterday_score": 46.3
+  "yesterday_sentiment": "偏空",
+  "yesterday_score": 44.7
 }
