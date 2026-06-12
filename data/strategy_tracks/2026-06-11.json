@@ -323,5 +323,585 @@
       }
     ]
   },
-  "total_stocks": 59
+  "total_stocks": 59,
+  "verified": true,
+  "verify_date": "2026-06-12",
+  "results": {
+    "s02_volume_breakout": {
+      "up": 0,
+      "down": 5,
+      "flat": 0,
+      "win_rate": 0.0,
+      "stocks": [
+        {
+          "code": "600698",
+          "name": "湖南天雁",
+          "pick_price": 7.11,
+          "today_price": 6.91,
+          "chg_pct": -3.22,
+          "verdict": "down"
+        },
+        {
+          "code": "600505",
+          "name": "西昌电力",
+          "pick_price": 14.92,
+          "today_price": 14.65,
+          "chg_pct": -1.41,
+          "verdict": "down"
+        },
+        {
+          "code": "605589",
+          "name": "圣泉集团",
+          "pick_price": 62.94,
+          "today_price": 58.32,
+          "chg_pct": -3.36,
+          "verdict": "down"
+        },
+        {
+          "code": "603155",
+          "name": "新亚强",
+          "pick_price": 23.76,
+          "today_price": 22.61,
+          "chg_pct": -9.99,
+          "verdict": "down"
+        },
+        {
+          "code": "605006",
+          "name": "山东玻纤",
+          "pick_price": 22.0,
+          "today_price": 20.59,
+          "chg_pct": -7.5,
+          "verdict": "down"
+        }
+      ]
+    },
+    "s03_macd_dif_bottom": {
+      "up": 2,
+      "down": 3,
+      "flat": 0,
+      "win_rate": 40.0,
+      "stocks": [
+        {
+          "code": "600310",
+          "name": "广西能源",
+          "pick_price": 4.74,
+          "today_price": 4.63,
+          "chg_pct": -2.73,
+          "verdict": "down"
+        },
+        {
+          "code": "600408",
+          "name": "安泰集团",
+          "pick_price": 2.96,
+          "today_price": 2.88,
+          "chg_pct": -1.37,
+          "verdict": "down"
+        },
+        {
+          "code": "000960",
+          "name": "锡业股份",
+          "pick_price": 34.73,
+          "today_price": 37.65,
+          "chg_pct": 8.0,
+          "verdict": "up"
+        },
+        {
+          "code": "603977",
+          "name": "国泰集团",
+          "pick_price": 12.68,
+          "today_price": 12.75,
+          "chg_pct": -0.62,
+          "verdict": "down"
+        },
+        {
+          "code": "600636",
+          "name": "退市国化",
+          "pick_price": 1.59,
+          "today_price": 1.64,
+          "chg_pct": 2.5,
+          "verdict": "up"
+        }
+      ]
+    },
+    "s04_boll_lower_bounce": {
+      "up": 1,
+      "down": 3,
+      "flat": 1,
+      "win_rate": 20.0,
+      "stocks": [
+        {
+          "code": "603012",
+          "name": "创力集团",
+          "pick_price": 7.5,
+          "today_price": 7.61,
+          "chg_pct": -0.52,
+          "verdict": "down"
+        },
+        {
+          "code": "003032",
+          "name": "传智教育",
+          "pick_price": 6.43,
+          "today_price": 6.25,
+          "chg_pct": -6.16,
+          "verdict": "down"
+        },
+        {
+          "code": "002922",
+          "name": "伊戈尔",
+          "pick_price": 33.72,
+          "today_price": 34.12,
+          "chg_pct": 0.06,
+          "verdict": "flat"
+        },
+        {
+          "code": "002638",
+          "name": "勤上股份",
+          "pick_price": 4.12,
+          "today_price": 4.03,
+          "chg_pct": -3.13,
+          "verdict": "down"
+        },
+        {
+          "code": "600803",
+          "name": "新奥股份",
+          "pick_price": 18.17,
+          "today_price": 18.33,
+          "chg_pct": 0.55,
+          "verdict": "up"
+        }
+      ]
+    },
+    "s05_pullback_ma20": {
+      "up": 1,
+      "down": 3,
+      "flat": 1,
+      "win_rate": 20.0,
+      "stocks": [
+        {
+          "code": "603212",
+          "name": "赛伍技术",
+          "pick_price": 15.4,
+          "today_price": 16.48,
+          "chg_pct": 5.17,
+          "verdict": "up"
+        },
+        {
+          "code": "002608",
+          "name": "江苏国信",
+          "pick_price": 8.82,
+          "today_price": 8.76,
+          "chg_pct": 0.23,
+          "verdict": "flat"
+        },
+        {
+          "code": "002491",
+          "name": "通鼎互联",
+          "pick_price": 24.11,
+          "today_price": 22.73,
+          "chg_pct": -5.53,
+          "verdict": "down"
+        },
+        {
+          "code": "603618",
+          "name": "杭电股份",
+          "pick_price": 40.11,
+          "today_price": 38.86,
+          "chg_pct": -6.14,
+          "verdict": "down"
+        },
+        {
+          "code": "000925",
+          "name": "众合科技",
+          "pick_price": 8.24,
+          "today_price": 8.03,
+          "chg_pct": -2.55,
+          "verdict": "down"
+        }
+      ]
+    },
+    "s09_w_bottom": {
+      "up": 2,
+      "down": 2,
+      "flat": 1,
+      "win_rate": 40.0,
+      "stocks": [
+        {
+          "code": "000690",
+          "name": "宝新能源",
+          "pick_price": 5.07,
+          "today_price": 5.2,
+          "chg_pct": 1.36,
+          "verdict": "up"
+        },
+        {
+          "code": "603977",
+          "name": "国泰集团",
+          "pick_price": 12.68,
+          "today_price": 12.75,
+          "chg_pct": -0.62,
+          "verdict": "down"
+        },
+        {
+          "code": "600961",
+          "name": "株冶集团",
+          "pick_price": 22.95,
+          "today_price": 25.41,
+          "chg_pct": 10.0,
+          "verdict": "up"
+        },
+        {
+          "code": "000531",
+          "name": "穗恒运Ａ",
+          "pick_price": 6.77,
+          "today_price": 6.75,
+          "chg_pct": 0.45,
+          "verdict": "flat"
+        },
+        {
+          "code": "603012",
+          "name": "创力集团",
+          "pick_price": 7.5,
+          "today_price": 7.61,
+          "chg_pct": -0.52,
+          "verdict": "down"
+        }
+      ]
+    },
+    "s10_smart_money_inflow": {
+      "up": 0,
+      "down": 2,
+      "flat": 0,
+      "win_rate": 0.0,
+      "stocks": [
+        {
+          "code": "605589",
+          "name": "圣泉集团",
+          "pick_price": 62.94,
+          "today_price": 58.32,
+          "chg_pct": -3.36,
+          "verdict": "down"
+        },
+        {
+          "code": "603155",
+          "name": "新亚强",
+          "pick_price": 23.76,
+          "today_price": 22.61,
+          "chg_pct": -9.99,
+          "verdict": "down"
+        }
+      ]
+    },
+    "s11_ma_bull_align": {
+      "up": 3,
+      "down": 2,
+      "flat": 0,
+      "win_rate": 60.0,
+      "stocks": [
+        {
+          "code": "603328",
+          "name": "依顿电子",
+          "pick_price": 13.42,
+          "today_price": 13.38,
+          "chg_pct": -4.29,
+          "verdict": "down"
+        },
+        {
+          "code": "002768",
+          "name": "国恩股份",
+          "pick_price": 66.38,
+          "today_price": 69.94,
+          "chg_pct": 4.4,
+          "verdict": "up"
+        },
+        {
+          "code": "603687",
+          "name": "大胜达",
+          "pick_price": 19.45,
+          "today_price": 18.38,
+          "chg_pct": -3.26,
+          "verdict": "down"
+        },
+        {
+          "code": "002171",
+          "name": "楚江新材",
+          "pick_price": 13.05,
+          "today_price": 13.59,
+          "chg_pct": 5.51,
+          "verdict": "up"
+        },
+        {
+          "code": "000657",
+          "name": "中钨高新",
+          "pick_price": 76.47,
+          "today_price": 79.0,
+          "chg_pct": 1.35,
+          "verdict": "up"
+        }
+      ]
+    },
+    "s12_rsi_oversold_recover": {
+      "up": 1,
+      "down": 1,
+      "flat": 3,
+      "win_rate": 20.0,
+      "stocks": [
+        {
+          "code": "000767",
+          "name": "晋控电力",
+          "pick_price": 4.66,
+          "today_price": 4.65,
+          "chg_pct": 0.43,
+          "verdict": "flat"
+        },
+        {
+          "code": "002455",
+          "name": "百川股份",
+          "pick_price": 8.19,
+          "today_price": 8.09,
+          "chg_pct": 0.37,
+          "verdict": "flat"
+        },
+        {
+          "code": "000690",
+          "name": "宝新能源",
+          "pick_price": 5.07,
+          "today_price": 5.2,
+          "chg_pct": 1.36,
+          "verdict": "up"
+        },
+        {
+          "code": "002975",
+          "name": "博杰股份",
+          "pick_price": 122.61,
+          "today_price": 121.37,
+          "chg_pct": -1.02,
+          "verdict": "down"
+        },
+        {
+          "code": "002608",
+          "name": "江苏国信",
+          "pick_price": 8.82,
+          "today_price": 8.76,
+          "chg_pct": 0.23,
+          "verdict": "flat"
+        }
+      ]
+    },
+    "s13_chip_concentration": {
+      "up": 0,
+      "down": 2,
+      "flat": 0,
+      "win_rate": 0.0,
+      "stocks": [
+        {
+          "code": "605589",
+          "name": "圣泉集团",
+          "pick_price": 62.94,
+          "today_price": 58.32,
+          "chg_pct": -3.36,
+          "verdict": "down"
+        },
+        {
+          "code": "603155",
+          "name": "新亚强",
+          "pick_price": 23.76,
+          "today_price": 22.61,
+          "chg_pct": -9.99,
+          "verdict": "down"
+        }
+      ]
+    },
+    "s14_gap_up_fill": {
+      "up": 3,
+      "down": 1,
+      "flat": 1,
+      "win_rate": 60.0,
+      "stocks": [
+        {
+          "code": "603328",
+          "name": "依顿电子",
+          "pick_price": 13.42,
+          "today_price": 13.38,
+          "chg_pct": -4.29,
+          "verdict": "down"
+        },
+        {
+          "code": "002768",
+          "name": "国恩股份",
+          "pick_price": 66.38,
+          "today_price": 69.94,
+          "chg_pct": 4.4,
+          "verdict": "up"
+        },
+        {
+          "code": "600397",
+          "name": "江钨装备",
+          "pick_price": 14.09,
+          "today_price": 14.72,
+          "chg_pct": 3.23,
+          "verdict": "up"
+        },
+        {
+          "code": "603283",
+          "name": "赛腾股份",
+          "pick_price": 50.61,
+          "today_price": 50.9,
+          "chg_pct": -0.06,
+          "verdict": "flat"
+        },
+        {
+          "code": "002674",
+          "name": "兴业科技",
+          "pick_price": 15.52,
+          "today_price": 16.0,
+          "chg_pct": 1.2,
+          "verdict": "up"
+        }
+      ]
+    },
+    "s15_high_turnover_start": {
+      "up": 0,
+      "down": 5,
+      "flat": 0,
+      "win_rate": 0.0,
+      "stocks": [
+        {
+          "code": "600505",
+          "name": "西昌电力",
+          "pick_price": 14.92,
+          "today_price": 14.65,
+          "chg_pct": -1.41,
+          "verdict": "down"
+        },
+        {
+          "code": "605589",
+          "name": "圣泉集团",
+          "pick_price": 62.94,
+          "today_price": 58.32,
+          "chg_pct": -3.36,
+          "verdict": "down"
+        },
+        {
+          "code": "603155",
+          "name": "新亚强",
+          "pick_price": 23.76,
+          "today_price": 22.61,
+          "chg_pct": -9.99,
+          "verdict": "down"
+        },
+        {
+          "code": "605006",
+          "name": "山东玻纤",
+          "pick_price": 22.0,
+          "today_price": 20.59,
+          "chg_pct": -7.5,
+          "verdict": "down"
+        },
+        {
+          "code": "601678",
+          "name": "滨化股份",
+          "pick_price": 5.86,
+          "today_price": 5.87,
+          "chg_pct": -1.34,
+          "verdict": "down"
+        }
+      ]
+    },
+    "s18_guiding_star": {
+      "up": 1,
+      "down": 3,
+      "flat": 1,
+      "win_rate": 20.0,
+      "stocks": [
+        {
+          "code": "603328",
+          "name": "依顿电子",
+          "pick_price": 13.42,
+          "today_price": 13.38,
+          "chg_pct": -4.29,
+          "verdict": "down"
+        },
+        {
+          "code": "002240",
+          "name": "盛新锂能",
+          "pick_price": 49.98,
+          "today_price": 51.08,
+          "chg_pct": 0.2,
+          "verdict": "flat"
+        },
+        {
+          "code": "002768",
+          "name": "国恩股份",
+          "pick_price": 66.38,
+          "today_price": 69.94,
+          "chg_pct": 4.4,
+          "verdict": "up"
+        },
+        {
+          "code": "600505",
+          "name": "西昌电力",
+          "pick_price": 14.92,
+          "today_price": 14.65,
+          "chg_pct": -1.41,
+          "verdict": "down"
+        },
+        {
+          "code": "603687",
+          "name": "大胜达",
+          "pick_price": 19.45,
+          "today_price": 18.38,
+          "chg_pct": -3.26,
+          "verdict": "down"
+        }
+      ]
+    },
+    "s20_makers_silent_acc": {
+      "up": 3,
+      "down": 2,
+      "flat": 0,
+      "win_rate": 60.0,
+      "stocks": [
+        {
+          "code": "600397",
+          "name": "江钨装备",
+          "pick_price": 14.09,
+          "today_price": 14.72,
+          "chg_pct": 3.23,
+          "verdict": "up"
+        },
+        {
+          "code": "600166",
+          "name": "福田汽车",
+          "pick_price": 3.04,
+          "today_price": 3.1,
+          "chg_pct": 2.99,
+          "verdict": "up"
+        },
+        {
+          "code": "600573",
+          "name": "惠泉啤酒",
+          "pick_price": 13.12,
+          "today_price": 13.59,
+          "chg_pct": 2.1,
+          "verdict": "up"
+        },
+        {
+          "code": "000021",
+          "name": "深科技",
+          "pick_price": 38.9,
+          "today_price": 37.09,
+          "chg_pct": -5.09,
+          "verdict": "down"
+        },
+        {
+          "code": "002508",
+          "name": "老板电器",
+          "pick_price": 16.69,
+          "today_price": 16.31,
+          "chg_pct": -0.61,
+          "verdict": "down"
+        }
+      ]
+    }
+  }
 }
