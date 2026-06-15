@@ -1252,7 +1252,7 @@ class Handler(SimpleHTTPRequestHandler):
     def _handle_auto_trade_watch(self):
         """返回引擎正在观察的候选股票"""
         import subprocess
-        r = subprocess.run(['python3', os.path.join(os.path.dirname(os.path.abspath(__file__)), 'scripts', 'auto_trader.py'), '--watch'], capture_output=True, timeout=15, cwd=os.path.dirname(os.path.abspath(__file__)))
+        r = subprocess.run(['python3', os.path.join(os.path.dirname(os.path.abspath(__file__)), 'scripts', 'watch_gen.py')], capture_output=True, timeout=15)
         try:
             self._json(json.loads(r.stdout))
         except:
