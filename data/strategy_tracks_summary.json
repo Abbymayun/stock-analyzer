@@ -1,93 +1,93 @@
 {
   "s02_volume_breakout": {
-    "days": 11,
-    "total_up": 24,
+    "days": 12,
+    "total_up": 29,
     "total_down": 28,
     "total_flat": 3,
-    "total_stocks": 55,
-    "total_win_rate": 43.6,
+    "total_stocks": 60,
+    "total_win_rate": 48.3,
     "avg_daily_picks": 5.0
   },
   "s03_macd_dif_bottom": {
-    "days": 11,
-    "total_up": 23,
+    "days": 12,
+    "total_up": 28,
     "total_down": 24,
     "total_flat": 7,
-    "total_stocks": 54,
-    "total_win_rate": 42.6,
+    "total_stocks": 59,
+    "total_win_rate": 47.5,
     "avg_daily_picks": 4.9
   },
   "s04_boll_lower_bounce": {
-    "days": 11,
-    "total_up": 18,
+    "days": 12,
+    "total_up": 19,
     "total_down": 24,
     "total_flat": 4,
-    "total_stocks": 46,
-    "total_win_rate": 39.1,
-    "avg_daily_picks": 4.2
+    "total_stocks": 47,
+    "total_win_rate": 40.4,
+    "avg_daily_picks": 3.9
   },
   "s09_w_bottom": {
-    "days": 11,
-    "total_up": 21,
+    "days": 12,
+    "total_up": 26,
     "total_down": 23,
     "total_flat": 8,
-    "total_stocks": 52,
-    "total_win_rate": 40.4,
-    "avg_daily_picks": 4.7
+    "total_stocks": 57,
+    "total_win_rate": 45.6,
+    "avg_daily_picks": 4.8
   },
   "s10_smart_money_inflow": {
-    "days": 9,
-    "total_up": 7,
+    "days": 10,
+    "total_up": 11,
     "total_down": 14,
     "total_flat": 2,
-    "total_stocks": 23,
-    "total_win_rate": 30.4,
-    "avg_daily_picks": 2.6
+    "total_stocks": 27,
+    "total_win_rate": 40.7,
+    "avg_daily_picks": 2.7
   },
   "s11_ma_bull_align": {
-    "days": 11,
-    "total_up": 27,
+    "days": 12,
+    "total_up": 32,
     "total_down": 21,
     "total_flat": 7,
-    "total_stocks": 55,
-    "total_win_rate": 49.1,
+    "total_stocks": 60,
+    "total_win_rate": 53.3,
     "avg_daily_picks": 5.0
   },
   "s12_rsi_oversold_recover": {
-    "days": 11,
-    "total_up": 21,
+    "days": 12,
+    "total_up": 26,
     "total_down": 24,
     "total_flat": 10,
-    "total_stocks": 55,
-    "total_win_rate": 38.2,
+    "total_stocks": 60,
+    "total_win_rate": 43.3,
     "avg_daily_picks": 5.0
   },
   "s13_chip_concentration": {
-    "days": 8,
-    "total_up": 6,
+    "days": 9,
+    "total_up": 10,
     "total_down": 10,
     "total_flat": 2,
-    "total_stocks": 18,
-    "total_win_rate": 33.3,
-    "avg_daily_picks": 2.2
+    "total_stocks": 22,
+    "total_win_rate": 45.5,
+    "avg_daily_picks": 2.4
   },
   "s14_gap_up_fill": {
-    "days": 11,
-    "total_up": 25,
+    "days": 12,
+    "total_up": 30,
     "total_down": 23,
     "total_flat": 7,
-    "total_stocks": 55,
-    "total_win_rate": 45.5,
+    "total_stocks": 60,
+    "total_win_rate": 50.0,
     "avg_daily_picks": 5.0
   },
   "s15_high_turnover_start": {
-    "days": 11,
-    "total_up": 26,
+    "days": 12,
+    "total_up": 31,
     "total_down": 20,
     "total_flat": 4,
-    "total_stocks": 50,
-    "total_win_rate": 52.0,
-    "avg_daily_picks": 4.5
+    "total_stocks": 55,
+    "total_win_rate": 56.4,
+    "avg_daily_picks": 4.6
   },
   "s16_small_yang_accumulate": {
     "days": 5,
@@ -99,22 +99,22 @@
     "avg_daily_picks": 1.2
   },
   "s18_guiding_star": {
-    "days": 11,
-    "total_up": 19,
+    "days": 12,
+    "total_up": 24,
     "total_down": 27,
     "total_flat": 9,
-    "total_stocks": 55,
-    "total_win_rate": 34.5,
+    "total_stocks": 60,
+    "total_win_rate": 40.0,
     "avg_daily_picks": 5.0
   },
   "s20_makers_silent_acc": {
-    "days": 11,
-    "total_up": 22,
+    "days": 12,
+    "total_up": 24,
     "total_down": 23,
     "total_flat": 7,
-    "total_stocks": 52,
-    "total_win_rate": 42.3,
-    "avg_daily_picks": 4.7
+    "total_stocks": 54,
+    "total_win_rate": 44.4,
+    "avg_daily_picks": 4.5
   },
   "s05_pullback_ma20": {
     "days": 10,
@@ -126,12 +126,12 @@
     "avg_daily_picks": 3.2
   },
   "s08_platform_breakout": {
-    "days": 2,
-    "total_up": 0,
+    "days": 3,
+    "total_up": 1,
     "total_down": 2,
     "total_flat": 1,
-    "total_stocks": 3,
-    "total_win_rate": 0.0,
-    "avg_daily_picks": 1.5
+    "total_stocks": 4,
+    "total_win_rate": 25.0,
+    "avg_daily_picks": 1.3
   }
 }

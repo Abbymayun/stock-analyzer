@@ -1,0 +1,17 @@
+{
+  "date": "2026-06-15",
+  "created_at": "15:00",
+  "total_assets": 200000,
+  "cash": 200000,
+  "market_value": 0,
+  "initial_capital": 200000,
+  "total_return": 0.0,
+  "total_pnl": 0,
+  "buy_count": 0,
+  "sell_count": 0,
+  "hold_count": 0,
+  "buys": [],
+  "sells": [],
+  "sell_total_pnl": 0,
+  "holdings": []
+}
