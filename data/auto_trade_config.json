@@ -1,0 +1,9 @@
+{
+  "per_stock_min": 8000,
+  "per_stock_max": 12000,
+  "stop_loss_pct": 1,
+  "take_profit_pct": 10,
+  "pos_strategy": "full",
+  "auto_buy": false,
+  "auto_sell": false
+}

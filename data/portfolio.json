@@ -1,70 +1,15 @@
 {
-  "cash": 50082.82,
+  "cash": 200000,
   "initial_capital": 200000,
-  "holdings": {
-    "603050": {
-      "name": "科林电气",
-      "code": "603050",
-      "qty": 3300,
-      "avg_cost": 21.953,
-      "buy_date": "2026-06-01",
-      "buy_score": 100,
-      "signals": []
-    },
-    "002273": {
-      "name": "水晶光电",
-      "code": "002273",
-      "qty": 800,
-      "avg_cost": 38.69,
-      "buy_date": "2026-06-01",
-      "buy_score": 0,
-      "signals": []
-    },
-    "002870": {
-      "name": "香山股份",
-      "code": "002870",
-      "qty": 300,
-      "avg_cost": 42.96,
-      "buy_date": "2026-06-01",
-      "buy_score": 0,
-      "signals": []
-    },
-    "600992": {
-      "name": "贵绳股份",
-      "code": "600992",
-      "qty": 800,
-      "avg_cost": 12.86,
-      "buy_date": "2026-06-01",
-      "buy_score": 0,
-      "signals": []
-    },
-    "600679": {
-      "name": "上海凤凰",
-      "code": "600679",
-      "qty": 1000,
-      "avg_cost": 10.91,
-      "buy_date": "2026-06-04",
-      "buy_score": 79,
-      "signals": []
-    },
-    "601015": {
-      "name": "陕西黑猫",
-      "code": "601015",
-      "qty": 2800,
-      "avg_cost": 4.242,
-      "buy_date": "2026-06-05",
-      "buy_score": 0,
-      "signals": []
-    }
-  },
-  "total_assets": 199443.32,
-  "total_return": -0.28,
+  "holdings": {},
+  "total_assets": 200000,
+  "total_return": 0,
   "trading_stats": {
-    "total_trades": 42,
-    "win_trades": 8,
-    "lose_trades": 6,
-    "total_pnl": -401.86,
-    "total_commission": 233.38,
+    "total_trades": 0,
+    "win_trades": 0,
+    "lose_trades": 0,
+    "total_pnl": 0,
+    "total_commission": 0,
     "max_drawdown": 0
   }
 }

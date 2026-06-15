@@ -1,20 +1,20 @@
 {
-  "generation": 3,
+  "generation": 4,
   "weights": {
     "s02_volume_breakout": 43.0,
-    "s03_macd_dif_bottom": 42.0,
-    "s04_boll_lower_bounce": 46.6,
-    "s09_w_bottom": 45.2,
-    "s10_smart_money_inflow": 39.5,
-    "s11_ma_bull_align": 50.0,
-    "s12_rsi_oversold_recover": 39.5,
+    "s03_macd_dif_bottom": 40.7,
+    "s04_boll_lower_bounce": 40.6,
+    "s09_w_bottom": 41.8,
+    "s10_smart_money_inflow": 37.3,
+    "s11_ma_bull_align": 48.6,
+    "s12_rsi_oversold_recover": 38.8,
     "s13_chip_concentration": 36.0,
-    "s14_gap_up_fill": 44.8,
-    "s15_high_turnover_start": 51.0,
+    "s14_gap_up_fill": 44.4,
+    "s15_high_turnover_start": 49.2,
     "s16_small_yang_accumulate": 22.0,
-    "s18_guiding_star": 39.5,
-    "s20_makers_silent_acc": 47.3,
-    "s05_pullback_ma20": 38.3,
+    "s18_guiding_star": 36.0,
+    "s20_makers_silent_acc": 45.0,
+    "s05_pullback_ma20": 35.3,
     "s08_platform_breakout": 15.0
   },
   "history": [
@@ -41,14 +41,20 @@
       "losers": 2,
       "min_score": 82,
       "max_buys": 1
+    },
+    {
+      "time": "2026-06-12 16:00",
+      "avg_win_rate": 38.2,
+      "winners": 3,
+      "losers": 2,
+      "min_score": 82,
+      "max_buys": 1
     }
   ],
   "rules": {
     "min_score": 82,
     "max_daily_buys": 1,
     "prefer_winners": [
-      "s04_boll_lower_bounce",
-      "s09_w_bottom",
       "s11_ma_bull_align",
       "s15_high_turnover_start",
       "s20_makers_silent_acc"
@@ -62,16 +68,21 @@
       "combo_ut_rt",
       "combo_ut_on_rt",
       "combo_ut_ow_rt"
-    ]
+    ],
+    "smart_tp": 10,
+    "smart_sl": 1,
+    "trailing_stop": true,
+    "trailing_rules": ">2%保本, >5%锁利3%, >8%锁利6%"
   },
   "insights": [
-    "🏆 高胜率策略: 高换手启动(51.0%), 多头排列(50.0%), 庄家静默吸筹(47.3%)",
-    "📉 失效策略: 平台突破(15.0%), 小阳线吸筹(22.0%)",
-    "⚠️ 整体胜率偏低(40%)，已收紧买入条件",
+    "🏆 高胜率策略: s15_high_turnover_start(49.2%), s11_ma_bull_align(48.6%), s20_makers_silent_acc(45.0%)",
+    "📉 失效策略: s08_platform_breakout(15.0%), s16_small_yang_accumulate(22.0%)",
+    "⚠️ 整体胜率偏低(38%)，已收紧买入条件",
     "📊 评分门槛: 82分 | 日限买1只",
-    "🧬 发现最强组合: 放量突破 + 高换手启动(64.0分)"
+    "🎯 移动止损: >2%保本, >5%锁利3%, >8%锁利6%",
+    "⚙ 全局止盈+10%, 止损-1%"
   ],
-  "updated": "2026-06-11 21:18",
+  "updated": "2026-06-12 16:00",
   "strategy_names": {
     "s02_volume_breakout": "放量突破",
     "s09_w_bottom": "W底形态",
@@ -97,7 +108,22 @@
     "combo_ut_on_rt": "放量突破 + 筹码集中启动 + 高换手启动",
     "combo_ut_ow_rt": "放量突破 + 主力资金流入 + 高换手启动",
     "combo_ow_on_rt": "主力资金流入 + 筹码集中启动 + 高换手启动",
-    "combo_gn_ll": "多头排列 + 跳空缺口回补"
+    "combo_gn_ll": "多头排列 + 跳空缺口回补",
+    "combo_0": "多头排列 + 高换手启动",
+    "combo_1": "多头排列 + 高换手启动 + 小阳线吸筹",
+    "combo_2": "高换手启动 + 小阳线吸筹",
+    "combo_3": "多头排列 + 小阳线吸筹",
+    "combo_4": "多头排列 + 跳空缺口回补 + 高换手启动",
+    "combo_5": "多头排列 + 跳空缺口回补 + 高换手启动 + 小阳线吸筹",
+    "combo_6": "跳空缺口回补 + 高换手启动",
+    "combo_7": "多头排列 + 跳空缺口回补",
+    "combo_8": "跳空缺口回补 + 高换手启动 + 小阳线吸筹",
+    "combo_9": "多头排列 + 跳空缺口回补 + 小阳线吸筹",
+    "combo_10": "多头排列 + 高换手启动 + 庄家静默吸筹",
+    "combo_11": "MACD底背离 + 多头排列 + 高换手启动",
+    "combo_12": "MACD底背离 + 多头排列 + 高换手启动 + 小阳线吸筹",
+    "combo_13": "多头排列 + 高换手启动 + 小阳线吸筹 + 庄家静默吸筹",
+    "combo_14": "W底形态 + 多头排列 + 高换手启动"
   },
   "daily_trends": {
     "s02_volume_breakout": [
@@ -154,6 +180,18 @@
         "win_rate": 20.0,
         "up": 1,
         "down": 4
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 0.0,
+        "up": 0,
+        "down": 5
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 80.0,
+        "up": 4,
+        "down": 1
       }
     ],
     "s03_macd_dif_bottom": [
@@ -210,6 +248,18 @@
         "win_rate": 33.3,
         "up": 1,
         "down": 2
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 40.0,
+        "up": 2,
+        "down": 3
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 100.0,
+        "up": 5,
+        "down": 0
       }
     ],
     "s04_boll_lower_bounce": [
@@ -266,6 +316,18 @@
         "win_rate": 60.0,
         "up": 3,
         "down": 2
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 25.0,
+        "up": 1,
+        "down": 3
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 100.0,
+        "up": 3,
+        "down": 0
       }
     ],
     "s09_w_bottom": [
@@ -322,6 +384,18 @@
         "win_rate": 66.7,
         "up": 2,
         "down": 1
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 50.0,
+        "up": 2,
+        "down": 2
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 100.0,
+        "up": 3,
+        "down": 0
       }
     ],
     "s10_smart_money_inflow": [
@@ -365,6 +439,18 @@
         "date": "2026-06-10",
         "win_rate": 50.0,
         "up": 1,
+        "down": 1
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 0.0,
+        "up": 0,
+        "down": 2
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 0.0,
+        "up": 0,
         "down": 1
       }
     ],
@@ -422,6 +508,18 @@
         "win_rate": 60.0,
         "up": 3,
         "down": 2
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 60.0,
+        "up": 3,
+        "down": 2
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 100.0,
+        "up": 3,
+        "down": 0
       }
     ],
     "s12_rsi_oversold_recover": [
@@ -478,6 +576,18 @@
         "win_rate": 25.0,
         "up": 1,
         "down": 3
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 50.0,
+        "up": 1,
+        "down": 1
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 100.0,
+        "up": 4,
+        "down": 0
       }
     ],
     "s13_chip_concentration": [
@@ -522,6 +632,12 @@
         "win_rate": 50.0,
         "up": 1,
         "down": 1
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 0.0,
+        "up": 0,
+        "down": 2
       }
     ],
     "s14_gap_up_fill": [
@@ -577,6 +693,18 @@
         "date": "2026-06-10",
         "win_rate": 66.7,
         "up": 2,
+        "down": 1
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 75.0,
+        "up": 3,
+        "down": 1
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 80.0,
+        "up": 4,
         "down": 1
       }
     ],
@@ -634,6 +762,18 @@
         "win_rate": 50.0,
         "up": 2,
         "down": 2
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 0.0,
+        "up": 0,
+        "down": 5
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 100.0,
+        "up": 4,
+        "down": 0
       }
     ],
     "s16_small_yang_accumulate": [
@@ -656,10 +796,10 @@
         "down": 0
       },
       {
-        "date": "2026-06-10",
-        "win_rate": 0,
+        "date": "2026-06-12",
+        "win_rate": 0.0,
         "up": 0,
-        "down": 0
+        "down": 1
       }
     ],
     "s18_guiding_star": [
@@ -716,6 +856,18 @@
         "win_rate": 40.0,
         "up": 2,
         "down": 3
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 25.0,
+        "up": 1,
+        "down": 3
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 100.0,
+        "up": 4,
+        "down": 0
       }
     ],
     "s20_makers_silent_acc": [
@@ -772,6 +924,18 @@
         "win_rate": 0.0,
         "up": 0,
         "down": 5
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 60.0,
+        "up": 3,
+        "down": 2
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 50.0,
+        "up": 1,
+        "down": 1
       }
     ],
     "s05_pullback_ma20": [
@@ -822,6 +986,18 @@
         "win_rate": 0.0,
         "up": 0,
         "down": 1
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 25.0,
+        "up": 1,
+        "down": 3
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 100.0,
+        "up": 1,
+        "down": 0
       }
     ],
     "s08_platform_breakout": [
@@ -830,95 +1006,1636 @@
         "win_rate": 0.0,
         "up": 0,
         "down": 2
+      }
+    ],
+    "combo_ut_rt": [
+      {
+        "date": "2026-05-30",
+        "win_rate": 87.5,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-01",
+        "win_rate": 50.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-02",
+        "win_rate": 73.3,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-03",
+        "win_rate": 75.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-04",
+        "win_rate": 30.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-05",
+        "win_rate": 90.0,
+        "up": 0,
+        "down": 0
       },
       {
         "date": "2026-06-08",
-        "win_rate": 0,
+        "win_rate": 50.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-09",
+        "win_rate": 0.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-10",
+        "win_rate": 35.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 0.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 90.0,
+        "up": 0,
+        "down": 0
+      }
+    ],
+    "combo_ut_on_rt": [
+      {
+        "date": "2026-05-30",
+        "win_rate": 91.7,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-01",
+        "win_rate": 44.4,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-02",
+        "win_rate": 82.2,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-03",
+        "win_rate": 75.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-04",
+        "win_rate": 28.3,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-05",
+        "win_rate": 60.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-08",
+        "win_rate": 33.3,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-09",
+        "win_rate": 0.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-10",
+        "win_rate": 40.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 0.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 90.0,
+        "up": 0,
+        "down": 0
+      }
+    ],
+    "combo_ut_ow_rt": [
+      {
+        "date": "2026-05-30",
+        "win_rate": 91.7,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-01",
+        "win_rate": 44.4,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-02",
+        "win_rate": 73.9,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-03",
+        "win_rate": 75.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-04",
+        "win_rate": 26.7,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-05",
+        "win_rate": 60.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-08",
+        "win_rate": 33.3,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-09",
+        "win_rate": 0.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-10",
+        "win_rate": 40.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 0.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 60.0,
+        "up": 0,
+        "down": 0
+      }
+    ],
+    "combo_ow_on_rt": [
+      {
+        "date": "2026-05-30",
+        "win_rate": 100.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-01",
+        "win_rate": 42.2,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-02",
+        "win_rate": 80.6,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-03",
+        "win_rate": 75.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-04",
+        "win_rate": 28.3,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-05",
+        "win_rate": 33.3,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-08",
+        "win_rate": 16.7,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-09",
+        "win_rate": 0.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-10",
+        "win_rate": 50.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 0.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 50.0,
+        "up": 0,
+        "down": 0
+      }
+    ],
+    "combo_gn_ll": [
+      {
+        "date": "2026-05-30",
+        "win_rate": 100.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-01",
+        "win_rate": 40.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-02",
+        "win_rate": 41.6,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-03",
+        "win_rate": 45.9,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-04",
+        "win_rate": 40.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-05",
+        "win_rate": 20.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-08",
+        "win_rate": 60.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-09",
+        "win_rate": 45.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-10",
+        "win_rate": 63.4,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 67.5,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 90.0,
+        "up": 0,
+        "down": 0
+      }
+    ],
+    "combo_0": [
+      {
+        "date": "2026-05-30",
+        "win_rate": 100.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-01",
+        "win_rate": 60.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-02",
+        "win_rate": 50.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-03",
+        "win_rate": 70.8,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-04",
+        "win_rate": 40.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-05",
+        "win_rate": 60.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-08",
+        "win_rate": 55.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-09",
+        "win_rate": 20.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-10",
+        "win_rate": 55.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 30.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 100.0,
+        "up": 0,
+        "down": 0
+      }
+    ],
+    "combo_1": [
+      {
+        "date": "2026-05-30",
+        "win_rate": 100.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-01",
+        "win_rate": 60.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-02",
+        "win_rate": 33.3,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-03",
+        "win_rate": 70.8,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-04",
+        "win_rate": 40.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-05",
+        "win_rate": 60.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-08",
+        "win_rate": 70.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-09",
+        "win_rate": 20.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-10",
+        "win_rate": 55.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 30.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 66.7,
+        "up": 0,
+        "down": 0
+      }
+    ],
+    "combo_2": [
+      {
+        "date": "2026-05-30",
+        "win_rate": 100.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-01",
+        "win_rate": 60.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-02",
+        "win_rate": 33.4,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-03",
+        "win_rate": 75.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-04",
+        "win_rate": 40.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-05",
+        "win_rate": 100.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-08",
+        "win_rate": 75.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-09",
+        "win_rate": 0.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-10",
+        "win_rate": 50.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 0.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 50.0,
+        "up": 0,
+        "down": 0
+      }
+    ],
+    "combo_3": [
+      {
+        "date": "2026-05-30",
+        "win_rate": 100.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-01",
+        "win_rate": 60.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-02",
+        "win_rate": 16.6,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-03",
+        "win_rate": 66.7,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-04",
+        "win_rate": 40.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-05",
+        "win_rate": 20.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-08",
+        "win_rate": 80.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-09",
+        "win_rate": 40.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-10",
+        "win_rate": 60.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 60.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 50.0,
+        "up": 0,
+        "down": 0
+      }
+    ],
+    "combo_4": [
+      {
+        "date": "2026-05-30",
+        "win_rate": 100.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-01",
+        "win_rate": 46.7,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-02",
+        "win_rate": 50.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-03",
+        "win_rate": 55.6,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-04",
+        "win_rate": 40.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-05",
+        "win_rate": 46.7,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-08",
+        "win_rate": 56.7,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-09",
+        "win_rate": 30.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-10",
+        "win_rate": 58.9,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 45.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 93.3,
+        "up": 0,
+        "down": 0
+      }
+    ],
+    "combo_5": [
+      {
+        "date": "2026-05-30",
+        "win_rate": 100.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-01",
+        "win_rate": 46.7,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-02",
+        "win_rate": 37.5,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-03",
+        "win_rate": 55.6,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-04",
+        "win_rate": 40.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-05",
+        "win_rate": 46.7,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-08",
+        "win_rate": 67.5,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-09",
+        "win_rate": 30.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-10",
+        "win_rate": 58.9,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 45.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 70.0,
+        "up": 0,
+        "down": 0
+      }
+    ],
+    "combo_6": [
+      {
+        "date": "2026-05-30",
+        "win_rate": 100.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-01",
+        "win_rate": 40.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-02",
+        "win_rate": 58.4,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-03",
+        "win_rate": 50.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-04",
+        "win_rate": 40.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-05",
+        "win_rate": 60.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-08",
+        "win_rate": 55.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-09",
+        "win_rate": 25.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-10",
+        "win_rate": 58.4,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 37.5,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 90.0,
+        "up": 0,
+        "down": 0
+      }
+    ],
+    "combo_7": [
+      {
+        "date": "2026-05-30",
+        "win_rate": 100.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-01",
+        "win_rate": 40.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-02",
+        "win_rate": 41.6,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-03",
+        "win_rate": 45.9,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-04",
+        "win_rate": 40.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-05",
+        "win_rate": 20.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-08",
+        "win_rate": 60.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-09",
+        "win_rate": 45.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-10",
+        "win_rate": 63.4,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 67.5,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 90.0,
+        "up": 0,
+        "down": 0
+      }
+    ],
+    "combo_8": [
+      {
+        "date": "2026-05-30",
+        "win_rate": 100.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-01",
+        "win_rate": 40.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-02",
+        "win_rate": 38.9,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-03",
+        "win_rate": 50.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-04",
+        "win_rate": 40.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-05",
+        "win_rate": 60.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-08",
+        "win_rate": 70.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-09",
+        "win_rate": 25.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-10",
+        "win_rate": 58.4,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 37.5,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 60.0,
+        "up": 0,
+        "down": 0
+      }
+    ],
+    "combo_9": [
+      {
+        "date": "2026-05-30",
+        "win_rate": 100.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-01",
+        "win_rate": 40.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-02",
+        "win_rate": 27.8,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-03",
+        "win_rate": 45.9,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-04",
+        "win_rate": 40.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-05",
+        "win_rate": 20.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-08",
+        "win_rate": 73.3,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-09",
+        "win_rate": 45.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-10",
+        "win_rate": 63.4,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 67.5,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 60.0,
+        "up": 0,
+        "down": 0
+      }
+    ],
+    "combo_10": [
+      {
+        "date": "2026-05-30",
+        "win_rate": 100.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-01",
+        "win_rate": 40.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-02",
+        "win_rate": 66.7,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-03",
+        "win_rate": 58.3,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-04",
+        "win_rate": 40.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-05",
+        "win_rate": 40.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-08",
+        "win_rate": 50.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-09",
+        "win_rate": 46.7,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-10",
+        "win_rate": 36.7,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 40.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 83.3,
+        "up": 0,
+        "down": 0
+      }
+    ],
+    "combo_11": [
+      {
+        "date": "2026-05-30",
+        "win_rate": 83.3,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-01",
+        "win_rate": 46.7,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-02",
+        "win_rate": 50.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-03",
+        "win_rate": 80.6,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-04",
+        "win_rate": 60.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-05",
+        "win_rate": 48.3,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-08",
+        "win_rate": 36.7,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-09",
+        "win_rate": 13.3,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-10",
+        "win_rate": 47.8,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 33.3,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 100.0,
+        "up": 0,
+        "down": 0
+      }
+    ],
+    "combo_12": [
+      {
+        "date": "2026-05-30",
+        "win_rate": 87.5,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-01",
+        "win_rate": 46.7,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-02",
+        "win_rate": 37.5,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-03",
+        "win_rate": 80.6,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-04",
+        "win_rate": 60.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-05",
+        "win_rate": 48.3,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-08",
+        "win_rate": 52.5,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-09",
+        "win_rate": 13.3,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-10",
+        "win_rate": 47.8,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 33.3,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 75.0,
+        "up": 0,
+        "down": 0
+      }
+    ],
+    "combo_13": [
+      {
+        "date": "2026-05-30",
+        "win_rate": 100.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-01",
+        "win_rate": 40.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-02",
+        "win_rate": 50.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-03",
+        "win_rate": 58.3,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-04",
+        "win_rate": 40.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-05",
+        "win_rate": 40.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-08",
+        "win_rate": 62.5,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-09",
+        "win_rate": 46.7,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-10",
+        "win_rate": 36.7,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 40.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 62.5,
+        "up": 0,
+        "down": 0
+      }
+    ],
+    "combo_14": [
+      {
+        "date": "2026-05-30",
+        "win_rate": 91.7,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-01",
+        "win_rate": 40.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-02",
+        "win_rate": 60.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-03",
+        "win_rate": 67.2,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-04",
+        "win_rate": 48.9,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-05",
+        "win_rate": 40.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-08",
+        "win_rate": 53.3,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-09",
+        "win_rate": 20.0,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-10",
+        "win_rate": 58.9,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-11",
+        "win_rate": 36.7,
+        "up": 0,
+        "down": 0
+      },
+      {
+        "date": "2026-06-12",
+        "win_rate": 100.0,
         "up": 0,
         "down": 0
       }
     ]
   },
   "composite_strategies": {
-    "combo_ut_rt": {
-      "name": "放量突破 + 高换手启动",
+    "combo_0": {
+      "name": "多头排列 + 高换手启动",
       "type": "2策略组合",
       "base_strategies": [
-        "s02_volume_breakout",
+        "s11_ma_bull_align",
         "s15_high_turnover_start"
       ],
-      "stock_count": 4,
-      "estimated_win_rate": 45.7,
-      "score": 64.0,
-      "stocks": [
-        "603155",
-        "600505",
-        "605589",
-        "605006"
-      ]
+      "real_win_rate": 56.4,
+      "samples": 94,
+      "stock_count": 0,
+      "stocks": []
     },
-    "combo_ut_on_rt": {
-      "name": "放量突破 + 筹码集中启动 + 高换手启动",
+    "combo_1": {
+      "name": "多头排列 + 高换手启动 + 小阳线吸筹",
       "type": "3策略组合",
       "base_strategies": [
-        "s02_volume_breakout",
-        "s13_chip_concentration",
-        "s15_high_turnover_start"
+        "s11_ma_bull_align",
+        "s15_high_turnover_start",
+        "s16_small_yang_accumulate"
       ],
-      "stock_count": 2,
-      "estimated_win_rate": 43.8,
-      "score": 56.9,
-      "stocks": [
-        "603155",
-        "605589"
-      ]
+      "real_win_rate": 56.1,
+      "samples": 98,
+      "stock_count": 0,
+      "stocks": []
     },
-    "combo_ut_ow_rt": {
-      "name": "放量突破 + 主力资金流入 + 高换手启动",
+    "combo_2": {
+      "name": "高换手启动 + 小阳线吸筹",
+      "type": "2策略组合",
+      "base_strategies": [
+        "s15_high_turnover_start",
+        "s16_small_yang_accumulate"
+      ],
+      "real_win_rate": 56.0,
+      "samples": 50,
+      "stock_count": 0,
+      "stocks": []
+    },
+    "combo_3": {
+      "name": "多头排列 + 小阳线吸筹",
+      "type": "2策略组合",
+      "base_strategies": [
+        "s11_ma_bull_align",
+        "s16_small_yang_accumulate"
+      ],
+      "real_win_rate": 55.8,
+      "samples": 52,
+      "stock_count": 0,
+      "stocks": []
+    },
+    "combo_4": {
+      "name": "多头排列 + 跳空缺口回补 + 高换手启动",
       "type": "3策略组合",
       "base_strategies": [
-        "s02_volume_breakout",
-        "s10_smart_money_inflow",
+        "s11_ma_bull_align",
+        "s14_gap_up_fill",
         "s15_high_turnover_start"
       ],
-      "stock_count": 2,
-      "estimated_win_rate": 42.7,
-      "score": 55.5,
-      "stocks": [
-        "603155",
-        "605589"
-      ]
+      "real_win_rate": 54.9,
+      "samples": 142,
+      "stock_count": 0,
+      "stocks": []
     },
-    "combo_ow_on_rt": {
-      "name": "主力资金流入 + 筹码集中启动 + 高换手启动",
-      "type": "3策略组合",
+    "combo_5": {
+      "name": "多头排列 + 跳空缺口回补 + 高换手启动 + 小阳线吸筹",
+      "type": "4策略组合",
       "base_strategies": [
-        "s10_smart_money_inflow",
-        "s13_chip_concentration",
+        "s11_ma_bull_align",
+        "s14_gap_up_fill",
+        "s15_high_turnover_start",
+        "s16_small_yang_accumulate"
+      ],
+      "real_win_rate": 54.8,
+      "samples": 146,
+      "stock_count": 0,
+      "stocks": []
+    },
+    "combo_6": {
+      "name": "跳空缺口回补 + 高换手启动",
+      "type": "2策略组合",
+      "base_strategies": [
+        "s14_gap_up_fill",
         "s15_high_turnover_start"
       ],
-      "stock_count": 2,
-      "estimated_win_rate": 42.7,
-      "score": 55.5,
-      "stocks": [
-        "603155",
-        "605589"
-      ]
+      "real_win_rate": 54.3,
+      "samples": 94,
+      "stock_count": 0,
+      "stocks": []
     },
-    "combo_gn_ll": {
+    "combo_7": {
       "name": "多头排列 + 跳空缺口回补",
       "type": "2策略组合",
       "base_strategies": [
         "s11_ma_bull_align",
         "s14_gap_up_fill"
       ],
-      "stock_count": 2,
-      "estimated_win_rate": 46.2,
-      "score": 55.4,
-      "stocks": [
-        "603328",
-        "002768"
-      ]
+      "real_win_rate": 54.2,
+      "samples": 96,
+      "stock_count": 0,
+      "stocks": []
+    },
+    "combo_8": {
+      "name": "跳空缺口回补 + 高换手启动 + 小阳线吸筹",
+      "type": "3策略组合",
+      "base_strategies": [
+        "s14_gap_up_fill",
+        "s15_high_turnover_start",
+        "s16_small_yang_accumulate"
+      ],
+      "real_win_rate": 54.1,
+      "samples": 98,
+      "stock_count": 0,
+      "stocks": []
+    },
+    "combo_9": {
+      "name": "多头排列 + 跳空缺口回补 + 小阳线吸筹",
+      "type": "3策略组合",
+      "base_strategies": [
+        "s11_ma_bull_align",
+        "s14_gap_up_fill",
+        "s16_small_yang_accumulate"
+      ],
+      "real_win_rate": 54.0,
+      "samples": 100,
+      "stock_count": 0,
+      "stocks": []
+    },
+    "combo_10": {
+      "name": "多头排列 + 高换手启动 + 庄家静默吸筹",
+      "type": "3策略组合",
+      "base_strategies": [
+        "s11_ma_bull_align",
+        "s15_high_turnover_start",
+        "s20_makers_silent_acc"
+      ],
+      "real_win_rate": 54.0,
+      "samples": 139,
+      "stock_count": 0,
+      "stocks": []
+    },
+    "combo_11": {
+      "name": "MACD底背离 + 多头排列 + 高换手启动",
+      "type": "3策略组合",
+      "base_strategies": [
+        "s03_macd_dif_bottom",
+        "s11_ma_bull_align",
+        "s15_high_turnover_start"
+      ],
+      "real_win_rate": 53.9,
+      "samples": 141,
+      "stock_count": 0,
+      "stocks": []
+    },
+    "combo_12": {
+      "name": "MACD底背离 + 多头排列 + 高换手启动 + 小阳线吸筹",
+      "type": "4策略组合",
+      "base_strategies": [
+        "s03_macd_dif_bottom",
+        "s11_ma_bull_align",
+        "s15_high_turnover_start",
+        "s16_small_yang_accumulate"
+      ],
+      "real_win_rate": 53.8,
+      "samples": 145,
+      "stock_count": 0,
+      "stocks": []
+    },
+    "combo_13": {
+      "name": "多头排列 + 高换手启动 + 小阳线吸筹 + 庄家静默吸筹",
+      "type": "4策略组合",
+      "base_strategies": [
+        "s11_ma_bull_align",
+        "s15_high_turnover_start",
+        "s16_small_yang_accumulate",
+        "s20_makers_silent_acc"
+      ],
+      "real_win_rate": 53.8,
+      "samples": 143,
+      "stock_count": 0,
+      "stocks": []
+    },
+    "combo_14": {
+      "name": "W底形态 + 多头排列 + 高换手启动",
+      "type": "3策略组合",
+      "base_strategies": [
+        "s09_w_bottom",
+        "s11_ma_bull_align",
+        "s15_high_turnover_start"
+      ],
+      "real_win_rate": 53.6,
+      "samples": 138,
+      "stock_count": 0,
+      "stocks": []
     }
-  }
+  },
+  "smart_stops": [
+    {
+      "name": "庄家静默吸筹",
+      "best_tp": 10,
+      "best_sl": 1,
+      "win_rate": 78.8,
+      "expected_return": 2.4
+    },
+    {
+      "name": "小阳线吸筹",
+      "best_tp": 10,
+      "best_sl": 1,
+      "win_rate": 66.7,
+      "expected_return": 2.48
+    },
+    {
+      "name": "跳空缺口回补",
+      "best_tp": 10,
+      "best_sl": 1,
+      "win_rate": 65.5,
+      "expected_return": 2.22
+    },
+    {
+      "name": "主力资金流入",
+      "best_tp": 10,
+      "best_sl": 1,
+      "win_rate": 69.6,
+      "expected_return": 1.97
+    },
+    {
+      "name": "布林下轨反弹",
+      "best_tp": 10,
+      "best_sl": 1,
+      "win_rate": 80.4,
+      "expected_return": 1.77
+    },
+    {
+      "name": "W底形态",
+      "best_tp": 10,
+      "best_sl": 1,
+      "win_rate": 80.8,
+      "expected_return": 1.75
+    },
+    {
+      "name": "仙人指路",
+      "best_tp": 10,
+      "best_sl": 1,
+      "win_rate": 56.4,
+      "expected_return": 1.95
+    },
+    {
+      "name": "筹码集中启动",
+      "best_tp": 10,
+      "best_sl": 1,
+      "win_rate": 61.1,
+      "expected_return": 1.88
+    },
+    {
+      "name": "RSI超卖回升",
+      "best_tp": 10,
+      "best_sl": 1,
+      "win_rate": 67.3,
+      "expected_return": 1.79
+    },
+    {
+      "name": "多头排列",
+      "best_tp": 10,
+      "best_sl": 1,
+      "win_rate": 52.7,
+      "expected_return": 1.91
+    }
+  ],
+  "global_best_tp": 10,
+  "global_best_sl": 1
 }
